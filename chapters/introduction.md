@@ -18,6 +18,27 @@ With the advent of the first small-enough computers, and small-enough cathode-ra
 
 Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (Tobii, cite). Such devices and their interaction modalities are commonly called Natural User Interfaces (NUIs, cite).
 
-## Scope of this thesis
+## Scope of this thesis and contributions
 
-In this thesis, we develop a framework that enables rapid prototyping of visualisations of biology data, and interaction with such data on the basis of Natural User Interfaces. We will demonstrate the utility and comprehensiveness of the framework on a set of case studies.
+In this thesis, we develop an open-source framework named _scenery_ that enables rapid prototyping of visualisations of biology data, and interaction with such data on the basis of Natural User Interfaces. This framework supports rendering on regular screens, virtual reality headsets (like the Oculus Rift or HTC Vive), and augmented reality headset (like the Microsoft HoloLens). We will demonstrate the necessity, utility and comprehensiveness of such a framework on a set of case studies and show further contributions made possible by the use of the framework.
+
+We will detail the following contributions:
+
+* _scenery_, a framework for creating visualisation and interaction interfaces with both volumetric and geometric data, supporting virtual and augmented reality, and clustered rendering.
+* rendering models for the _Adaptive Particle Representation_ (APR) (cite), which can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. The APR is a new computational particle-based representation of image and volume data that can significantly reduce both storage and processing cost. All rendering algorithms are implemented on top of _scenery_.
+* _attentive tracking_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
+* _interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_.
+
+### Publications
+
+The following peer-reviewed papers have been published from parts of this work:
+
+* Royer, L.A., Weigert, M., _Günther, U._, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. __ClearVolume: open-source live 3D visualization for light-sheet microscopy__. _Nature Methods_, 12(6), p.480.
+* Cheeseman, B.L.,  _Günther, U._, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018. __The Adaptive Particle Representation (APR) for efficient storage and computation on LSFM images__. (Preprint)
+
+### Supervision
+
+The following students have been supervised by the author in the duration of the thesis:
+
+* Sahil Loomba, intern
+* Aryaman Gupta, intern and master student
