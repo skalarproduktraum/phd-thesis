@@ -1,0 +1,1 @@
+pandoc --pdf-engine=xelatex -H preamble.tex -V fontsize=12pt -V documentclass:book -V papersize:a4paper -V classoption:openright -V subparagraph --top-level-division=chapter chapters/title.md chapters/acknowledgements.md chapters/toc.md chapters/introduction.md -o thesis.pdf
