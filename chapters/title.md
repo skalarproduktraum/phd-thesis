@@ -11,7 +11,7 @@
         
         \vspace{0.5cm}
         
-        \vspace{1.5cm}
+        \vspace{1.0cm}
  
         A thesis submitted to attain the degree of\\
         \large{\textsc{Doctor rerum naturalium}}\\ 
@@ -23,7 +23,7 @@
         \textbf{Ulrik Günther}
        
        \vspace{0.8cm}    
-        \textit{Diplom-Physiker, Technische Universitaet Dresden}       
+        \textit{Diplom-Physiker, Technische Universit{\"a}t Dresden}       
        
        \vspace{0.8cm}          
         born on 19th May, 1987
@@ -31,9 +31,10 @@
         \vspace{0.5cm}     
         citizen of Germany
         
-         \vspace{2cm}
-         accepted on the recommendation of
-        Names of Your Professors              
+         \vspace{1.5cm}
+         accepted on the recommendation of\\
+         Prof. Dr. sc. techn. Ivo F. Sbalzarini (First advisor)\\
+         Prof. Dr.-Ing. Raimund Dachselt (Fachreferent)
        
 
         

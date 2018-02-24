@@ -6,12 +6,27 @@
 \usepackage{fancyhdr}
 \usepackage{fontspec}
 \usepackage{titlesec}
-\usepackage{palatino}
 \pagestyle{plain}
  
 % Fonts and typesetting
-\newfontfamily{\headingfont}{RobotoSlab}[Extension = .ttf, UprightFont = *-Regular]
+\newfontfamily{\headingfont}[Path=fonts/, 
+    Extension = .ttf, 
+    UprightFont = *-Regular,
+    BoldFont = *-Bold]{RobotoSlab}
 
+\setmonofont[Path=fonts/, 
+    Extension = .otf, 
+    UprightFont = *-Regular,
+    BoldFont = *-Bold, 
+    ItalicFont = *-It, 
+    BoldItalicFont = *-BoldIt]{SourceCodePro}
+
+\setmainfont[Path=fonts/, 
+    Extension = .ttf, 
+    UprightFont = *-Regular, 
+    BoldFont = *-Bold, 
+    ItalicFont = *-Italic, 
+    BoldItalicFont = *-BoldItalic]{EBGaramond}
 
 % Set figure legends and captions to be smaller sized sans serif font
 \usepackage[font={footnotesize,sf}]{caption}
