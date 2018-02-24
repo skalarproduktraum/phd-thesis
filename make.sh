@@ -1,1 +1,6 @@
-pandoc --pdf-engine=xelatex -H preamble.tex -V fontsize=12pt -V documentclass:book -V papersize:a4paper -V classoption:openright -V subparagraph --top-level-division=chapter chapters/title.md chapters/acknowledgements.md chapters/toc.md chapters/introduction.md -o thesis.pdf
+CHAPTERS=`cat chapters.list | sed -e ':a; N; s/\n/ chapters\//; ba'`
+PREAMBLE="tex/preamble.tex"
+
+echo "pandoc'ing $CHAPTERS to thesis.pdf"
+
+pandoc --pdf-engine=xelatex -H $PREAMBLE -V fontsize=12pt -V documentclass:book -V papersize:a4paper -V classoption:openright -V subparagraph --top-level-division=chapter $CHAPTERS -o thesis.pdf
