@@ -1,13 +1,14 @@
 
-title.md
-acknowledgements.md
-toc.md
-introduction.md
-microscopy.md
-xr.md
-eye-tracking.md
-scenery.md
-attentive-tracking.md
-apr-rendering.md
-interactive-ablation.md
-outlook.md
+chapters/title.md
+chapters/acknowledgements.md
+chapters/toc.md
+chapters/introduction.md
+chapters/microscopy.md
+chapters/xr.md
+chapters/eye-tracking.md
+chapters/scenery.md
+chapters/attentive-tracking.md
+chapters/apr-rendering.md
+chapters/interactive-ablation.md
+chapters/outlook.md
+chapters/references.md
