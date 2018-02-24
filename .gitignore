@@ -1,3 +1,11 @@
 thesis.pdf
+thesis.tex
 .*.swp
 *.log
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+*.out
+*.toc
