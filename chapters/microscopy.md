@@ -10,7 +10,18 @@ The confocal microscope was developed in the 1960s by Marvin Minsky, one of the 
 
 ### Image formation
 
+### Shortcomings
+
+Though a very useful instrument, confocal microscopy has a few issues, namely:
+
+* due to the pinhole rejecting light, a lot of the photon yield is discarded. For fast acquisitions, this can lead to images with a very low signal-to-noise ratio.
+* due to scanning the laser over each point to be imaged, the specimen is exposed to high levels of light, often above the biologically tolerated or inconsequential threshold.
+
+In the next section, we will explain lightsheet microscopy, which aims to alleviate these shortcomings.
+
 ## Lightsheet Microscopy
+
+In lightsheet, or similarly, selective plane illumination microscopy{Huisken:2004ky}[^1], the specimen is illuminated by a coherent light source in a 90º angle to the detection plane. The illumination light is focused into a thin sheet of light by means of a cylindrical lens (selective plane illumination microscopy, SPIM), or by scanning a Gaussian laser beam (digitally scanned lightsheet microscope, DSLM). This means that a full-frame 2D image of the specimen can be acquired at once, without point scanning, lowering the required light intensity by a substantial amount. Further, many 2D acquisitions can happen sequentially, enabling the capture of fast biological processes in 3D and 4D, such as the beating of the zebrafish _Danio rerio_'s heart[@Mickoleit:2014bl].
 
 ### Image formation
 
@@ -19,3 +30,5 @@ The confocal microscope was developed in the 1960s by Marvin Minsky, one of the 
 ![\label{fig:spim_data_rate}Comparison of the data produced by a confocal microscope equipped with an EM-CCD camera, a lightsheet microscope with an EM-CCD camera, and a lightsheet microscope with an sCMOS camera in the course of 24 hours. Adapted from [@Reynaud:2015dx].](./figures/spim_data_rate.pdf)
 
 ## Challenges and Opportunities
+
+[^1]: Throughout the remainder of this work, for the sake of brevity, we are going to refer to both lightsheet microscopy and SPIM microscopy simply as "lightsheet microscopy".
