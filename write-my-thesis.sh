@@ -1,7 +1,7 @@
 CHAPTERS=`cat chapters.list | tr '\n' ' chapters/'`
 PREAMBLE="tex/preamble.tex"
 BIBLIOGRAPHY="thesis.bib"
-CSL="csl/nature.csl"
+CSL="csl/pnas.csl"
 
 echo "pandoc'ing $CHAPTERS to thesis.pdf"
 
