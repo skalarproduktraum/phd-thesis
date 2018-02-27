@@ -2,9 +2,12 @@
 
 ## Requirements
 
-* pandoc
-* a working TeX distribution that includes XeLaTeX, e.g. TeXLive
+* [pandoc](https://pandoc.org)
+* pandoc-citeproc
+* a working TeX distribution that includes XeLaTeX and BiBTeX, e.g. TeXLive
 
 ## Building
 
-Run `./make.sh`.
+* Put chapters in wanted order in `chapters.list`, can include both TeX and
+Markdown files.
+* Run `./write-my-thesis.sh`, rest happens magically.
