@@ -1,5 +1,9 @@
 # scenery
 
+_scenery_ is a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, geared towards desktop and small-cluster use. 
+
+To realise the ideas described in the previous chapters, we have chosen to develop our own toolkit, as currently existing libraries were not flexible enough to achieve this. 
+
 ## Design Goals
 
 In designing _scenery_, we tried to adhere to these design goals
@@ -39,15 +43,24 @@ We find that none of the existing software packages satisfy our design goals ful
 
 ## Implementation Challenges
 
+### Language
+
 The first implementation challenge is finding the right language. For the project, we aimed to use a functional language to make it easy to reason about the code. In the Java ecosystem, the contenders therefore were
 
-* _Clojure_, a LISP dialect
+* _Clojure_, a Lisp dialect
 * _Scala_, a functional and object-oriented language developed at _EPFL_
 * _Kotlin_, a functional and object-oriented language developed by the company JetBrains and used in their IntelliJ product line, now also a first-class citizen on the Android operating system.
 
-_Clojure_ unfortunately has a very steep learning curve, with a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)).
+_Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)).
 
 [^kotlinlink]: see [https://kotlinlang.org](https://kotlinlang.org).
+
+### Interfacing with Graphics API on the Java VM
+
+Current versions (8.0+) of the Java Virtual Machine do not provide Java-native bindings to graphics APIs like Direct3D, OpenGL or Vulkan, but 3rd party solutions exist to bridge that gap.  We have chosen two projects for developing the OpenGL and Vulkan backends:
+
+* _JOGL_ ([www.jogamp.org](https://jogamp.org)) provides an object-oriented Java interface to the OpenGL API in all of its current versions. In that, JOGLs interfaces are written in a very idiomatic way, which partially diverge quite far from the original OpenGL C API. They however simplify the use for the developed software, especially in situations where it has to be embedded into an existing GUI application. JOGL is used for the OpenGL backend in scenery.
+* _LWJGL_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL keeps its API very close to the original, and does not try to wrap a normal C API in an object-oriented manner, but leaves that aspect to the user, in case desired. This approach results in more flexibility, though at the cost of higher effort for embedding into existing applications. LWJGL is used to develop the Vulkan backend in scenery.
 
 ## Architecture Details
 
