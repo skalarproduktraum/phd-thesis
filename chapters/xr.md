@@ -42,3 +42,19 @@ Current-generation HMDs are now able to display convincing virtual reality envir
 
 ## Challenges and Opportunities
 
+## Fitness for Purpose
+
+We are interested in how cross reality combined with natural user interfaces can enhance the daily workflows of life scientists (such as biologists, computer scientists working on simulations of biological systems, etc.), and by extension also enable experiments that were not possible before. In this section, we will briefly summarise three particular areas the different modalities of virtual reality, augmented reality, and mixed reality can be beneficial, and where or how they might actually hinder the user.
+
+### Simulation visualisation and debugging
+
+In this case, we envision the user to be using a regular desktop computer to write software and run simulations directly there, or submit them to a remote cluster, returning the simulation results. The simulation results themselves might be abstract data, or might be concerning spatiotemporal relations of objects such as cells. Such objects constitute abstract entities that usually do not have any correspondence with objects experience by the user in daily life. In such settings, a full virtual reality HMD is the best solution, as the setting itself does not usually require interacting with anything, but the simulation results themselves. It is therefore okay to shut out the user from the normal environment, and only show a simulated environment, from which the user can then return at will.
+
+### Microscopy data visualisation
+
+Visualisation might occur both at the time of acquisition (e.g. for checking correct imaging parameters), or later on, at the time of evaluation of the data. Both cases have in common that the user will most probably need to interact with the outside environment to adjust the microscope, or just to take notes. It would therefore be not beneficial to encumber the user inside a fully virtual environment, but rather augment the existing environment with the data that has been acquired. Intuitive interactions, in which the users e.g. sifts through a set of time points of a microscopy dataset much alike to sifting through a pile of papers, would enhance the acceptance of such modalities.
+
+### Microscope development and control
+
+This use case can make use of both augmented and virtual reality settings: While augmented reality would benefit the user at design time of the instrument, e.g. by overlaying rulers, angles, and component descriptions on the optical table, fully shutting out the user from reality at control time can be helpful to interact with data that does not have a daily-life correspondent, just analogue to the first use case we have been looking at.
+
