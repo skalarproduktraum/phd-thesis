@@ -40,7 +40,7 @@ Specifically, we will detail the following contributions:
 The following peer-reviewed papers have been published from parts of this work:
 
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018. _Forget Pixels: Adaptive Particle Representation of Fluorescence Microscopy Images_. (Preprint)
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018. _Forget Pixels: Adaptive Particle Representation of Fluorescence Microscopy Images_. ([bioRxiv preprint](https://www.biorxiv.org/content/early/2018/03/02/263061), under revision at _Nature Communications_)
 
 ### Supervision
 
