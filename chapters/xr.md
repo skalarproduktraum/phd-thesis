@@ -16,15 +16,15 @@ In the case of a mix of both, where there is a direct connection or overlap betw
 
 The first virtual reality "glasses" have been introduced in the 1850's, as so-called _stereoscopes_, looking not unlike contemporary head-mounted displays. In the stereoscopes, the user would insert a postcard that is split in the middle in two parts, showing the subject of the postcard from two slightly different perspectives corresponding the capturing an image with two eyes, as in the human visual system. 
 
-![\label{fig:stereoscope}The stereoscope.](figures/stereoscope.png)
+![\label{fig:stereoscope}The stereoscope.](figures/stereoscope.png){ width=50% }
 
 In the early 1950, the _sensorama_ was introduced, an immersive movie theater\ref{fig:sensorama}, that not only included stereoscopic visuals, but also wind, sound, and even smell.
 
-![\label{fig:sensorama}The sensorama.](figures/sensorama.png)
+![\label{fig:sensorama}The sensorama.](figures/sensorama.png){ width=50% }
 
 With computer graphics still in it's infancy, the first steps towards a head-mounted display mainly for military purposes, were made in 1968 by Ivan Sutherland[@Sutherland:1968im]. Sutherland developed a glasses-based virtual reality system (actually, augmented reality) that consisted of cathode-ray tubes mounted on the users head, with images being directed to the eyes by the means of mirrors. The tracking system for the contraption was suspended from the ceiling, looming over the user, hence the name of the system, _The Sword of Damocles_. _The Sword of Damocles_ could display wireframe models of geometric objects overlaid onto the user's surroundings, and adapted to the viewpoint that had been calculated by the tracking system.
 
-![\label{fig:damocles}The _Sword of Damocles_. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.](figures/sword-of-damocles.png)
+![\label{fig:damocles}The _Sword of Damocles_. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.](figures/sword-of-damocles.png){ width=50% }
 
 Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the aforementioned lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves that would react to virtual objects and the user's grip. One more idea from the lab is the omnidirectional threadmill for exploring virtual worlds, which is nowadays getting new traction for gaming settings. __TODO: Add citations__ Many of these developments have led to the _First Virtual Reality Revolution_, aiming at ubiquity of virtual reality devices and their usage. It was however not successful, due to the high cost of the systems, and ergonomics issues arising both from the size and weight of the systems, and the low frame rates contemporary computers produced when created digital 3-dimensional imagery.
 
