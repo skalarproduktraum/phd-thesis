@@ -44,7 +44,7 @@ Current-generation HMDs are now able to display convincing virtual reality envir
 
 ## Fitness for Purpose
 
-We are interested in how cross reality combined with natural user interfaces can enhance the daily workflows of life scientists (such as biologists, computer scientists working on simulations of biological systems, etc.), and by extension also enable experiments that were not possible before. In this section, we will briefly summarise three particular areas the different modalities of virtual reality, augmented reality, and mixed reality can be beneficial, and where or how they might actually hinder the user.
+We are interested in how cross reality combined with natural user interfaces can enhance the daily workflows of life scientists (such as biologists, computer scientists working on simulations of biological systems, etc.), and by extension also enable experiments that were not possible before. We do not intend to (ab)use cross reality for each and every kind of interaction, so in this section, we will briefly summarise three particular areas the different modalities of virtual reality, augmented reality, and mixed reality can be especially beneficial, and where or how they might actually hinder the user.
 
 ### Simulation visualisation and debugging
 
