@@ -1,3 +1,5 @@
+\part{scenery}
+
 # scenery
 
 _scenery_ is a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, geared towards desktop and small-cluster use. 
