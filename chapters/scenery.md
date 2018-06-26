@@ -83,7 +83,11 @@ Current versions (8.0+) of the Java Virtual Machine do not provide Java-native b
 
 ## Architecture Details
 
-## Capabilities
+## Features
+
+### Mapping between the Virtual Machine and shaders
+
+### Configurable Rendering Pipelines
 
 ### Virtual and Augmented Reality
 
@@ -111,5 +115,5 @@ The inclusion of the keyed mutex information into the `vkQueueSubmit` call in th
 
 ### Clustering
 
-### Interaction Prototyping
+## Designing applications with scenery
 
