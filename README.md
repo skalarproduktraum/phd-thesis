@@ -10,4 +10,4 @@
 
 * Put chapters in wanted order in `chapters.list`, can include both TeX and
 Markdown files.
-* Run `./write-my-thesis.sh`, rest happens magically.
+* Run `make`, rest happens magically.
