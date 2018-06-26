@@ -88,3 +88,4 @@ _Complex cells_ then adding (e.g. _OR_'ing) together the outputs of multiple sim
 _Hypercomplex cells_ then, in turn, wire together multiple complex cells, to additionally provide inhibition if a stimulus exceeds the receptive field — complex cells would continue to fire there.
 
 [^primarynote]: We're going to use this name in the rest of the thesis.
+
