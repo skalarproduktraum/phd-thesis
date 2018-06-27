@@ -1,8 +1,24 @@
 # Visual Processing
 
-## A Short Tour of the Human Visual System
+Visual processing of photons received by the eye's lens, cornea, and ultimately, by the retina and visual cortex, is the basic process enabling cross reality and eye-based natural user interfaces. 
 
-Visual processing of photons received by the eye's lens, cornea, and ultimately, retina is the basic process enabling cross reality and eye-based natural user interfaces. In this chapter, we will give a short tour of the human visual system, including the optical path of photons, and the processing that happens in the retina and downstream in the central nervous system.
+In this chapter, we introduce the movements performed by the human eyes, and then give a short tour of the human visual system, including the optical path of photons, and the processing that happens in the retina and downstream in the central nervous system.
+
+## Eye movements
+
+Following the classifications from [@Duchowski:2017ii] and [@Snowden:2012wu], we can categorise eye movements into these categories:
+
+* _Saccades_ are quick, jumpy voluntary or involuntary movements of the eye to reposition the fovea to a new area of interest. In natural environments, saccades occur with high speeds, and several times per second. Their peak angular velocity can exceed $1000^\circ/\mathrm{s}$, and they last about $10-100\,\mathrm{ms}$. Saccades are _stereotyped_ movements in the sense that they always follow the same pattern of fast initial acceleration, movement with maximum velocity, followed by a rapid slowdown as the eye reaches the target area. The movements are also _ballistic_, meaning they are planned and, once initiated, cannot be stopped, rendering the subject effectively blind for their duration.
+* _Smooth pursuits_ occur when a subject is tracking a moving stimulus, where the eye's angular velocity is matched to the movement of the image of the stimulus on the retina.
+* _Fixations_, _tremors_, and _jitters_ occurs when a subject focuses on a particular object of interest. Counterintuitively, these movements do not completely fix the image on the retina, but jitter around it within about $5^\circ$ of visual angle. If they would not do that, the image would disappear within seconds. \TODO{Does this have to do with receptor bleaching?} This suggests that a different system is involved with fixations than with saccades or pursuits. Fixations last for about $150-600\,\mathrm{ms}$ and humans spend over 90% of viewing time with this kind of eye movement.
+* _Vergence_ movements occur when a subject is moving its attention between near and far objects.
+* (Physiological) _Nystagmus_ is a fast, compensatory movement of both eyes to either follow moving imagery (optokinetic nystagmus, such as when looking out of a train window), or when compensating for fast angular movements of the head (vestibular nystagmus). Both follow the same movement patterns.
+
+In the context of 2-dimensional localisation of gaze directions, fixations, saccades, and smooth pursuits are the most important eye movements. Vergence movements would also be desirable to detect, but considering that even contemporary head-mounted VR displays are using regular, flat screen, with no possibility of actual scene depth, this is not a priority yet. Future displays are going to provide focus queues as well and will change that [@Jang:2017dr; @Sun:2017ia; @Huang:2015ce].
+
+Let's continue this chapter by touring the human visual system, and connecting the aforementioned eye movements with their neurological basis:
+
+## A Short Tour of the Human Visual System
 
 ![\label{fig:eye_diagram}Anatomy of the human eye -- 
 **1**: posterior segment of eyeball **2**: ora serrata **3**: ciliary muscle **4**: ciliary zonules/zonules of Zinn **5**: canal of Schlemm **6**: pupil **7**: anterior chamber **8**: cornea **9**: iris **10**: lens cortex **11**: lens nucleus **12**: ciliary process **13**: conjunctiva **14**: inferior oblique muscle **15**: inferior rectus muscle **16**: medial rectus muscle **17**: retinal arteries and veins **18**: optic disc **19**: dura mater **20**: central retinal artery **21**: central retinal vein **22**: optic nerve **23**: vorticose vein **24**: bulbar sheath **25**: macula **26**: fovea **27**: sclera **28**: choroid **29**: superior rectus muscle **30**: retina, Image (cc) by [Ignacio Icke](https://commons.wikimedia.org/wiki/File:Eye-diagram_no_circles_border.svg)](./figures/eye-diagram.pdf){ width=50% }
@@ -20,7 +36,7 @@ Light enters the anterior chamber (7) of the eye, and travels through the iris (
 Adaption to visible objects happens in two ways:
 
 * the iris size can be modulated, changing the amount of light reaching the retina by a factor of 16[^irisnote].
-* ciliary muscles can modulate the lens thickness; when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects.
+* ciliary muscles can modulate the lens thickness; when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects — these are the aforementioned vergence movements.
 
 [^irisnote]: The iris not only contracts and expands due to light stimuli, but can also be affected by drugs or hormonal changes, e.g. due to excitement.
 
