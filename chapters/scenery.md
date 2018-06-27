@@ -90,7 +90,9 @@ Current versions (8.0+) of the Java Virtual Machine do not provide Java-native b
 
 ### Configurable Rendering Pipelines
 
-### Virtual and Augmented Reality — HoloLens support
+### Head-mounted Virtual Reality Displays
+
+### Augmented Reality — HoloLens support
 
 _scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform. The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
 
@@ -115,4 +117,6 @@ The inclusion of the keyed mutex information into the `vkQueueSubmit` call in th
 ### Clustering
 
 ## Designing applications with scenery
+
+### Define, Make, Learn — Principles of Iterative Design
 
