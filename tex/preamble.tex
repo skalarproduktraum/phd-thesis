@@ -9,6 +9,7 @@
 \pagestyle{plain}
  
 % Fonts and typesetting
+\usepackage[usenames,svgnames]{xcolor}
 \newfontfamily{\headingfont}[Path=fonts/, 
     Extension = .ttf, 
     UprightFont = *-Regular,
@@ -51,7 +52,7 @@
 \makeatother
 
 \titleformat{\chapter}[display]
-  {\huge\headingfont}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+  {\huge\headingfont}{\colorbox{yellow}{\chaptertitlename\ \thechapter}}{20pt}{\Huge}
 \titleformat*{\section}{\LARGE\headingfont}
 \titleformat*{\subsection}{\Large\headingfont}
 
@@ -74,7 +75,7 @@
 %\usepackage[section,subsection]{extraplaceins}
 
 % TODO command
-\newcommand{\TODO}[1]{\textcolor{red}{\textbf{\emph{\underline{TODO:}} #1}}}
+\newcommand{\TODO}[1]{\colorbox{OrangeRed}{\textcolor{White}{\textbf{\emph{TODO:} #1}}}}
 
 
 
