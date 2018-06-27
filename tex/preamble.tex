@@ -30,7 +30,8 @@
     BoldItalicFont = *-BoldItalic]{EBGaramond}
 
 % Set figure legends and captions to be smaller sized sans serif font
-\usepackage[font={footnotesize}]{caption}
+%\usepackage[font={footnotesize}]{caption}
+\usepackage[caption=false]{subfig}
 
 \usepackage{siunitx}
 
@@ -38,9 +39,6 @@
 \usepackage{setspace}
 \onehalfspacing
 \raggedbottom
-
-% Set margins
-\usepackage[top=1.25in,bottom=1.25in]{geometry}
 
 % Chapter styling
 \usepackage[grey]{quotchap}
@@ -60,6 +58,11 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks=true, linkcolor=black}
 
+% letter spacing — workaround needed by tufte-book package
+% Set up the spacing using fontspec features
+\renewcommand\allcapsspacing[1]{{\addfontfeature{LetterSpace=15}#1}}
+\renewcommand\smallcapsspacing[1]{{\addfontfeature{LetterSpace=10}#1}}
+
 % Tables
 \usepackage{booktabs}
 \usepackage{threeparttable}
@@ -67,12 +70,6 @@
 \usepackage{unicode-math}
 \newcolumntype{x}[1]{%
 >{\centering\arraybackslash}m{#1}}%
-
-% Allow for long captions and float captions on opposite page of figures 
-%\usepackage[rightFloats, CaptionBefore]{fltpage}
-
-% Don't let floats cross subsections
-%\usepackage[section,subsection]{extraplaceins}
 
 % TODO command
 \newcommand{\TODO}[1]{\colorbox{OrangeRed}{\textcolor{White}{\textbf{\emph{TODO:} #1}}}}

@@ -42,8 +42,7 @@ Adaption to visible objects happens in two ways:
 
 ## Retinal architecture and processing
 
-![\label{fig:retina_architecture}Inverted retinal architecture of mammals (light path in the image is bottom to top)\
-**RPE**: retinal pigment epithelium; **OS**: outer segment of the photoreceptor cells; **IS**: inner segment of the photoreceptor cells; **ONL**: outer nuclear layer; **OPL**: outer plexiform layer; **INL**: inner nuclear layer **IPL**: inner plexiform layer; **GC**: ganglion cell layer; **P**: pigment epithelium cell; **BM**: Bruch-Membran; **R**: rods; **C**: cones; **H**: horizontal cell; **B**: bipolar cell; **M**: Müller cell; **A**: amacrine cell; **G**: ganglion cell; **AX**: Axon, Image (cc) by [Marc Gabriel Schmid](https://commons.wikimedia.org/wiki/File:Retina_layers.svg)](./figures/retina-architecture.pdf){ width=50% }
+![\label{fig:retina_architecture}Inverted retinal architecture of mammals (light path in the image is bottom to top); **RPE**: retinal pigment epithelium; **OS**: outer segment of the photoreceptor cells; **IS**: inner segment of the photoreceptor cells; **ONL**: outer nuclear layer; **OPL**: outer plexiform layer; **INL**: inner nuclear layer **IPL**: inner plexiform layer; **GC**: ganglion cell layer; **P**: pigment epithelium cell; **BM**: Bruch-Membran; **R**: rods; **C**: cones; **H**: horizontal cell; **B**: bipolar cell; **M**: Müller cell; **A**: amacrine cell; **G**: ganglion cell; **AX**: Axon, Image (cc) by [Marc Gabriel Schmid](https://commons.wikimedia.org/wiki/File:Retina_layers.svg)](./figures/retina-architecture.pdf){ width=50% }
 
 At the retina, the computational processing of incident photons starts in the true sense of the word, so far we've been only concerned with transmission, modulation, and focussing.
 
