@@ -26,7 +26,7 @@ In designing _scenery_, we tried to adhere to these design goals
 
 The following table shows a comparison of _scenery_ with other state-of-the-art software packages in terms of our design goals.
 
-| Software | Type | \rotatebox[origin=c]{90}{Free and open-source} | \rotatebox[origin=c]{90}{Volumes} | \rotatebox[origin=c]{90}{Meshes} | \rotatebox[origin=c]{90}{Clustering} | \rotatebox[origin=c]{90}{VR} | \rotatebox[origin=c]{90}{Extendible} | \rotatebox[origin=c]{90}{Cross-platform} | \rotatebox[origin=c]{90}{OpenGL 4.0+/Vulkan} | \rotatebox[origin=c]{90}{Fiji integration} |
+| Software | Type | \rotatebox[origin=c]{90}{Free/open-source} | \rotatebox[origin=c]{90}{Volumes} | \rotatebox[origin=c]{90}{Meshes} | \rotatebox[origin=c]{90}{Clustering} | \rotatebox[origin=c]{90}{VR} | \rotatebox[origin=c]{90}{Extensible} | \rotatebox[origin=c]{90}{Cross-platform} | \rotatebox[origin=c]{90}{OGL 4.1/D3D12/Vulkan} | \rotatebox[origin=c]{90}{Fiji integration} |
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
 | Amira | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | - | - | - | - |
 | Arivis | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | \textbullet | - | - | - |
@@ -40,6 +40,7 @@ The following table shows a comparison of _scenery_ with other state-of-the-art 
 | Vizard | CAVE software | - | - | \textbullet | \textbullet | \textbullet | \textbullet | - | \textbullet | - |
 | Mechdyne CAVELib | CAVE software | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
 | VTK | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
+| _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
 
 We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build, maintain, and use, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0, and therefore not able to make full use of current GPUs in an efficient manner.
 
