@@ -42,6 +42,20 @@ Current-generation HMDs are now able to display convincing virtual reality envir
 
 ## Challenges and Opportunities
 
+### Simulator Sickness
+
+### Lack of Vergence
+
+Current, commercially-available HMDs do not provide focus cues for the eye. This not only completely precludes the use of vergence for user evaluation or control, but also makes the issue of simulator sickness, described in the section before, worse. 
+
+Research-grade HMDs try to solve this now using light-field rendering [@Wetzstein:2013jo], to provide focus cues for the eye. In [@Huang:2015ce] for example, a three-layered HMDs is described, providing focus cues for foreground, background, and the area in-between. 
+
+Actually giving focus cues to the user would bring detection of the depth the user is looking at one step closer.
+
+### Hygienic Issues
+
+In settings where a head-mounted display is used by many different people, hygienic problems arise. To be comfortable, a HMD needs some cushioning, usually provided by a foamy insert on the HMD, which over time accumulate dirt. One solution to this is to provide washable inserts \TODO{add link or citation}, or produce HMDs that could e.g. clip to a user's already-worn glasses.
+
 ## Fitness for Purpose
 
 We are interested in how cross reality combined with natural user interfaces can enhance the daily workflows of life scientists (such as biologists, computer scientists working on simulations of biological systems, etc.), and by extension also enable experiments that were not possible before. We do not intend to (ab)use cross reality for each and every kind of interaction, so in this section, we will briefly summarise three particular areas the different modalities of virtual reality, augmented reality, and mixed reality can be especially beneficial, and where or how they might actually hinder the user.
