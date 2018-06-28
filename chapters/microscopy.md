@@ -29,7 +29,31 @@ In lightsheet, or similarly, selective plane illumination microscopy[@Huisken:20
 
 ### Data rates
 
-![\label{fig:spim_data_rate}Comparison of the data produced by a confocal microscope equipped with an EM-CCD camera, a lightsheet microscope with an EM-CCD camera, and a lightsheet microscope with an sCMOS camera in the course of 24 hours. Adapted from [@Reynaud:2015dx].](./figures/spim_data_rate.pdf)
+![\label{fig:spim_data_rate}Comparison of the data produced by a confocal microscope equipped with an EM-CCD camera, a lightsheet microscope with an EM-CCD camera, and a lightsheet microscope with an sCMOS camera in the course of 24 hours. Adapted from [@Reynaud:2015dx].](./figures/spim_data_rate.pdf){ width=50% }
+
+Confocal microscopes equipped with EM-CCD cameras produce an image data rate of about $1\,\mathrm{MB/s}$. Surely, lightsheet microscopes are going to be at least in the same area? 
+
+No, they are not. Lightsheet microscopes are usually equipped with state-of-the-art sCMOS[^scmosnote] cameras. These cameras, running at full speed, can easily produce data rates of $1 GB/s$ [@Reynaud:2015dx], filling up a 500GiB SSD drive in less than 10 minutes, and amounting to nearly 90TiB of data _per day_, if running at full speed.
+
+This deluge of data now poses a large problem both for the scientists using the lightsheet microscopes and producing that data, and also for the support staff that has to take care of data storage, compute clusters, and so on. This has led to approaches where microscopy data is acquired and processed in an interleaved way, with e.g. 10 minutes of data acquisition followed by 10 minutes of processing, such as in the case of imaging the zebrafish heart. [@Mickoleit:2014bl].
+
+Furthermore, effective processing of long developmental timelapses, the parade discipline of lightsheet microscopes, is not possible without a cluster. 
+
+The high data rate combined with the high spatiotemporal quality of the data leads to interesting challenges regarding data storage and processing, and instrument interaction for current and future lightsheet microscopes:
+
+[^scmosnote]: sCMOS is a trademark of Fairchild Semiconductor and describes their take on high-resolution complimentary metal-oxide semiconductor (CMOS) active pixel sensors, featuring about 60% quantum efficiency, a low readout noise, and high readout speeds of about 100fps at full frame size, which is usually 4 to 6 megapixels.
 
 ## Challenges and Opportunities
+
+### Taming the data
+
+Data compression alone is not going to solve the data deluge issue posed by lightsheet microscopy: While the compression step requires time, but can nowadays, utilising efficient algorithms and multi-core processors or graphics cards, be made very quick, it also requires a decompression step, again taking time and restoring the data to it's original, unwieldy size. While successful efforts have already been made to democratise the use of lightsheet microscopes [@2016PLoSOneEduSPIM; @Pitrone:2013ki; @Gualda:2013gr], the expensive data processing requiring the use of clusters hinders users from effectively deploying one or multiple lightsheet microscopes. 
+
+To really tame the data, one has to think of an alternative data representation, that could have a compression step, but without necessary decompression — instead, processing should happen on the alternative data representation. 
+
+Such a representation has been developed [@Cheeseman:ia], named the _Adaptive Particle Representation_ (APR). The APR non-uniformly resamples images and stores information only where it actually is, saving a lot of storage space, especially for sparsely populated images, such as from fluorescence microscopes. 
+
+In the chapter _Rendering the APR_ we are going to talk about how to use this representation for fast and efficient rendering of lightsheet microscopy data.
+
+### Smart microscopy requires smart interactions
 
