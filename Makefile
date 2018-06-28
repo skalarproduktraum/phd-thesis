@@ -1,7 +1,7 @@
 PANDOC=pandoc
 CHAPTERS := $(shell cat chapters.list | tr '\n' ' chapters/')
 PREAMBLE=tex/preamble.tex
-BIBLIOGRAPHY=thesis.bib
+BIBLIOGRAPHY=bibliography.bib
 CSL=csl/pnas.csl
 OUTPUTFORMAT=pdf
 
