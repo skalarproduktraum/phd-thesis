@@ -2,23 +2,28 @@
 
 # scenery
 
-_scenery_ is a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, geared towards desktop and small-cluster use. 
+In the chapters before, we have described the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customizable visualisations, and reproducibility. 
 
-To realise the ideas described in the previous chapters, we have chosen to develop our own toolkit, as currently existing libraries were not flexible enough to achieve this. 
+To realise these needs, we have chosen to develop our own visualisation framework, as currently existing libraries were not flexible.
+
+The result of this effort is _scenery_, a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, targeting the Java Virtual Machine (JavaVM). scenery can be used on both desktop machines, as well as clustered setups, such as the ones commonly used for CAVE systems or Powerwalls.
+
+In this chapter, we are going to introduce the framework, outlining the exact design goals and decisions made along the way, compare it to existing frameworks and related works, followed by a high-level description of its components. This chapter is followed by the architecture chapter, going into deeper details for each of scenery's building blocks.
+
 
 ## Design Goals
 
-In designing _scenery_, we tried to adhere to these design goals
+In designing _scenery_, we set these design goals
 
-* __Free and open source software__ —  the resulting package should be open-source such that the users, such as scientists, can dive into the code and see both what a particular algorithm is doing and/or modify it to their needs
+* __Free and open source software__ —  the resulting framework should be open-source such that the users, such as scientists, can dive into the code and see both what a particular algorithm is doing and/or modify it to their needs.
 * __Volume rendering__ — fluorescence microscopy produces volumetric data, so the software package has to support both single-timepoint 3D volumetric images (as are also created in CT or MRI scans), and time series of 3D images, such as developmental time lapse images.
-* __Mesh rendering__ — segmentation results or simulation results are also often produced in a mesh format, so the software also has to support these.
-* __Clustering__ — the software should be able to run on multiple machines in parallel, which share the rendering workload, e.g. for rendering to Powerwall systems or CAVE systems[@CruzNeira:1992vt].
-* __VR__ — the software has to support virtual reality rendering modalities, such as HMDs.
-* __Extensible__ — the software has to be easily extensible, such that it can be adapted to current and future needs easily.
+* __Mesh rendering__ — segmentation results or simulation results are also often produced in a mesh format, so the software also has to support these. Furthermore, localisation microscopy produces collocation points, which can also be interpreted as vertices and rendered as such.
+* __Clustering__ — the software should be able to run on multiple machines which share the rendering workload, and syncronise scene content, e.g. for running on Powerwall systems \TODO{cite Powerwall paper} or CAVE systems[@CruzNeira:1992vt].
+* __Cross Reality__ — the software has to support both virtual and augmented reality rendering modalities, such as HMDs.
+* __Extensible__ — the software has to be easily extensible, such that it can be adapted to current and future needs easily, both from hardware and software side.
 * __Cross-platform__ — Windows, macOS and Linux are the most commonly encountered operating systems today. When surveying the fields of biology, computer science, physics and math, they are encountered in different distributions, to the software has to support all of them, preferably with minimal adjustments required.
-* __OpenGL 4.0+/Vulkan support__ — To harness the power of current GPUs, the software should support state-of-the-art rendering APIs like Vulkan and/or OpenGL 4.0+ [^openglnote].
-* __Fiji integration__ — Fiji[@Schindelin:2012ir] is a free and open-source image analysis software package used by thousands of biologists world-wide. To facilitate easy adoption and present the user with a familiar ecosystem, the software has to integrate with this particular ecosystem easily. For that, the software has either to be written to target the Java Runtime Environment, or be able to be called from that.
+* __Vulkan/OpenGL support__ — To harness the power of current GPUs, the software should support state-of-the-art rendering APIs Vulkan, and also provide a fallback to  OpenGL 4.0+ in case Vulkan is not supported on the platform. [^openglnote].
+* __JavaVM/Fiji integration__ — Fiji[@Schindelin:2012ir] is a free and open-source image analysis software package running on the JavaVM, and used by thousands of biologists world-wide. To enable easy adoption and present the user with a familiar ecosystem, the software has to integrate with this particular ecosystem easily. For that, the software has either to be written to target the Java Runtime Environment, or be able to be called from that.
 
 [^openglnote]: A higher OpenGL version than 4.1 would also be desirable, but macOS only supports up to 4.1, unfortunately.
 
@@ -42,81 +47,74 @@ The following table shows a comparison of _scenery_ with other state-of-the-art 
 | VTK | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
 | _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
 
-We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build, maintain, and use, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0, and therefore not able to make full use of current GPUs in an efficient manner.
+We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build and maintain the code interfacing VTK's native parts with Java, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0\cite{IEEE OpenGL2.0 VTK paper}, and therefore not able to make full use of current GPUs.
 
 ## Implementation Challenges
 
 ### Language
 
-The first implementation challenge is finding the right language. For the project, we aim for interoperability with the ImageJ ecosystem, and wanted to use a functional language to make it easy to reason about the code. In the Java ecosystem, the contenders therefore were
+The first implementation challenge is finding the right language. The obvious choice for graphics applications would be C/C++, or newer/safer alternatives, such as Rust. As we have just mentioned, one of our goals is tight integration with the ImageJ ecosystem, targeting the JavaVM. While the JavaVM itself does not have the reputation of being a harbour for high-performance applications, usually resorting to C/C++, it offers a less steep learning curve for new users, and extremely well-designed abstractions between the different platforms we are targeting, making platform-specific code (mostly) unnecessary. We additionally view our framework as an interesting experiment on how to bring high-performance graphics to the JavaVM -- a task that should now not be as difficult as before anymore, owed to pipelined graphics/compute APIs such as OpenCL, CUDA or Vulkan. 
 
-* _Clojure_, a Lisp dialect
-* _Scala_, a functional and object-oriented language developed at _EPFL_
-* _Kotlin_, a functional and object-oriented language developed by the company JetBrains and used in their IntelliJ product line, now also a first-class citizen on the Android operating system.
+As said before, we aim for excellent interoperability with the ImageJ ecosystem, yet wanted to use a functional language to make it easy to reason about the code, and prevent the amounts of boilerplate code usually necessary in pure-Java projects. Within the realm of JavaVM-based languages, the contenders[^contendernote] therefore were
 
-_Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)).
+* _Clojure_, a Lisp dialect,
+* _Scala_, a functional and object-oriented language developed at _EPFL_,
+* _Kotlin_, a language using both functional and object-oriented paradigms by the company JetBrains.
 
-In addition to targeting the JVM, _Kotlin_ also offers support for JavaScript and actual native code as target, making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
+_Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)). Since 2017, Kotlin is also a first-class citizen on the Android platform, which has since significantly boosted its popularity.
+
+Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target, making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
 
 [^kotlinlink]: see [https://kotlinlang.org](https://kotlinlang.org).
+[^contendernote]: As of early 2016, when the project was started. Since then, other languages, such as Ceylon, have matured a lot, and would probably now be considered as well.
 
 ### Graphics APIs
 
-While OpenGL has been developed and extended over the years, Vulkan was only introduced by the Khronos Group in 2016, and provides much deeper, _close-to-metal_ access to GPUs than OpenGL does. The main differences are:
+OpenGL is a graphics API originally developed by Silicon Graphics (SGI) in the early 1990's for their graphics workstations. Originally intended for CAD/CAM applications, OpenGL soon became the go-to API for developing cross-platform graphics applications and games.
 
-* More verbose code, with less checks done by the driver, leading to more clarity about what is done, and how.
+Since the early days of OpenGL, and also after further development had been handed over to the Khronos Group, OpenGL's development model has been based around the definition of a standard, augmented by extensions approved by the Khronos Group's Architecture Review Board (ARB). New versions of the standard were then essentially made out of sets of mandatory ARB extensions a GPU would have to support to be declared compatible with OpenGL x.y.
+
+Shader-based rendering has been introduced into OpenGL fully with OpenGL 2.1, with further extensions made with 3.3 and 4.1. What has not changed since the beginning though, is the basic programming model, where the programmer would modify a global state, and render objects either directly (in the ancient days of OpenGL 1.x), or with the help of vertex buffer objects (VBOs).
+
+Unfortunately, this programming model does not map well to current-generation GPUs, which have become massively parallel computing machines, sporting 4000 individual cores and more. They do not have the flexibility of regular CPUs, but eclipse them easily in floating-point compute power.
+
+In 2016, the Khronos Group has published a new graphics API named Vulkan, aiming at alleviating the issues with OpenGL, essentially starting with a clean slate. Vulkan provides a much deeper, _close-to-metal_ access to the GPU than OpenGL does, further differences are:
+
+* More verbose code, with less checks done by the driver, leading to more clarity about what is done, and how. This however necessitates the developer taking greater care, as the specification clearly states that the driver is allowed to crash an application in case it is behaving out-of-spec.
 * Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration with every frame.
-* Resources, such as textures and buffers, have to be allocated and managed on a much more fine-grained level than with OpenGL.
+* Resources, such as textures and buffers, and their descriptors, have to be allocated and managed on a much more fine-grained level than with OpenGL.
 * (Homogeneous) Multi-GPU support (since Vulkan 1.1).
-* Conformance Test Suites (CTS) for the graphics drivers.
-* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with large introspection possibilities.
+* A Conformance Test Suite (CTS) for the graphics drivers, ensuring that a Vulkan-based application behaves the same on all drivers.
+* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with large introspection possibilities, e.g. via the tool/library _spirv-cross_.
 
 From this list it is clear that with great power comes great responsibility — and that the OpenGL and Vulkan APIs do not map very well to each other. 
 
-For this reason, _scenery_ has been written with flexibility regarding the rendering backend in mind: It should be easy for the developer to replace one of the existing rendering backends with an entirely new one. _scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. As the contract between the core library and the rendering part is quite thin, it is very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Cycles_ or _OptiX_ being a possibility.
+For this reason, _scenery_ has been written with flexibility regarding the rendering backend in mind: It should be easy for the developer to replace one of the existing rendering backends with an entirely new one. 
+
+_scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. As the contract between the core library and the rendering part is quite thin, it is very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Cycles_ or _OptiX_ being a possibility.
 
 ### Interfacing with Graphics API on the Java VM
 
 Current versions (8.0+) of the Java Virtual Machine do not provide Java-native bindings to graphics APIs like Direct3D, OpenGL or Vulkan, but 3rd party libraries exist to bridge that gap.  We have chosen two projects for developing the OpenGL and Vulkan backends:
 
 * _JOGL_ ([www.jogamp.org](https://jogamp.org)) provides an object-oriented Java interface to the OpenGL API in all of its current versions. In that, JOGLs interfaces are written in a very idiomatic way, which partially diverge quite far from the original OpenGL C API. They however simplify the use for the developed software, especially in situations where it has to be embedded into an existing GUI application. JOGL is used for the OpenGL backend in scenery.
-* _LWJGL_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL keeps its API very close to the original, and does not try to wrap a normal C API in an object-oriented manner, but leaves that aspect to the user, in case desired. This approach results in more flexibility, though at the cost of higher effort for embedding into existing applications. LWJGL is used to develop the Vulkan backend in scenery.
+* _LWJGL3_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL3 keeps its API very close to the original, and does not try to wrap a normal C API in an object-oriented manner, but leaves that aspect to the developer, in case desired. This approach results in more flexibility, though at the cost of higher effort for embedding into existing applications. LWJGL3 is used to develop the Vulkan backend in scenery. Memory management for Vulkan-related structures is mostly manual, but off-heap[^offheapnote], such that management of that memory is up to the developer.
 
-## Architecture Details
+[^offheapnote]: Off-heap memory is memory that is not being managed by the JavaVM. In the case of LWJGL3, on Windows `malloc()` is used for allocations, while on Linux and macOS, the high-performance memory allocator _jemalloc_ (jemalloc.net](http://jemalloc.net)) is used. Both allocators provide a better alternative to using Java's Direct Byte Buffers that incur a large performance penalty over raw `malloc()` calls, and are also a sparse resource, available only in a size determined at program startup. In LWJGL3, a thread-local memory stack is provided in addition, enabling high-speed temporary allocations. For details about memory allocation strategies in LWJGL3, see [blog.lwjgl.org/memory-management-in-lwjgl-3/](https://blog.lwjgl.org/memory-management-in-lwjgl-3/).
 
-## Features
+## Component overview
 
-### Mapping between the Virtual Machine and shaders
+From a birds-eye perspective, the scenery framework consists of six main components:
 
-### Configurable Rendering Pipelines
+* the _Scene_, representing all the content that needs to be shown on screen as directed, acyclic graph (scenegraph),
+* the _Renderer_, taking care of the visual representation of the scene's contents,
+* the _Input Handler_, for responding to input events triggered by the user,
+* the _External Hardware Handlers_, for handling e.g. head-mounted displays or tracking systems,
+* the _Hub_, tying all these systems together, and allowing each system to query information about each other's state, and
+* the _Settings_, an instance-local database of default and user-defined settings that might also change during runtime.
 
-### Head-mounted Virtual Reality Displays
+The construction and interplay of all these subsystems is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
 
-### Augmented Reality — HoloLens support
 
-_scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform. The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
-
-To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a kind of proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ publish-subscribe socket, as is receiving of per-frame pose data.
-
-The Hololens remoting applications are usually fed by data rendered with Direct3D, which lets us immediately recognise the problem that _scenery_ can only render via OpenGL and Vulkan at the present moment. Fortunately, a shared memory extension for Vulkan, `NV_external_memory`, exists in the standard that enables `zero-copy` sharing of buffer data between different graphics APIs, by using a keyed mutex. Programmatically, this is done as:
-
-1. Allocate a Direct3D shared handle texture with flag `D3D11_RESOURCE_MISC_SHARED_KEYEDMUTEX` on the side of the client application. This application will serve as the final render target.[^sharedperfnote]
-2. On the host (_scenery_) side, verify that the device supports this type of Direct3D texture for importing.
-3. Create a Vulkan image, with memory bound to the shared handle.
-4. Request access to the image via the keyed mutex, and store image data in it, e.g. via `vkCmdBlitImage`. Keyed mutex handling is done by the extension itself, via extra information attached to the appropriate `vkQueueSubmit` call.
-
-The inclusion of the keyed mutex information into the `vkQueueSubmit` call in the last step has the benefit that no additional network communication via ZeroMQ is necessary to indicate by which part of the software the shared texture is used at the moment, leading to increased performance.
-
-[^remotingnote]: The exact details of how this works are not published, but apparently work by streaming the image data for both eyes over the network, compressed with H264.
-[^sharedperfnote]: In a production application, multiple image buffers should be allocated and used in a double/triple-buffering manner for read/write access to prevent the GPU stalling.
-
-### Eye Tracking
-
-### Real-Time Rendering
-
-### Clustering
-
-## Designing applications with scenery
-
-### Define, Make, Learn — Principles of Iterative Design
+In the next chapter, _design & architecture_, we are going into sharp detail about each of the subsystems.
 
