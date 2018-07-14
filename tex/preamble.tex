@@ -49,8 +49,12 @@
 }
 \makeatother
 
+\newcommand{\yellowbox}[1]{\colorbox{yellow}{#1}}
 \titleformat{\chapter}[display]
-  {\huge\headingfont}{\colorbox{yellow}{\chaptertitlename\ \thechapter}}{20pt}{\Huge}
+  {\LARGE\headingfont}
+  {\chaptertitlename\ \thechapter}
+  {0pt}
+  {\Huge\yellowbox}
 \titleformat*{\section}{\LARGE\headingfont}
 \titleformat*{\subsection}{\Large\headingfont}
 
