@@ -150,13 +150,13 @@ Let's note here that the Vulkan renderer does not perform explicit scene initial
 
 [^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
 
-<div class="figure-on-margin">
-~~~mermaid
+::: figure-on-margin
+~~~ {.mermaid format=svg width=100% loc=tmp}
 sequenceDiagram
     Alice->>John: Hello John, how are you?
     John-->>Alice: Great!
 ~~~
-</div>
+:::
 
 
 ### Generic Rendering workflow

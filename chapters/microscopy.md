@@ -33,7 +33,7 @@ In lightsheet, or similarly, selective plane illumination microscopy[@Huisken:20
 
 Confocal microscopes equipped with EM-CCD cameras produce an image data rate of about $1\,\mathrm{MB/s}$. Surely, lightsheet microscopes are going to be at least in the same area? 
 
-No, they are not. Lightsheet microscopes are usually equipped with state-of-the-art sCMOS[^scmosnote] cameras. These cameras, running at full speed, can easily produce data rates of $1 GB/s$ [@Reynaud:2015dx], filling up a 500GiB SSD drive in less than 10 minutes, and amounting to nearly 90TiB of data _per day_, if running at full speed.
+No, they are not. Lightsheet microscopes are usually equipped with state-of-the-art sCMOS[^scmosnote] cameras. These cameras, running at full speed, can easily produce data rates of $1 GB/s$ [@Reynaud:2015dx][^datarateimg], filling up a 500GiB SSD drive in less than 10 minutes, and amounting to nearly 90TiB of data _per day_, if running at full speed.
 
 This deluge of data now poses a large problem both for the scientists using the lightsheet microscopes and producing that data, and also for the support staff that has to take care of data storage, compute clusters, and so on. This has led to approaches where microscopy data is acquired and processed in an interleaved way, with e.g. 10 minutes of data acquisition followed by 10 minutes of processing, such as in the case of imaging the zebrafish heart. [@Mickoleit:2014bl].
 

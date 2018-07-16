@@ -14,7 +14,7 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY)
 		--metadata link-citations=true --pdf-engine=xelatex -H $(PREAMBLE) \
 		-V fontsize=12pt -V documentclass:tufte-book -V papersize:a4 -V classoption:openright \
 		-V subparagraph --top-level-division=chapter \
-		$(CHAPTERS) metadata.yaml -s -o $@
+		metadata.yaml $(CHAPTERS) -s -o $@
 
 clean:
 	rm thesis.$(OUTPUTFORMAT)
