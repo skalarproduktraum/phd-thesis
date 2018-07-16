@@ -158,8 +158,106 @@ sequenceDiagram
 ~~~
 :::
 
+### Uniform Buffer Serialisation and Updates
+
+UBOs are tentatively updated with each frame before the main rendering loop, guaranteeing that a `Node` that has been added to the scene graph will have it's transformations and properties ready at render time. 
+
+Serialisation of a `Node`'s transformations and properties are handled by the class `UBO`. In that class, member variables of the UBO are stored as a `LinkedHashMap` of a string (for the property name), and a lambda of type `() -> Any` for the value of the property. This mechanism enables determining values of properties that change during runtime, without rewriting the contents of the map. Order in the struct does matter, which is why a linked map is being used. The actual order of the properties is determined via shader introspection. For common data types (floats, doubles, integers, shorts, booleans, vectors, and matrices), `UBO` will determine the necessary size and offset of a certain property, and write the contents of the property to a `ByteBuffer`, according to OpenGL's `std140` buffer rules.
+
+After an `UBO` has been serialised for the first time, a hash is calculated from it's current members. Upon revisiting this `UBO`, the previous member hash is compared with the current one, to determine whether re-serialisation is necessary or not.
+
+### Push Mode
+
+Push Mode is a rendering optimisation especially for viewer-type applications, where continuous scene changes are not expected. In push mode, the renderer will keep track of updated UBOs and modified scene contents, and only render a frame in the following cases:
+
+* an UBO has been updated
+* an object has been added or removed from the currently visible objects
+* an object that is visible has changed it's properties (e.g. uses a different material or texture now)
+
+Buffer swaps may however still take place, so that special care is taken to update all swapchain images before stopping to actively render. This mechanism is implemented using a `CountDownLatch` that starts with the number of swapchain images, and is counted down by one for each render loop pass. When the latch reaches zero, rendering is discontinued until the next update happens.
+
+The push mode mechanism also guarantees that all updates to the scene's content are obeyed, as it is not tied to e.g. input events, but the actual updates of scene contents or UBOs.
+
+### Configurable Rendering Pipelines
+
+scenery provides configurable rendering pipelines which can contain multiple passes over the scene's geometry, or postprocessing (fullscreen) passes. The renderpasses are read from a YAML file, that looks e.g. like the following one for forward shading with HDR postprocessing:
+
+```yaml
+name: Forward Shading
+description: Forward Shading Pipeline, with HDR postprocessing
+
+rendertargets:
+  HDR:
+    size: 1.0, 1.0
+    attachments:
+      HDRBuffer: RGBA_Float32
+      ZBuffer: Depth32
+
+renderpasses:
+  Scene:
+    type: geometry
+    shaders:
+      - "Default.vert.spv"
+      - "Default.frag.spv"
+    output: HDR
+  PostprocessHDR:
+    type: quad
+    shaders:
+      - "FullscreenQuad.vert.spv"
+      - "HDR.frag.spv"
+    inputs:
+      - HDR
+    output: Viewport
+    parameters:
+      Gamma: 1.7
+      Exposure: 1.5
+```
+
+In the render config file, both _rendertargets_ and _renderpasses_ are defined. A _rendertarget_ consists of a framebuffer name, a framebuffer size, and a set of attachments of the framebuffer that can have different data types. A _renderpass_ consists of a pass name, a type -- geometry or quad (for postprocessing) --, a set of default shaders, and defined _inputs_ and _outputs_. The renderpass may also define a set of _shader parameters_, which are handed over to the shader via the `UBO` mechanism, and supports all the data types supported by `UBO`.
+
+The definition must contain one renderpass that outputs to Viewport, otherwise nothing will be rendered.
+
+From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple:
+
+~~~ {.mermaid format=png width=100%}
+graph LR
+    A(Scene contents) -.-> B[Scene]
+    B --> C[PostprocessHDR]
+    C -.-> D(Viewport)
+~~~
+
+If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
+
+Render configs are switchable during runtime and will cause the renderer to destroy and recreate its rendering framebuffers. This mechanims is e.g. used to switch between mono and stereo rendering during runtime.
 
 ### Generic Rendering workflow
+
+In scenery, scene object discovery (determining which objects are to be rendered), and updating the UBO's contents are done in parallel using Kotlin's coroutines.
+
+The main rendering loop will proceed after the visible objects have been determined:
+
+~~~ {.mermaid format=png width=100% caption="Rendering timeline\label{fig:rendertimeline}"}
+gantt
+    title Rendering Timeline
+    dateFormat  YYYY-MM-DD
+    section Rendering
+    Async object discovery           :a1, 2018-03-14, 2d
+    
+    Render loop						:after a1, 3d
+    section UBO
+    UBO updates      :2018-03-14, 36h
+~~~
+
+The main loop then proceeds as follows:
+
+1. Loop through the flow of renderpasses, except Viewport pass:
+	1. determine the kind of pass 	
+	2. bind framebuffers for output
+	3. blit contents of inputs into output framebuffer (if configured)
+	4. set pass configuration and blending options
+	5. iterate through scene objects (if scene pass or light pass) or draw fullscreen quad (if quad/postprocessing pass), and bind UBOs and buffers for each object as necessary
+2. Run the viewport pass in the same way as (5), but siphon out data for third-party consumers (video recording, screenshots,...) if necessary
+3. Swap buffers.
 
 ### Shader Introspection
 
@@ -178,9 +276,7 @@ spirvcrossj enables...
 
 
 
-### Configurable Rendering Pipelines
 
-With YAML files, we can ...
 
 
 
@@ -209,19 +305,21 @@ HMD support is provided by SteamVR...
 
 _scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform. The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
 
-To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a kind of proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ publish-subscribe socket, as is receiving of per-frame pose data.
+To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a kind of proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ request-reply socket, while receiving of per-frame pose data is handled with an additional, publish-subscribe socket due to better latency.
 
-The Hololens remoting applications are usually fed by data rendered with Direct3D, which lets us immediately recognise the problem that _scenery_ can only render via OpenGL and Vulkan at the present moment. Fortunately, a shared memory extension for Vulkan, `NV_external_memory`, exists in the standard that enables `zero-copy` sharing of buffer data between different graphics APIs, by using a keyed mutex. Programmatically, this is done as:
+The Hololens remoting applications are usually fed by data rendered with Direct3D, which lets us immediately recognise the problem that _scenery_ can only render via OpenGL and Vulkan at the present moment. 
 
-1. Allocate a Direct3D shared handle texture with flag `D3D11_RESOURCE_MISC_SHARED_KEYEDMUTEX` on the side of the client application. This application will serve as the final render target.[^sharedperfnote]
-2. On the host (_scenery_) side, verify that the device supports this type of Direct3D texture for importing.
-3. Create a Vulkan image, with memory bound to the shared handle.
-4. Request access to the image via the keyed mutex, and store image data in it, e.g. via `vkCmdBlitImage`. Keyed mutex handling is done by the extension itself, via extra information attached to the appropriate `vkQueueSubmit` call.
+Fortunately, a shared memory extension for Vulkan, `NV_external_memory`, exists in the standard that enables _zero-copy_ sharing of buffer data between different graphics APIs, by using a keyed mutex. Programmatically, this is done as:
+
+1. On the host (_scenery_) side, verify that the device supports this type of Direct3D texture for importing.
+2. For each swapchain image, allocate a Direct3D shared handle texture with flag `D3D11_RESOURCE_MISC_SHARED_KEYEDMUTEX` on the side of the client application. This image will serve as the final render target to be sent to the Hololens[^sharedperfnote].
+3. For each shared handle, create a Vulkan image, with memory bound to the shared handle.
+4. Request access to the image via the keyed mutex, and store image data in it, e.g. via `vkCmdBlitImage`. Keyed mutex handling is done by the extension itself, via extra information attached to the appropriate `vkQueueSubmit` call. The command buffer for the blit operation needs to be recorded only once and can be reused as long the resolution does not change.
 
 The inclusion of the keyed mutex information into the `vkQueueSubmit` call in the last step has the benefit that no additional network communication via ZeroMQ is necessary to indicate by which part of the software the shared texture is used at the moment, leading to increased performance.
 
 [^remotingnote]: The exact details of how this works are not published, but apparently work by streaming the image data for both eyes over the network, compressed with H264.
-[^sharedperfnote]: In a production application, multiple image buffers should be allocated and used in a double/triple-buffering manner for read/write access to prevent the GPU stalling.
+[^sharedperfnote]: We allocate multiple image buffers and use them in a double/triple-buffering manner for read/write access to prevent the GPU stalling.
 
 ## External Hardware -- Eye Tracking
 
