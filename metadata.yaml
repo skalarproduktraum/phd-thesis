@@ -1,0 +1,4 @@
+---
+pandoc-latex-environment:
+  marginfigure: [figure-on-margin]
+---
