@@ -73,7 +73,7 @@ While OpenGL has been developed and extended over the years, Vulkan was only int
 
 From this list it is clear that with great power comes great responsibility — and that the OpenGL and Vulkan APIs do not map very well to each other. 
 
-For this reason, _scenery_ has been written with flexibility regarding the rendering backend in mind: It should be easy for the developer to replace one of the existing rendering backends with an entirely new one. _scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. As the contract between the core library and the rendering part is quite thin, it is very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Cycles_ or _OptiX_ being a possibility.
+For this reason, _scenery_ has been written with flexibility regarding the rendering backend in mind: It should be easy for the developer to replace one of the existing rendering backends with an entirely new one. _scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. As the contract between the core library and the rendering part is quite thin, it is very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Embree_[@Wald:2014db], _OSPray_[@Wald:2017ee] or _OptiX_[@Parker:2013hxa] being a possibility.
 
 ### Interfacing with Graphics API on the Java VM
 
