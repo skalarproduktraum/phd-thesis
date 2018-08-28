@@ -36,9 +36,16 @@ The currently ongoing _Second Virtual Reality Revolution_ (with the same goals a
 
 After showing several prototypes of head-mounted displays, Palmer Luckey, a former employee of the _Mixed Reality Lab_, produced the _Oculus Rift_, a translational and rotational tracking HMD complete with tracking system, based on full-HD smartphone displays. Soon after the _Rift_, other manufacturers presented similar devices, such as HTC's _Vive_, Sony's _Playstation VR_, Samsung's _GearVR_, or the set of Microsoft's _Windows Mixed Reality_ glasses (which are actually misnamed, as they are virtual reality glasses, not mixed reality).
 
-On the side of augmented reality, Microsoft is at the moment selling the developer kit of the _HoloLens_, an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The _HoloLens_ features _inside-out tracking_, where no external tracking hardware is needed, apart from the HMD itself.
+On the side of augmented reality, Microsoft is at the moment selling the developer kit of the _HoloLens_, an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The _HoloLens_ features _inside-out tracking_, where no external tracking hardware is needed, apart from the HMD itself. On the software side, the HoloLens supports rendering directly on the device via Direct3D11, or via low-latency remote rendering (named Holographic Remoting) on a separate computer, and streamed image transfer, with the images encoded as H264 video stream, and corrected by the HoloLens on-the-fly with affine transformations for rotations and translations, to compensate for network latency.
 
-Current-generation HMDs are now able to display convincing virtual reality environments to the user, if a potent-enough computer and GPU are used to produce the images. Compared to the _First VR Revolution_, performance of the rendering computers has increased tremendously, the form factors and weights of the HMDs have gotten to usable and halfway ergonomic dimensions, and cost has reduced substantially, such that a virtual reality-capable computer system, including the HMD, can now be bought for about €1500.
+Another now-available AR headset is the _Magic Leap One_, featuring advanced optics, with three planes of focus, and a dedicated processing unit (dubbed _light pack_) featuring 8 GiB RAM and an ARM-architecture Nvidia Tegra X2 with an integrated Pascal-generation GPU with 256 CUDA cores, tentatively providing more compute power than the HoloLens. Also on contrast to the HoloLens that runs Windows 10, the Magic Leap One runs a custom Linux distribution named Lumin OS. 
+
+Both the HoloLens and the Magic Leap One provide a glimpse of what will be possible, comfortable, and easy with mixed reality devices at some point, but both still suffer from a lack of resolution, field-of-view, and computational power, which, at least for the HoloLens, can be circumvented by using Holographic Remoting.
+
+In contrast, current-generation HMDs are able to display convincing virtual reality environments to the user, with a high frame rate, and a large field of view, given a potent-enough CPU and GPU are used to produce the images. Compared to the _First VR Revolution_, performance of the rendering computers, and even more importantly, the tracking systems, has increased tremendously, the form factors and weights of the HMDs have gotten to usable and halfway ergonomic dimensions, and cost has reduced substantially, such that a virtual reality-capable computer system, including the HMD, can now be bought for about €1500.
+
+\TODO{Add more academic VR/AR examples}
+
 
 ## Challenges and Opportunities
 
