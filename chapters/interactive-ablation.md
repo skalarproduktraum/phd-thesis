@@ -13,8 +13,8 @@ For the interaction of light with biological tissue, five different regimes, bas
 | Photochemical interaction | $10^{-3}\,-\,10$ | $10+$ |
 | Thermal interaction | $10\,-\,10^6$ | $10^{-5}\,-\,10$ |
 | Photoablation | $10^6\,-\,10^{10}$ | $10^{-9}\,-\,10^{-6}$ |
-| _Plasma-induced ablation_ | $10^{10}\,-\,10^{14}$ | $10^{-13}$\,-\,$10^{-10}$ |
-| Photodisruption | $10^{11}\,-\,10^{16}$ | $10^{-12}$\,-\,$10^{-8}$ |
+| _Plasma-induced ablation_ | $10^{10}\,-\,10^{14}$ | $10^{-13}\,-\,10^{-10}$ |
+| Photodisruption | $10^{11}\,-\,10^{16}$ | $10^{-12}\,-\,10^{-8}$ |
 
 For microsurgery on the cellular level, we are interested in the _plasma-induced ablation_ regime, highlighted in the table. This regime provides ablation of the target area by _optical breakdown_, confined to the focal point of the laser, with no damage around that area, and no shock-wave generation or cavitation, as observed in the _photodisruption_ regime marked by even higher power densities.
 
