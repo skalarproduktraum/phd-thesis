@@ -32,11 +32,11 @@ The hub is the communication backbone of scenery. All of the subsystems register
 
 Hubs can be queried by `Hub.get(e: SceneryElement)`. This routine will return the `SceneryElement` is has been asked for, or `null` if it does not exist.
 
-A new `SceneryElement` may be added to a hub via `Hub.add(e: SceneryElement, obj: Any)`.
+A `SceneryElement` can be a renderer, OpenCL compute context, statistics collector, node publishers or subscribers, settings storage, and regular or natural input devices. A new `SceneryElement` may be added to a hub via `Hub.add(e: SceneryElement, obj: Any)`.
 
 ## Input Handling
 
-Input handling is done using using Tobias Pietzsch's _ui-behaviour_ library \TODO{Cite!}. This library provides an distinction of input events into `InputTriggers` and `Behaviours`. An `InputTrigger` is the causal event, such as a key press, or a mouse movement/scroll/click. A `Behaviour` is the triggered action. By default, ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from within JOGL, GLFW, or JavaFX. Further, custom mappings are available for buttons of hand-held controller devices, or VRPN devices.
+Input handling is done using using Tobias Pietzsch's _ui-behaviour_ library \TODO{Cite!}. This library provides an distinction of input events into `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement/scroll/click. A `Behaviour` is the triggered action. By default, ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from within JOGL, GLFW, or JavaFX. Further, custom mappings are available for buttons of hand-held controller devices, or VRPN devices.
 
 Spatial input, such as HMD positioning and rotations, are handled by the specific implementation of a `TriggerInput`, such as an `OpenVRHMD`, or a `VRPNTracker`. Multiple of these inputs can coexist peacefully, and will not interfere with each other, but rather augment.
 
@@ -76,15 +76,15 @@ Basically, a renderer needs to be able to render something, take screenshots, re
 
 A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run syncronous with scenery's main loop.
 
-A renderer may store its own metadata related to a `Node` in its `metadata` field. This field must be cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers running in parallel do not interfere with each other's `metadata`.
+A renderer may store its own metadata related to a `Node` in its `metadata` field. This field is cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers, which could be running in parallel, do not interfere with each other's `metadata`.
 
-At the time of writing, scenery includes an OpenGL renderer, and a Vulkan renderer.
+At the time of writing, scenery includes a high-performance Vulkan renderer, used by default on Windows and Linux, and an OpenGL renderer, used on macOS.
 
 ### Windowing Systems
 
 On the JavaVM, the main options for drawing (to) windows and related elements are AWT, Swing, and JavaFX. Rendering to AWT and Swing is only supported by the OpenGL renderer, while both renderers support JavaFX. The Vulkan renderer by default uses GLFW to create and interact with windows, GLFW however is not compatible with AWT or Swing, because both have very similar ideas about how event handling should be done in which thread, therefore clashing about it, and leading to software instability.
 
-JavaFX is now the predominant mode for building scenery-based applications. However, in OpenGL, buffer copies from the current framebuffer to a JavaFX texture are necessary and incur a performance penalty. With Vulkan, this problem does not exist, as Vulkan exhibits a feature called _permanently mapped buffers_, which are accessible by both the host and device via DMA, and do not require copying, alleviating the pressure on the PCI express bus incurred by a copy. These PMBs then are ping-ponged for double buffering and provide a very good user and developer experience.
+JavaFX is now the predominant mode for building scenery-based applications. However, in OpenGL, buffer copies from the current framebuffer to a JavaFX texture are necessary and incur a performance penalty. With Vulkan, this problem does not exist, as Vulkan exhibits a feature called _permanently mapped buffers_\TODO{link}, which are accessible by both the host and device via DMA, and do not require copying, alleviating the pressure on the PCI express bus incurred by a copy. These PMBs then are ping-ponged for double buffering and provide a very good user and developer experience.
 
 ### Rendering with OpenGL
 
@@ -174,9 +174,9 @@ Push Mode is a rendering optimisation especially for viewer-type applications, w
 * an object has been added or removed from the currently visible objects
 * an object that is visible has changed it's properties (e.g. uses a different material or texture now)
 
-Buffer swaps may however still take place, so that special care is taken to update all swapchain images before stopping to actively render. This mechanism is implemented using a `CountDownLatch` that starts with the number of swapchain images, and is counted down by one for each render loop pass. When the latch reaches zero, rendering is discontinued until the next update happens.
+Buffer swaps may however still take place, so that special care is taken to update all swapchain images before stopping to actively render. This mechanism is implemented using a JDK-provided `CountDownLatch` that starts with the number of swapchain images, and is counted down by one for each render loop pass. When the latch reaches zero, rendering is discontinued until the next update happens.
 
-The push mode mechanism also guarantees that all updates to the scene's content are obeyed, as it is not tied to e.g. input events, but the actual updates of scene contents or UBOs.
+The push mode mechanism also guarantees that all updates to the scene's content are obeyed, as it is not tied to e.g. input events, which might be caused by a myriad of devices, but the actual updates of scene contents or UBOs.
 
 ### Configurable Rendering Pipelines
 
@@ -259,51 +259,105 @@ The main loop then proceeds as follows:
 2. Run the viewport pass in the same way as (5), but siphon out data for third-party consumers (video recording, screenshots,...) if necessary
 3. Swap buffers.
 
-### Shader Introspection
+### Shader Introspection and Shader Properties
 
+scenery's renderers by default perform introspection on the shader files they ingest, by using the _spirvcrossj_[^spirvcrossjnote] library ([github.com/scenerygraphics/spirvcrossj](https://github.com/scenerygraphics/spirvcrossj)). Shader files are loaded via the `Shaders` class, which can provide both source code and SPIRV[^spirvnote] bytecode, either from file sources, or from procedurally generated shaders, and potentially other sources. `Shaders` will try to provide both versions of a shader, but can be instructed to prioritise either the source code version or the SPIRV version of the shader.
 
+By adding the `@ShaderProperty` annotation to a member variable of a `-`Node` class, this variable can be made accessible from the shader via the same name. Supported data types are Java's default elementary types, as well as the `GLVector` vector type and the `GLMatrix` matrix type. Additionally, the `@ShaderProperty` annotation can be added to a hash map of type `HashMap<String, Any>` to provide even more flexibility (e.g. for procedurally-generated shaders). scenery discovers shader properties in the following way:
 
+1. When loading the shader, construct a list of all the properties that are part of the `ShaderProperties` UBO in the shader file, e.g. 
+  ```glsl
+  layout(set = 0, binding = 0) uniform struct ShaderProperties {
+    float scale;
+    mat4 model;
+    vec3 color;
+  }
+  ```
+  Metadata for each member in the form of an offset and a length are stored along the with the property, and follow GLSL's std140 rules for alignment.
+2. When updating UBOs for a `Node`, scenery performs reflection (and caches that information) on all properties that carry the `@ShaderProperty` annotation: first, properties with the given name are checked, and if not found, the `shaderProperties` hash map is consulted as fallback. Not providing a shader property in the class that is required by the shader will result in an exception. The other way around, a shader property defined in the class, but not used in the shader will only trigger a warning. Shader properties defined in the UBO, but not used in the shader will not be skipped upon serialisation.
+
+[^spirvcrossjnote]: _spirvcrossj_ is a wrapper of the Khronos Group's _spirv-cross_ reflection library and the _glslang_ reference compiler.
+[^spirvnote]: SPIRV or SPIR-V is a binary bytecode format for shader files, specified by the Khronos Group. It serves as the primary provider of shader programs for Vulkan, but can also be used from OpenGL via vendor-specific extensions, and can be decompiled to plain GLSL or even HLSL.
 
 ### Instancing
 
-Instancing is done nicely ...
+Instancing can be done by defining a `Node`'s `instanceMaster` property as `true` and adding other `Nodes` to its `instances` property. Instances are not part of the regular scene graph for improved discovery performance, but their transformation matrices are updated in the same manner. Instanced properties can be added to the master node's `instancedProperties` hash map, and are serialised in the same manner as UBOs. As instances are not allowed to depend on each other, the serialisation is done in parallel in a number of worker threads using coroutines, such that tens of thousands of instances can be updated at interactive frame rates.
 
+To use instancing, the user needs to provide a custom shader that declares the properties set in `instancedProperties`, e.g. as in
 
-
-### Mapping between scenery Nodes and shaders
-
-spirvcrossj enables...
-
-
-
-
-
-
-
-### Push Mode
-
-Push mode enables event-driven rendering
+```glsl
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec3 vertexNormal;
+layout(location = 2) in vec2 vertexTexCoord;
+layout(location = 3) in mat4 iModelMatrix;
+```
+where the location 3 defines the instanced model matrix. For Vulkan, scenery will automatically derive a fitting vertex description consisting of both `VkVertexInputAttributeDescription`s and `VkVertexInputBindingDescription`s (see `VulkanRenderer::vertexDescriptionFromInstancedNode`).
 
 
 ### Volume Rendering
 
-
+\TODO{expand}
 
 ## Settings store
 
-Settings are stored...
+Settings are stored...\{TODO: Actually necessary?} 
 
 
+## External hardware -- Head-mounted displays and natural/gestural user interface devices
 
-## External hardware -- Head-mounted displays
+Support for head-mounted displays and control devices is provided by two means:
 
-HMD support is provided by SteamVR...
+1. utilising the lwjgl bindings for SteamVR/OpenVR to interface with off-the-shelf HMDs like the Oculus Rift or HTC Vive (see class `OpenVRHMD`).
+2. utilising the custom-built wrappers for the VRPN (Virtual Reality Periphery Network \TODO{cite!}) library, called jVRPN ([github.com/scenerygraphics/jvrpn](https://github.com/scenerygraphics/jvrpn)). jVRPN is used in scenery to e.g. provide support for DTrack devices used in CAVE systems (see class `TrackedStereoGlasses`).
 
+HMDs usually implement the `Display` interface:
+```
+interface Display {
+    fun getEyeProjection(eye: Int, nearPlane: Float = 1.0f, farPlane: Float = 1000.0f): GLMatrix
+    fun getIPD(): Float
+    fun hasCompositor(): Boolean
+    fun submitToCompositor(textureId: Int)
+    fun submitToCompositorVulkan(width: Int, height: Int, format: Int,
+                                 instance: VkInstance, device: VulkanDevice,
+                                 queue: VkQueue,
+                                 image: Long)
+    fun getRenderTargetSize(): GLVector
+    fun initializedAndWorking(): Boolean
+    fun update()
+    fun getVulkanInstanceExtensions(): List<String>
+    fun getVulkanDeviceExtensions(physicalDevice: VkPhysicalDevice): List<String>
+    fun getWorkingDisplay(): Display?
+    fun getHeadToEyeTransform(eye: Int): GLMatrix
+}
+```
 
+This interface provides submission to both OpenGL and Vulkan renderers, which is necessary as they work quite differently. The `update` function is used to update HMD state once per frame, while transformations are cached as much as possible. The renderer will only render to the device if `initializedAndWorking()` returns `true`, and `getWorkingDisplay()` returns a `Display` instance. HMDs can choose to have a compositor to which the resulting renderered image is submitted. If this is not the case, e.g. as it is with tracked stereo glasses for CAVEs, the image is rendered regularly.
+
+An HMD might also provide tracking information, in which case it will also implement the `TrackerInput` interface:
+
+```
+interface TrackerInput {
+   
+    fun getOrientation(): Quaternion
+    fun getOrientation(id: String): Quaternion
+    fun getPosition(): GLVector
+    fun getPose(): GLMatrix
+    fun getPoseForEye(eye: Int): GLMatrix
+    fun initializedAndWorking(): Boolean
+    fun update()
+    fun getWorkingTracker(): TrackerInput?
+    fun loadModelForMesh(device: TrackedDevice, mesh: Mesh): Mesh
+    fun loadModelForMesh(type: TrackedDeviceType = TrackedDeviceType.Controller, mesh: Mesh): Mesh
+    fun attachToNode(device: TrackedDevice, node: Node, camera: Camera? = null)
+    fun getTrackedDevices(ofType: TrackedDeviceType): Map<String, TrackedDevice>
+}
+```
+
+In this interface, the noteworthy functions are `getPoseForEye()`, which returns a transformation matrix relative to the origin containing translational and rotational information per-eye. Furthermore, an HMD may provide multiple tracked devices, such as nunchucks, which can be queried via `getTrackedDevices()`. `attachToNode()` then facilitates their attachment to any `Node` in the scene graph, which subsequently inherits the transformations of the tracked device. A model for such a device may be provided by the HMD via `loadModelForMesh()`. Our implementation of SteamVR HMDs provides the correct mesh for a given HMD via this function.
 
 ## External hardware -- Augmented Reality and the Hololens
 
-_scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform. The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
+_scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform (see class `Hololens`). The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
 
 To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a kind of proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ request-reply socket, while receiving of per-frame pose data is handled with an additional, publish-subscribe socket due to better latency.
 
@@ -323,8 +377,9 @@ The inclusion of the keyed mutex information into the `vkQueueSubmit` call in th
 
 ## External Hardware -- Eye Tracking
 
-Eye tracking support is provided by ...
+scenery includes support for the Pupil Labs eye tracking solution \TODO{cite!} ([www.pupil-labs.com](https://www.pupil-labs.com)), implemented in the class `PupilEyeTracker`. This class communicates with the Pupil Labs software _Pupil Capture_ or _Pupil Service_ via ZeroMQ, with msgpack data serialisation. Our implementation provides HMD-based screen-space and world-space calibration, reporting of the gaze positions, normals, timestamps, and confidences.
 
+More details about eye tracking can be found in the chapter [Eye Tracking and Gaze-based Interaction], with a use case implemented in the chapter [Attentive Tracking].
 
 
 
