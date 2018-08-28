@@ -9,3 +9,5 @@ thesis.tex
 *.run.xml
 *.out
 *.toc
+tmp/*.pdf
+tmp/*.svg
