@@ -63,9 +63,9 @@ As said before, we aim for excellent interoperability with the ImageJ ecosystem,
 
 _Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)). Since 2017, Kotlin is also a first-class citizen on the Android platform, which has since significantly boosted its popularity.
 
-Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target, making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
+Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target (via LLVM \TODO{cite}), making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
 
-[^kotlinlink]: see [https://kotlinlang.org](https://kotlinlang.org).
+[^kotlinlink]: see [kotlinlang.org](https://kotlinlang.org).
 [^contendernote]: As of early 2016, when the project was started. Since then, other languages, such as Ceylon, have matured a lot, and would probably now be considered as well.
 
 ### Graphics APIs
@@ -76,22 +76,22 @@ Since the early days of OpenGL, and also after further development had been hand
 
 Shader-based rendering has been introduced into OpenGL fully with OpenGL 2.1, with further extensions made with 3.3 and 4.1. What has not changed since the beginning though, is the basic programming model, where the programmer would modify a global state, and render objects either directly (in the ancient days of OpenGL 1.x), or with the help of vertex buffer objects (VBOs).
 
-Unfortunately, this programming model does not map well to current-generation GPUs, which have become massively parallel computing machines, sporting 4000 individual cores and more. They do not have the flexibility of regular CPUs, but eclipse them easily in floating-point compute power.
+Unfortunately, this programming model does not map well to current-generation GPUs, which have become massively parallel computing machines, with some sporting 4000 individual cores and more. They do not have the flexibility of regular CPUs, but eclipse them easily in floating-point compute power.
 
-In 2016, the Khronos Group has published a new graphics API named Vulkan, aiming at alleviating the issues with OpenGL, essentially starting with a clean slate. Vulkan provides a much deeper, _close-to-metal_ access to the GPU than OpenGL does, further differences are:
+In 2016, the Khronos Group has published a new graphics API named _Vulkan_, aiming at alleviating the issues with OpenGL, essentially starting with a clean slate. Vulkan provides a much deeper, _close-to-metal_ access to the GPU than OpenGL does, further differences are:
 
-* More verbose code, with less checks done by the driver, leading to more clarity about what is done, and how. This however necessitates the developer taking greater care, as the specification clearly states that the driver is allowed to crash an application in case it is behaving out-of-spec.
-* Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration with every frame.
+* More verbose code, with less checks done by the driver, leading to more clarity about what is done, when, and how. Now however the developer needs to take greater care in adhering to the specification, as it clearly states that the driver is allowed to crash an application in case it is behaving out-of-spec.
+* Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration with every frame. Command buffers can also be created by multiple threads in parallel, but need to be submitted serially.
 * Resources, such as textures and buffers, and their descriptors, have to be allocated and managed on a much more fine-grained level than with OpenGL.
 * (Homogeneous) Multi-GPU support (since Vulkan 1.1).
 * A Conformance Test Suite (CTS) for the graphics drivers, ensuring that a Vulkan-based application behaves the same on all drivers.
-* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with large introspection possibilities, e.g. via the tool/library _spirv-cross_.
+* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with large possibilities for introspection and reflection, e.g. via the tool/library _spirv-cross_.
 
 From this list it is clear that with great power comes great responsibility — and that the OpenGL and Vulkan APIs do not map very well to each other. 
 
 For this reason, _scenery_ has been written with flexibility regarding the rendering backend in mind: It should be easy for the developer to replace one of the existing rendering backends with an entirely new one. 
 
-_scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. As the contract between the core library and the rendering part is quite thin, it is very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Embree_[@Wald:2014db], _OSPray_[@Wald:2017ee] or _OptiX_[@Parker:2013hxa] being a possibility.
+_scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating system, and a Vulkan backend for use on Windows and Linux. The contract between the core library and the rendering part is quite thin, making it very easy to create new rendering backends, with offline rendering via an external raytracing software, such as _Embree_[@Wald:2014db], _OSPray_[@Wald:2017ee] or _OptiX_[@Parker:2013hxa] being a future possibility.
 
 ### Interfacing with Graphics API on the Java VM
 

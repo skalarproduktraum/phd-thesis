@@ -1,6 +1,21 @@
 # Design and Architecture
 
+## Scenegraph-based rendering
 
+A scenegraphs is a data structure that organises objects in a hierarchical manner, in a tree or graph structure, where each node in the graph has its own transformation properties. In that way, it is very easy to describe spatial and organisational relations between objects, such as a car tyre belonging to a car, and the tyre moving with the parent object _car_ (inheriting its transformations), when it moves.
+
+If bounding boxes are stored along with the nodes, the scenegraph can easily be extended to also include _bounding volume hierarchies_ that can enable more efficient collision detection[^collisionnote] or frustum culling[^cullingnote].
+
+
+
+[^collisionnote]: For general collision detection without additional acceleration data structures like bounding volume hierarchies, the whole scenegraph has to be traversed for each object that is checked for collisions, leading to a $\mathcal{O}(n^2)$ complexity. In BVHs, objects are guaranteed not to overlap, if their parent bounding volumes to not overlap, which can greatly lower the candidate pool, speeding collision detection up tremendously.
+[^cullingnote]: Frustum culling is the process of determining the objects that are currently in the camera's view frustum, and rendering only those. Acceleration data structures can help with determining the inside set in the same manner as in collusion detection.
+
+
+
+### Traversal
+
+Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. In scenery, the scenegraph is traversed by default in the same way it is stored. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.  
 
 ## The Nodes
 
