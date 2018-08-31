@@ -370,7 +370,9 @@ interface TrackerInput {
 
 In this interface, the noteworthy functions are `getPoseForEye()`, which returns a transformation matrix relative to the origin containing translational and rotational information per-eye. Furthermore, an HMD may provide multiple tracked devices, such as nunchucks, which can be queried via `getTrackedDevices()`. `attachToNode()` then facilitates their attachment to any `Node` in the scene graph, which subsequently inherits the transformations of the tracked device. A model for such a device may be provided by the HMD via `loadModelForMesh()`. Our implementation of SteamVR HMDs provides the correct mesh for a given HMD via this function.
 
-## External hardware -- Augmented Reality and the Hololens
+## Integration of External Hardware
+
+### Augmented Reality and the Hololens
 
 _scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform (see class `Hololens`). The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
 
@@ -390,9 +392,13 @@ The inclusion of the keyed mutex information into the `vkQueueSubmit` call in th
 [^remotingnote]: The exact details of how this works are not published, but apparently work by streaming the image data for both eyes over the network, compressed with H264.
 [^sharedperfnote]: We allocate multiple image buffers and use them in a double/triple-buffering manner for read/write access to prevent the GPU stalling.
 
-## External Hardware -- Eye Tracking
+### Eye Tracking
 
 scenery includes support for the Pupil Labs eye tracking solution \TODO{cite!} ([www.pupil-labs.com](https://www.pupil-labs.com)), implemented in the class `PupilEyeTracker`. This class communicates with the Pupil Labs software _Pupil Capture_ or _Pupil Service_ via ZeroMQ, with msgpack data serialisation. Our implementation provides HMD-based screen-space and world-space calibration, reporting of the gaze positions, normals, timestamps, and confidences.
+
+For calibration, the user is presented with a series of points to look at, which serve to establish a connection between the eye tracker's captured direction of gaze with a screen-space or world-space position in the scene. For each calibration point, 80 different samples are taken to account for microsaccades, and the first 20 are discarded to exclude those samples that might still include eye movement, while the user is moving from one point to the next. After finishing the calibration, the user is informed of successful or unsuccessful calibration, and can repeat the calibration, if necessary.
+
+After successful calibration, scenery enables the developer to connect the outputs of the eye tracker (in the form of gaze normals, gaze positions, and a confidence rating) to the properties of any object. By default, gaze points are only output in case the confidence reaches more than 90%, leaving the decision which of the higher-confidence samples to use to the developer.
 
 More details about eye tracking can be found in the chapter [Eye Tracking and Gaze-based Interaction], with a use case implemented in the chapter [Attentive Tracking].
 
