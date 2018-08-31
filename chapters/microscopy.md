@@ -57,3 +57,15 @@ In the chapter _Rendering the APR_ we are going to talk about how to use this re
 
 ### Smart microscopy requires smart interactions
 
+Scherf and Huisken [@Scherf:2015ba] have made the case in 2015 for smart and gentle microscopes, that not only know how to image a specimen, but also take great care in not disturbing the normal development of it, treating it as gently as possible, by means of adaptive laser power, imaging times and windows, and dynamic determination of regions of interest. 
+
+Royer has developed a microscope for long-term _Drosophila_ imaging [@Royer:2016fh] that constantly measures image sharpness and embryo drift, and optimises the microscope's optical components in-between each stack of a timelapse for optimal image quality, fit for high-quality tracking and lineage tree creation for the whole time of embryo development.
+
+Hufnagel \TODO{cite} has developed a microscope that combines adaptive lightsheet imaging with single-cell transcriptomics, yielding simulteneous insight into both gene expression and the spatiotemporal consequences of it.
+
+All these microscopes, envisioned, and already existing, have in common that they require a very low to no level of human intervention during the imaging session, therefore allowing developmental imaging with unprecented precision, but no options to interfere with the specimen interactively, may it be via optogenetic manipulation, or laser microsurgery. Such tools are however invaluable for the biophysical investigation of tissue mechanics, and the combination of smart microscopy with smart, natural, and intuitive interaction techniques in 3D can open the door for new experiments leading to even deeper insight into both developmental and biophysical processes, such as _Drosophila_ wingdisc formation, or retinal development \TODO{cite Marija's paper}:
+
+* In the case of _Drosophila_ wingdisc formations, investigations of tissue tensions and mechanics have so far been focused only on flat pieces of tissue, which do not constitute the main part of development, and are actually hard to find in the developing embryo. 3D interaction in that scenario can provide the user with easy access to more complex geometries to perform ablation experiments in.
+* In the case of retinal development, which takes place on highly curved surfaces and in complex volumes, additional 3D interactions for ablation and optogenetics can lead to more insight into defects in retinal development, of which human medicine might ultimately benefit.
+
+For these use cases, we are going into deeper detail in the chapter [Interactive Laser Ablation], developing an interactive demo of how such interactions might take place in the future, on a microscope, equipped with 3D virtual reality glasses, or from a room-scale virtual reality system.
