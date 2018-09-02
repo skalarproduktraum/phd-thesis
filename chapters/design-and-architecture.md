@@ -308,15 +308,25 @@ layout(location = 3) in mat4 iModelMatrix;
 ```
 where the location 3 defines the instanced model matrix. For Vulkan, scenery will automatically derive a fitting vertex description consisting of both `VkVertexInputAttributeDescription`s and `VkVertexInputBindingDescription`s (see `VulkanRenderer::vertexDescriptionFromInstancedNode`).
 
-
-### Volume Rendering
-
-\TODO{expand}
-
 ## Settings store
 
 Settings are stored...\{TODO: Actually necessary?} 
 
+## Rendering of Volumetric Data
+
+![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.svg)
+
+Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectivelly correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following blending options:
+
+* _maximum projection_ (MIP), where each voxel data point along the way is compared to the previous, and the maximum kept,
+* _local maximum projection_ (LMIP), where each voxel data point along the way is compared to the previous, and the maximum kept, but only after reaching a user-defined threshold, and
+* _alpha blending_, where the attenuation of light entering the volume is simulated in a physically plausible manner.
+
+The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. For alpha blending, the ordering of the volumes does matter, and accurate visualisation is only possible if all the volumes occupying the same space are rendering in the same moment.
+
+### Out-of-core rendering
+
+Out-of-core rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
 
 ## External hardware -- Head-mounted displays and natural/gestural user interface devices
 
