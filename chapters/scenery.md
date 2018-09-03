@@ -145,5 +145,5 @@ From a birds-eye perspective, the scenery framework consists of six main compone
 The construction and interplay of all these subsystems is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
 
 
-In the next chapter, _design & architecture_, we are going into sharp detail about each of the subsystems.
+In the next chapter, [Design and Architecture], we are going into detail about each of the subsystems.
 
