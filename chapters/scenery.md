@@ -8,12 +8,41 @@ To realise these needs, we have chosen to develop our own visualisation framewor
 
 The result of this effort is _scenery_, a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, targeting the Java Virtual Machine (JavaVM). scenery can be used on both desktop machines, as well as clustered setups, such as the ones commonly used for CAVE systems or Powerwalls.
 
-In this chapter, we are going to introduce the framework, outlining the exact design goals and decisions made along the way, compare it to existing frameworks and related works, followed by a high-level description of its components. This chapter is followed by the architecture chapter, going into deeper details for each of scenery's building blocks.
+In this chapter, we are going to introduce the framework, starting with the development of ClearVolume which later ignited the development of _scenery_. Subsequently, we outline the exact design goals and decisions made along the way, and compare _scenery_ to existing frameworks and related works, followed by a high-level description of its components. 
 
+This chapter is then followed by the architecture chapter, going into deeper details for each of scenery's building blocks. As last part of this section, we introduce a development model for _scenery_-based applications.
+
+## History
+
+![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset.](./figures/ClearVolumeFiji.png)
+
+The work presented in this section has been done in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Myers Lab, MPI-CBG, and has been published in 
+Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
+
+In 2015, we published ClearVolume [@Royer:2015tg], a visualisation library enabling live, realtime visualisation of lightsheet microscopy data, with the capability to be integrated into existing setups[^integrationnote].
+
+ClearVolume has a few discerning features:
+
+* _local and remote visualisation_ — the data acquired on the microscope can be visualised right on the instrument's control computer, or on a remote machine, with the data transferred over the network, albeit uncompressed. Especially when working with genetically modified organism, where the instrument has to be located in a S1 or S2-designated area, remote viewing proved to be a useful tool for biologists to check on the specimen's health,
+* _source/sink architecture_ — the data acquired in ClearVolume can be sent through a processing pipeline on the GPU, with the visualisation part at the end of the pipeline, and a number of processing steps before. These processing steps can include e.g. image sharpness measurement, sample drift measurement, or Lucy-Richardson deconvolution,
+* _multipass maximum projection_ — rendering large datasets in full resolution can be quite taxing on GPUs. To alleviate this problem, we have developed a new way of sampling along a traced ray, based on low-discrepancy sequences (such as the Fibonacci sequence). When multipass maximum projection rendering is active, the first samples along the ray are taken very coarsely, while subsequent samples are placed in a way to fill "holes" along the ray most efficiently (see Figure~\ref{fig:LowDiscrepancySampling} for a sketch of the principle), and
+* _Fiji & KNIME integration_ — as ClearVolume does not care whether the data it visualises comes from a microscope, or any other source, we have also developed plugins for Fiji[@Schindelin:2012ir] and KNIME.
+
+![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments, while with low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are closed most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{ref:LowDiscrepancySampling}](./figures/ClearVolumeMultipassVsNaive.pdf)
+
+![__a__ data flow in a ClearVolume-augmented microscopy application, __b__ local or remote visualisation using ClearVolume, __c__ evaluation of data fitness and drift correction, __d__ multi-colour compositing\label{fig:cv}](./figures/ClearVolumeMainFigure.pdf).
+
+In the time since its publication, ClearVolume has proven to be a useful tool for lightsheet microscope development and usage, and has seen use for both highly automated microscopy[@Royer:2016fh] and regular visualisation tasks. 
+
+However, ClearVolume only supports the visualisation of a single, potentially multicolour, registered volumetric dataset, but especially with the foray of computational methods into systems biology, volumetric data is not the only kind of data that needs to be visualised, and the need for a more flexible architecture, supporting complex scenes, as well as geometric and custom datatypes, arose. Furthermore, we also recognised the need for integration of various interaction hardware, which albeit possible with ClearVolume, needed to happen on a deeper level, with the single-volume focus also being a problem.
+
+The development of _scenery_ was started out of this need.
+
+[^integrationnote]: ClearVolume can be integrated into microscopy software setups based on e.g. MicroManager[@Edelstein:2010gf] or LabView.
 
 ## Design Goals
 
-In designing _scenery_, we set these design goals
+With the both useful features and deficiencies identified in the previous section in mind, in designing _scenery_, we set these design goals:
 
 * __Free and open source software__ —  the resulting framework should be open-source such that the users, such as scientists, can dive into the code and see both what a particular algorithm is doing and/or modify it to their needs.
 * __Volume rendering__ — fluorescence microscopy produces volumetric data, so the software package has to support both single-timepoint 3D volumetric images (as are also created in CT or MRI scans), and time series of 3D images, such as developmental time lapse images.
