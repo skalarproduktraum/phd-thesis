@@ -23,3 +23,22 @@ Optical breakdown of tissue occurs when the applied electric field $\symbfit{E}$
 ## Common Use Cases
 
 ## Limitations of the current approach
+
+## Prototyping, Stage 1
+
+As a first prototype, we developed a browser-based (threejs, [https://threejs.org](https://threejs.org)) prototype that makes use of the _LeapMotion_ gesture controller. A screenshot of the prototype can be seen in Figure \ref{fig:LMAblationPrototype}. The workflow of the prototype is
+
+1. orient the specimen in the desired way by using keyboard and mouse,
+2. form a circular structure with thumb and index finger, and draw the desired tubular structure into the aligned worm, and finally
+3. a cylindrical tube is calculated from the defined circular samples via Centripetal Catmull-Rom spline interpolation[@Catmull:1974cf]. Catmull-Rom splines have been chosen here as they always go through their control points, and do not form cusps, which both are desirable properties for surfaces later to be used in laser ablation.
+
+Within a limited user study, we identified two main issues with this approach:
+
+1. Orientation of the specimen using keyboard and mouse is error-prone and was noted to be not very comfortable and intuitive, especially when combined with subsequent gestural interaction,
+2. the gestural interaction was found to be imprecise, as a feeling of 3-dimensionality or immersion did not come up when being restricted to a regular, flat screen.
+
+Additionally, we abandoned browser-based prototyping after this first iteration, as loading times were already too long when using the geometry model of 26MiB, and would be even longer if volumetric data would be used. We want to note here that this initial experience also contributed to the decision to start the development of scenery.
+
+![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](./figures/LeapMotionLaserAblationPrototype.png)
+
+## Prototyping, Stage 2
