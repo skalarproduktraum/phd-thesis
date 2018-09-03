@@ -92,7 +92,7 @@ As said before, we aim for excellent interoperability with the ImageJ ecosystem,
 
 _Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)). Since 2017, Kotlin is also a first-class citizen on the Android platform, which has since significantly boosted its popularity.
 
-Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target (via LLVM \TODO{cite}), making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
+Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target (via LLVM [@Lattner:2004vw]), making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
 
 [^kotlinlink]: see [kotlinlang.org](https://kotlinlang.org).
 [^contendernote]: As of early 2016, when the project was started. Since then, other languages, such as Ceylon, have matured a lot, and would probably now be considered as well.
