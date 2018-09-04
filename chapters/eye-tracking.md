@@ -48,11 +48,39 @@ From the discussion of the various modalities, we conclude:
 
 ## Challenges
 
-### Midas Touch Problem
+A few challenges remain to achieve widespread use of eye tracking technology. We're going to detail them in this section:
 
-### Accuracy
+### Midas Touch Problem and the Double Role of Gaze
+
+The notion of the _Midas Touch Problem_ was introduced by Jacob in 1990[@Jacob:1990hz], and describes the issue that by looking at an object, the user inadvertently triggers an action. It is named after the Greek fable of King Midas, who, after wishing that everything he touches would turn to gold, ultimately starved to death.
+
+The Midas Touch Problem is intimately linked with the _Double Role of Gaze_: while visual attention can be actively directed, it is also often influenced by visual distractions that carry a high saliency, such as flashing lights, fast moving objects, or even input from other senses, such as loud bangs. A shift towards passive attention may cause a disruption of the workflow of the user, or can, in the sense of the Midas Touch Problem, lead to wrong inputs. The issues are especially pronounced in the case that one wants to emulate mouse-based input with gaze input.
+
+Both issues can be addressed e.g. by providing the user with an additional means to confirm that the selection action is actually the one he intends to perform. This can be achieved with a variety of means:
+
+* _dwell time-/blink-based selection_, where an action is only triggered after the user has rested his gaze on the object[@Jacob:1990hz], or blinked once or multiple times as confirmation[@jacob:1993; @Ashtiani:2010dw]. Anyway, these solutions lead to additional delays for the input, which, depending on the intent might or might not be a problem:  If fast interaction is intended, e.g. for selecting highly salient objects in fast succession, dwell/blink-based confirmation is problematic, while when interacting e.g. with locked-in patients, it may provide an excellent way for communicating[@Ashtiani:2010dw].
+* _multimodal interaction_, where the user can utilise an additional device to confirm his intent, for example by pressing a button on a keyboard[@Castellina:vg], using an additional touchpad[@Meena:2017bn],   a foot pedal or foot mat[@Klamka:2015ka, @Hatscher:2017bi], or free-air pinch gestures[@Pfeuffer:2017jk].
+* _computer vision techniques_, where visual attention and saliency[@Itti:2001cl] is modelled computationally, to determine which is the most probably object of attention at the moment [@Wu:2015kt; @Theis:2018tw].
+
+### Accuracy and Reliability
+
+Due to individual differences between users, and also between different spike trains in EOG, measurement of gaze cannot be 100% correct. For cursor-based applications, filtering approaches can be used to weed out erratic recognitions[@Zhang:2008ex], and adjusting the interface shown to the user, e.g. via magnifying it or exaggerating details (see [@Cockburn:2009kj] for a review).
+
+HMD-based eye tracking here has the benefit that the lighting situation can be controlled, and it'll mostly be dark inside the eye piece of the HMD, leading to more predictable and reliable gaze detection. For screen-mounted or mobile eye trackers however, the situation is a bit more difficult, as they might be used in many different lighting scenarios.
+
+In terms of recognition reliability, advances have been made in recent years towards model-free determination of gaze, e.g. via artificial neural networks[@Gneo:2012kn]. One can expect this trend to continue, leading to more reliable algorithms. _Pupil_[@Kassner:2014kh] for example uses a combination of model-based detection together with a convolutional neural network for gaze determination.
 
 ### Availability
+
+Still back in 2014, eye tracking hardware was very expensive, with both screen-mounted and HMD-mounted trackers costing in excess of 10000 EUR.
+
+Since then, a few projects have started that provide either low-cost or open-source eye trackers, or even both. Examples are e.g.: 
+
+* _Pupil_[@Kassner:2014kh], where ready-to-use eye trackers for glasses, mobile or HMD use can be bought, but the bill of materials, construction manual, and software are open-sourced (see [github.com/pupil-labs/pupil](https://github.com/pupil-labs/pupil) and [docs.pupil-labs.com](https://docs.pupil-labs.com)).
+* _Oculomatic_[@Zimmermann:2016hv], which provides an open-source toolkit, as well as schematics for high-speed eye tracking, primarily for use in oculomotor research.
+* _aGlass_, which has recently announced the availability of a low-cost, full-FOV eye tracking development kit for the HTC Vive, mainly to facilitate foveated rendering[@Pohl:2016fy].
+
+These developments lead us to believe that widespread and cost-effective use of eye-tracking hardware will soon become a reality.
 
 ## Review of Interaction Techniques
 
