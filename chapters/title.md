@@ -59,7 +59,7 @@
 \vspace*{\fill}
 \textsc{isbn:} 978-1-333-33333-7
 
-![Creative Commons Logo Badge](./logos/cc-by-sa.eps){ width=20% } \
+![Creative Commons Logo Badge](./logos/cc-by-sa.pdf){ width=20% } \
 This work is licensed under a \
 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 
