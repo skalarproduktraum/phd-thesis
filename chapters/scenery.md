@@ -64,10 +64,10 @@ The following table shows a comparison of _scenery_ with other state-of-the-art 
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
 | Amira | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | - | - | - | - |
 | Arivis | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | \textbullet | - | - | - |
-| BigDataViewer | Big data, Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
+| BigDataViewer[@Pietzsch:2015hl] | Big data, Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
 | Imaris | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | \textbullet | - | \textbullet | \textbullet |
-| Vaa3D | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
-| ClearVolume | Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
+| Vaa3D[@Bria:2016fl] | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
+| ClearVolume[@Royer:2015tg] | Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
 | Zeiss ZEN | Microscopy | - | \textbullet | - | - | - | \textbullet | - | - | - |
 | Unity | Game engine | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
 | Unreal Engine | Game engine | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
