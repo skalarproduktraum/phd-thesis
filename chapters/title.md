@@ -53,7 +53,7 @@
 \frontmatter
 \small
 \bigskip
-Typeset using [pandoc](https://www.pandoc.org), [Markdown](https://daringfireball.net/projects/markdown/), and [XeTeX](http://xetex.sourceforge.net/) in EB Garamond, Roboto Slab, and Source Code Pro.
+\noindent Typeset using [pandoc](https://www.pandoc.org), [Markdown](https://daringfireball.net/projects/markdown/), and [LuaLaTeX](http://www.luatex.org/) in EB Garamond, Roboto Slab, and Source Code Pro.
 \bigskip
 
 \vspace*{\fill}
