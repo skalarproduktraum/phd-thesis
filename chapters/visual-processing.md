@@ -38,8 +38,6 @@ Adaption to visible objects happens in two ways:
 * the iris size can be modulated, changing the amount of light reaching the retina by a factor of 16. This contraction and expansion is not only due to light stimuli, but can also be triggered by drugs or hormonal changes, e.g. due to excitement.
 * ciliary muscles can modulate the lens thickness; when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects — these are the aforementioned vergence movements.
 
-[^irisnote]: .
-
 ## Retinal architecture and processing
 
 \begin{marginfigure}[-5cm]
