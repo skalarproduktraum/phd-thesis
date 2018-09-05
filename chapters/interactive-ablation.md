@@ -6,7 +6,7 @@ The investigation of biological phenomena not only rests on observation of such,
 
 ### Biophysical Principles
 
-For the interaction of light with biological tissue, five different regimes, based on the applied power density are known:
+For the interaction of light with biological tissue, the five different regimes, based on the applied power density, are shown in table {@tbl:LaserInteractions}:
 
 | Regime | Power density ($\mathrm{W}/\mathrm{m}^2$) | Exposure time (s) |
 |:--|:--|:--|
@@ -15,6 +15,8 @@ For the interaction of light with biological tissue, five different regimes, bas
 | Photoablation | $10^6\,-\,10^{10}$ | $10^{-9}\,-\,10^{-6}$ |
 | _Plasma-induced ablation_ | $10^{10}\,-\,10^{14}$ | $10^{-13}\,-\,10^{-10}$ |
 | Photodisruption | $10^{11}\,-\,10^{16}$ | $10^{-12}\,-\,10^{-8}$ |
+
+Table: Regimes for light interacting with biological tissue. {#tbl:LaserInteractions}
 
 For microsurgery on the cellular level, we are interested in the _plasma-induced ablation_ regime, highlighted in the table. This regime provides ablation of the target area by _optical breakdown_, confined to the focal point of the laser, with no damage around that area, and no shock-wave generation or cavitation, as observed in the _photodisruption_ regime marked by even higher power densities.
 

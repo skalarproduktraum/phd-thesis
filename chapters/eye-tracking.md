@@ -40,6 +40,8 @@ With _Pupil_[@Kassner:2014kh] and _Oculomatic_[@Zimmermann:2016hv], now  open-so
 | EOG | High | Medium | High | 1-2º | >2º |
 | VOG | Low | Low | High | 1º | 2-5ms |
 
+Table: Comparison of eye tracking modalities. {#tbl:EyeTrackingComparison}
+
 From the discussion of the various modalities, we conclude:
 
 * _Search Coil Contact Lenses_ remain the gold standard for clinical eye tracking, where a high precision, both spatially and temporally is required, and balances their low user comfort and high setup effort.
