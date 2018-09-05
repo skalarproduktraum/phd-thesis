@@ -10,7 +10,7 @@ all: thesis.$(OUTPUTFORMAT)
 thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY)
 	@echo "pandoc'ing $(CHAPTERS) to thesis.$(OUTPUTFORMAT)"
 	@echo " "
-	$(PANDOC) -F mermaid-filter -F pandoc-latex-environment --bibliography=$(BIBLIOGRAPHY) --csl=$(CSL) \
+	$(PANDOC) -F pandoc-latex-environment --bibliography=$(BIBLIOGRAPHY) --csl=$(CSL) \
 		--metadata link-citations=true --pdf-engine=xelatex -H $(PREAMBLE) \
 		-V fontsize=12pt -V documentclass:tufte-book -V papersize:a4 -V classoption:openright \
 		-V subparagraph --top-level-division=chapter \

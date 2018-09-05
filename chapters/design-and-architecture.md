@@ -165,14 +165,6 @@ Let's note here that the Vulkan renderer does not perform explicit scene initial
 
 [^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
 
-::: figure-on-margin
-~~~ {.mermaid format=svg width=100% loc=tmp}
-sequenceDiagram
-    Alice->>John: Hello John, how are you?
-    John-->>Alice: Great!
-~~~
-:::
-
 ### Uniform Buffer Serialisation and Updates
 
 UBOs are tentatively updated with each frame before the main rendering loop, guaranteeing that a `Node` that has been added to the scene graph will have it's transformations and properties ready at render time. 
@@ -234,12 +226,7 @@ The definition must contain one renderpass that outputs to Viewport, otherwise n
 
 From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple:
 
-~~~ {.mermaid format=png width=100%}
-graph LR
-    A(Scene contents) -.-> B[Scene]
-    B --> C[PostprocessHDR]
-    C -.-> D(Viewport)
-~~~
+\TODO{add example graph}
 
 If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
 
@@ -251,18 +238,7 @@ In scenery, scene object discovery (determining which objects are to be rendered
 
 The main rendering loop will proceed after the visible objects have been determined:
 
-~~~ {.mermaid format=png width=100% caption="Rendering timeline\label{fig:rendertimeline}"}
-gantt
-    title Rendering Timeline
-    dateFormat  YYYY-MM-DD
-    section Rendering
-    Async object discovery           :a1, 2018-03-14, 2d
-    
-    Render loop						:after a1, 3d
-    section UBO
-    UBO updates      :2018-03-14, 36h
-~~~
-
+\TODO{add rendering flow diagram}
 The main loop then proceeds as follows:
 
 1. Loop through the flow of renderpasses, except Viewport pass:
@@ -314,7 +290,7 @@ Settings are stored...\{TODO: Actually necessary?}
 
 ## Rendering of Volumetric Data
 
-![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.svg)
+![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.png)
 
 Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectivelly correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following blending options:
 
