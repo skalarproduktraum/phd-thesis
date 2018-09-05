@@ -307,12 +307,28 @@ The first two of those, MIP and LMIP, are commutative in the sense that volumes 
 
 Out-of-core rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
 
-## External hardware -- Head-mounted displays and natural/gestural user interface devices
+BigDataViewer[@Pietzsch:2015hl] has introduced a pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources.
+
+scenery also includes support for loading these data sets, and for that makes use of a BigDataViewer-provided library. For correct blending of multiple, unregistered volumes, we make use of a custom `ShaderFactory` that creates a custom shader program for any number of volumes used (subject to hardware limitations, of course). An example of multiple volumes rendered using this technique is shown in Figure \ref{fig:sceneryBDV}.
+
+![scenery rendering an out-of-core dataset using the BigDataViewer library.\TODO{add the actual image}\label{fig:sceneryBDV}](./figures/scenery-bdv.png)
+
+\TODO{Add workflow diagram}
+
+## Clustering
+
+![A user interacting with a _Drosophila_ dataset rendered on a clustered CAVE setup with 5 machines.](./figures/scenery-cave.jpg)
+
+scenery includes support for parallel rendering on multiple machines.
+
+## Integration of External Hardware
+
+### Head-mounted displays and natural/gestural user interface devices
 
 Support for head-mounted displays and control devices is provided by two means:
 
 1. utilising the lwjgl bindings for SteamVR/OpenVR to interface with off-the-shelf HMDs like the Oculus Rift or HTC Vive (see class `OpenVRHMD`).
-2. utilising the custom-built wrappers for the VRPN (Virtual Reality Periphery Network \TODO{cite!}) library, called jVRPN ([github.com/scenerygraphics/jvrpn](https://github.com/scenerygraphics/jvrpn)). jVRPN is used in scenery to e.g. provide support for DTrack devices used in CAVE systems (see class `TrackedStereoGlasses`).
+2. utilising the custom-built wrappers for the VRPN[@TaylorII:2001bq], the Virtual Reality Periphery Network, library, called jVRPN ([github.com/scenerygraphics/jvrpn](https://github.com/scenerygraphics/jvrpn)). jVRPN is used in scenery to e.g. provide support for DTrack devices used in CAVE systems (see class `TrackedStereoGlasses`).
 
 HMDs usually implement the `Display` interface:
 ```
@@ -359,7 +375,6 @@ interface TrackerInput {
 
 In this interface, the noteworthy functions are `getPoseForEye()`, which returns a transformation matrix relative to the origin containing translational and rotational information per-eye. Furthermore, an HMD may provide multiple tracked devices, such as nunchucks, which can be queried via `getTrackedDevices()`. `attachToNode()` then facilitates their attachment to any `Node` in the scene graph, which subsequently inherits the transformations of the tracked device. A model for such a device may be provided by the HMD via `loadModelForMesh()`. Our implementation of SteamVR HMDs provides the correct mesh for a given HMD via this function.
 
-## Integration of External Hardware
 
 ### Augmented Reality and the Hololens
 
