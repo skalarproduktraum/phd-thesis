@@ -35,18 +35,22 @@ Light enters the anterior chamber (7) of the eye, and travels through the iris (
 
 Adaption to visible objects happens in two ways:
 
-* the iris size can be modulated, changing the amount of light reaching the retina by a factor of 16[^irisnote].
+* the iris size can be modulated, changing the amount of light reaching the retina by a factor of 16. This contraction and expansion is not only due to light stimuli, but can also be triggered by drugs or hormonal changes, e.g. due to excitement.
 * ciliary muscles can modulate the lens thickness; when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects — these are the aforementioned vergence movements.
 
-[^irisnote]: The iris not only contracts and expands due to light stimuli, but can also be affected by drugs or hormonal changes, e.g. due to excitement.
+[^irisnote]: .
 
 ## Retinal architecture and processing
 
-![\label{fig:retina_architecture}Inverted retinal architecture of mammals (light path in the image is bottom to top); **RPE**: retinal pigment epithelium; **OS**: outer segment of the photoreceptor cells; **IS**: inner segment of the photoreceptor cells; **ONL**: outer nuclear layer; **OPL**: outer plexiform layer; **INL**: inner nuclear layer **IPL**: inner plexiform layer; **GC**: ganglion cell layer; **P**: pigment epithelium cell; **BM**: Bruch-Membran; **R**: rods; **C**: cones; **H**: horizontal cell; **B**: bipolar cell; **M**: Müller cell; **A**: amacrine cell; **G**: ganglion cell; **AX**: Axon, Image (cc) by [Marc Gabriel Schmid](https://commons.wikimedia.org/wiki/File:Retina_layers.svg)](./figures/retina-architecture.pdf){ width=50% }
+\begin{marginfigure}[-5cm]
+    \label{fig:retina_architecture}
+    \includegraphics{./figures/retina-architecture.pdf}
+    \caption{Inverted retinal architecture of mammals (light path in the image is bottom to top); \emph{RPE}: retinal pigment epithelium; \emph{OS}: outer segment of the photoreceptor cells; \emph{IS}: inner segment of the photoreceptor cells; \emph{ONL}: outer nuclear layer; \emph{OPL}: outer plexiform layer; \emph{INL}: inner nuclear layer \emph{IPL}: inner plexiform layer; \emph{GC}: ganglion cell layer; \emph{P}: pigment epithelium cell; \emph{BM}: Bruch-Membran; \emph{R}: rods; \emph{C}: cones; \emph{H}: horizontal cell; \emph{B}: bipolar cell; \emph{M}: Müller cell; \emph{A}: amacrine cell; \emph{G}: ganglion cell; \emph{AX}: Axon, Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
+\end{marginfigure}
 
 At the retina, the computational processing of incident photons starts in the true sense of the word, so far we've been only concerned with transmission, modulation, and focussing.
 
-A mammal's retina has a somewhat odd architecture, seen in Figure\ref{fig:retina_architecture}, where the light is entering from the bottom of the image. This kind of architecture is called _inverted retina architecture_, as the light has to travel through a maze of neurons and ganglion cells, before reaching the true actors of photon reception, the _rods_ and _cones_. Why this kind of retina architecture has evolved in mammals, or has not been "corrected", is still a matter of scientific debate \TODO{Add citations for retina architecture}. There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. A tradeoff however is the existence of the blind spot where the optic nerve exits, mostly mended by the presence of two eyes.
+A mammal's retina has a somewhat odd architecture, seen in Figure \ref{fig:retina_architecture}, where the light is entering from the bottom of the image. This kind of architecture is called _inverted retina architecture_, as the light has to travel through a maze of neurons and ganglion cells, before reaching the true actors of photon reception, the _rods_ and _cones_. Why this kind of retina architecture has evolved in mammals, or has not been "corrected", is still a matter of scientific debate \TODO{Add citations for retina architecture}. There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. A tradeoff however is the existence of the blind spot where the optic nerve exits, mostly mended by the presence of two eyes.
 
 ### Rods and cones
 

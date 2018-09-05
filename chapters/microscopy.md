@@ -29,7 +29,11 @@ In lightsheet, or similarly, selective plane illumination microscopy[@Huisken:20
 
 ### Data rates
 
-![\label{fig:spim_data_rate}Comparison of the data produced by a confocal microscope equipped with an EM-CCD camera, a lightsheet microscope with an EM-CCD camera, and a lightsheet microscope with an sCMOS camera in the course of 24 hours. Adapted from [@Reynaud:2015dx].](./figures/spim_data_rate.pdf){ width=50% }
+\begin{marginfigure}
+    \includegraphics{./figures/spim_data_rate.pdf}
+    \caption{Comparison of the data produced by a confocal microscope equipped with an EM-CCD camera, a lightsheet microscope with an EM-CCD camera, and a lightsheet microscope with an sCMOS camera in the course of 24 hours. Adapted from \citep{Reynaud:2015dx}.}
+    \label{fig:spim_data_rate}
+\end{marginfigure}
 
 Confocal microscopes equipped with EM-CCD cameras produce an image data rate of about $1\,\mathrm{MB/s}$. Surely, lightsheet microscopes are going to be at least in the same area? 
 
