@@ -28,7 +28,7 @@ ClearVolume has a few discerning features:
 * _multipass maximum projection_ — rendering large datasets in full resolution can be quite taxing on GPUs. To alleviate this problem, we have developed a new way of sampling along a traced ray, based on low-discrepancy sequences (such as the Fibonacci sequence). When multipass maximum projection rendering is active, the first samples along the ray are taken very coarsely, while subsequent samples are placed in a way to fill "holes" along the ray most efficiently (see Figure~\ref{fig:LowDiscrepancySampling} for a sketch of the principle), and
 * _Fiji & KNIME integration_ — as ClearVolume does not care whether the data it visualises comes from a microscope, or any other source, we have also developed plugins for Fiji[@Schindelin:2012ir] and KNIME.
 
-![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments, while with low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are closed most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{ref:LowDiscrepancySampling}](./figures/ClearVolumeMultipassVsNaive.pdf)
+![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments, while with low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are closed most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling}](./figures/ClearVolumeMultipassVsNaive.pdf)
 
 ![__a__ data flow in a ClearVolume-augmented microscopy application, __b__ local or remote visualisation using ClearVolume, __c__ evaluation of data fitness and drift correction, __d__ multi-colour compositing\label{fig:cv}](./figures/ClearVolumeMainFigure.pdf).
 
@@ -78,7 +78,7 @@ The following table shows a comparison of _scenery_ with other state-of-the-art 
 
 Table: _scenery_ compared to other software packages. {#tbl:SceneryComparison}
 
-We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build and maintain the code interfacing VTK's native parts with Java, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0\cite{IEEE OpenGL2.0 VTK paper}, and therefore not able to make full use of current GPUs.
+We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build and maintain the code interfacing VTK's native parts with Java, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0\TODO{Cite IEEE OpenGL2.0 VTK paper}, and therefore not able to make full use of current GPUs.
 
 ## Implementation Challenges
 

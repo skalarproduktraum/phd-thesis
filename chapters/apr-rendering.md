@@ -135,7 +135,7 @@ The Pulling Scheme has the following properties:
 * _Separability_ — The OVPC set can be found by considering each particle cell in $\mathcal{L}$ on its own, and afterwards combining them into one set, covering the whole image. See Figure \ref{fig:APRsep} for a visualisation.
 * _Redundancy_ — When constructing $\mathcal{V}$, all particle cells in $\mathcal{L}$ that have descendants can be ignored, as descendants imply either the same or a tighter constraint on the Resolution Function.
 
-![Separability property of the Pulling Scheme: In the first two parts, the construction of $R^*(y)$ is shown for two separate particle cells, $c_{19,6}$ and $c_{38,6}$. In the third part of the figure, their combination into the Local Particle set $\mathcal{L}$ is shown.](./figures/apr-separability.pdf)
+![Separability property of the Pulling Scheme: In the first two parts, the construction of $R^*(y)$ is shown for two separate particle cells, $c_{19,6}$ and $c_{38,6}$. In the third part of the figure, their combination into the Local Particle set $\mathcal{L}$ is shown.\label{fig:APRsep}](./figures/apr-separability.pdf)
 
 ### Creating the APR from the Optimal Valid Particle Cell set
 
