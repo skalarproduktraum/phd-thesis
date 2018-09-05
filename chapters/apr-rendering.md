@@ -139,7 +139,11 @@ The Pulling Scheme has the following properties:
 
 ### Creating the APR from the Optimal Valid Particle Cell set
 
-After determining $\mathcal{V}$ via the pulling scheme, the particles $\mathcal{P}$ have to be placed. The Resolution Bound implies that within radius $R^*(y)$ of a pixel at $y$, at least one particle has to be placed. This means that for each $c_{i,l} \in \mathcal{V}$, a particle $p$ is added to $\mathcal{P}$ with location $y_p = \frac{|\Omega|}{2^l}(i+0.5)$. As particle positions are already governed by the particle cell, they do not need to be stored explicitly. The only data then stored explicitly are particle properties, such as interpolated intensities $I_p$.
+After determining $\mathcal{V}$ via the pulling scheme, the particles $\mathcal{P}$ have to be placed. The Resolution Bound implies that within radius $R^*(y)$ of a pixel at $y$, at least one particle has to be placed. This means that for each $c_{i,l} \in \mathcal{V}$, a particle $p$ is added to $\mathcal{P}$ with location 
+\begin{align}
+y_p = \frac{|\Omega|}{2^l}(i+0.5)\label{eq:ParticlePosition}. 
+\end{align}
+As particle positions are already governed by the particle cell, they do not need to be stored explicitly. The only data then stored explicitly are particle properties, such as interpolated intensities $I_p$.
 
 Finally, the APR is formed from both the Optimal Valid Particle Cell set $\mathcal{V}$, and the Particle Set $\mathcal{P}$.
 
@@ -154,12 +158,91 @@ If we venture outside of just image processing and turn to (realtime) rendering,
 
 ![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](./figures/vdb2d.png)
 
+## Integration into _scenery_
+
+Our APR software library, _libapr_ is written in C++ and available at [github.com/cheesema/libapr](https://github.com/cheesema/libapr). For interfacing with _scenery_, and the JavaVM ecosystem in general, we have developed a SWIG[@Workshop:uc] ([swig.org](https://swig.org)) wrapper that exposes nearly all of the _libapr_ functionality to Java. The wrapper functionality is part of the main repository.
+
+SWIG works by creating an _interface definition file_ that specifies all header files that need to be wrapped, in our library this file can be found in the root directory as `libapr.i`, and is quite short. The interface definition also includes additional code that is needed to make the wrapping work, e.g. for renaming functions in the case that naming rules clash between wrapper and wrappee, or for specialising templated code. It also includes custom allocator/deallocator code for the `APR` and `ExtraParticleData`[^epdclassnote] class, as memory management between garbage-collected languages and non-garbage-collected ones is not straightforward: In our case, both those classes will retain references to a loaded APR, such that it does not get garbage collected by the VM.
+
+[^epdclassnote]: The `ExtraParticleData` class contains functionality for attaching additional properties to particles, such as intensities.
+
+### Limitations
+
+SWIG does not have very good support for templated code, and the APR library is heavily templated. Therefore, the wrapped library contains only support for 16bit APRs, although this is not too limiting, as that is the most common case, at least in our main use case of fluorescence microscopy.
+
+### Future Directions
+
+We are exploring alternatives to SWIG, such as JavaCPP ([github.com/bytedeco/javacpp](https://github.com/bytedeco/javacpp), which has better support for state-of-the-art C++ features, and also includes an automatic wrapper generator, as well as the possibility for manual adjustments, which SWIG provides with the interface definition file.
+
+A prototype of that effort has been developed by Krzysztof Gonciarz and can be found at [github.com/krzysg/LibAPR-java-wrapper](https://github.com/krzysg/LibAPR-java-wrapper).
+
 ## Rendering
 
 ### Particle-based rendering
 
-### Particle-based volume rendering
+For interactive rendering of the APR, we have integrated the Java wrapper with _scenery_[^demonote]. In scenery, we render the APR as point-based graphics, and subject it to the same postprocessing steps as all other renderings (such as screen-space ambient occlusion, and HDR exposure correction).
+
+For point-based rendering, positions and intensities for particles for all levels of the APR are reconstructed according to Eq. \ref{eq:ParticlePosition}, and stored in a `Mesh`, with the following mapping:
+
+| scenery Node property | APR contents |
+|:--|:--|
+| `Mesh.vertices` | Particle position (x, y, z) |
+| `Mesh.normals` | Particle intensity, particle cell level, Particle normal x (optional) |
+| `Mesh.texcoords` | Particle normal y, Particle normal z |
+
+Table: APR-to-scenery mapping for particle properties. {#tbl:APRtoScenery}
+
+Particle normals can be stored with the regular APR data as additional property, but they might also be computed on-the-fly. The vertex data is then rendered with a custom shader that provides multiple options for colouring the particles, such as colouring by level, by distance to observer, or intensity. The shader also enables thresholding of the particles, resulting in a very simple way to render isosurfaces and segmentations. An example segmentation of _D. rerio_ head vasculature is shown in Figure \ref{fig:APRvasculature} and an example direct particle rendering of a _Drosophila melanogaster_ embryo is shown in Figure \ref{fig:APRdrosophila}
+
+[^demonote]: See [github.com/skalarproduktraum/aprrenderer](https://github.com/skalarproduktraum/aprrenderer) for demo code.
+
+![Image of a APR-based segmentation of _Danio rerio_ head vasculature visualised as point-based graphics. Particles are coloured by distance to the camera. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:APRvasculature}](./figures/apr-vasculature.png)
+
+![Image of a APR-based direct particle rendering of a _Drosophila melanogaster_ embryo after cellularisation. Particles are here colored by level, with blue signifying the highest-resolution level, and red the lowest-resolution level. Dataset courtesy of Loïc Royer, MPI-CBG Dresden & Chen-Zuckerberg Biohub, San Francisco, USA\label{fig:APRdrosophila}](./figures/apr-drosophila.png)
+
+### Particle-based maximum intensity projection
+
+![Comparison of maximum intensity projections of a _D. rerio_ vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](./figures/apr-raycasting.png)
+
+Maximum intensity projects of datasets are one of the most common visualisations used in fluorescence microscopy, therefore it needs to be supported on the APR.
+
+The algorithm for achieving this is relatively simple: First, we create a Mipmap of the original image dimensions down to the lowest level, iterating over all particles, and adding the interpolated pixel intensity to the corresponding pixel. Second, the resulting per-level images are blended together to yield the final maximum intensity projection. More formally, this algorithm is stated in Algorithm \ref{alg:MaxProjectionAPR}.
+
+An example rendering resulting from this algorithm is shown in Figure \ref{fig:PixelVsAPR}, where it is also compared with a maximum intensity projection from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the lowest particle cell levels will appear when the contrast is exaggerated. \TODO{Add exaggerated-contrast image for comparison?}
+
+\begin{algorithm}
+  \SetKwData{Image}{image}
+  \SetKwData{Presult}{$\hat{P}$}
+  \SetKwFunction{InterpolateIntensity}{InterpolateIntensity}
+  \SetKwFunction{Blend}{blend}
+	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
+	\KwResult{Maximum projection of the APR, $\hat{P}$}
+	\BlankLine
+	
+	\Fn{max\_project\_apr($\mathcal{V}$, $\mathcal{P}$)}
+	{
+    	\For{$l_c = l_{max}:l_{min}$ }{
+        	\Image$\leftarrow$ initialize as empty with dimensions $\Omega_{l_c}$
+        	\For{$c_{i,l_c} \in \mathcal{V}$ }{
+            	$y_p$ $\leftarrow$ $\frac{|\Omega|}{2^{l_c}}(i+0.5)$
+            	\tcc{\InterpolateIntensity can either directly use the particle's intensity, or interpolate it}
+            	\Image$(y_p)$ $\leftarrow$ \InterpolateIntensity{$c_{i,l_c}$,$\mathcal{P}$}
+        	}
+        	
+        	\tcc{Blend levels together, e.g. by max operation}
+        	\Presult \leftarrow \Blend{\Presult, \Image}
+    	}
+	}
+	\caption{Maximum Projection on the APR.\label{alg:MaxProjectionAPR}} 
+\end{algorithm}
+
+
+
 
 ### GPU-based volume rendering
+
+Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. In this section, we present an alternative algorithm that solves these problems and makes the APR accessible as a basis for interactive volume rendering of large datasets.
+
+\TODO{add details}
 
 ## Discussion
