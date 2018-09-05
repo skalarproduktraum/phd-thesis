@@ -48,7 +48,7 @@ From the discussion of the various modalities, we conclude:
 
 ## Challenges
 
-A few challenges remain to achieve widespread use of eye tracking technology. We're going to detail them in this section:
+A few challenges remain to achieve widespread use of eye tracking technology. In this section, we're going to detail the Midas Touch Problem and the Double Role of Gaze, Accuracy and Reliability, Availability, and Privacy.
 
 ### Midas Touch Problem and the Double Role of Gaze
 
@@ -81,6 +81,17 @@ Since then, a few projects have started that provide either low-cost or open-sou
 * _aGlass_, which has recently announced the availability of a low-cost, full-FOV eye tracking development kit for the HTC Vive, mainly to facilitate foveated rendering[@Pohl:2016fy].
 
 These developments lead us to believe that widespread and cost-effective use of eye-tracking hardware will soon become a reality.
+
+
+### Privacy
+
+With eye movements being an additional data point that can be used to fingerprint persons and track them through different media and situations, privacy is of course a concern when employing eye tracking.
+
+This concern becomes even more important, as Hoppe, et al. have recently shown that tracking eye movements in daily activities is able to predict four of the Big Five personality traits[@Hoppe:2018ko] — namely neuroticism, extraversion, agreeableness, and conscientiousness —, and additionally, also perceptual curiousity[@Collins:2004ks]. The possibility of doing that makes it absolutely clear that acquired eye tracking data has to stay with the user, and must not leave the computer for outside processing, as the misuse potential is very high. 
+
+With e.g. Facebook also evaluating eye tracking for foveated rendering for their next-generation Oculus headsets[^oculuseyetrackingnote], it remains to be seen whether eye tracking will turn into a privacy nightmare, or stay user-governed as a very promising and useful technology for future human-computer interaction.
+
+[^oculuseyetrackingnote]: See e.g. [uploadvr.com/oculus-is-working-on-eye-tracking-technology-for-next-generation-of-vr/](https://uploadvr.com/oculus-is-working-on-eye-tracking-technology-for-next-generation-of-vr/) or [uploadvr.com/oculus-patented-new-eye-tracking-device-days-acquiring-eye-tribe/](https://uploadvr.com/oculus-patented-new-eye-tracking-device-days-acquiring-eye-tribe/).
 
 ## Review of Interaction Techniques
 
