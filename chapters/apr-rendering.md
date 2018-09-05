@@ -145,6 +145,15 @@ Finally, the APR is formed from both the Optimal Valid Particle Cell set $\mathc
 
 ## Related Work
 
+Adaptive sampling and multiresolution approaches have quite a history in  image processing: Ranging from pyramid image representations[@adelson1984pyramid], over super-pixels[@achanta2012slic; @amat2012fast], wavelet decompositions, level-set methods[@monasse2000fast], dictionary-based sparse representations[@davis1997adaptive], to adaptive mesh representations[@demaret2002scattered; @wang1996use; @yang2003fast], and dimensionality reduction[@schmid2013high; @heemskerk2015tissue]. None of these methods however are able to guarantee all the Reconstruction Criteria we have outlined earlier.
+
+If we venture outside of just image processing and turn to (realtime) rendering, there are two additional techniques that bear a similarity:
+
+* _Sparse Voxel Octrees_ (SVOs)[@Laine:vp; @Crassin:2011uo] work by voxelising a given geometry, with the actual voxels being stored in an octree data structure as final leaf nodes. SVOs are great for storing very large mesh data, but cannot efficiently represent volumetric data as we try to achieve. 
+* _VDB_[@Museth:2013gw] uses B+trees[@Bayer:2002ds] to hierarchically represent volumetric data. From the spatial organisation, VDB is closest to our approach, although the leaf nodes of their tree do still contain voxels instead of particles. Figure \ref{fig:vdb2d} shows a 2D representation of a VDB dataset.
+
+![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](./figures/vdb2d.png)
+
 ## Rendering
 
 ### Particle-based rendering
