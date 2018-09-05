@@ -135,11 +135,15 @@ The renderer then proceeds with scene initialisation, initialising each `Node` i
 
 ### Rendering with Vulkan
 
-When using OpenGL, the initialisation of the renderer proceeds in the following way:
+Here it should be emphasised again that Vulkan provides much leaner, close-to-metal access to the GPU's resources. It is therefore more verbose, but does not do as much validation as OpenGL during runtime.
+
+Instead in Vulkan, a _validation layer_ provides guidance to adherance to the standard. While in OpenGL, all state and state changes are continiously checked for sanity, incurring a performance hit, Vulkan skips these checks, and outsources them to validation layers, that may be activated during startup, and usually only used during development or debugging. Compared to OpenGL error messages, Vulkan validation layers provide highly detailed error messages, thus enabling the developer to quickly pinpoint the source of a problem.
+
+When using Vulkan, the initialisation of the renderer proceeds in the following way:
 
 1. the presence of a virtual reality HMD is checked, and window dimensions set accordingly.
 2. The `RenderConfig` is parsed from a render config YAML file.
-3. The renderer checks whether the user has requested the activation of validation layers[^layernote], and activates them if indicated.
+3. The renderer checks whether the user has requested the activation of validation layers, and activates them if indicated.
 4. the renderer checks whether the output will be embedded in a `SceneryPanel`. If this is not the case, the renderer will request surface rendering extensions, and create a _Vulkan instance_[^instancenote], if not, the instance will be created without the extensions. Further extensions might be required by the presence of an HMD, e.g. for memory sharing.
 5. A `VulkanDevice`[^devicenote] is created, the renderer defaults to the first device found, but this can be overridden by the user.
 6. A device queue[^queuenote] is created.
@@ -157,7 +161,6 @@ When using OpenGL, the initialisation of the renderer proceeds in the following 
 
 Let's note here that the Vulkan renderer does not perform explicit scene initialisation on startup, but discovers the `Node`s of a scene during the rendering loop.
 
-[^layernote]: In Vulkan, a _validation layer_ provides guidance to adherance to the standard. While in OpenGL, all state is continiously checked for sanity, thus incurring a performance hit, Vulkan skips these checks, and has outsourced them to validation layers, that may be activated during startup, and usually only used during development or debugging. Compared to OpenGL error messages, Vulkan validation layers provide highly detailed error messages, usually enabling the developer to quickly pinpoint the source of a problem.
 [^instancenote]: A _Vulkan instance_ is the basic building block of a Vulkan application.
 [^devicenote]: A _Vulkan device_ contains all the information about a device and its capabilities, and all allocations and executions are made with respect to a particular device, also enabling parallel runs on multiple devices.
 [^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asyncronously by the GPU. A queue may be asked for work completion and can be waited on.
@@ -254,7 +257,7 @@ The main loop then proceeds as follows:
 
 scenery's renderers by default perform introspection on the shader files they ingest, by using the _spirvcrossj_[^spirvcrossjnote] library ([github.com/scenerygraphics/spirvcrossj](https://github.com/scenerygraphics/spirvcrossj)). Shader files are loaded via the `Shaders` class, which can provide both source code and SPIRV[^spirvnote] bytecode, either from file sources, or from procedurally generated shaders, and potentially other sources. `Shaders` will try to provide both versions of a shader, but can be instructed to prioritise either the source code version or the SPIRV version of the shader.
 
-By adding the `@ShaderProperty` annotation to a member variable of a `-`Node` class, this variable can be made accessible from the shader via the same name. Supported data types are Java's default elementary types, as well as the `GLVector` vector type and the `GLMatrix` matrix type. Additionally, the `@ShaderProperty` annotation can be added to a hash map of type `HashMap<String, Any>` to provide even more flexibility (e.g. for procedurally-generated shaders). scenery discovers shader properties in the following way:
+By adding the `@ShaderProperty` annotation to a member variable of a `Node`-derived class, this variable can be made accessible from the shader via the same name. Supported data types are Java's default elementary types, as well as the `GLVector` vector type and the `GLMatrix` matrix type. Additionally, the `@ShaderProperty` annotation can be added to a hash map of type `HashMap<String, Any>` to provide even more flexibility (e.g. for procedurally-generated shaders). scenery discovers shader properties in the following way:
 
 1. When loading the shader, construct a list of all the properties that are part of the `ShaderProperties` UBO in the shader file, e.g. 
   ```glsl
