@@ -176,7 +176,56 @@ We are exploring alternatives to SWIG, such as JavaCPP ([github.com/bytedeco/jav
 
 A prototype of that effort has been developed by Krzysztof Gonciarz and can be found at [github.com/krzysg/LibAPR-java-wrapper](https://github.com/krzysg/LibAPR-java-wrapper).
 
-## Rendering
+## Goals
+
+For visualising the Adaptive Particle Representation, we set the following goals:
+
+* the software has to handle the APR datasets in realtime
+* the software needs to be integrated at some point with the existing Fiji/ImageJ ecosystem, i.e. it needs to be usable from Java
+* the software needs to support virtual reality visualisation
+* the software needs to make use of the attributes provided by the APR particles, such as position, normals, etc.
+
+## First prototype
+
+The first prototype developed for APR visualisation, named _dive_, came to be before scenery development even had started.
+
+dive was able to primitively visualise APR datasets as point clouds, with no postprocessing applied (see Figure \ref{fig:dive}), but included limited support for the Oculus Rift DK2 HMD. It was also written from scratch using OpenGL 3.3 and SDL, where the need for a much quicker prototyping solution became apparent, as this cost much more time than it should have.
+
+![Visualisation of a partial _Danio rerio_ vasculature dataset using _dive_ as a point cloud. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:dive}](./figures/dive.png)
+
+### User feedback
+
+A demo of _dive_ was shown at the 2014 BioImageInformatics conference in Leuven, Belgium. In addition, it was tested on 2 more lab members internally. The main points collected were:
+
+* flat colouring leads to a false impression of the dataset
+* dataset loading times were considered good, especially as the original dataset is about 500MiB, and the APR dataset around 20MiB \TODO{verify actual size}.
+* filtering based on particle properties should be possible
+
+## Second prototype
+
+The second prototype built was based on _scenery_ already, and included a port of the code used in _dive_ for importing the APR files. This port resulted in the creation of the Java wrappers discussed in [Integration into _scenery_].
+
+This new iteration now had support for particle properties, as well as HDR and Ambient Occlusion as postprocessing options, as provided by default by scenery. A visualisation with AO on/off is shown in Figure \ref{fig:aprAO}. The second prototype did not include support for VR headsets, as this was still work in progress in scenery back then.
+
+![Visualisation of  _Danio rerio_ vasculature dataset using _scenery_. Top: Ambient occlusion on, revealing the details of the vasculature. Bottom: Ambient occlusion off. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:aprAO}](./figures/apr-ao.png)
+
+### User feedback
+ 
+ Compared to the first prototype, user feedback now was better:
+ 
+ * Ambient Occlusion was well liked, as it gives the dataset a more plastic, more detailed appearance and highlights small details.
+ * Custom colormaps introduce more customisation options.
+ * Filtering can help to create segmentation-like visualisations easily.
+
+However, there were also negative comments:
+
+* 3D model-like appearance is unusual for microscopy datasets, biologists are more used to maximum intensity projections or alpha blending-based renderings.
+* Re-addition of Virtual Reality support would be nice.
+* It would be good if filtering on the particles could be interactively controlled.
+
+## Third prototype
+
+For the third prototype, the APR was fully integrated into _scenery_, and additional prototypes were developed for maximum projection renderings, and GPU-based volume renderings of APR datasets:
 
 ### Particle-based rendering
 
@@ -202,13 +251,15 @@ Particle normals can be stored with the regular APR data as additional property,
 
 ### Particle-based maximum intensity projection
 
-![Comparison of maximum intensity projections of a _D. rerio_ vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](./figures/apr-raycasting.png)
+![Comparison of maximum intensity projections of a _Danio rerio_ (zebrafish) vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](./figures/apr-raycasting.png)
+
+![Comparison of maximum intensity projections of a _Triboleum castaneum_ (red flour beetle) dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Akanksha Jain, Tomancak Lab, MPI-CBG Dresden\label{fig:TriboliumPixelVsAPR}](./figures/apr-tribolium.png)
 
 Maximum intensity projects of datasets are one of the most common visualisations used in fluorescence microscopy, therefore it needs to be supported on the APR.
 
 The algorithm for achieving this is relatively simple: First, we create a Mipmap of the original image dimensions down to the lowest level, iterating over all particles, and adding the interpolated pixel intensity to the corresponding pixel. Second, the resulting per-level images are blended together to yield the final maximum intensity projection. More formally, this algorithm is stated in Algorithm \ref{alg:MaxProjectionAPR}.
 
-An example rendering resulting from this algorithm is shown in Figure \ref{fig:PixelVsAPR}, where it is also compared with a maximum intensity projection from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the lowest particle cell levels will appear when the contrast is exaggerated. \TODO{Add exaggerated-contrast image for comparison?}
+Two example rendering resulting from this algorithm are shown in Figures \ref{fig:PixelVsAPR} and \ref{fig:TriboliumPixelVsAPR}, where it is also compared with a maximum intensity projection from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the lowest particle cell levels will appear when the contrast is exaggerated. \TODO{Add exaggerated-contrast image for comparison?}
 
 \begin{algorithm}
   \SetKwData{Image}{image}
@@ -244,5 +295,9 @@ An example rendering resulting from this algorithm is shown in Figure \ref{fig:P
 Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. In this section, we present an alternative algorithm that solves these problems and makes the APR accessible as a basis for interactive volume rendering of large datasets.
 
 \TODO{add details}
+
+### User feedback
+
+
 
 ## Discussion
