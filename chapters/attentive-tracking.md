@@ -22,7 +22,7 @@ Encouraged by the positive reactions to the first, admittedly very primitive, pr
 
 ### Selecting the eye tracking hardware
 
-For the this project, we have chosen the _Pupil_ eye trackers produced by _Pupil Labs_[@Kassner:2014kh][^pupilnote], as they provide an open-source and very competitively priced solution that is easy to integrate into HMD headsets. The software offered by _Pupil Labs_ is available as GPL-licensed open-source software on Github ([https://github.com/pupillabs](https://github.com/pupillabs)) and can be easily extended. In addition to being open, data gathered by the software is also available to external applications via an easy-to-implement, ZeroMQ-based protocol (opposed to closed-source proprietary libraries required by other products), which even enables the use of the eye tracking data over the network.
+For the this project, we have chosen the _Pupil_ eye trackers produced by _Pupil Labs_[@Kassner:2014kh][^pupilnote], as they provide an open-source and very competitively priced solution that is easy to integrate into HMD headsets. The software offered is available as LGPL-licensed open-source software on Github ([https://github.com/pupil-labs](https://github.com/pupil-labs)) and can be easily extended. In addition to being open, data gathered by the software is also available to external applications via an easy-to-implement, ZeroMQ-based protocol (opposed to closed-source proprietary libraries required by other products), which even enables the use of the eye tracking data over the network.
 
 [^pupilnote]: The Pupil HMD-based eye tracker from Pupil Labs, see [https://www.pupil-labs.com](https://www.pupil-labs.com).
 
