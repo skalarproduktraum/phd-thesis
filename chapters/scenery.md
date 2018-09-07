@@ -78,7 +78,7 @@ The following table shows a comparison of _scenery_ with other state-of-the-art 
 
 Table: _scenery_ compared to other software packages. {#tbl:SceneryComparison}
 
-We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build and maintain the code interfacing VTK's native parts with Java, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.0\TODO{Cite IEEE OpenGL2.0 VTK paper}, and therefore not able to make full use of current GPUs.
+We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes very close. While _VTK_ is widely used and stable, and actually provides wrapper code for use in Java, it is difficult to build and maintain the code interfacing VTK's native parts with Java, and does not offer easy modifications of the rendering code, which is also still using OpenGL 2.1[@Hanwell:2015iv], and therefore not able to make full use of current GPUs.
 
 ## Implementation Challenges
 
