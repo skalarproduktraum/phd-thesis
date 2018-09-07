@@ -34,16 +34,26 @@ We will detail the architecture of the framework and demonstrate its necessity, 
 Specifically, we will detail the following contributions:
 
 * _scenery_, a framework for creating visualisation and interaction interfaces with both volumetric and geometric data, supporting virtual and augmented reality, and clustered rendering.
+* _SciView_, a plugin for the Fiji/ImageJ ecosystem, make scenery's flexible visualisation solutions available to the end user.
 * rendering the _Adaptive Particle Representation_[@Cheeseman:ia], which can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. The APR is a new computational particle-based representation of image and volume data that can significantly reduce both storage and processing cost. All rendering algorithms are implemented on top of _scenery_.
 * _attentive tracking_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
 * _interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_.
 
-### Publications
+## Publications
 
-The following peer-reviewed papers have been published from parts of this work:
+Some of the results presented in this thesis have already been published :
+
+### Peer-reviewed Papers
 
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
 * Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018. _Forget Pixels: Adaptive Particle Representation of Fluorescence Microscopy Images_. ([bioRxiv preprint](https://www.biorxiv.org/content/early/2018/03/02/263061), under revision at _Nature Communications_)
+
+### Conference Abstracts
+
+* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: _dive into data — immersive 3D particle visualisation_, _BioImageInformatics_, Leuven, 2014
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: _ClearVolume - open-source 4D live visualisation for light-sheet microscopy_. _Focus on Microscopy_, Göttingen, 2015
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: _ClearVolume - from microscope to visualisation in seconds_, _VizBi_, EMBL Heidelberg, 2016
+* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: _Exploring the scenery of lightsheet microscopy with virtual reality_, _LSFM2018_, Dresden
 
 ### Supervision
 
