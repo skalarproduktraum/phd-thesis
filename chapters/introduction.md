@@ -3,11 +3,11 @@
 
 # Introduction
 
-## The State of Biology
+## Current Trends in Biology
 
-In recent years, biology has made a remarkable jump from being a discipline that is mostly wetlab-based to a a discipline utilising the tools and methods of mathematics, physics and computer science. 
+In recent years, biology has made a remarkable jump from being a discipline that is mostly wetlab-based to a a discipline utilising the tools and methods of mathematics, physics, and computer science. 
 
-Developments on the experimental side like light-sheet fluorescence microscopy [@Huisken:2004ky], optogenetics [@Boyden:2005cd; @Li:2005ha] or Cryo-EM [@Adrian:1984vv] have opened new venues for investigation, while theoretical contributions like active matter theory (cite) or ... now shed more light on these results.
+Developments on the experimental side like light-sheet fluorescence microscopy [@Huisken:2004ky], optogenetics [@Boyden:2005cd; @Li:2005ha], or Cryo-EM [@Adrian:1984vv] have opened new venues for investigation, while theoretical contributions, e.g. to active matter theory [@Mietke:2018b12] now shed more light on these results.
 
 Investigating biological systems in two dimensions have already led to remarkable results in the past (Drosophila embryonic genes, etc.). Building on these, and utilising the techniques mentioned above, we are now able to investigate biological systems in three dimensions, and over time, making correct reasoning about spatiotemporal processes a reality. 
 
