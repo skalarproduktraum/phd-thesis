@@ -45,15 +45,16 @@ Some of the results presented in this thesis have already been published :
 
 ### Peer-reviewed Papers
 
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018. _Forget Pixels: Adaptive Particle Representation of Fluorescence Microscopy Images_. ([bioRxiv preprint](https://www.biorxiv.org/content/early/2018/03/02/263061), under revision at _Nature Communications_)
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018 ([bioRxiv preprint](https://www.biorxiv.org/content/early/2018/03/02/263061))
 
 ### Conference Abstracts
 
-* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: _dive into data — immersive 3D particle visualisation_, _BioImageInformatics_, Leuven, 2014
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: _ClearVolume - open-source 4D live visualisation for light-sheet microscopy_. _Focus on Microscopy_, Göttingen, 2015
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: _ClearVolume - from microscope to visualisation in seconds_, _VizBi_, EMBL Heidelberg, 2016
-* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: _Exploring the scenery of lightsheet microscopy with virtual reality_, _LSFM2018_, Dresden
+* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016
+* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018
+* __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
 
 ### Supervision
 
