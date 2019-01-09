@@ -51,10 +51,22 @@ Some of the results presented in this thesis have already been published :
 ### Conference Abstracts
 
 * __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
+
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015
+
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016
+
 * __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018
+
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
+
+### Papers in Preparation
+
+The following papers containing material from this work are currently under preparation:
+
+* __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji.
+* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Sbalzarini, I.F.: scenery - a cross-platform virtual reality visualisation framework for arbitrary geometric and volumetric data.
+* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Robust pupil detection for interactive, real-world eye tracking applications using genetic programming.
 
 ### Supervision
 
