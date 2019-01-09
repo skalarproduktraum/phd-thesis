@@ -78,10 +78,10 @@ The algorithm for the pulling scheme is summarised in Algorithm \ref{alg:Pulling
 
 \SetKwProg{Fn}{Function}{}{}
 \begin{algorithm}
-	\KwData{Local Particle Cell set $\mathcal{L}$}
-	\KwResult{Optimal Valid Particle Cell set $\mathcal{V}(\mathcal{L})$}
-	\BlankLine
-	
+​	\KwData{Local Particle Cell set $\mathcal{L}$}
+​	\KwResult{Optimal Valid Particle Cell set $\mathcal{V}(\mathcal{L})$}
+​	\BlankLine
+​	
 	\Fn{pulling\_scheme($\mathcal{L}$)}
 	{
 		
@@ -124,8 +124,9 @@ The algorithm for the pulling scheme is summarised in Algorithm \ref{alg:Pulling
 		return all type SEED, BOUNDARY and FILLER Particle Cells in $\mathcal{C}$ as $\mathcal{V}$\;
 	}
 	\BlankLine
-	
-	
+
+
+​	
 	\caption{\textbf{The Pulling Scheme algorithm}. The Pulling Scheme efficiently computes the OVPC set $\mathcal{V}$ from the Local Particle Cell set $\mathcal{L}$ using a temporary pyramid mesh data structure. $\mathcal{C}(l)$ denotes all Particle Cells on level $l$.\label{alg:PullingScheme}} 
 \end{algorithm}
 
@@ -153,7 +154,7 @@ Adaptive sampling and multiresolution approaches have quite a history in  image 
 
 If we venture outside of just image processing and turn to (realtime) rendering, there are two additional techniques that bear a similarity:
 
-* _Sparse Voxel Octrees_ (SVOs)[@Laine:vp; @Crassin:2011uo] work by voxelising a given geometry, with the actual voxels being stored in an octree data structure as final leaf nodes. SVOs are great for storing very large mesh data, but cannot efficiently represent volumetric data as we try to achieve. 
+* _Sparse Voxel Octrees_ (SVOs)[@Laine:EffectiveSVO; @Crassin:2011uo] work by voxelising a given geometry, with the actual voxels being stored in an octree data structure as final leaf nodes. SVOs are great for storing very large mesh data, but cannot efficiently represent volumetric data as we try to achieve. 
 * _VDB_[@Museth:2013gw] uses B+trees[@Bayer:2002ds] to hierarchically represent volumetric data. From the spatial organisation, VDB is closest to our approach, although the leaf nodes of their tree do still contain voxels instead of particles. Figure \ref{fig:vdb2d} shows a 2D representation of a VDB dataset.
 
 ![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](./figures/vdb2d.png)
@@ -210,9 +211,9 @@ This new iteration now had support for particle properties, as well as HDR and A
 ![Visualisation of  _Danio rerio_ vasculature dataset using _scenery_. Top: Ambient occlusion on, revealing the details of the vasculature. Bottom: Ambient occlusion off. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:aprAO}](./figures/apr-ao.png)
 
 ### User feedback
- 
+
  Compared to the first prototype, user feedback now was better:
- 
+
  * Ambient Occlusion was well liked, as it gives the dataset a more plastic, more detailed appearance and highlights small details.
  * Custom colormaps introduce more customisation options.
  * Filtering can help to create segmentation-like visualisations easily.
@@ -266,23 +267,23 @@ Two example rendering resulting from this algorithm are shown in Figures \ref{fi
   \SetKwData{Presult}{$\hat{P}$}
   \SetKwFunction{InterpolateIntensity}{InterpolateIntensity}
   \SetKwFunction{Blend}{blend}
-	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
-	\KwResult{Maximum projection of the APR, $\hat{P}$}
-	\BlankLine
-	
+​	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
+​	\KwResult{Maximum projection of the APR, $\hat{P}$}
+​	\BlankLine
+​	
 	\Fn{max\_project\_apr($\mathcal{V}$, $\mathcal{P}$)}
 	{
-    	\For{$l_c = l_{max}:l_{min}$ }{
-        	\Image$\leftarrow$ initialize as empty with dimensions $\Omega_{l_c}$
-        	\For{$c_{i,l_c} \in \mathcal{V}$ }{
-            	$y_p$ $\leftarrow$ $\frac{|\Omega|}{2^{l_c}}(i+0.5)$
-            	\tcc{\InterpolateIntensity can either directly use the particle's intensity, or interpolate it}
-            	\Image$(y_p)$ $\leftarrow$ \InterpolateIntensity{$c_{i,l_c}$,$\mathcal{P}$}
-        	}
-        	
-        	\tcc{Blend levels together, e.g. by max operation}
-        	\Presult \leftarrow \Blend{\Presult, \Image}
-    	}
+		\For{$l_c = l_{max}:l_{min}$ }{
+	    	\Image$\leftarrow$ initialize as empty with dimensions $\Omega_{l_c}$
+	    	\For{$c_{i,l_c} \in \mathcal{V}$ }{
+	        	$y_p$ $\leftarrow$ $\frac{|\Omega|}{2^{l_c}}(i+0.5)$
+	        	\tcc{\InterpolateIntensity can either directly use the particle's intensity, or interpolate it}
+	        	\Image$(y_p)$ $\leftarrow$ \InterpolateIntensity{$c_{i,l_c}$,$\mathcal{P}$}
+	    	}
+	    	
+	    	\tcc{Blend levels together, e.g. by max operation}
+	    	\Presult \leftarrow \Blend{\Presult, \Image}
+		}
 	}
 	\caption{Maximum Projection on the APR.\label{alg:MaxProjectionAPR}} 
 \end{algorithm}
