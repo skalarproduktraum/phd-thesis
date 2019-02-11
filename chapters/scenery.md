@@ -1,7 +1,7 @@
 \part{scenery}
 
 # scenery
-
+    
 In the chapters before, we have described the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customizable visualisations, and reproducibility. 
 
 To realise these needs, we have chosen to develop our own visualisation framework, as currently existing libraries were not flexible.
@@ -12,7 +12,7 @@ In this chapter, we are going to introduce the framework, starting with the deve
 
 This chapter is then followed by the architecture chapter, going into deeper details for each of scenery's building blocks. As last part of this section, we introduce a development model for _scenery_-based applications.
 
-## History
+## ClearVolume
 
 ![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset.](./figures/ClearVolumeFiji.png)
 
@@ -114,9 +114,9 @@ In 2016, the Khronos Group has published a new graphics API named _Vulkan_, aimi
 * More verbose code, with less checks done by the driver, leading to more clarity about what is done, when, and how. Now however the developer needs to take greater care in adhering to the specification, as it clearly states that the driver is allowed to crash an application in case it is behaving out-of-spec.
 * Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration with every frame. Command buffers can also be created by multiple threads in parallel, but need to be submitted serially.
 * Resources, such as textures and buffers, and their descriptors, have to be allocated and managed on a much more fine-grained level than with OpenGL.
-* (Homogeneous) Multi-GPU support (since Vulkan 1.1).
+* Vendor-independent (Homogeneous) Multi-GPU support (since Vulkan 1.1).
 * A Conformance Test Suite (CTS) for the graphics drivers, ensuring that a Vulkan-based application behaves the same on all drivers.
-* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with large possibilities for introspection and reflection, e.g. via the tool/library _spirv-cross_.
+* Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with interesting new possibilities for introspection and reflection, e.g. via the tool/library _spirv-cross_.
 
 From this list it is clear that with great power comes great responsibility — and that the OpenGL and Vulkan APIs do not map very well to each other. 
 
