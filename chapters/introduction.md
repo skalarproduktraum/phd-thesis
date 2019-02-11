@@ -1,33 +1,32 @@
 \mainmatter
-\part{Introduction}
 
 # Introduction
 
-## Current Trends in Biology
+## Current Trends and Challenges in Biology
 
-In recent years, biology has made a remarkable jump from being a discipline that is mostly wetlab-based to a a discipline utilising the tools and methods of mathematics, physics, and computer science. 
+In the last three decades, biology has gone through a remarkable development from being a discipline that is mostly wetlab-based to one  utilising the tools and methods of mathematics, physics, and computer science, becoming more and more reliant and intertwined with them: 
 
-Developments on the experimental side like light-sheet fluorescence microscopy [@Huisken:2004ky], optogenetics [@Boyden:2005cd; @Li:2005ha], or Cryo-EM [@Adrian:1984vv] have opened new venues for investigation, while theoretical contributions, e.g. to active matter theory [@Mietke:2018b12] now shed more light on these results.
+To just highlight a few, developments on the experimental side like light-sheet fluorescence microscopy [@Huisken:2004ky], optogenetics [@Boyden:2005cd; @Li:2005ha], or Cryo-EM [@Adrian:1984vv] have opened new venues for investigation, while theoretical contributions, e.g. to active matter theory [@Mietke:2018b12] now shed more light on these results and provide analytical guidance.
 
-Investigating biological systems in two dimensions have already led to remarkable results in the past (Drosophila embryonic genes, etc.). Building on these, and utilising the techniques mentioned above, we are now able to investigate biological systems in three dimensions, and over time, making correct reasoning about spatiotemporal processes a reality. 
+Investigating biological systems in two dimensions has already led to fascinating and important results in the past (Drosophila embryonic genes, etc.). Building on these, and utilising the mathematical, physical, and computational techniques mentioned above, we are now able to investigate biological systems in three dimensions, and over time, and at high speed, enabling in-depth observation and reasoning about spatiotemporal processes.
 
-Even more recent developments, like CRISPR/Cas9 [@Jinek:2012hm] or gene drives enable us to manipulate specimen in ways and on timescales thought impossible before. 
+Even more recent developments, like CRISPR/Cas9 [@Jinek:2012hm] or gene drives enable us to manipulate specimen in ways and on fast timescales thought impossible before. 
 
-All of these need new, flexible ways of interacting with the large amounts of data produced, and with the instruments producing this data.
+What these developments lack to a certain extent, are ways to again bring the experimenter into focus, both during the experiment, and during analysis, to enable new and flexible ways of interacting the large and complex amounts of data state-of-the-art experiments create, and also with the scientific instruments producing this data.
 
 ## Virtual and Augmented Reality
 
-With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq] from the 1960s. In the meantime, and over the course of two Virtual Reality Revolutions -- with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992vt]) --  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly expensive, specialised device into the homes of users.
+With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems — from the 1960s — are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq], made famous as _The Mother of All Demos_. In the meantime, and over the course of two Virtual Reality Revolutions — with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992vt]) —  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly specialised and expensive device into the homes  or offices of potential users.
 
 ## Natural User Interfaces
 
-Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (Tobii, cite). Such devices and their interaction modalities are commonly called Natural User Interfaces (NUIs, cite).
+Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect or the Leap Motion), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (such as eye trackers from Tobii or Pupil Labs). Such devices and their interaction modalities are commonly called Natural User Interfaces (NUIs, cite).
 
 ## Scope of this thesis and contributions
 
 In this thesis, we aim to demonstrate that the inclusion of natural user interfaces, combined with Virtual or Augmented Reality, and advanced realtime rendering techniques can enhance the biologist's workflow, and enable new kinds of experiments, _in vivo_ and _in silico_.
 
-To achieve this, we develop an open-source realtime rendering and interaction framework named _scenery_ that enables rapid prototyping of visualisations of biology data, and interaction with such data on the basis of Natural User Interfaces. This framework supports rendering on regular desktop screens, virtual reality headsets (like the Oculus Rift or HTC Vive), and augmented reality headsets (like the Microsoft HoloLens). 
+To achieve this, we develop an open-source realtime rendering and interaction framework named _scenery_ that enables rapid prototyping of visualisations of geometric and volumetric biological data, and interaction with such on the basis of Natural User Interfaces. The framework supports rendering on regular desktop screens, virtual reality headsets (like the Oculus Rift or HTC Vive), and augmented reality headsets (like the Microsoft HoloLens). 
 
 We will detail the architecture of the framework and demonstrate its necessity, utility and comprehensiveness on a set of case studies, and show further contributions made possible by the use of the framework.
 
@@ -66,13 +65,16 @@ The following papers containing material from this work are currently under prep
 
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji.
 * __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Sbalzarini, I.F.: scenery - a cross-platform virtual reality visualisation framework for arbitrary geometric and volumetric data.
-* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Robust pupil detection for interactive, real-world eye tracking applications using genetic programming.
+* __Günther, U.__, Simson, J, Sbalzarini, I.F., Harrington, K.I.S.: Linear Genetic Programming for robust pupil detection in interactive, virtual reality eye tracking applications.
 
 ### Supervision
 
 The following students have been supervised by the author in the duration of the thesis:
 
-* Sahil Loomba, intern
-* Aryaman Gupta, intern and master student
+* Sahil Loomba, intern, May - August 2014.
+* Aryaman Gupta, intern and master student, June - December 2017.
+
+
+\part{Preliminaries}
 
 
