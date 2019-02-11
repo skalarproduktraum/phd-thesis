@@ -14,6 +14,6 @@
 
 \begin{marginfigure}
     \includegraphics{./figures/developmental-timelapse.png}
-    \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in SciView, from \citep{Daetwyler:2018}.}
+    \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in SciView, from \citep{Daetwyler:2018e8d}.}
     \label{fig:developmental_timelapse_sciview}
 \end{marginfigure}
