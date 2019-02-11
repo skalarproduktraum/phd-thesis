@@ -15,7 +15,8 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) Makefile
 	$(PANDOC) -F pandoc-latex-environment -F pandoc-tablenos \
 		--bibliography=thesis.bib --natbib \
 		--metadata link-citations=true --pdf-engine=lualatex -H $(PREAMBLE) \
-		-V fontsize=12pt -V documentclass:tufte-book -V papersize:a4 -V classoption:openright \
+		-V fontsize=12pt -V documentclass:tufte-book \
+		-V classoption:a4paper -V papersize:a4 -V classoption:openright \
 		-V subparagraph -V lof -V lot --top-level-division=chapter \
 		--template=tex/thesis-template.latex \
 		metadata.yaml $(CHAPTERS) -s -o $@
