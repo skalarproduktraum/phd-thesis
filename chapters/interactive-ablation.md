@@ -47,4 +47,4 @@ Additionally, we abandoned browser-based prototyping after this first iteration,
 
 ## Hardware Realisation
 
-    ![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
+![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
