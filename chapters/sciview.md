@@ -11,3 +11,9 @@
 ### ClearVolume
 
 ## Example Use Cases
+
+\begin{marginfigure}
+    \includegraphics{./figures/developmental-timelapse.png}
+    \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in SciView, from \citep{Daetwyler:2018}.}
+    \label{fig:developmental_timelapse_sciview}
+\end{marginfigure}
