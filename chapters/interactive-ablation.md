@@ -24,6 +24,16 @@ Optical breakdown of tissue occurs when the applied electric field $\symbfit{E}$
 
 ## Common Use Cases
 
+## Related work
+
+In [@Peng:2014bu] the authors demonstrate the _Virtual Finger_ system to  boost the precision of selection tasks in 3D environments, such as for neuron tracing, or in microsurgery settings.
+
+In [@Engelbrecht:2007tu] the authors demonstrate a SPIM-based microsurgery/laser ablation setup, powered by a $355\,\mathrm{nm}$ UV laser, which is able to perform single cuts in three dimensions.
+
+In [@Oswald:2010pr], the author demonstrates a versatile laser ablation setup on top of a confocal microscope that is able to perform cuts with rates in the $1\,\mathrm{kHz}$ range over an area of $100^2\,\mathrm{µm}$.
+
+In [@Brugues:2012fx] the authors use a femtosecond infrared laser to perform plane-like cuts composed of many, micrometer-spaced lines inside the spindle apparatus of a _Xenopus_ cell undergoing metaphase to investigate synchronous depolymerisation.
+
 ## Limitations of the current approach
 
 ## Prototyping, Stage 1
