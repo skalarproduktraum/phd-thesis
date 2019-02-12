@@ -45,7 +45,8 @@ Some of the results presented in this thesis have already been published :
 ### Peer-reviewed Papers
 
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F., 2018.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018 ([bioRxiv preprint](https://www.biorxiv.org/content/early/2018/03/02/263061))
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
+* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_ (under revision), 2018, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
 
 ### Conference Abstracts
 
@@ -75,6 +76,9 @@ The following students have been supervised by the author in the duration of the
 * Aryaman Gupta, intern and master student, June - December 2017.
 
 
+## What follows
+
+In the following, first part of the thesis we are going to introduce the basic concepts and technologies as the _Preliminaries_ that have ultimately led to the challenges addressed in this thesis. We start with _fluorescence microscopy_, describing the developments from first light microscopes to modern lightsheet volumetric microscopes, followed by a chapter about _visual processing_, detailing the detection and processing of visual information in the human nervous system. The visual processing chapter is followed by the _XR_ chapter, describing the historic and current developments in virtual and augmented reality, together termed as _cross reality_, or _XR_. The final chapter of the preliminaries part introduces _Eye Tracking and Gaze-based interaction_, going into detail how a mode of perception can also be used for control purposes. At the end of each of _preliminaries_ chapters, we state specific challenges that will be addressed in the _Case Studies_ in Part Three of this thesis. In Part Two, we describe our visualisation framework _scenery_ in detail, which is the enabling technology for the case studies in Part Three. Finally, in Part Four, we are going to conclude our findings and provide an outlook to future work.
+
+
 \part{Preliminaries}
-
-
