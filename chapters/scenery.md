@@ -2,11 +2,11 @@
 
 # scenery
     
-In the chapters before, we have described the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customizable visualisations, and reproducibility. 
+In the chapters before, we have highlighted the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customisable visualisations, and reproducibility. 
 
-To realise these needs, we have chosen to develop our own visualisation framework, as currently existing libraries were not flexible.
+To realise these needs, we have chosen to develop our own visualisation framework, as existing frameworks did not have the capabilities we envisioned and did not interoperate well with our existing image analysis libraries, mainly from the ImageJ ecosystem.
 
-The result of this effort is _scenery_, a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, targeting the Java Virtual Machine (JavaVM). scenery can be used on both desktop machines, as well as clustered setups, such as the ones commonly used for CAVE systems or Powerwalls.
+The result of this effort is _scenery_, a toolkit for prototyping and delivering multimodal, customisable, and interactive scientific visualisations, targeting the Java Virtual Machine (JavaVM/JVM). scenery can be used on both desktop machines, and on clustered setups, such as the ones commonly used for CAVE systems or Powerwalls.
 
 In this chapter, we are going to introduce the framework, starting with the development of ClearVolume which later ignited the development of _scenery_. Subsequently, we outline the exact design goals and decisions made along the way, and compare _scenery_ to existing frameworks and related works, followed by a high-level description of its components. 
 
@@ -14,38 +14,41 @@ This chapter is then followed by the architecture chapter, going into deeper det
 
 ## ClearVolume
 
-![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset.](./figures/ClearVolumeFiji.png)
+![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset.\label{fig:cvfiji}](./figures/ClearVolumeFiji.png)
 
 The work presented in this section has been done in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Myers Lab, MPI-CBG, and has been published in 
 Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
 
-In 2015, we published ClearVolume [@Royer:2015tg], a visualisation library enabling live, realtime visualisation of lightsheet microscopy data, with the capability to be integrated into existing setups[^integrationnote].
+In 2015, we published ClearVolume [@Royer:2015tg], a visualisation library enabling live, realtime visualisation of lightsheet microscopy data, with the capability to be integrated directly into an existing microscopy setup — ClearVolume integrates will with commonly used microscopy control software, like MicroManager[@Edelstein:2010gf] or LabVIEW.
 
-ClearVolume has a few discerning features:
+The discerning features of ClearVolume are:
 
-* _local and remote visualisation_ — the data acquired on the microscope can be visualised right on the instrument's control computer, or on a remote machine, with the data transferred over the network, albeit uncompressed. Especially when working with genetically modified organism, where the instrument has to be located in a S1 or S2-designated area, remote viewing proved to be a useful tool for biologists to check on the specimen's health,
+* _local and remote visualisation_ — the data acquired on the microscope can be visualised right on the instrument's control computer, or on a remote machine, with the data transferred over the network, albeit uncompressed. Especially when working with genetically modified organism, where the instrument has to be located in a designated S1 or S2 area, remote viewing proved to be a useful tool for biologists to check on the specimen's health,
 * _source/sink architecture_ — the data acquired in ClearVolume can be sent through a processing pipeline on the GPU, with the visualisation part at the end of the pipeline, and a number of processing steps before. These processing steps can include e.g. image sharpness measurement, sample drift measurement, or Lucy-Richardson deconvolution,
-* _multipass maximum projection_ — rendering large datasets in full resolution can be quite taxing on GPUs. To alleviate this problem, we have developed a new way of sampling along a traced ray, based on low-discrepancy sequences (such as the Fibonacci sequence). When multipass maximum projection rendering is active, the first samples along the ray are taken very coarsely, while subsequent samples are placed in a way to fill "holes" along the ray most efficiently (see Figure~\ref{fig:LowDiscrepancySampling} for a sketch of the principle), and
-* _Fiji & KNIME integration_ — as ClearVolume does not care whether the data it visualises comes from a microscope, or any other source, we have also developed plugins for Fiji[@Schindelin:2012ir] and KNIME.
+* _multipass maximum projection_ — rendering large datasets in full resolution can be quite taxing on GPUs. To alleviate this problem, we have developed a new way of sampling along a traced ray, based on low-discrepancy sequences (such as the Fibonacci sequence). When multipass maximum projection rendering is active, the first samples along the ray are taken very coarsely, while subsequent samples are placed in a way to fill "holes" along the ray most efficiently (see Figure~\ref{fig:LowDiscrepancySampling} for a sketch of the principle),
+* _sample tracking_ — utilising the source/sink architecture for data, we developed a simple center-of-mass tracking algorithm that stabilises the sample in the center of the user's field of view. The tracking can be enabled or disabled at any point in time (see Figure \ref{fig:ClearVolume}c),
+* _image quality measurement_ — again utilising the source/sink architecture for data, we added a flexible evaluator of image sharpness to the system, where in the default settings the Tenengrad image sharpness measure is used (see Figure \ref{fig:ClearVolume}c), and
+* _Fiji & KNIME integration_ — as ClearVolume does not care whether the data it visualises comes from a microscope, or any other source. We have developed plugins for Fiji[@Schindelin:2012ir] and KNIME, in addition to the integration with MicroManager and LabVIEW (see Figure \ref{fig:cvfiji}).
 
-![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments, while with low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are closed most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling}](./figures/ClearVolumeMultipassVsNaive.pdf)
+![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments, while with low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are closed most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} From [@Royer:2015tg]](./figures/ClearVolumeMultipassVsNaive.pdf)
 
-![__a__ data flow in a ClearVolume-augmented microscopy application, __b__ local or remote visualisation using ClearVolume, __c__ evaluation of data fitness and drift correction, __d__ multi-colour compositing\label{fig:cv}](./figures/ClearVolumeMainFigure.pdf).
 
-In the time since its publication, ClearVolume has proven to be a useful tool for lightsheet microscope development and usage, and has seen use for both highly automated microscopy[@Royer:2016fh] and regular visualisation tasks. 
+![a: data flow in a ClearVolume-augmented microscopy application, b: local or remote visualisation using ClearVolume, c: evaluation of data fitness/sharpness and drift correction applied, d: multi-colour compositing.\label{fig:ClearVolume} From [@Royer:2015tg].](./figures/ClearVolumeMainFigure.pdf)
 
-However, ClearVolume only supports the visualisation of a single, potentially multicolour, registered volumetric dataset, but especially with the foray of computational methods into systems biology, volumetric data is not the only kind of data that needs to be visualised, and the need for a more flexible architecture, supporting complex scenes, as well as geometric and custom datatypes, arose. Furthermore, we also recognised the need for integration of various interaction hardware, which albeit possible with ClearVolume, needed to happen on a deeper level, with the single-volume focus also being a problem.
+In the time since its publication, ClearVolume has proven to be a useful tool for lightsheet microscope development and usage, and has seen use for both highly automated microscopy[@Royer:2016fh] and regular desktop visualisation tasks. 
 
-The development of _scenery_ was started out of this need.
+However, ClearVolume only supports the visualisation of a single (although potentially multicolour) registered volumetric dataset, which needs to fit into GPU memory. With the ongoing foray of more complex computational methods into systems biology, volumetric data is not the only kind of data that needs to be visualised, and the need for a more flexible architecture, supporting complex scenes, as well as geometric and custom datatypes, arose. Furthermore, we also recognised the need for integration of various interaction hardware, which albeit possible with ClearVolume, needed to happen on a deeper level, with the single-volume focus also being a problem.
 
-[^integrationnote]: ClearVolume can be integrated into microscopy software setups based on e.g. MicroManager[@Edelstein:2010gf] or LabView.
+The development of _scenery_ was started out of this particular need.
+
 
 ## Design Goals
 
 With the both useful features and deficiencies identified in the previous section in mind, in designing _scenery_, we set these design goals:
 
 * __Free and open source software__ —  the resulting framework should be open-source such that the users, such as scientists, can dive into the code and see both what a particular algorithm is doing and/or modify it to their needs.
-* __Volume rendering__ — fluorescence microscopy produces volumetric data, so the software package has to support both single-timepoint 3D volumetric images (as are also created in CT or MRI scans), and time series of 3D images, such as developmental time lapse images.
+* __Volume rendering__ — fluorescence microscopy produces volumetric data, so the software package has to support both single-timepoint 3D volumetric images (as are also created in CT or MRI scans), and time series of 3D images, such as developmental time lapse images. 
+* __Out of core volume rendering__ — volumetric data is not getting smaller, so the software has to support datasets that do not fit into the GPU memory anymore.
 * __Mesh rendering__ — segmentation results or simulation results are also often produced in a mesh format, so the software also has to support these. Furthermore, localisation microscopy produces collocation points, which can also be interpreted as vertices and rendered as such.
 * __Clustering__ — the software should be able to run on multiple machines which share the rendering workload, and syncronise scene content, e.g. for running on Powerwall systems[@woodward2001powerwall; @Papadopoulos:2015bw] or CAVE systems[@CruzNeira:1992vt].
 * __Cross Reality__ — the software has to support both virtual and augmented reality rendering modalities, such as head-mounted displays (HMDs).
@@ -60,21 +63,21 @@ With the both useful features and deficiencies identified in the previous sectio
 
 The following table shows a comparison of _scenery_ with other state-of-the-art software packages in terms of our design goals.
 
-| Software | Type | \rotatebox[origin=c]{90}{Free/open-source} | \rotatebox[origin=c]{90}{Volumes} | \rotatebox[origin=c]{90}{Meshes} | \rotatebox[origin=c]{90}{Clustering} | \rotatebox[origin=c]{90}{VR} | \rotatebox[origin=c]{90}{Extensible} | \rotatebox[origin=c]{90}{Cross-platform} | \rotatebox[origin=c]{90}{OGL 4.1/D3D12/Vulkan} | \rotatebox[origin=c]{90}{Fiji integration} |
-|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
-| Amira | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | - | - | - | - |
-| Arivis | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | \textbullet | - | - | - |
-| BigDataViewer[@Pietzsch:2015hl] | Big data, Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
-| Imaris | Big data, Microscopy | - | \textbullet | \textbullet | - | \textbullet | \textbullet | - | \textbullet | \textbullet |
-| Vaa3D[@Bria:2016fl] | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
-| ClearVolume[@Royer:2015tg] | Microscopy | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
-| Zeiss ZEN | Microscopy | - | \textbullet | - | - | - | \textbullet | - | - | - |
-| Unity | Game engine | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
-| Unreal Engine | Game engine | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
-| Vizard | CAVE software | - | - | \textbullet | \textbullet | \textbullet | \textbullet | - | \textbullet | - |
-| Mechdyne CAVELib | CAVE software | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
-| VTK | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
-| _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
+| Software | Type | \rotatebox[origin=c]{90}{Free/open-source} | \rotatebox[origin=c]{90}{Volumes} | \rotatebox[origin=c]{90}{Out-of-core rendering}  | \rotatebox[origin=c]{90}{Meshes} | \rotatebox[origin=c]{90}{Clustering} | \rotatebox[origin=c]{90}{VR} | \rotatebox[origin=c]{90}{Extensible} | \rotatebox[origin=c]{90}{Cross-platform} | \rotatebox[origin=c]{90}{OGL 4.1/D3D12/Vulkan} | \rotatebox[origin=c]{90}{Fiji integration} |
+|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
+| Amira | Big data, Microscopy | - | \textbullet | \textbullet | \textbullet | - | \textbullet | - | - | - | - |
+| Arivis | Big data, Microscopy | - | \textbullet | \textbullet | \textbullet | - | \textbullet | \textbullet | - | - | - |
+| BigDataViewer[@Pietzsch:2015hl] | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
+| Imaris | Big data, Microscopy | - | \textbullet | \textbullet |  \textbullet | - | \textbullet | \textbullet | - | \textbullet | \textbullet |
+| Vaa3D[@Bria:2016fl] | Big data, Microscopy | \textbullet | \textbullet |  \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
+| ClearVolume[@Royer:2015tg] | Microscopy | \textbullet | \textbullet | - | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
+| Zeiss ZEN | Microscopy | - | \textbullet | - | - | - | - | \textbullet | - | - | - |
+| Unity | Game engine | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
+| Unreal Engine | Game engine | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
+| Vizard | CAVE software | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | - | \textbullet | - |
+| Mechdyne CAVELib | CAVE software | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
+| VTK | Scivis engine | \textbullet | \textbullet | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
+| _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
 
 Table: _scenery_ compared to other software packages. {#tbl:SceneryComparison}
 
@@ -84,36 +87,44 @@ We find that none of the existing software packages satisfy our design goals ful
 
 ### Language
 
-The first implementation challenge is finding the right language. The obvious choice for graphics applications would be C/C++, or newer/safer alternatives, such as Rust. As we have just mentioned, one of our goals is tight integration with the ImageJ ecosystem, targeting the JavaVM. While the JavaVM itself does not have the reputation of being a harbour for high-performance applications, usually resorting to C/C++, it offers a less steep learning curve for new users, and extremely well-designed abstractions between the different platforms we are targeting, making platform-specific code (mostly) unnecessary. We additionally view our framework as an interesting experiment on how to bring high-performance graphics to the JavaVM -- a task that should now not be as difficult as before anymore, owed to pipelined graphics/compute APIs such as OpenCL, CUDA or Vulkan. 
+The first implementation challenge is finding the right language. The obvious choice for graphics applications would be C/C++, or newer/safer alternatives, such as Rust[^rustnote]. 
 
-As said before, we aim for excellent interoperability with the ImageJ ecosystem, yet wanted to use a functional language to make it easy to reason about the code, and prevent the amounts of boilerplate code usually necessary in pure-Java projects. Within the realm of JavaVM-based languages, the contenders[^contendernote] therefore were
+One of our goals however is tight integration with the ImageJ ecosystem, which is targeting the JavaVM. While the JavaVM itself does not have the reputation of being a harbour for high-performance applications, which usually resort to C/C++, it offers a less steep learning curve for new users, and extremely well-designed abstractions e.g. for multithreading between the different platforms we are targeting, making platform-specific code unnecessary in most cases. 
+
+We additionally view our framework as an interesting experiment on how to bring high-performance graphics to the JavaVM — a task that should now not be as difficult as before anymore, owed to pipelined graphics/compute APIs such as OpenCL, CUDA or Vulkan. 
+
+We aim for excellent interoperability with the ImageJ ecosystem, yet wanted to use a functional language to make it easy to reason about the code, and prevent the high amounts of boilerplate code usually necessary in pure-Java projects. Within the realm of JavaVM-based languages, the contenders[^contendernote] therefore were
 
 * _Clojure_, a Lisp dialect,
 * _Scala_, a functional and object-oriented language developed at _EPFL_,
 * _Kotlin_, a language using both functional and object-oriented paradigms by the company JetBrains.
 
-_Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink] Further, Kotlin is also useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)). Since 2017, Kotlin is also a first-class citizen on the Android platform, which has since significantly boosted its popularity.
+_Clojure_ unfortunately has a very steep learning curve, resulting in a small pool of experts, and _Scala_ makes use from existing Java code difficult. _Kotlin_ on the other hand provides a useful functional feature set, as well as low entry barriers, and a well developed, open-source and commercially maintained IDE [^kotlinlink]. Kotlin is additionally useable as a scripting language (see [https://github.com/hbrandl/kscript](https://github.com/hbrandl/kscript)). Since 2017, Kotlin is also a first-class citizen on the Android platform, which has since significantly boosted its popularity, making it one of the most popular newcomer languages, as determined by the PyPL index (_P_opularit_Y_ of _P_rogramming _L_anguages, [pypl.github.io](https://pypl.github.io)). 
 
-Coming back to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers support for JavaScript and actual native code as target (via LLVM [@Lattner:2004vw]), making the design choice more future-proof, just in the case that the JVM should at some day present unsurmountable issues, or should we decide to include the web browser as our deployment target of choice.
+Finally, returning to our previous remark about native languages vs. the JavaVM: In addition to targeting the JavaVM, _Kotlin_ also offers to transpile to JavaScript or to actual native code (via LLVM [@Lattner:2004vw]), making our design choice more future-proof, in the case that the JavaVM should at some day present unsurmountable issues, or should we decide to include the web browser in our list of deployment targets.
 
+[^rustnote]: Rust is a new multi-paradigm programming language focused on memory safety, see [rustlang.org](https://rust-lang.org).
 [^kotlinlink]: see [kotlinlang.org](https://kotlinlang.org).
 [^contendernote]: As of early 2016, when the project was started. Since then, other languages, such as Ceylon, have matured a lot, and would probably now be considered as well.
 
 ### Graphics APIs
 
-OpenGL is a graphics API originally developed by Silicon Graphics (SGI) in the early 1990's for their graphics workstations. Originally intended for CAD/CAM applications, OpenGL soon became the go-to API for developing cross-platform graphics applications and games.
+The graphics API is the API that makes talking to the GPU possible. Historically, and before graphics cards were actually called GPUs, the developer would manipulate the geometry to be shown on screen on the CPU, and the graphics card would execute a hard-wired in-silicon graphics that could not be changed. OpenGL is an example for an API that originated in this era, back when graphics cards did not offer actual programmability.
+
+OpenGL has originally been developed by Silicon Graphics (SGI) in the early 1990's for their graphics workstations. Originally intended for CAD/CAM applications, OpenGL soon became the go-to API for developing cross-platform graphics applications and games.
 
 Since the early days of OpenGL, and also after further development had been handed over to the Khronos Group, OpenGL's development model has been based around the definition of a standard, augmented by extensions approved by the Khronos Group's Architecture Review Board (ARB). New versions of the standard were then essentially made out of sets of mandatory ARB extensions a GPU would have to support to be declared compatible with OpenGL x.y.
 
-Shader-based rendering has been introduced into OpenGL fully with OpenGL 2.1, with further extensions made with 3.3 and 4.1. What has not changed since the beginning though, is the basic programming model, where the programmer would modify a global state, and render objects either directly (in the ancient days of OpenGL 1.x), or with the help of vertex buffer objects (VBOs).
+Shader-based rendering, and with that, more and more programmability of the graphics pipeline, has been introduced into OpenGL fully with OpenGL 2.1, with further extensions made with 3.3 and 4.1. What has not changed since the beginning though, is the basic programming model, where the programmer would modify a global state, and render objects either directly (in the ancient days of OpenGL 1.x), or with the help of vertex buffer objects (VBOs). This programming model mapped very well to the early, non-programmable graphics cards.
 
-Unfortunately, this programming model does not map well to current-generation GPUs, which have become massively parallel computing machines, with some sporting 4000 individual cores and more. They do not have the flexibility of regular CPUs, but eclipse them easily in floating-point compute power.
+Unfortunately, this programming model does not map well to current-generation GPUs, which have become massively parallel computing machines, with some sporting 4000 individual cores and more. These cores do not have the flexibility of regular CPUs, but eclipse them easily in specialty disciplines, such as the floating-point computations needed for matrix and vector math utilised heavily in both graphics and machine learning. 
 
-In 2016, the Khronos Group has published a new graphics API named _Vulkan_, aiming at alleviating the issues with OpenGL, essentially starting with a clean slate. Vulkan provides a much deeper, _close-to-metal_ access to the GPU than OpenGL does, further differences are:
+In 2016, the Khronos Group has published a new graphics API named _Vulkan_, aiming at alleviating the issues with OpenGL, and essentially starting with a clean slate. Vulkan provides a much deeper, _close-to-metal_ access to the GPU than OpenGL does, with the main differences being:
 
 * More verbose code, with less checks done by the driver, leading to more clarity about what is done, when, and how. Now however the developer needs to take greater care in adhering to the specification, as it clearly states that the driver is allowed to crash an application in case it is behaving out-of-spec.
-* Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration with every frame. Command buffers can also be created by multiple threads in parallel, but need to be submitted serially.
-* Resources, such as textures and buffers, and their descriptors, have to be allocated and managed on a much more fine-grained level than with OpenGL.
+* Better options for validation on the developer side — while the driver does not do much checks anymore, such can be activated by so called _Validation Layers_, which largely affect performance, but provide highly detailed information about where and when a problem took place, giving the developer quicker insight how to fix that problem.
+* Higher possible performance by caching command buffers containing rendering commands, instead of scene iteration and draw call issueing with every frame. Command buffers can also be created by multiple threads in parallel, but need to be submitted serially.
+* Resources, such as textures and buffers, and their descriptors, have to be allocated and managed on a much more fine-grained level than with OpenGL, but can be accessed directly, and do not need to be bound to texture units like in OpenGL.
 * Vendor-independent (Homogeneous) Multi-GPU support (since Vulkan 1.1).
 * A Conformance Test Suite (CTS) for the graphics drivers, ensuring that a Vulkan-based application behaves the same on all drivers.
 * Shaders are not loaded from GLSL text files, but compiled SPIR-V byte code, with interesting new possibilities for introspection and reflection, e.g. via the tool/library _spirv-cross_.
@@ -126,10 +137,12 @@ _scenery_ now includes both an OpenGL 4.1 backend for use on the macOS operating
 
 ### Interfacing with Graphics API on the Java VM
 
-Current versions (8.0+) of the Java Virtual Machine do not provide Java-native bindings to graphics APIs like Direct3D, OpenGL or Vulkan, but 3rd party libraries exist to bridge that gap.  We have chosen two projects for developing the OpenGL and Vulkan backends:
+Current versions (8.0+) of the Java Virtual Machine do not provide Java-native bindings to graphics APIs like Direct3D, OpenGL or Vulkan out-of-the-box, but 3rd party libraries exist to bridge that gap.  We have chosen two projects for developing the OpenGL and Vulkan backends:
 
 * _JOGL_ ([www.jogamp.org](https://jogamp.org)) provides an object-oriented Java interface to the OpenGL API in all of its current versions. In that, JOGLs interfaces are written in a very idiomatic way, which partially diverge quite far from the original OpenGL C API. They however simplify the use for the developed software, especially in situations where it has to be embedded into an existing GUI application. JOGL is used for the OpenGL backend in scenery.
 * _LWJGL3_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL3 keeps its API very close to the original, and does not try to wrap a normal C API in an object-oriented manner, but leaves that aspect to the developer, in case desired. This approach results in more flexibility, though at the cost of higher effort for embedding into existing applications. LWJGL3 is used to develop the Vulkan backend in scenery. Memory management for Vulkan-related structures is mostly manual, but off-heap[^offheapnote], such that management of that memory is up to the developer.
+
+Unfortunately, JOGL is not being actively maintained anymore, and we hope to fully switch to the LWJGL3-powered Vulkan backend in the future.
 
 [^offheapnote]: Off-heap memory is memory that is not being managed by the JavaVM. In the case of LWJGL3, on Windows `malloc()` is used for allocations, while on Linux and macOS, the high-performance memory allocator _jemalloc_ (jemalloc.net](http://jemalloc.net)) is used. Both allocators provide a better alternative to using Java's Direct Byte Buffers that incur a large performance penalty over raw `malloc()` calls, and are also a sparse resource, available only in a size determined at program startup. In LWJGL3, a thread-local memory stack is provided in addition, enabling high-speed temporary allocations. For details about memory allocation strategies in LWJGL3, see [blog.lwjgl.org/memory-management-in-lwjgl-3/](https://blog.lwjgl.org/memory-management-in-lwjgl-3/).
 
@@ -145,7 +158,6 @@ From a birds-eye perspective, the scenery framework consists of six main compone
 * the _Settings_, an instance-local database of default and user-defined settings that might also change during runtime.
 
 The construction and interplay of all these subsystems is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
-
 
 In the next chapter, [Design and Architecture], we are going into detail about each of the subsystems.
 
