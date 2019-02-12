@@ -1,4 +1,7 @@
+\frontmatter
 \begin{titlepage}
+\begin{fullwidth}
+    \thispagestyle{empty}
     \begin{center}
     
         \vspace*{1cm}
@@ -41,16 +44,18 @@
         
         \vfill
   
-        2018
+        2019
         
  
  
      \end{center}
-    \thispagestyle{empty}
+\end{fullwidth}
 \end{titlepage} 
 
 \newpage
-\frontmatter
+\thispagestyle{empty}
+
+
 \small
 \bigskip
 \noindent Typeset using [pandoc](https://www.pandoc.org), [Markdown](https://daringfireball.net/projects/markdown/), and [LuaLaTeX](http://www.luatex.org/) in EB Garamond, Roboto Slab, and Source Code Pro.
@@ -65,3 +70,5 @@ This work is licensed under a \
 
 
 \mbox{}
+
+
