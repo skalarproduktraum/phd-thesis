@@ -376,10 +376,14 @@ $endif$
 $body$
 
 $if(lot)$
+\begin{fullwidth}
 \listoftables
+\end{fullwidth}
 $endif$
 $if(lof)$
+\begin{fullwidth}
 \listoffigures
+\end{fullwidth}
 $endif$
 
 $if(natbib)$
@@ -391,25 +395,33 @@ $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
+\begin{fullwidth}
 $if(beamer)$
+\begin{fullwidth}
 \begin{frame}[allowframebreaks]{$biblio-title$}
 \bibliographytrue
 $endif$
 \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
 $if(beamer)$
 \end{frame}
+
 $endif$
+\end{fullwidth}
 
 $endif$
 $endif$
 $if(biblatex)$
 $if(beamer)$
+\begin{fullwidth}
 \begin{frame}[allowframebreaks]{$biblio-title$}
 \bibliographytrue
 \printbibliography[heading=none]
 \end{frame}
+\end{fullwidth}
 $else$
+\begin{fullwidth}
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+\end{fullwidth}
 $endif$
 
 $endif$
