@@ -3,11 +3,12 @@ CHAPTERS := $(shell cat chapters.list | tr '\n' ' chapters/')
 PREAMBLE=tex/preamble.tex
 BIBLIOGRAPHY=bibliography.bib
 CSL=csl/chicago-author-date.csl
+TEMPLATE=tex/thesis-template.latex
 OUTPUTFORMAT=tex
 
 all: thesis.$(OUTPUTFORMAT)
 
-thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) Makefile
+thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) Makefile
 	@echo "Removing unnecessary fields from bibliography ..."
 	bibtool -i $(BIBLIOGRAPHY) -o thesis.bib -- "delete.field { doi url annote abstract }"
 	@echo "pandoc'ing $(CHAPTERS) to thesis.$(OUTPUTFORMAT)"
@@ -18,7 +19,7 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) Makefile
 		-V fontsize=12pt -V documentclass:tufte-book \
 		-V classoption:a4paper -V papersize:a4 -V classoption:openright \
 		-V subparagraph -V lof -V lot --top-level-division=chapter \
-		--template=tex/thesis-template.latex \
+		--template=$(TEMPLATE) \
 		metadata.yaml $(CHAPTERS) -s -o $@
 	latexmk -pdflatex=lualatex -pdf thesis.tex
 	latexmk -c
