@@ -28,7 +28,7 @@ Optical breakdown of tissue occurs when the applied electric field $\symbfit{E}$
 
 In [@Peng:2014bu] the authors demonstrate the _Virtual Finger_ system to  boost the precision of selection tasks in 3D environments, such as for neuron tracing, or in microsurgery settings.
 
-In [@Engelbrecht:2007tt] the authors demonstrate a SPIM-based microsurgery/laser ablation setup, powered by a $355\,\mathrm{nm}$ UV laser, which is able to perform single cuts in three dimensions.
+In [@Engelbrecht:2007tu] the authors demonstrate a SPIM-based microsurgery/laser ablation setup, powered by a $355\,\mathrm{nm}$ UV laser, which is able to perform single cuts in three dimensions.
 
 In [@Oswald:2010pr], the author demonstrates a versatile laser ablation setup on top of a confocal microscope that is able to perform cuts with rates in the $1\,\mathrm{kHz}$ range over an area of $100^2\,\mathrm{µm}$.
 
