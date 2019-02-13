@@ -109,15 +109,13 @@ The SPIM also has the benefit that samples can be mounted in a movable way, and 
 
 Confocal microscopes equipped with EM-CCD cameras produce an image data rate of about $1\,\mathrm{MB/s}$. Surely, lightsheet microscopes are going to be at least in the same area? 
 
-No, they are not. Lightsheet microscopes are usually equipped with state-of-the-art sCMOS[^scmosnote] cameras. These cameras, running at full speed, can easily produce data rates of $1 GB/s$ [@Reynaud:2015dx], filling up a 500GiB SSD drive in less than 10 minutes, and amounting to nearly 90TiB of data _per day_, if running at full speed. For a visual comparison, have a look at Figure \ref{fig:spim_data_rate}.
+No, they are not. Lightsheet microscopes are usually equipped with state-of-the-art sCMOS cameras, offering about 60% quantum efficiency, a low readout noise, and high readout speeds of about 100fps at full frame size, which is usually 4 to 6 megapixels. These cameras, running at full speed, can easily produce data rates of $1 GB/s$ [@Reynaud:2015dx], filling up a 500GiB SSD drive in less than 10 minutes, and amounting to nearly 90TiB of data _per day_, if running at full speed. For a visual comparison, have a look at Figure \ref{fig:spim_data_rate}.
 
 This deluge of data now poses a large problem both for the scientists using the lightsheet microscopes and producing that data, and also for the support staff that has to take care of data storage, compute clusters, and so on. This has led to approaches where microscopy data is acquired and processed in an interleaved way, with e.g. 10 minutes of data acquisition followed by 10 minutes of processing, such as in the case of imaging the zebrafish heart. [@Mickoleit:2014bl].
 
 Furthermore, effective processing of long developmental timelapses, the parade discipline of lightsheet microscopes, is not possible without a cluster. 
 
 The high data rate combined with the high spatiotemporal quality of the data leads to interesting challenges regarding data storage and processing, and instrument interaction for current and future lightsheet microscopes:
-
-[^scmosnote]: sCMOS is a trademark of Fairchild Semiconductor and describes their take on high-resolution complimentary metal-oxide semiconductor (CMOS) active pixel sensors, featuring about 60% quantum efficiency, a low readout noise, and high readout speeds of about 100fps at full frame size, which is usually 4 to 6 megapixels.
 
 ## Challenges and Opportunities
 
