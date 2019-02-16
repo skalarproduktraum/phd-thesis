@@ -110,3 +110,5 @@ _Hypercomplex cells_ then, in turn, wire together multiple complex cells, to add
 
 * Can we harness the knowledge gained about the human visual system to more efficiently control and steer data analysis or scientific instruments?
 * Can we apply data reduction techniques implemented by e.g. the receptive fields of the human retina for efficient data reduction for image storage and/or processing?
+
+
