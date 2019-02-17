@@ -9,5 +9,10 @@ thesis.tex
 *.run.xml
 *.out
 *.toc
+*.lof
+*.lot
+*.synctex.gz
+*.fdb_latexmk
+*.fls
 tmp/*.pdf
 tmp/*.svg
