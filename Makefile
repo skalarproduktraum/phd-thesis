@@ -21,8 +21,7 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLAT
 		-V subparagraph -V lof -V lot --top-level-division=chapter \
 		--template=$(TEMPLATE) \
 		metadata.yaml $(CHAPTERS) -s -o $@
-	latexmk -quiet -pdflatex=lualatex -pdf thesis.tex
-	latexmk -c
+	./latexmk-fast.sh thesis.tex
 	rm -f thesis.bib
 
 clean:
