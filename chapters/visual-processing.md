@@ -1,49 +1,36 @@
 # Visual Processing
 
-Visual processing of photons received by the eye's lens, cornea, and ultimately, by the retina and visual cortex, encompasses all the physiologically basic processes enabling cross reality and eye-based natural user interfaces.
+\begin{figure*}
+    \includegraphics{./figures/gray_optic_system.pdf}
+    \caption{Schematic overview of the paths from the eye to the visual cortex, with the parts discussed in this chapter highlighted in italics. Adapted from \emph{Anatomy of the Human Body}\citep{Gray:1878ahb}, Public Domain.\label{fig:processing_overview}}
+\end{figure*}
 
-In this chapter, we introduce the movements performed by the human eyes, and then give a short tour of the human visual system, including the optical path of photons, and the processing that happens in the retina and downstream in the central nervous system. In the end of the chapter, we will summarise how and the knowledge of these details enables the technologies and ideas in the following chapters, and what challenges we can address.
+In this chapter, we introduce the human visual system, the anatomy of the human eye and its physical capabilities and movements, as well as the processing happening to incoming photons in the retina and further downstream, in the central nervous system. 
 
-## Eye movements
-
-Following the classifications from [@Snowden:2012wu] and [@Duchowski:2017ii], we can categorise eye movements into these five categories:
-
-* _Saccades_ are quick and jumpy movements of the eye to reposition the fovea to a new area of interest. As such, they can be voluntary or involuntary. In natural environments saccades occur with high speeds, and several times per second. Their peak angular velocity can exceed $900^\circ/\mathrm{s}$, take approximately $200\,\mathrm{ms}$ to initiate, and then last for about $10-200\,\mathrm{ms}$. Saccades are _stereotyped_ and _ballistic_. Stereotypical movement  means they always follow the same pattern of fast initial acceleration after an initial processing delay of about $200\,\mathrm{ms}$, followed by movement with maximum velocity, and concluded by a rapid slowdown as the eye reaches the target area. Ballistic movement means they are planned and, once initiated, cannot be stopped. Additionally, there is no visual perception during the movement, rendering the subject effectively blind for their duration, which is called _saccadic suppression_[^suppressionnote] [@Snowden:2012wu].
-* _Smooth pursuits_ occur when a subject is tracking a moving stimulus, where the eye's angular velocity is matched to the movement of the image of the stimulus on the retina.
-* _Fixations_, _tremors_, and _jitters_ occurs when a subject focuses on a particular object of interest. Counterintuitively, these movements do not completely fix the image on the retina, but jitter around it within about $5^\circ$ of visual angle. If they would not do that, the image would disappear within seconds. \TODO{Does this have to do with receptor bleaching?} This suggests that a different system is involved with fixations than with saccades or pursuits. Fixations last for about $150-600\,\mathrm{ms}$ and humans spend over 90% of viewing time with this kind of eye movement.
-* _Vergence_ movements occur when a subject is moving its attention between near and far objects, with the eyes then moving in opposite directions.
-* (Physiological) _Nystagmus_ is a fast, compensatory movement of both eyes to either follow moving imagery (optokinetic nystagmus, such as when looking out of a train window), or when compensating for fast angular movements of the head (vestibular nystagmus). Both follow the same movement patterns.
-
-[^suppressionnote]: The most visible effect of saccadic suppression in humans is the lack of motion blur during saccadic eye movements, opposed to e.g. fast head movements.
-
-In the context of 2-dimensional localisation of gaze directions, fixations, saccades, and smooth pursuits are the most important eye movements. Vergence movements would also be desirable to detect, but considering that even contemporary head-mounted VR displays are using regular, flat screen, with no possibility of actual scene depth, this is not a priority yet. Future displays are going to provide focus cues as well and will most probably change that [@Huang:2015ce; @Jang:2017dr; @Sun:2017ia].
-
-Let's continue this chapter by touring the human visual system, and connecting the aforementioned eye movements with their neurological basis:
+The goal of this chapter is to give the reader an understanding of the physiological processes that ultimately enable both eye-based natural user interfaces and cross reality applications, and introduce implications from physiology for such. In the end of the chapter, we will introduce some challenges and questions in the context of visual processing which will be addressed in later chapters of this thesis.
 
 ## A Short Tour of the Human Visual System
 
-\begin{marginfigure}
-    \includegraphics{./figures/eye-diagram.pdf}
-    \label{fig:eye_diagram}
-    \caption{Anatomy of the human eye — \emph{1}: posterior segment of eyeball \emph{2}: ora serrata \emph{3}: ciliary muscle \emph{4}: ciliary zonules/zonules of Zinn \emph{5}: canal of Schlemm \emph{6}: pupil \emph{7}: anterior chamber \emph{8}: cornea \emph{9}: iris \emph{10}: lens cortex \emph{11}: lens nucleus \emph{12}: ciliary process \emph{13}: conjunctiva \emph{14}: inferior oblique muscle \emph{15}: inferior rectus muscle \emph{16}: medial rectus muscle \emph{17}: retinal arteries and veins \emph{18}: optic disc \emph{19}: dura mater \emph{20}: central retinal artery \emph{21}: central retinal vein \emph{22}: optic nerve \emph{23}: vorticose vein \emph{24}: bulbar sheath \emph{25}: macula \emph{26}: fovea \emph{27}: sclera \emph{28}: choroid \emph{29}: superior rectus muscle \emph{30}: retina. Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Eye-diagram_no_circles_border.svg}{Ignacio Icke, Wikimedia Commons}.}
-\end{marginfigure}
+The processing of visual stimuli happens in multiple stages: In Figure \ref{fig:processing_overview} we show an overview sketch of the nerve pathways involved in visual processing. In the following, we will discuss the following parts in deeper detail:
 
-
-The processing of visual stimuli happens in multiple stages. In Figure \ref{fig:eye_diagram} we show a schematic of the human eye. Further, in \ref{fig:processing_overview} we show an overview sketch of the nerve pathways involved in visual processing, with the parts we are going to discuss in the following highlighted:
-
-1. Accumulation of incoming photons by the optical system consisting of the _cornea_ (8), _iris_(9), and _lens_(11) onto the _retina_(30), and especially the most sensitive part of the retina, the _fovea_(26).
-2. Pre-processing in the _Lateral Geniculate Nucleus_ (LGN) situated in the _thalamus_ part of the forebrain, serving as a relay for the information coming directly from the retina. Fascinatingly, the left LGN processes information from the right eye, and vice versa -- a pattern common in the human brain.
-3. Final processing in the _primary visual cortex_ of the occipital lobe on the back of the brain.
-
-![Schematic overview of the paths from the eye to the visual cortex, with the parts discussed in this chapter highlighted in italics. Adapted from _Anatomy of the Human Body_[@Gray:1878ahb], Public Domain.\label{fig:processing_overview}](./figures/gray_optic_system.pdf)
+1. _The Optical Path_ — Collection and accumulation of incoming photons by the optical system consisting of the _cornea_, _iris_, and _lens_ onto the _retina_, and especially the most sensitive part of the retina, the _fovea_.
+2. _The Retina_ — Collection and translation of incoming photons into nerve pulses, and compression of the nerve signals for further processing,
+3. _The Lateral Geniculate Nucleus_ (LGN) — situated in the _thalamus_ part of the forebrain, which serves as a relay for the information coming directly from the retina (interestingly, the left LGN processes information from the right eye, and vice versa — a pattern common in the human brain), and
+4. _The Primary Visual Cortex_ — Final processing of the signals in the _primary visual cortex_ of the occipital lobe on the back of the brain.
 
 ## Optical Path
 
-Light enters the anterior chamber (7) of the eye, travelling through the iris (9), then traversing the the vitreous humour, a gelatineous substance filling the interior of the eye, to the lens (11). 
+\begin{marginfigure}
+    \includegraphics{./figures/EyeSchematic.pdf}
+    \label{fig:eye_diagram}
+    \caption{Anatomy of the human eye — Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg}{Rhcastilhos and Jmarchn, Wikimedia Commons}.}
+\end{marginfigure}
 
-Evolution has optimised the refractive index of the human cornea to yield an optimal air/cornea boundary, rendering the final image sharp on the retina. The lens, held in place by the ciliary body (3), and the zonules of Zinn, focuses the incident light onto the retina, and especially on the most sensitive part of the retina, the fovea(26), containing the most photoreceptor-dense region ($150000/\mathrm{mm}^2$ compared to $\approx 15000/\mathrm{mm}^2$). 
+Light enters the anterior chamber of the eye, travelling through the iris, then traversing the the vitreous humour (a gelatineous substance filling the interior of the eye) to the retina. 
 
-Foveal, or central vision only makes up about 5º of the field of vision, with the [Eye movements] described compensating for the actually small field of sharp vision. See also Figure \ref{fig:peripheral_vision} for a depiction of the different ranges of vision in humans.
+Evolution has optimised the refractive index of the human cornea to yield an optimal air/cornea boundary, rendering the final image sharp on the retina. The lens, held in place by the ciliary body, and the suspensory ligaments, focuses the incident light onto the retina, and especially on the most sensitive part of the retina, the fovea. The fovea is about $1.5\,\mathrm{mm}$ in diameter and contains the most photoreceptor-dense region — $300000/\mathrm{mm}^2$ compared to $\approx 100000/\mathrm{mm}^2$ in the periphery [@Duchowski:2017ii; Snowden:2012wu]. 
+
+Foveal, or central vision only makes up about 5º of the field of vision.  In the most central part of the fovea, the foveola, about 133 cones per degree of visual angle lead to a resolvable frequency of 66 cycles/º, while at the fovea, the frequency already drop by about half, to 35 cycles/º [@Duchowski:2017ii]. In Figure \ref{fig:peripheral_vision}, we show a scheme of the different ranges of vision in humans, with the region below 30º being the _field of useful vision_. The movements of the eye, described in the next section, [Eye movements], are able to make up for the small field of useful vision by constantly scanning a scene. 
 
 \begin{marginfigure}
     \includegraphics{./figures/peripheral_vision.png}
@@ -51,12 +38,36 @@ Foveal, or central vision only makes up about 5º of the field of vision, with t
     \caption{Ranges for peripheral and central vision in humans. Central or foveal vision offers the highest acuity. Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Peripheral_vision.svg}{Zyxwv99, Wikimedia Commons}.}
 \end{marginfigure}
 
-Adaption to visible objects happens in two ways:
+Apart from movements, the eye is also able to adapt itself internally to different viewing conditions. This adaption to visible objects happens in two ways:
 
-* the iris size can be modulated, changing the amount of light reaching the retina by a factor of 16. This contraction and expansion is not only due to light stimuli, but can also be triggered by drugs or hormonal changes, e.g. due to excitement.
-* ciliary muscles can modulate the lens thickness: when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects — these are the aforementioned vergence movements.
+* the iris size can be modulated, changing the amount of light reaching the retina by a up to a factor of 16. This contraction and expansion is not only due to light stimuli, but can also be triggered by drugs or hormonal changes, e.g. due to excitement, and
+* ciliary muscles can modulate the lens thickness: when they relax, leading to tense zonules, the vision is adapted for distance, when they contract, the zonules get more slack, and the vision is adapted for closer objects — these are called vergence movements.
 
-## Retinal architecture and processing
+Vergence however is only one kind of the movements the eye can perform, so let's get into more detail about the other forms of movement.
+
+### Eye movements
+
+\begin{marginfigure}
+    \includegraphics{./figures/EyeMuscles.jpg}
+    \label{fig:EyeMuscles}
+    \caption{Muscles of the human eye. Image (cc) by \href{http://patricklynch.net}{Patrick Lynch, Wikimedia Commons}.}
+\end{marginfigure}
+
+Following the classifications from [@Snowden:2012wu] and [@Duchowski:2017ii], eye movements fall into one of five categories:
+
+* _Saccades_ are quick and jumpy movements of the eye to reposition the fovea to a new area of interest. As such, they can be voluntary or involuntary. In natural environments saccades occur with high speeds, and several times per second. Their peak angular velocity can exceed $900^\circ/\mathrm{s}$, take approximately $200\,\mathrm{ms}$ to initiate, and then last for about $10-200\,\mathrm{ms}$. Saccades are _stereotypical_ and _ballistic_: Stereotypical movement means they always follow the same pattern of fast initial acceleration after an initial processing delay of about $200\,\mathrm{ms}$, followed by movement with maximum velocity, and concluded by a rapid slowdown as the eye reaches the target area. Ballistic movement means they are planned and, once initiated, cannot be stopped. During execution of the movement there is no visual perception, rendering the subject temporarilly blind. This effect is called _saccadic suppression_[^suppressionnote] [@Snowden:2012wu].
+* _Smooth pursuits_ occur when a subject is tracking a moving stimulus, where the eye's angular velocity is matched to the movement of the image of the stimulus on the retina. These are the only smooth movements the eyes perform.
+* _Fixations_, _tremors_, and _jitters_ occurs when a subject focuses on a particular object of interest. Counterintuitively, these movements do not completely fix the image on the retina, but jitter around it within about $5^\circ$ of visual angle. If they would not do that, the image would disappear within seconds. \TODO{Does this have to do with receptor bleaching?} This suggests that a different system is involved with fixations than with saccades or pursuits. Fixations last for about $150-600\,\mathrm{ms}$ and humans spend over 90% of viewing time with this kind of eye movement. It has also been found that miniature movements enhance the perception of high-frequency detail in a stimulus [@Rucci:20070f2].
+* _Vergence_ movements occur when a subject is moving its attention between near and far objects, with the eyes then moving in opposite directions.
+* (Physiological) _Nystagmus_ is a fast, compensatory movement of both eyes to either follow moving imagery (optokinetic nystagmus, such as when looking out of a train window), or when compensating for fast angular movements of the head (vestibular nystagmus). Both follow the same movement patterns.
+
+[^suppressionnote]: The most visible effect of saccadic suppression in humans is the lack of motion blur during saccadic eye movements, opposed to e.g. fast head movements.
+
+In the context of 2-dimensional localisation of gaze directions, fixations, saccades, and smooth pursuits are the most important eye movements. Vergence movements would also be interesting to detect and use, but considering that contemporary head-mounted VR displays are using regular, flat screen, with no possibility of actual scene depth, this is not yet a priority. Future displays are going to provide focus cues as well and will most probably change that [@Huang:2015ce; @Jang:2017dr; @Sun:2017ia].
+
+All of the described movements are optimisations to provide the best image possible, using "the world's worst camera" [@Duchowski:2017ii]. We continue our discussion with the retina, the translator of photons to neural impulses.
+
+## The Retina — Retinal Architecture and Processing
 
 \begin{marginfigure}
     \label{fig:retina_architecture}
@@ -64,9 +75,13 @@ Adaption to visible objects happens in two ways:
     \caption{Inverted retinal architecture of mammals (light path in the image is bottom to top); \emph{RPE}: retinal pigment epithelium; \emph{OS}: outer segment of the photoreceptor cells; \emph{IS}: inner segment of the photoreceptor cells; \emph{ONL}: outer nuclear layer; \emph{OPL}: outer plexiform layer; \emph{INL}: inner nuclear layer \emph{IPL}: inner plexiform layer; \emph{GC}: ganglion cell layer; \emph{P}: pigment epithelium cell; \emph{BM}: Bruch-Membran; \emph{R}: rods; \emph{C}: cones; \emph{H}: horizontal cell; \emph{B}: bipolar cell; \emph{M}: Müller cell; \emph{A}: amacrine cell; \emph{G}: ganglion cell; \emph{AX}: Axon, Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
 \end{marginfigure}
 
-At the retina, the computational processing of incident photons starts in the true sense of the word, so far we've been only concerned with transmission, modulation, and focussing.
+At the retina, the processing of incident photons starts in the true sense of the word, as so far we have only been concerned with transmission, modulation, and focussing.
 
-A mammal's retina has a somewhat odd architecture, seen in Figure \ref{fig:retina_architecture}: The light is entering from the bottom of the image, so the light has to travel through a dense maze of neurons and ganglion cells before reaching the photoactive cells. This kind of architecture is called _inverted retina architecture_. Why this kind of retina architecture has evolved in mammals, or has not been "corrected", is still a matter of scientific debate \TODO{Add citations for retina architecture}. There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, rather than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. A tradeoff however is the existence of the blind spot where the optic nerve exits, mended in most cases by the presence of two eyes, the [Eye movements] described before, and the upstream neural processing. After traversing this neuronal maze, photons reach the true actors of photon reception, the _rods_ and _cones_.
+The retina of mammals has a somewhat odd architecture, seen in Figure \ref{fig:retina_architecture}: The light is entering from the bottom of the image, so the light has to travel through a dense forest of neurons before reaching the photoactive rods and cones. This kind of architecture is called _inverted retina architecture_. What the true benefits of an inverted architecture are remains a matter of debate.  
+
+There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, rather than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. The neural tissue of the eyes has also been shown to act as waveguide for incoming photons, probably a mechanism to counter photon scattering through it[@Franze:20077e7]. One tradeoff is the existence of the blind spot where the optic nerve exits the eye, mended in most cases by the presence of two eyes, the [Eye movements] described before, and the upstream neural processing. 
+
+After traversing this neuronal maze, photons reach the true actors of photon reception, the _rods_ and _cones_.
 
 ### Rods and cones
 
@@ -74,29 +89,42 @@ These are the workhorses of the retina, responding in different lighting intensi
 
 Coming back to the distribution of photoreceptors among the retina, both types also follow different patterns: While most — $150000/\mathrm{mm}^2$ — of the rods exist around $12^\circ-15^\circ$ of visual angle, the density of cones peaks at the fovea at $0^\circ$ of visual angle, also with about $150000/mm^2$. The cone density falls off sharply outside the fovea, reaching a density as low as $\approx 15000/mm^2$ at $15^\circ$. 
 
-There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$.
+There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012w].
 
 ### Retinal ganglion cells
 
-Retinal ganglion cells are responsible for wiring the photoreceptors of the retina to the _lateral geniculate nucleus_ (LGN) in the thalamus. What they are doing can already be described as image processing: They are wired to the photoreceptors in a layout that is essentially circular, with the area of responsibility called a _receptive field_. 
+Retinal ganglion cells are responsible for wiring the photoreceptors of the retina to the _lateral geniculate nucleus_ (LGN) in the thalamus, and are actually dendrites of the optic nerve. What they are doing can already be described as image processing: They are wired to the photoreceptors in a layout that is essentially circular, with the area of responsibility called a _receptive field_. 
 
-The layout of a receptive field consists of an inner and an outer ring that act in competition with each other: starting from their baseline neuronal activity, ON-center cells fire more when the center is stimulated, and the outside is not, while OFF-center cells fire more when the center remains unstimulated, but the outside is stimulated (center-surround decorrelation).
+A receptive field contains about 100 photoreceptors and consists of an inner and an outer ring that act in competition with each other: starting from their baseline neuronal activity, ON-center cells fire more when the center is stimulated, and the outside is not, while OFF-center cells fire more when the center remains unstimulated, but the outside is stimulated (_center-surround decorrelation_).
 
-This behaviour makes ganglion cells basically differentiators, or better, edge detectors, transmitting only the edge information downstream, which results in a large reduction in the amount of data that needs to be transmitted: Retinal ganglion cells receive input from about about $128000000$ cells — about $120000000$ rods and $8000000$ cones — carrying (for simplicity) 256 shades of gray, or 8bit of data. Assuming a "refresh rate" of 30 Hz, this amounts to $\approx 4\,\mathrm{GiB/s}$(!). The ganglion cells however only have about $1000000$ outputs, reducing the necessary data rate to the LGN to about $30\,\mathrm{MiB/s}$ [@brenner2000adaptive; @koch2006much].
+Instead of acting like the pixels of a camera sensor, this behaviour makes ganglion cells basically edge detectors, transmitting mostly the edge information downstream, which results in a large reduction in the amount of data that needs to be transmitted. Let's do an example calculation of the effect this has:
 
-## From the retina to the Lateral Geniculate Nucleus
+Retinal ganglion cells receive input from about about $128000000$ cells — about $120000000$ rods and $8000000$ cones —  assumed to carry, for simplicity, or 8bit of data, equivalent to 256 shades of gray. Assuming a "refresh rate" of 30 Hz, this amounts to $\approx 4\,\mathrm{GiB/s}$(!). The ganglion cells however only have about $1000000$ outputs connecting to the next processing area, the LGN, reducing the necessary data rate to the LGN to about $30\,\mathrm{MiB/s}$ [@brenner2000adaptive; @koch2006much]. Would the optic nerve carry through all the neural connections from the rods and cones, it would not have an average $3.5\,\mathrm{mm}$ diameter, but about $20\,\mathrm{mm}$, severely restricting the possible movements of the eye.
+
+## The Lateral Geniculate Nucleus
 
 First, the axons from both eyes cross over at a point called the _optic chiasm_. There, the axons from the nasal side of each retina cross to the other side of the brain, while the axons from the temporal side do not cross. The part of the nerves between the optic chiasm and the LGN is called the _optic tract_.
 
-The LGN itself has a 6-layer architecture, and consists of three types of cells, that in some cases refine the receptive field structure of the retinal ganglion cells:
+The LGN itself has a 6-layer, staggered architecture: Projections from the same side (_ipsilateral_) end up in layers 2, 3, and 5, while projections from the opposite side (_contralateral_) end up in 1, 4, and 6 — and projections from the same visual area connect to the same place in all the layers. In the LGN, three types of cells are found, that in some cases refine the receptive field structure of the retinal ganglion cells:
 
 * _magnocellular_ (M) cells, large, fast-responding cells connected to rods,  to be found in the first two layers,
 * _parvocellular_ (P) cells, small, slow-responding cells, connected to the cones, and found in layers 3-6,
 * _koniocellular_ (K) cells, consisting of very small, heterogeneous cells, connected to only blue cones, to be found _between_ the M and P layers.
 
-The inputs from each eye are staggered: Projections from the same side (_ipsilateral_) end up in layers 2, 3, and 5, while projections from the opposite side (_contralateral_) end up in 1, 4, and 6 — and projections from the same visual area connect to the same place in all the layers.
+The M and P cells have complimentary functional characteristics, with certain similarities to the photoreceptors they connect from (from [@Duchowski:2017ii):
 
-While the functions of the M and P cells are more or less clear, the function of the K cells remains a bit nebulous, they might play a role in motion detection and where-and-when processing [@Eiber:20182bf] and regulate other visual pathways [@Martin:2019cd1], and most likely are heterogeneous and form subpopulations [@Casagrande:1994tp].
+| Characteristic | Magnocellular cells | Parvocellular cells |
+|:--|:--|:--|
+| Ganglion size | Large | Small |
+| Transmission time | Fast | Slow |
+| Receptive fields | Large | Small |
+| Sensitivity to small objects | Poor | Good |
+| Sensitivity to change in light levels | Large | Small |
+| Sensitivity to contrast | Low | High |
+| Sensitivity to motion | High | Low |
+| Color discrimination | No | Yes |
+
+The function of the K cells remains a bit nebulous: They might play a role in motion detection and where-and-when processing [@Eiber:20182bf] and regulate other visual pathways [@Martin:2019cd1], and most likely are heterogeneous and form subpopulations [@Casagrande:1994tp].
 
 The most striking fact about the LGN is that it does not receive most of its input from the retinal ganglion cells, but actually from the visual cortex itself. Through this feedback loop, the LGN is able to play a vital role in the direction of visual attention, focussing and vergence of the eyes, and stereoscopic mapping of the visual field.
 
@@ -104,7 +132,13 @@ Just as the retinal ganglion cells provide a spatial coding of their inputs, the
 
 In terms of functional relevance to eye movements, the LGN plays an important role in the execution of saccades [@Krebs:20105e6], as well as indirectly controlling the ciliary muscles for vergence and focus described in [Optical Path].
 
-## From the Lateral Geniculate Nucleus to the Visual Cortex
+## The Superior Colliculus
+
+The Superior Colliculus again has a layered structure, with 7 layers in total. The first three layers are called superficial layers and connect mainly to the retina and the LGN. The remaining intermediate and deep layers receive connections from a variety of sources, such as somatosensory inputs and the cerebral cortex in general. The superficial layers also have outputs to the LGN.
+
+The Superior Colliculus is heavily involved in the control of the eye movements. Each of the colliculi, which are located on the left and right side of the brain, can be mapped to respective halves of the visual field. Experiments with electrical microstimulation in monkeys have shown that, depending on the site of the stimulus, either saccades or fixations can be evoked [@Klier:20019e6]. The coordinate system used by the Superior Colliculus is also not world coordinates, but retinal coordinates, where the area of the colliculus covered corresponds with the receptor counts in the visual field (see Figure \ref{fig:peripheral_vision}).
+
+## The Visual Cortex
 
 \begin{marginfigure}
     \includegraphics{./figures/v1-layers.jpg}
