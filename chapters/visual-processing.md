@@ -89,7 +89,7 @@ These are the workhorses of the retina, responding in different lighting intensi
 
 Coming back to the distribution of photoreceptors among the retina, both types also follow different patterns: While most — $150000/\mathrm{mm}^2$ — of the rods exist around $12^\circ-15^\circ$ of visual angle, the density of cones peaks at the fovea at $0^\circ$ of visual angle, also with about $150000/mm^2$. The cone density falls off sharply outside the fovea, reaching a density as low as $\approx 15000/mm^2$ at $15^\circ$. 
 
-There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012w].
+There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012wu].
 
 ### Retinal ganglion cells
 

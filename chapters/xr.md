@@ -58,7 +58,7 @@ Another fascinating idea from the 90s is the omnidirectional treadmill for explo
 Unfortunately, the First Virtual Reality Revolution was not successful, at least from a commercial point of view — and most of the companies betting on its success went out of business until 1998 [@Jerald:201667e]. Some reasons for the failure were: 
 
 * Due to the high cost of the systems, few were able to afford them, and often the systems remained only in research use,
-* ergonomics issues arising both from the size and weight of the systems prevented usage for more than a short period of time, with Randy Pausch stating, "approximately  10%  of  the  visitorsadamantly decline the opportunity to wear a head-mounted display" [@Bryson:19942f4], and
+* ergonomics issues arising both from the size and weight of the systems prevented usage for more than a short period of time, with Randy Pausch stating, "approximately 10% of the visitors adamantly decline the opportunity to wear a head-mounted display" [@Bryson:19942f4], and
 * the visual fidelity then-contemporary computers could produce when rendering digital 3-dimensional imagery were simply neither good enough nor fast enough to provide a fully convincing, not sickness-inducing, experience.
 
 [^WiredLinkNegroponte]: See [wired.com/1993/06/negroponte-11/](https://www.wired.com/1993/06/negroponte-11/).
