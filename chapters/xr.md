@@ -8,15 +8,15 @@ In this chapter we give a brief overview of existing technology and current deve
 
 > "_Virtual Reality_ is the computer-generated simulation of a three-dimensional image or environment that can be interacted with in a seemingly real or physical way by a person using special electronic equipment, such as a helmet with a screen inside or gloves fitted with sensors." —  _Oxford Dictionary of English_
 
-With the term _Virtual Reality_ we describe environments that simulate parts of the real-world experience of human beings, such as the visual surroundings, auditory perception, and sometimes even proprioception[^ProprioNote] in an interactive, computer-generated three-dimensional environment. The world exterior to the simulated environment plays no role here, such that the user can become shut off — or immersed — from his real surroundings, if the presentation is convincing enough.
+With the term _Virtual Reality_ we describe environments that simulate parts of the real-world experience of human beings, such as the visual surroundings, auditory perception, and sometimes even proprioception[^ProprioNote] in an interactive, computer-generated three-dimensional environment. The world exterior to the simulated environment plays no role here, such that the user can become shut off from his real surroundings and fully immersed in the simulation, if it is convincing enough.
 
 [^ProprioNote]: Proprioception is the sense of relative motion and positioning of one's own body and/or its parts.
 
 If the surroundings of the user are actually visible, e.g. via a set of glasses that are transparent and show the outside environment (or show them via cameras) and overlay information on top of it that extend or augment the capabilities or information content of the environment, we speak of _augmented reality_.
 
-In the case of a mix of both, where there is a direct connection or overlap between the virtual, simulated world, and the real world, the setting is termed _mixed reality_. _Mixed reality_ might take place anywhere in the _virtuality continuum_, except the extremal points of fully real environments, or fully virtual environments[@Milgram:1995cl]. 
+In the case of a mix of both, where there is a direct connection or overlap between the virtual, simulated world, and the real world, the setting is termed _mixed reality_. _Mixed reality_ might take place anywhere in the _virtuality continuum_, except the extremal points of fully real environments, or fully virtual environments, while _cross reality_ encompasses the full spectrum [@Milgram:1995cl]. 
 
-![\label{fig:virtuality}Virtuality continuum according to [@Milgram:1995cl], where mixed reality encompasses all settings that are not the extremal points.](figures/virtuality_continuum.pdf)
+![\label{fig:virtuality}Virtuality continuum according to [@Milgram:1995cl], where mixed reality encompasses all settings that are not the extremal points, and cross reality encloses the extremal points as well.](figures/virtuality_continuum.pdf)
 
 ## Historic Perspective — 1800s to 1990s
 
@@ -27,25 +27,25 @@ The first virtual reality "glasses" have been introduced in the 1850's, as so-ca
     \caption{\label{fig:stereoscope}The stereoscope.}
 \end{marginfigure}
 
-In the early 1950, the _Sensorama_ was introduced, an immersive movie theater\ref{fig:sensorama}, that not only included stereoscopic visuals, but also wind, sound, and even smell.
+In the early 1950, the _Sensorama_ was introduced, an immersive movie theater, that not only included stereoscopic visuals, but also wind, sound, and even smell. The machine is shown in Figure \ref{fig:sensorama}.
 
 \begin{marginfigure}
     \includegraphics{./figures/sensorama.png}
     \caption{\label{fig:sensorama}The sensorama. Image reproduced from Sensorama, Inc. advertisement, 1962.}
 \end{marginfigure}
 
-With computer graphics still in it's infancy, the first steps towards a head-mounted display mainly for military purposes, were made in 1968 by Ivan Sutherland[@Sutherland:1968im]. Sutherland developed a glasses-based virtual reality system (actually, augmented reality) that consisted of cathode-ray tubes mounted on the users head, with images being directed to the eyes by the means of mirrors. The tracking system for the contraption was suspended from the ceiling, looming over the user, hence the name of the system, _The Sword of Damocles_. _The Sword of Damocles_ could display wireframe models of geometric objects overlaid onto the user's surroundings, and adapted to the viewpoint that had been calculated by the tracking system.
+With computer graphics still in it's infancy, the first steps towards a head-mounted display mainly for military purposes, were made in 1968 by Ivan Sutherland [@Sutherland:1968im]. Sutherland developed a glasses-based virtual reality system (actually, augmented reality) that consisted of cathode-ray tubes mounted on the users head, with images being directed to the eyes by the means of mirrors. The tracking system for the contraption was suspended from the ceiling, looming over the user, hence the name of the system, _The Sword of Damocles_. _The Sword of Damocles_ could display wireframe models of geometric objects overlaid onto the user's surroundings, and adapted to the viewpoint that had been calculated by the tracking system.
 
 \begin{marginfigure}
     \includegraphics{./figures/sword-of-damocles.png}
     \caption{\label{fig:damocles}The \emph{Sword of Damocles}. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.}
 \end{marginfigure}
 
-Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the aforementioned lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves developed for NASA that would react to virtual objects and the user's grip[@Zimmerman:19875d6]. 
-In addition to the personal systems based on head-mounted displays, room-scale systems such as the _CAVE_[@CruzNeira:1992vt] — a backronym for _CAVE Automatic Virtual Environment_ — were developed in the mid-1990s. In contrast to the HMDs, these systems use the tracking of the user not to display a perspective-corrected image on a screen attached to the user's head, but on a (front or back-)projected wall or display at a distance to the user. Compared to HMDs, such CAVEs have the benefit that multiple people can use it simultaneously, with the constraint that only a single person will see the fully correct three-dimensional, immersive image. 
-CAVE systems have found a large user base in the automative industry, and in architecture and design[@DeFanti:2010cp].
+Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the aforementioned lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves developed for NASA that would react to virtual objects and the user's grip [@Zimmerman:19875d6]. 
+In addition to the personal systems based on head-mounted displays, room-scale systems such as the _CAVE_ [@CruzNeira:1992vt] — a backronym for _CAVE Automatic Virtual Environment_ — were developed in the mid-1990s. In contrast to the HMDs, these systems use the tracking of the user not to display a perspective-corrected image on a screen attached to the user's head, but on a (front or back-)projected wall or display at a distance to the user. Compared to HMDs, such CAVEs have the benefit that multiple people can use it simultaneously, with the constraint that only a single person will see the fully correct three-dimensional, immersive image. 
+CAVE systems have found a large user base in the automative industry, and in architecture and design [@DeFanti:2010cp].
 
-In the 1990s, interesting applications for various VR settings were explored in the research field. Especially UNC Chapel Hill's Virtual Reality Lab created a lot of solutions for diverse areas such as pharmaceuticals[@Brooks:1990be2], electron microscope control[@Taylor:19932a5], or architecture[@Airey:1990151], with the example of VR protein docking supported by haptics shown in \ref{fig:GROPE}.
+In the 1990s, interesting applications for various VR settings were explored in the research field. Especially UNC Chapel Hill's Virtual Reality Lab created a lot of solutions for diverse areas such as pharmaceuticals [@Brooks:1990be2], electron microscope control [@Taylor:19932a5], or architecture [@Airey:1990151], with the example of VR protein docking supported by haptics shown in \ref{fig:GROPE}.
 
 \begin{marginfigure}
     \label{fig:GROPE}
@@ -53,12 +53,12 @@ In the 1990s, interesting applications for various VR settings were explored in 
     \caption{Protein docking example using the haptic \emph{GROPE-III} system. Users reported a radically improved situational awareness from using the system. From \citep{Brooks:1990be2}.}
 \end{marginfigure}
 
-Another fascinating idea from the 90s is the omnidirectional treadmill for exploring virtual worlds[@Darken:1997odt], where a moving 2D conveyor belt would compensate the user's movement in the virtual environment. These developments have led to the _First Virtual Reality Revolution_, aiming at ubiquity of virtual reality devices and their usage, sprouting movies and conferences focused on VR, and companies channeling R&D money into VR technology. Nicholas Negroponte conjectured in 1993 a widespread use of VR devices, and a company that "will soon introduce a VR display system with a parts cost of less than US$25"[^WiredLinkNegroponte], while Fred Brooks estimated in 1994 "we will see high-resolution, low-lag systems doing serious applications within 3 years", although acknowledging that display technology back then was so bad it made the user "legally blind"[@Bryson:19942f4].
+Another fascinating idea from the 90s is the omnidirectional treadmill for exploring virtual worlds [@Darken:1997odt], where a moving 2D conveyor belt would compensate the user's movement in the virtual environment. These developments have led to the _First Virtual Reality Revolution_, aiming at ubiquity of virtual reality devices and their usage, sprouting movies and conferences focused on VR, and companies channeling R&D money into VR technology. Nicholas Negroponte conjectured in 1993 a widespread use of VR devices, and a company that "will soon introduce a VR display system with a parts cost of less than US$25"[^WiredLinkNegroponte], while Fred Brooks estimated in 1994 "we will see high-resolution, low-lag systems doing serious applications within 3 years", although acknowledging that display technology back then was so bad it made the user "legally blind" [@Bryson:19942f4].
 
-Unfortunately, the First Virtual Reality Revolution was not successful, at least from a commercial point of view — and most of the companies betting on its success went out of business until 1998[@Jerald:201667e]. Some reasons for the failure were: 
+Unfortunately, the First Virtual Reality Revolution was not successful, at least from a commercial point of view — and most of the companies betting on its success went out of business until 1998 [@Jerald:201667e]. Some reasons for the failure were: 
 
 * Due to the high cost of the systems, few were able to afford them, and often the systems remained only in research use,
-* ergonomics issues arising both from the size and weight of the systems prevented usage for more than a short period of time, with Randy Pausch stating, "approximately  10%  of  the  visitorsadamantly decline the opportunity to wear a head-mounted display"[@Bryson:19942f4], and
+* ergonomics issues arising both from the size and weight of the systems prevented usage for more than a short period of time, with Randy Pausch stating, "approximately  10%  of  the  visitorsadamantly decline the opportunity to wear a head-mounted display" [@Bryson:19942f4], and
 * the visual fidelity then-contemporary computers could produce when rendering digital 3-dimensional imagery were simply neither good enough nor fast enough to provide a fully convincing, not sickness-inducing, experience.
 
 [^WiredLinkNegroponte]: See [wired.com/1993/06/negroponte-11/](https://www.wired.com/1993/06/negroponte-11/).
@@ -84,7 +84,7 @@ After showing several prototypes of head-mounted displays, Palmer Luckey, a form
     \caption{The Oculus Rift Virtual Reality HMD. Public domain.}
 \end{marginfigure}
 
-On the side of augmented reality, Microsoft has been selling the developer kit of the _HoloLens_ since 2016. The HoloLens is an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The HoloLens features _inside-out tracking_, where no external tracking hardware is needed, apart from the cameras inside the HMD itself. On the software side, the HoloLens supports rendering directly on the device via Direct3D11, or via low-latency remote rendering (named Holographic Remoting) on a separate computer, and streamed image transfer, with the images encoded as H264 video stream, and corrected by the HoloLens on-the-fly with affine transformations for rotations and translations, to compensate for network latency. In early 2019, Microsoft announced the _HoloLens 2_, with improved field-of-view, latency, and physical footprint (see Figure \ref{fig:HoloLens2}).
+On the side of augmented reality, Microsoft has been selling the developer kit of the _HoloLens_ since 2016. The HoloLens is an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The HoloLens features _inside-out tracking_, where no external tracking hardware is needed, apart from the cameras inside the HMD itself. On the software side, the HoloLens supports rendering directly on the device via Direct3D11, or via low-latency remote rendering (named Holographic Remoting) on a separate computer, and streamed image transfer, with the images encoded as H264 video stream, and corrected by the HoloLens on-the-fly with affine transformations for rotations and translations, to compensate for network latency. In early 2019, Microsoft announced the _HoloLens 2_, with improved field of view, latency, and physical footprint (see Figure \ref{fig:HoloLens2}).
 
 \begin{marginfigure}
     \includegraphics{./figures/HoloLens2.jpg}
@@ -98,13 +98,13 @@ Another available AR headset (as of 2019) is the _Magic Leap One_, featuring adv
     \caption{The Magic Leap AR Headset. Promotional picture, from \href{http://magicleap.com}{magicleap.com}.\label{fig:MagicLeap}}
 \end{marginfigure}
 
-Both the HoloLens and the Magic Leap One provide a glimpse of what will be possible, comfortable, and easy with mixed reality devices at some point in the near future. Both still suffer from a lack of resolution, field-of-view, and computational power, such that the impression these headsets leave in actual reality are still a bit of a stretch from their promotional materials.
+Both the HoloLens and the Magic Leap One provide a glimpse of what will be possible, comfortable, and easy with mixed reality devices at some point in the near future. Both still suffer from a lack of resolution, field of view, and computational power, such that the impression these headsets leave in actual reality are still a bit of a stretch from their promotional materials.
 
-In contrast, current-generation HMDs are able to display convincing virtual reality environments to the user, with a high frame rate, and a large field of view, given a potent-enough CPU and GPU are used to produce the images. Compared to the _First VR Revolution_, performance of the rendering computers, and even more importantly, the tracking systems, has increased tremendously, the form factors and weights of the HMDs have gotten to usable and ergonomic dimensions, and their price has been reduced substantially, such that a VR-capable computer system, including the HMD, can be bought for as little as about €1500 in early 2019.
+In contrast, current-generation Virtual Reality HMDs are able to display convincing virtual reality environments to the user, with a high frame rate, and a large field of view, given a potent-enough CPU and GPU are used to produce the images. Compared to the _First VR Revolution_, performance of the rendering computers, and even more importantly, the tracking systems, has increased tremendously, the form factors and weights of the HMDs have gotten to usable and ergonomic dimensions, and their price has been reduced substantially, such that a VR-capable computer system, including the HMD, can be bought for as little as about €1500 in early 2019.
 
-Current research topics in the usage of virtual reality include how people explore virtual environments[@Sitzmann:to], the combination of multiuser virtual reality with physical systems on top of 5G low-latency networks[@Baştuğ:201645e], or foveated rendering to gain significant speed-ups[@Patney:2016b4e][^FoveatedNote]. Clinicians have renewed interest in the usage of VR technologies in psychology and psychiatry, such as for treatment of anxiety disorders[@Maples-Keller:2017790] or for the rehabilitation of stroke victims[@Laver:2017vrsr]. In the context of biology, VR has recently been used to sample molecular conformations in a multiuser environment[@OConnor:2018339], combining rendering on VR HMDs with cloud-based simulations of molecular structures, or for the visualisation of endocytosis datasets from electron microscopy[@Johnston:20189ce].
+Current research topics in the usage of virtual reality include how people explore virtual environments [@Sitzmann:to], the combination of multiuser virtual reality with physical systems on top of 5G low-latency networks [@Baştuğ:201645e], or foveated rendering to gain significant speed-ups [@Patney:2016b4e][^FoveatedNote]. Clinicians have renewed interest in the usage of VR technologies in psychology and psychiatry, such as for treatment of anxiety disorders [@Maples-Keller:2017790] or for the rehabilitation of stroke victims [@Laver:2017vrsr]. In the context of biology, VR has recently been used to sample molecular conformations in a multiuser environment [@OConnor:2018339], combining rendering on VR HMDs with cloud-based simulations of molecular structures, or for the visualisation of endocytosis datasets from electron microscopy [@Johnston:20189ce].
 
-For augmented reality, the visualisation of complex data, such as large graphs is an active area of research[@Buschel:2019a5d], and it is also being explored as a new modality for neuronavigational systems in neurosurgery[@Meola:20170ce]. Utilising AR in combination with cyber-physical systems, such as human-robot collaborative assembly systems[@Makris:20161c0] or for debugging distributed systems[@Reipschläger:2018945] is also investigated.
+For augmented reality, the visualisation of complex data, such as large graphs is an active area of research [@Buschel:2019a5d], and it is also being explored as a new modality for neuronavigational systems in neurosurgery [@Meola:20170ce]. Utilising AR in combination with cyber-physical systems, such as human-robot collaborative assembly systems [@Makris:20161c0] or for debugging distributed systems [@Reipschläger:2018945] is also investigated.
 
 [^FoveatedNote]: In foveated rendering, only the part of the image seen by the user's fovea, the part of the retina with the highest spatial resolution, is rendered at full resolution.
 
@@ -113,7 +113,7 @@ For augmented reality, the visualisation of complex data, such as large graphs i
 
 ### Motion Sickness or Simulator Sickness
 
-Motion or Simulator sickness can occur when there is a disparity between the motion seen by the eyes, and the motion perceived by the vestibular system. There are several hypothesis why it arises[@Jerald:201667e]:
+Motion or Simulator sickness can occur when there is a disparity between the motion seen by the eyes, and the motion perceived by the vestibular system. There are several hypothesis why it arises [@Jerald:201667e]:
 
 * _sensory conflict theory_ — motion sickness arises due to a conflict of the visual, vestibular, or proprioceptive systems that cannot be reconciled,
 * _evolutionary theory_ — the disparity of sensations from the different system is assumed by the body to originate in being poisoned, which is counteracted by the need to lie down, vomiting (to get rid of ingested poison), and nausea, to prevent the consumption of more poison, 
@@ -123,9 +123,9 @@ Motion or Simulator sickness can occur when there is a disparity between the mot
 Whatever the actual reason for motion sickness might be, it has to be kept in check for a user to be able to comfortably use a VR system. For that, several defences can be used:
 
 * the system should run with a frame rate of 60fps, or better 90fps to maintain a fluid appearance, as everything below will be perceived as stuttering and can increase motion sickness — it is advisable to rather sacrifice realistic rendering instead of frame rate (see [Visual Processing] on more information about what movements are perceived as fluid),
-* certain kinds of movement, such as lateral movements should be avoided, as they do not occur in the real world, and teleportation should be the preferred way of moving, with fading transitions at start and end[^OculusBPLink], alternatively, dynamically reduce the field of view during fast movements[@Fernandes:2016cvrs],
-* the system should be set up to use the correct inter-pupillary distance (IPD) of the user, to provide the same image convergence as in the real world[@Ukai:20085b2],
-* the tracking system used should be well-calibrated and work with low latency to avoid stuttering and jerky movements[@Mania:2004ps;@Jerald:201667e].
+* certain kinds of movement, such as lateral movements should be avoided, as they do not occur in the real world, and teleportation should be the preferred way of moving, with fading transitions at start and end[^OculusBPLink], alternatively, dynamically reduce the field of view during fast movements [@Fernandes:2016cvrs],
+* the system should be set up to use the correct inter-pupillary distance (IPD) of the user, to provide the same image convergence as in the real world [@Ukai:20085b2],
+* the tracking system used should be well-calibrated and work with low latency to avoid stuttering and jerky movements [@Mania:2004ps;@Jerald:201667e].
 
 [^OculusBPLink]: See [developer.oculus.com/design/latest/concepts/book-bp/](https://developer.oculus.com/design/latest/concepts/book-bp/).
 
@@ -139,7 +139,7 @@ Current, commercially-available HMDs do not provide focus cues for the eye. This
 
 Research-grade HMDs try to solve this now using light-field rendering [@Wetzstein:2013jo], to provide focus cues for the eye. In [@Huang:2015ce] for example, a three-layered HMDs is described, providing focus cues for foreground, background, and the area in-between. 
 
-Actually giving focus cues to the user would bring detection of the depth the user is looking at, and therefore 3D eye tracking, one step closer.s
+Actually giving focus cues to the user would bring detection of the depth the user is looking at, and therefore 3D eye tracking, one step closer.
 
 ### Hygienic Issues
 
