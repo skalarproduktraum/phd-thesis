@@ -72,7 +72,7 @@ All of the described movements are optimisations to provide the best image possi
 \begin{marginfigure}
     \label{fig:retina_architecture}
     \includegraphics{./figures/retina-architecture.pdf}
-    \caption{Inverted retinal architecture of mammals (light path in the image is bottom to top); \emph{RPE}: retinal pigment epithelium; \emph{OS}: outer segment of the photoreceptor cells; \emph{IS}: inner segment of the photoreceptor cells; \emph{ONL}: outer nuclear layer; \emph{OPL}: outer plexiform layer; \emph{INL}: inner nuclear layer \emph{IPL}: inner plexiform layer; \emph{GC}: ganglion cell layer; \emph{P}: pigment epithelium cell; \emph{BM}: Bruch-Membran; \emph{R}: rods; \emph{C}: cones; \emph{H}: horizontal cell; \emph{B}: bipolar cell; \emph{M}: Müller cell; \emph{A}: amacrine cell; \emph{G}: ganglion cell; \emph{AX}: Axon, Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
+    \caption{Inverted retinal architecture of mammals. Adapted, original illustration (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
 \end{marginfigure}
 
 At the retina, the processing of incident photons starts in the true sense of the word, as so far we have only been concerned with transmission, modulation, and focussing.
@@ -100,6 +100,8 @@ A receptive field contains about 100 photoreceptors and consists of an inner and
 Instead of acting like the pixels of a camera sensor, this behaviour makes ganglion cells basically edge detectors, transmitting mostly the edge information downstream, which results in a large reduction in the amount of data that needs to be transmitted. Let's do an example calculation of the effect this has:
 
 Retinal ganglion cells receive input from about about $128000000$ cells — about $120000000$ rods and $8000000$ cones —  assumed to carry, for simplicity, or 8bit of data, equivalent to 256 shades of gray. Assuming a "refresh rate" of 30 Hz, this amounts to $\approx 4\,\mathrm{GiB/s}$(!). The ganglion cells however only have about $1000000$ outputs connecting to the next processing area, the LGN, reducing the necessary data rate to the LGN to about $30\,\mathrm{MiB/s}$ [@brenner2000adaptive; @koch2006much]. Would the optic nerve carry through all the neural connections from the rods and cones, it would not have an average $3.5\,\mathrm{mm}$ diameter, but about $20\,\mathrm{mm}$, severely restricting the possible movements of the eye.
+
+
 
 ## The Lateral Geniculate Nucleus
 
