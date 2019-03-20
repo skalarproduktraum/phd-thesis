@@ -165,6 +165,20 @@ The hypercolumns can contain three different types of cells:
 * _Complex Cells:_ They add together (e.g. with a mathematical _or_ operation) the outputs of multiple simple cells, resulting in a receptive field that is not only sensitive to the orientation of the stimulus, but also to its relative position within the field.
 * Finally, _Hypercomplex cells_ or _End-stopped cells_ wire together multiple complex cells, to additionally provide inhibition if a stimulus exceeds the receptive field — complex cells would continue to fire there, and are thereby able to detect curved stimuli [@Yazdanbakhsh:2006ec0; @Snowden:2012wu].
 
+## Consequences for the Design of Eye-based Interfaces
+
+from Duchowski:
+
+* chrominance can be coded with less resolution outside the fovea
+* luminance should be coded with higher resolution in the periphery, because there are still a high number of cones in the periphery
+* contrast sensitivity should be high in the periphery region, as the magnocellular ganglion cells respond most strongly to that area
+* temporal resolution must be available in the periphery, careful with sudden-onset bright objects, they might steal attention
+* spatial resolution should be high in the foveal area, and degrade smoothly in the surroundings, high-frequency detail in the periphery should be made available just-in-time to anticipate fixation changes
+
+additionally:
+
+* the delay, velocity, and duration of eye movements has to be taken into account, such as the processing delay that occurs with saccades, and the following temporary phase of blindness due to saccadic suppression
+
 ## Challenges
 
 * _Can we harness the knowledge gained about the human visual system to more efficiently control and steer data analysis or scientific instruments?_

@@ -57,7 +57,7 @@ Spatial input, such as HMD positioning and rotations, are handled by the specifi
 
 ## The Renderers
 
-In scenery, the contract with the renderer is a relatively thin one:
+In scenery, the contract with the renderer is a thin one:
 
 ```kotlin
 abstract class Renderer : Hubable {
@@ -87,9 +87,9 @@ abstract class Renderer : Hubable {
 }
 ```
 
-Basically, a renderer needs to be able to render something, take screenshots, resize a (potentially not existing) viewport, and take screenshots. This design decision was made such that scenery can support a variety of different rendering backends, after discovering that OpenGL -- which scenery started with as only renderer -- and Vulkan do not map well to each other. With this architecture it is possible to extend rendering support in the future to e.g. software renderers, or external ray tracing frameworks.
+Basically, a renderer needs to be able to render something, take screenshots, resize a (potentially not existing) viewport, and take screenshots. This design decision was made such that scenery can support a variety of different rendering backends, after discovering that OpenGL — which scenery started with as only renderer — and Vulkan do not map well to each other. With this architecture it is possible to extend rendering support in the future to e.g. software renderers, or external ray tracing frameworks.
 
-A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run syncronous with scenery's main loop.
+A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run synchronous with scenery's main loop.
 
 A renderer may store its own metadata related to a `Node` in its `metadata` field. This field is cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers, which could be running in parallel, do not interfere with each other's `metadata`.
 
@@ -295,7 +295,7 @@ Settings are stored...\{TODO: Actually necessary?}
 
 ![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.png)
 
-Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectivelly correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following blending options:
+Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectively correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following blending options:
 
 * _maximum projection_ (MIP), where each voxel data point along the way is compared to the previous, and the maximum kept,
 * _local maximum projection_ (LMIP), where each voxel data point along the way is compared to the previous, and the maximum kept, but only after reaching a user-defined threshold, and
