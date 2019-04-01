@@ -1,8 +1,8 @@
 # Quantifying Interface Efficiency
 
-The efficiency of Human-Computer Interfaces can be measured in various ways, such as watching different types of users — unexperienced vs. experienced — use a specific interface and evaluating their actions subjectively, or by trying to come up with a mathematical model of how the user will interact a specific interface. In this chapter we are going to explore the latter possibility, in the form of an extension of the GOMS model:
+The efficiency of Human-Computer Interfaces can be measured in various ways, such as watching different types of users — unexperienced vs. experienced — use a specific interface and evaluating their actions subjectively, or by trying to come up with a mathematical model of how the user will interact a specific interface. In this chapter we are going to explore the latter possibility, in the form of an extension of the widely-used and validated Keystroke-Level Model (KLM). We start with an introduction to the original model, and example calculations for two interfaces achieving the same task.
 
-## The GOMS Model for Quantifying Interface Efficiency
+## The Keystroke-Level Model for Quantifying Interface Efficiency
 
 A widely used model for quantification the efficiency of an interface is a model based on defining \textbf{G}oals, a set of \textbf{O}perators used as instruments, a set of \textbf{M}ethods to achieve the defined Goals, and a definition of \textbf{S}election rules how to discern competing methods, in short _GOMS_. The GOMS model, or it's original version, _CMN-GOMS_, the  was introduced in 1980 by Card, Moran, and Newell [@Card:1980kl] and can help to predict the time taken by an experienced user to perform a given task. It soon turned out it was relatively difficult to build a CMN-GOMS-based predictor, and the authors published a highly simplified version of it, the _Keystroke-Level Model_ (KLM) [@Card:1980kl].
 
@@ -45,7 +45,7 @@ Further execution times for the operators according to [@Card:1980kl] are given 
 
 Table: Execution times for the KLM-GOMS operators. {#tbl:GOMSExecutionTimes}
 
-[^FittsNote]: The given expression only applies to 1D mouse movements. The constants $a$ and $b$ of the general form of Fitts's Law, $T = a + b \cdot \ln\left(\frac{d}{s}+0.5\right)$ have to be determined experimentally for other cases.
+[^FittsNote]: The given expression only applies to 1D mouse movements. The constants $a$ and $b$ of the general form of Fitts's Law, $T = a + b \cdot \ln\left(\frac{d}{s}+0.5\right)$ have to be determined experimentally for other cases. Fitts's Law has also been extended to three-dimensional pointing tasks [@Murata:2001ebc].
 
 After putting together the operators for the task under evaluation, a set of heuristics needs to be applied for distributing the Mental operators correctly (following [@Card:1980kl] and [@Raskin:2000thi]):
 
@@ -115,8 +115,23 @@ We can see that the interface design _A_, which enables the user to just type in
 
 [@Raskin:2000thi] also discusses the ideal interface, which in our case would end up with _MKKK_, the mental operation plus three key strokes for typing the temperature, resulting in an execution time of only $1.95\,\mathrm{s}$. While clearly optimal, in our use case such an interface is not desirable: the user needs to be able to confirm the setting, such that typos are avoided. In design __A__, this is implemented by the _Set_ button, while in design __B__ the laser power is only set after the user has finished dragging the slider. 
 
-## An Extension of GOMS for Virtual Reality
+## An Extension of the Keystroke-Level Model for Virtual Reality
+
+| Operator | Description | Time/s |
+|:--|:--|:--|
+| \cellcolor{blue!10}\textbf{M}ental | Mentally preparing a physical action. | $1.35$ |
+| \cellcolor{blue!10}\textbf{R}(t) | Response time of the system. | $t$ |
+| \cellcolor{green!10}\textbf{P}ointing | Pointing to a target, subject to Fitts's Law (or extensions).  | $1.1$ [^PointingNote] |
+| \cellcolor{green!10}\textbf{Pr}eparation | Preparation of the execution of movements. | t |
+| \cellcolor{green!10}\textbf{W}alk | Walking to reach a target area. | t |
+| \cellcolor{green!10}\textbf{Re}traction | Retracting an arm after the execution of a movement. | t |
+| \cellcolor{yellow!10}\textbf{H}olding | Holding a position in 3D space with the hand. |  t |
+| \cellcolor{yellow!10}\textbf{T}apping | Tapping in 3D space. | t |
+| \cellcolor{yellow!10}\textbf{D}rawing | Drawing a shape in 3D space. | t |
+| \cellcolor{yellow!10}\textbf{K}eystroke | Pressing a key, including modifiers. | $0.2$ avg. |
 
 
 
+
+[^PointingNote]: Following [@Murata:2001ebc] and [@Erazo:2015d6c].
 
