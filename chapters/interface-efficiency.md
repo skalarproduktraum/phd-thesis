@@ -1,12 +1,12 @@
-# Interface Efficiency
+# Quantifying Interface Efficiency
 
 The efficiency of Human-Computer Interfaces can be measured in various ways, such as watching different types of users — unexperienced vs. experienced — use a specific interface and evaluating their actions subjectively, or by trying to come up with a mathematical model of how the user will interact a specific interface. In this chapter we are going to explore the latter possibility, in the form of an extension of the GOMS model:
 
 ## The GOMS Model for Quantifying Interface Efficiency
 
-A widely used model for quantification the efficiency of an interface is a model based on defining \textbf{G}oals, a set of \textbf{O}perators used as instruments, a set of \textbf{M}ethods to achieve the defined Goals, and a definition of \textbf{S}election rules how to discern competing methods, in short _GOMS_. The GOMS model, or it's original version, _CMN-GOMS_, the  was introduced in 1980 by Card, Moran, and Newell [@Card:1980kl] and can help to predict the time taken by an experienced user to perform a given task. It soon turned out it was relatively difficult to build a CMN-GOMS -based predictor, and the authors published a highly simplified version of it, the _Keystroke-Level Model_ (KLM) [@Card:1980kl].
+A widely used model for quantification the efficiency of an interface is a model based on defining \textbf{G}oals, a set of \textbf{O}perators used as instruments, a set of \textbf{M}ethods to achieve the defined Goals, and a definition of \textbf{S}election rules how to discern competing methods, in short _GOMS_. The GOMS model, or it's original version, _CMN-GOMS_, the  was introduced in 1980 by Card, Moran, and Newell [@Card:1980kl] and can help to predict the time taken by an experienced user to perform a given task. It soon turned out it was relatively difficult to build a CMN-GOMS-based predictor, and the authors published a highly simplified version of it, the _Keystroke-Level Model_ (KLM) [@Card:1980kl].
 
-The main benefit of the original KLM-GOMS model is that it is simple and easy to evaluate, and — despite making assumptions about the average time taken for different parts of a task's execution — it is quite accurate in addition. Since its inception has been widely used, e.g. for \TODO{add example papers}. The major downsides of the model is not taking other aspects of the user's performance into consideration: already the original authors acknowledge not taking into account factors like fatigue, learning, or errors made during execution [@Card:1980kl]. As mentioned above, the model also assumes an experienced user, and as such cannot be applied to the unskilled user.
+The main benefit of the original KLM-GOMS model is that it is simple and easy to evaluate, and — despite making assumptions about the average time taken for different parts of a task's execution — it is quite accurate in addition. Since its inception has been widely used, e.g. for \TODO{add example papers}. The major downside of the model is not taking other aspects of the user's performance into consideration: already the original authors acknowledge not taking into account factors like fatigue, learning, or errors made during execution [@Card:1980kl]. As mentioned above, the model also assumes an experienced user, and as such cannot be applied to the unskilled user.
 
 Since the development of the original model, more derivatives were developed such as, 
 
@@ -36,7 +36,7 @@ Further execution times for the operators according to [@Card:1980kl] are given 
 
 | Operator | Description | Time/s |
 |:--|:--|:--|
-| \textbf{K}eystroke | Pressing a key, including modifiers. | $0.08 - 1.20$ |
+| \textbf{K}eystroke | Pressing a key, including modifiers. | $0.08 - 1.20$, $0.2$ avg. |
 | \textbf{P}ointing | Pointing to a target, subject to Fitt's Law | $1.1$ |
 | \textbf{H}oming | Homing the hands on an input device. | $0.4$ |
 | \textbf{D}rawing | Drawing $n$ line segments of length $l$ | $0.9n + 0.16l$ |
@@ -60,9 +60,63 @@ While these six heuristics may seem arbitrary at first glance, they have a deepe
 
 ### An Example KLM-GOMS Calculation
 
+_The discussion in this section follows chapter 4.2.3 of [@Raskin:2000thi]_
+
+\begin{marginfigure}
+    \includegraphics{./figures/laser-power-interfaces.pdf}
+    \caption{Two examples of how interfaces for adjusting laser power on a microscope could be designed. See text for theoretical comparison. \label{fig:LaserPowerInterfaces}}
+\end{marginfigure}
+
+Let's make an example calculation to compare the efficiency of two interfaces with each other: In Figure \{ref:LaserPowerInterfaces} we show two examples of how an interface for adjusting the laser power on a microscope could be adjusted by the user:
+
+* In __A__, the user can type in the wanted laser power, followed by pressing the _Set_ button. Alternatively, the user can adjust the power by pushing the spinner buttons, while
+* in __B__, a range of laser powers — as biological specimen have only a certain tolerance before phototoxicity arises, this can be used as a guideline — is shown on a slider. The user can adjust the ranges of the slider by clicking on the buttons above and below, adjusting the range. By dragging the slider, the laser power can be set. 
+
+In the case of using the spinner controls of __A__, the following steps are necessary:
+
+* _H_ move hand to input device,
+* _P_ point input device to the input field,
+* 3 _K_ to type in the laser power with three significant digits,
+* _P_ point input device to the _Set_ button
+* _K_ click the _Set_ button, ending up with
+
+_HPKKKPK_. Adding the necessary mental operators according to Rule 1, we get _HMPKMKMKMPK_. As the _K_ operators for the laser power are fully anticipated though, we delete the _M_ operators except for the first one in that string according to rule 3, and arrive at _HMPKKKMPK_. For the execution time $T$, we get
+
+\begin{align}
+T & = T_H + T_M + T_P + 3 \cdot T_K + T_M + T_P + T_K \\
+& = T_H + 2 \cdot T_M + 4 \cdot T_K + 2 \cdot T_P \\
+ & = 0.4 + 2 \cdot 1.35 + 4 \cdot 0.2 + 2 \cdot 1.1\\
+ & = 6.1\,\mathrm{s}.
+\end{align}
+
+In design __B__, we followed a more skeuomorphic way of designing the interface, which means that the interfaces resembles a slider that could be present on a physical device in hardware. The necessary steps to set up a given laser power are (the calculation here is assumed to be worst case, where the ranges do not match the wanted power):
+
+* _H_ move hand to input device,
+* _P_ point input device to the top scroll button,
+* _K_ push down button on mouse on top scroll button,
+* _S_ scroll until desired maximum is shown,
+* _P_ point input device to the bottom scroll button,
+* _K_ push down button on mouse on bottom scroll button,
+* _S_ scroll until desired minimum is shown,
+* _P_ point input device to the slider,
+* _K_ push down button on slider,
+* _P_ point slider to desired power value, and
+* _K_ release mouse button,
+
+_HPKSPKSPKPK_. Adding _M_ according to Rules 1 and 2, we get _HMPKSMPKSMPKPK_. For the scroll action _S_ we assume a time of 2 seconds, in accordance with [@Raskin:2000thi]. For the execution time $T$, we arrive at
+
+\begin{align}
+T & = T_H + 2\cdot (T_M + T_P + T_K + T_S) + T_M + 2\cdot(T_P + T_K)\\
+& = 0.4 + 2\cdot (1.35 + 1.1 + 0.2 + 2.0) + 1.35 + 2\cdot(1.1 + 0.2)\\
+ & = 13.65\,\mathrm{s}.
+\end{align}
+
+We can see that the interface design _A_, which enables the user to just type in and confirm the desired laser power, is clearly superior from a execution time point of view. 
+
+[@Raskin:2000thi] also discusses the ideal interface, which in our case would end up with _MKKK_, the mental operation plus three key strokes for typing the temperature, resulting in an execution time of only $1.95\,\mathrm{s}$. While clearly optimal, in our use case such an interface is not desirable: the user needs to be able to confirm the setting, such that typos are avoided. In design __A__, this is implemented by the _Set_ button, while in design __B__ the laser power is only set after the user has finished dragging the slider. 
+
 ## An Extension of GOMS for Virtual Reality
 
-## Measuring Interface Efficiency
 
 
 
