@@ -11,8 +11,9 @@ The main benefit of the original KLM-GOMS model is that it is simple and easy to
 Since the development of the original model, more derivatives were developed such as, 
 
 * _CPM-GOMS_ [@John:1995cp], extending the original GOMS model to parallel tasks, 
-* _Codein_ [@Christou:2012b12], a new notation for GOMS which extends to reality-based interfaces, or
-* the _Touch-Level Model_ (TLM) [@Rice:2014341], which not only extends the use of KLM-GOMS to today's ubiquitous touch-enabled devices, but also introduces new operators, e.g. for taps, gestures, or real-world distractions.
+* _Codein_ [@Christou:2012b12], a new notation for GOMS which extends to reality-based interfaces,
+* the _Touch-Level Model_ (TLM) [@Rice:2014341], which not only extends the use of KLM-GOMS to today's ubiquitous touch-enabled devices, but also introduces new operators, e.g. for taps, gestures, or real-world distractions, or
+* the _Touch-less Hand Gesture-Level Model_ (THGLM), extending the KLM to touchless interactions [@Erazo:2015d6c].
 
 ### KLM-GOMS Concepts and Terminology
 
@@ -117,10 +118,29 @@ We can see that the interface design _A_, which enables the user to just type in
 
 ## An Extension of the Keystroke-Level Model for Virtual Reality
 
+As mentioned in the introduction above, the KLM has been extended to include other interfaces than just keyboards, such as touchscreen interfaces or interfaces based on touchless gestural interaction [@Erazo:2015d6c]. In this section we construct a KLM-derived model that extends the work of [@Erazo:2015d6c] to virtual reality and augmented reality settings, where the user can use both free-hand interaction and  physical controllers, and might perform gestures with both.
+
+For gestures, [@Erazo:2015d6c] describe the temporal structure of a gesture in terms of _gesture units_ and _gesture phrases_. A gesture unit is defined as the time between the start and the end of limb movements, and may contain one or more gesture phrases. A gesture phrase in turn can be a _stroke phrase_, or a _hold phrase_. In addition, we include _action_, which can consist either of a gesture unit, or a _movement_ that is not a gesture. We can summarise these concepts as:
+
+\begin{align}
+\begin{split}
+    \text{action} & = \text{gesture unit}\,\,|\,\,\textcolor{green}{\text{movement}}\\
+    \text{gesture unit} & = \{\text{gesture phrases}\} + [\text{Retraction}]\\
+    \text{gesture phrase} & = \textcolor{yellow}{\text{hold phrase}}\,\,|\,\, \textcolor{red}{\text{stroke phrase}}\\
+    \textcolor{yellow}{\text{hold phrase}} & = [\text{preparation}] + \text{hold}\\
+    \textcolor{red}{\text{stroke phrase}} & = [\text{preparation}] + [\text{pre-stroke hold}] + \text{stroke} + [\text{post-stroke hold}].
+    \label{eq:PhraseGrammar}
+\end{split}
+\end{align}
+
+Here, curly brackets denote one or multiple elements, square brackets optional elements, and elements without brackets are mandatory.
+
+
 | Operator | Description | Time/s |
 |:--|:--|:--|
 | \cellcolor{blue!10}\textbf{M}ental | Mentally preparing a physical action. | $1.35$ |
 | \cellcolor{blue!10}\textbf{R}(t) | Response time of the system. | $t$ |
+| \cellcolor{blue!10}\textbf{K}eystroke | Pressing a key, including modifiers. | $0.2$ avg. |
 | \cellcolor{green!10}\textbf{P}ointing | Pointing to a target, subject to Fitts's Law (or extensions).  | $1.1$ [^PointingNote] |
 | \cellcolor{green!10}\textbf{Pr}eparation | Preparation of the execution of movements. | t |
 | \cellcolor{green!10}\textbf{W}alk | Walking to reach a target area. | t |
@@ -128,10 +148,14 @@ We can see that the interface design _A_, which enables the user to just type in
 | \cellcolor{yellow!10}\textbf{H}olding | Holding a position in 3D space with the hand. |  t |
 | \cellcolor{yellow!10}\textbf{T}apping | Tapping in 3D space. | t |
 | \cellcolor{yellow!10}\textbf{D}rawing | Drawing a shape in 3D space. | t |
-| \cellcolor{yellow!10}\textbf{K}eystroke | Pressing a key, including modifiers. | $0.2$ avg. |
+| \cellcolor{yellow!10}\textbf{S}wiping | Performing a swipe gesture. | t |
+| \cellcolor{yellow!10}\textbf{G}ripping | Gripping an object. | t |
+| \cellcolor{yellow!10}\textbf{R}eleasing | Releasing an object. | t |
+
+Table: The operators in our extended model, colour-coded according to \ref{eq:PhraseGrammar}. {#tbl:VRKLMOperators}
 
 
 
 
-[^PointingNote]: Following [@Murata:2001ebc] and [@Erazo:2015d6c].
+[^PointingNote]: Following [@Murata:2001ebc; @Erazo:2015d6c].
 
