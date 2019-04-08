@@ -1,8 +1,12 @@
 # Design and Architecture
 
+After having introduced a high-level overview of scenery in the previous chapter, in this chapter, we are diving deeper into the framework, describing each of its components. We start with scenegraph-based rendering and traversal:
+
 ## Scenegraph-based rendering
 
-A scenegraphs is a data structure that organises objects in a hierarchical manner, in a tree or graph structure, where each node in the graph has its own transformation properties. In that way, it is very easy to describe spatial and organisational relations between objects, such as a car tyre belonging to a car, and the tyre moving with the parent object _car_ (inheriting its transformations), when it moves.
+A scenegraph is a data structure that organises objects in a hierarchical manner, in a tree or graph structure, where each node in the graph has its own transformation properties. In that way, it is very easy to describe spatial and organisational relations between objects, such as a car tyre belonging to a car, and the tyre moving with the parent object _car_ (inheriting its transformations), when it moves.
+
+In general, a scenegraph can contain connections between multiple nodes. In scenery, we use a scenegraph approach that is closer to a tree representation, because that structure more easily enables parallel scene element discovery \TODO{add reference to Boudier/Kubisch GTC presentation}.
 
 If bounding boxes are stored along with the nodes, the scenegraph can easily be extended to also include _bounding volume hierarchies_ that can enable more efficient collision detection[^collisionnote] or frustum culling[^cullingnote].
 
@@ -15,15 +19,15 @@ If bounding boxes are stored along with the nodes, the scenegraph can easily be 
 
 ### Traversal
 
-Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. In scenery, the scenegraph is traversed by default in the same way it is stored. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.  
+Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. In scenery, the scenegraph is traversed by default in the same way it is stored. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.
 
 ## The Nodes
 
-Nodes are the central part of scenery and represent all the entities that can be rendered on-screen. These nodes are organised into an ordered, acyclic graph of parent-child relationships. Operations, such as mathematical transformations -- such as translations, rotations, or scalings -- are automatically propagated to a `Node`s `children`. This way of organising scene contents is called a _scene graph_ and is a standard way in computer graphics to organise scenes hierarchically by their relationship with each other. 
+Nodes are the elements of the scenegraph, and most of them are entities that can be rendered on-screen. These nodes are organised into an ordered, acyclic graph of parent-child relationships. Operations, such as mathematical transformations — such as translations, rotations, or scalings — are automatically propagated to a `Node`s `children`.  
 
 For actually organising nodes into a scene, a special node type exists, the `Scene`. `Node`s attached to a top-level `Scene` element as `children` become the top-level elements of the scene, and can in turn have their own `children`.
 
-As a short example, a `Scene` might contain a `Node` _Cell_, which has children _Nucleus_ and _ER_. The transformations of _Nucleus_ and _ER_ are then relative to _Cell_, and when the _Cell_ moves, so will _Nucleus_ and _ER_.
+As a short example, a `Scene` might contain a `Node` _Cell_, which has children _Nucleus_ and _ER_. The transformations of _Nucleus_ and _ER_ are then relative to _Cell_, and when the _Cell_ moves or rotates, so will _Nucleus_ and _ER_.
 
 ### Transforms
 
@@ -37,27 +41,48 @@ A `Node` can have the following transforms:
 
 The transforms are calculated by a `Node`s `updateWorld(recursive: Boolean, force: Boolean)` routine, and stored to the `model` and `world` properties. If `recursive` is specified, the routine will descend to all children, calculate their transforms, and mark them as updated. If any of the transforms of a `Node` change during runtime, it will get its `needsUpdate` and `needsUpdateWorld` flag set, to be picked up on the next update run.
 
+Some nodes might want to construct their own model and world matrices, overriding the behaviour of `updateWorld`: this can be achieved by setting the `wantsComposeModel` flag to `false`.
+
 \TODO{Add scene graph figure}
 
-[^quatnote]: Quaternions are a 4-dimensional extension of complex numbers, that can also describe rotations in space. While rotations may as well be represented as matrices, such representations suffer from two problems: a) they cannot be smoothly interpolated and b) they may lead to _gimbal locking_, where the sine or cosine of an angle in a rotation matrix lead to a zero entry, making the transformation loose a degree of freedom. Quaternions are free of both problems, they are however not as intuitive as e.g. Euler angles. In scenery, helper routines are provided to convert Euler angles and matrices to quaternions for user convenience.
+[^quatnote]: Quaternions are a 4-dimensional extension of complex numbers, that can describe rotations in space. While rotations may as well be represented as matrices, such representations suffer from two problems: a) matrices cannot be smoothly interpolated and b) they may lead to _gimbal locking_, where the sine or cosine of an angle in a rotation matrix lead to a zero entry, making the transformation loose a degree of freedom — further multiplications will not be able to achieve a non-zero rotation around this axis. Quaternions do not suffer from both problems, they are however not as intuitive as other rotation representations such as Euler angles. In scenery, helper routines are provided to convert Euler angles or matrices to quaternions for user convenience.
 
 ## The Hub
 
-The hub is the communication backbone of scenery. All of the subsystems register with a hub, and a hub can be queried for the presence of a subsystem. In this way, it is possible to also realise completely headless applications, that run logic, but do not produce any visual output, and do not take any input.
+The hub is the communications backbone of scenery. All of the subsystems register with a hub, and a hub can be queried for the presence of a subsystem. In this way, it is possible to also realise completely headless applications, that run logic, but do not produce any visual output, and do not take any input. It also helps to create minimal unit tests that only include the necessary subsystems for the particular test case.
 
-Hubs can be queried by `Hub.get(e: SceneryElement)`. This routine will return the `SceneryElement` is has been asked for, or `null` if it does not exist.
+Hubs can be queried by `Hub.get(e: SceneryElement)`. This routine will either return the `SceneryElement` is has been asked for, or `null` if that subsystem has not been registered.
 
-A `SceneryElement` can be a renderer, OpenCL compute context, statistics collector, node publishers or subscribers, settings storage, and regular or natural input devices. A new `SceneryElement` may be added to a hub via `Hub.add(e: SceneryElement, obj: Any)`.
+A `SceneryElement` can be a renderer, OpenCL compute context, statistics collector, node publishers or subscribers, settings storage, and regular or natural input devices. A new `SceneryElement` may be added to a hub via the generic function `<T: Hubable> Hub.add(e: SceneryElement, obj: T)`. `add` will return the object that has been added to the hub.
 
 ## Input Handling
 
-Input handling is done using using Tobias Pietzsch's _ui-behaviour_ library \TODO{Cite!}. This library provides an distinction of input events into `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement/scroll/click. A `Behaviour` is the triggered action. By default, ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from within JOGL, GLFW, or JavaFX. Further, custom mappings are available for buttons of hand-held controller devices, or VRPN devices.
+Input handling is done using using Tobias Pietzsch's _ui-behaviour_ library \TODO{Cite!}. This library provides a distinction of input events into `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement/scroll/click. A `Behaviour` is the triggered action. Vanilla ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from JOGL, GLFW, JavaFX, or headless windows. Further, custom mappings are available for buttons of hand-held controller devices, or VRPN devices.
 
-Spatial input, such as HMD positioning and rotations, are handled by the specific implementation of a `TriggerInput`, such as an `OpenVRHMD`, or a `VRPNTracker`. Multiple of these inputs can coexist peacefully, and will not interfere with each other, but rather augment.
+Spatial input, such as HMD positioning and rotations, are handled by the specific implementation of a `TrackerInput`, such as an `OpenVRHMD`[^openvrnote], or a `VRPNTracker`[^vrpnnote]. Multiple of these inputs can coexist peacefully, and will not interfere with each other, but rather augment.
+
+[^openvrnote]: OpenVR or SteamVR is a VR abstraction layer that provides rendering to various VR headsets, and access to the associated input devices. OpenVR has been developed by Valve Software, more information can be found at [github.com/ValveSoftware/OpenVR](https://github.com/ValveSoftware/OpenVR).
+
+[^vrpnnote]: VRPN (Virtual Reality Periphery Network) is an abstraction layer that enables access to a variety of Virtual Reality-associated input devices, such as tracked stereo glasses, Wiimotes or Flysticks. See [@TaylorII:2001bq].
 
 ## The Renderers
 
-In scenery, the contract with the renderer is a thin one:
+In scenery, the contract with the renderer is a thin one: a renderer needs to:
+
+* be able to render something (`render()` function),
+* initialize a scene (`initializeScene()` function),
+* take screenshots (`screenshot()` function),
+* resize a (eventually existing) viewport (`reshape()` function),
+* become embedded inside an existing window, e.g. from JavaFX or Swing (`embedIn` property),
+* change the rendering quality (`setRenderingQuality()` function),
+* toggle push mode (`pushMode` property, see [Push Mode] section),
+* hold settings (`settings` property),
+* hold a window (`window` property), and
+* close.
+
+This design decision was made such that scenery can support a variety of different rendering backends, after discovering that OpenGL — which scenery started with as only renderer — and Vulkan do not map well to each other. With this architecture we are more easily able to extend rendering support in the future to e.g. software renderers, or external ray tracing frameworks.
+
+The Renderer interface in scenery is defined as:
 
 ```kotlin
 abstract class Renderer : Hubable {
@@ -87,13 +112,12 @@ abstract class Renderer : Hubable {
 }
 ```
 
-Basically, a renderer needs to be able to render something, take screenshots, resize a (potentially not existing) viewport, and take screenshots. This design decision was made such that scenery can support a variety of different rendering backends, after discovering that OpenGL — which scenery started with as only renderer — and Vulkan do not map well to each other. With this architecture it is possible to extend rendering support in the future to e.g. software renderers, or external ray tracing frameworks.
 
 A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run synchronous with scenery's main loop.
 
-A renderer may store its own metadata related to a `Node` in its `metadata` field. This field is cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers, which could be running in parallel, do not interfere with each other's `metadata`.
+A renderer may store its own metadata related to a `Node` in its `metadata` field. This field is cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers — which could be running in parallel — do not interfere with each other's `metadata`.
 
-At the time of writing, scenery includes a high-performance Vulkan renderer, used by default on Windows and Linux, and an OpenGL renderer, used on macOS.
+At the time of writing, scenery includes a high-performance Vulkan renderer, used by default on Windows and Linux, and an OpenGL renderer, used by default on macOS.
 
 ### Windowing Systems
 
@@ -233,7 +257,199 @@ From the definition in the YAML file, `RenderConfigReader` will try to form a di
 
 If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
 
-Render configs are switchable during runtime and will cause the renderer to destroy and recreate its rendering framebuffers. This mechanims is e.g. used to switch between mono and stereo rendering during runtime.
+Render configs are switchable during runtime and will cause the renderer to destroy and recreate its rendering framebuffers. This mechanism is e.g. used to toggle stereo rendering during runtime.
+
+Let's also show a more complex rendering pipeline configuration:
+
+```yaml
+name: Deferred Shading
+description: Deferred Shading, with HDR postprocessing and FXAA
+sRGB: true
+
+rendertargets:
+  GeometryBuffer:
+    attachments:
+      NormalsMaterial: RGBA_Float16
+      DiffuseAlbedo: RGBA_UInt8
+      ZBuffer: Depth32
+  ForwardBuffer:
+    attachments:
+      Color: RGBA_Float16
+  AOBuffer:
+    size: 0.5, 0.5
+    attachments:
+      Occlusion: R_UInt8
+  AOTemp1:
+    size: 1.0, 1.0
+    attachments:
+      Occlusion: R_UInt8
+  AOTemp2:
+    size: 1.0, 1.0
+    attachments:
+      Occlusion: R_UInt8
+  HDRBuffer:
+    attachments:
+      Color: RGBA_Float16
+      Depth: Depth32
+  FXAABuffer:
+    attachments:
+      Color: RGBA_UInt8
+
+renderpasses:
+  Scene:
+    type: geometry
+    renderTransparent: false
+    renderOpaque: true
+    shaders:
+      - "DefaultDeferred.vert.spv"
+      - "DefaultDeferred.frag.spv"
+    output: GeometryBuffer
+  AO:
+    type: quad
+    parameters:
+      Pass.displayWidth: 0
+      Pass.displayHeight: 0
+      occlusionRadius: 1.0
+      occlusionSamples: 4
+      occlusionExponent: 2.0
+      maxDistance: 1.0
+      bias: 0.1
+      algorithm: 0
+    shaders:
+      - "FullscreenQuadFrustum.vert.spv"
+      - "HBAO.frag.spv"
+    inputs:
+      - GeometryBuffer
+    output: AOTemp1
+  AOBlurV:
+    type: quad
+    parameters:
+      Pass.displayWidth: 0
+      Pass.displayHeight: 0
+      Direction: 1.0, 0.0
+      Sharpness: 40.0
+      KernelRadius: 8
+    shaders:
+      - "FullscreenQuad.vert.spv"
+      - "HBAOBlur.frag.spv"
+    inputs:
+      - GeometryBuffer.ZBuffer
+      - AOTemp1
+    output: AOTemp2
+  AOBlurH:
+    type: quad
+    parameters:
+      Pass.displayWidth: 0
+      Pass.displayHeight: 0
+      Direction: 0.0, 1.0
+      Sharpness: 40.0
+      KernelRadius: 8
+    shaders:
+      - "FullscreenQuad.vert.spv"
+      - "HBAOBlur.frag.spv"
+    inputs:
+      - GeometryBuffer.ZBuffer
+      - AOTemp2
+    output: AOBuffer
+  DeferredLighting:
+    type: lights
+    renderTransparent: true
+    renderOpaque: false
+    depthWriteEnabled: false
+    depthTestEnabled: false
+    shaders:
+      - "DeferredLighting.vert.spv"
+      - "DeferredLighting.frag.spv"
+    inputs:
+      - GeometryBuffer
+      - AOBuffer
+    output: ForwardBuffer
+    parameters:
+      debugLights: 0
+      reflectanceModel: 0
+      Global.displayWidth: 0
+      Global.displayHeight: 0
+  ForwardShading:
+    type: geometry
+    renderTransparent: true
+    renderOpaque: false
+    blitInputs: true
+    shaders:
+      - "DefaultForward.vert.spv"
+      - "DefaultForward.frag.spv"
+    inputs:
+      - ForwardBuffer.Color
+      - GeometryBuffer.ZBuffer
+    output: HDRBuffer
+  HDR:
+    type: quad
+    shaders:
+      - "FullscreenQuad.vert.spv"
+      - "HDR.frag.spv"
+    inputs:
+      - HDRBuffer.Color
+    output: FXAABuffer
+    parameters:
+      TonemappingOperator: 0
+      Gamma: 1.8
+      Exposure: 1.0
+      WhitePoint: 11.2
+  FXAA:
+    type: quad
+    shaders:
+      - "FullscreenQuad.vert.spv"
+      - "FXAA.frag.spv"
+    parameters:
+      activateFXAA: 1
+      showEdges: 0
+      lumaThreshold: 0.125
+      minLumaThreshold: 0.02
+      mulReduce: 0.125
+      minReduce: 0.0078125
+      maxSpan: 8.0
+      Global.displayWidth: 0
+      Global.displayHeight: 0
+    inputs:
+      - FXAABuffer
+    output: Viewport
+
+qualitySettings:
+  Low:
+    AO.occlusionSamples: 0
+    FXAA.activateFXAA: 0
+    AO.shaders:
+      - "FullscreenQuadFrustum.vert.spv"
+      - "SSAO.frag.spv"
+  Medium:
+    AO.occlusionSamples: 8
+    FXAA.activateFXAA: 1
+    AO.shaders:
+      - "FullscreenQuadFrustum.vert.spv"
+      - "SSAO.frag.spv"
+  High:
+    AO.occlusionSamples: 4
+    FXAA.activateFXAA: 1
+    AO.shaders:
+      - "FullscreenQuadFrustum.vert.spv"
+      - "HBAO.frag.spv"
+  Ultra:
+    AO.occlusionSamples: 8
+    FXAA.activateFXAA: 1
+    AO.shaders:
+      - "FullscreenQuadFrustum.vert.spv"
+      - "HBAO.frag.spv"
+```
+
+In this rendering pipeline configuration, we apply the following techniques \TODO{add graph}:
+
+* Deferred Shading [@Deering:1988jd], for being able to render a large number of lights by splitting geometry processing and lighting into two separate passes: for every pixel, first, surface normals (with an efficient normal storage, where 3D unit vectors are compressed into a 2D octogon [@Zigolle:2014ase]), surface material properties, and depth are stored into separate buffers in the `Scene` pass, second, the final shading of the pixel is determined from these buffers in the `DeferredLighting` pass.
+* Ambient Occlusion via the HBAO algorithm [@Bavoil:2008a61] in the `AO` pass, with horizontal and vertical blurring in the `AOBlurV` and `AOBlurH` passes,
+* tone-mapping of the 16bit HDR color output of the `DeferredLighting` pass in the `HDR` pass, using the ACES tone mapping operator[^ACESnote], and
+* Anti-aliasing of the final image via the Fast approximate anti-aliasing algorithm [@Lottes:200983a] in the `FXAA` pass.
+
+This rendering pipeline configuration also showcases shader properties (see e.g. `Direction` or `Pass.displayWidth` in the `parameters` section of the `AOBlurH` pass). These are explained in more detail in the section [Shader Introspection and Shader Properties].
+
+[^ACESnote]: ACES, the Academy Color Encoding System, defines a particular curve for mapping from HDR to LDR color, see [github.com/ampas/aces-dev/tree/v1.0.3](https://github.com/ampas/aces-dev/tree/v1.0.3) for details.
 
 ### Generic Rendering workflow
 
@@ -253,24 +469,57 @@ The main loop then proceeds as follows:
 2. Run the viewport pass in the same way as (5), but siphon out data for third-party consumers (video recording, screenshots,...) if necessary
 3. Swap buffers.
 
-### Shader Introspection and Shader Properties
+### Shader Introspection, Shader Properties, and Shader Parameters
 
 scenery's renderers by default perform introspection on the shader files they ingest, by using the _spirvcrossj_[^spirvcrossjnote] library ([github.com/scenerygraphics/spirvcrossj](https://github.com/scenerygraphics/spirvcrossj)). Shader files are loaded via the `Shaders` class, which can provide both source code and SPIRV[^spirvnote] bytecode, either from file sources, or from procedurally generated shaders, and potentially other sources. `Shaders` will try to provide both versions of a shader, but can be instructed to prioritise either the source code version or the SPIRV version of the shader.
 
 By adding the `@ShaderProperty` annotation to a member variable of a `Node`-derived class, this variable can be made accessible from the shader via the same name. Supported data types are Java's default elementary types, as well as the `GLVector` vector type and the `GLMatrix` matrix type. Additionally, the `@ShaderProperty` annotation can be added to a hash map of type `HashMap<String, Any>` to provide even more flexibility (e.g. for procedurally-generated shaders). scenery discovers shader properties in the following way:
 
-1. When loading the shader, construct a list of all the properties that are part of the `ShaderProperties` UBO in the shader file, e.g. 
-  ```glsl
-  layout(set = 0, binding = 0) uniform struct ShaderProperties {
-    float scale;
-    mat4 model;
-    vec3 color;
-  }
-  ```
-  Metadata for each member in the form of an offset and a length are stored along the with the property, and follow GLSL's std140 rules for alignment.
-2. When updating UBOs for a `Node`, scenery performs reflection (and caches that information) on all properties that carry the `@ShaderProperty` annotation: first, properties with the given name are checked, and if not found, the `shaderProperties` hash map is consulted as fallback. Not providing a shader property in the class that is required by the shader will result in an exception. The other way around, a shader property defined in the class, but not used in the shader will only trigger a warning. Shader properties defined in the UBO, but not used in the shader will not be skipped upon serialisation.
+When loading the shader, construct a list of all the properties that are part of the `ShaderProperties` UBO in the shader file, e.g. 
+```glsl
+layout(set = 0, binding = 0) uniform struct ShaderProperties {
+  float scale;
+  mat4 model;
+  vec3 color;
+}
+```
 
-[^spirvcrossjnote]: _spirvcrossj_ is a wrapper of the Khronos Group's _spirv-cross_ reflection library and the _glslang_ reference compiler.
+Metadata for each member in the form of an offset and a length are stored along the with the property, and follow GLSL's std140 rules for alignment.
+
+When updating UBOs for a `Node`, scenery performs reflection (and caches that information) on all properties that carry the `@ShaderProperty` annotation: first, properties with the given name are checked, and if not found, the `shaderProperties` hash map is consulted as fallback. Not providing a shader property in the class that is required by the shader will result in an exception. The other way around, a shader property defined in the class, but not used in the shader will only trigger a warning. Shader properties defined in the UBO, but not used in the shader will not be skipped upon serialisation.
+
+_Shader parameters_ provide another way to hand parameters over to shader programs: These are defined in the rendering pipeline configuration, e.g. as (see [Configurable Rendering Pipelines] for full examples of such configurations):
+
+```yaml
+AO:
+  type: quad
+  parameters:
+    Pass.displayWidth: 0
+    Pass.displayHeight: 0
+    occlusionRadius: 1.0
+    occlusionSamples: 4
+    occlusionExponent: 2.0
+    maxDistance: 1.0
+    bias: 0.1
+    algorithm: 0
+```
+
+The shader parameters here are all the key-value pairs below `parameters`: The ones starting with `Pass` or `Global` are filled in automatically by the renderer, and are used e.g. for framebuffer sizes. All others are derived from scenery settings, and can be modified on-the-fly, enabling e.g. an easy way to switch between different algorithms in a shader, or turn  functionality in the shader on and off. The corresponding declaration in the shader file looks the following (ordering does not matter and is resolved automatically):
+
+```glsl
+layout(set = 2, binding = 0, std140) uniform ShaderParameters {
+	int displayWidth;
+	int displayHeight;
+	float occlusionRadius;
+	int occlusionSamples;
+	float occlusionExponent;
+  float maxDistance;
+  float bias;
+  int algorithm;
+};
+```
+
+[^spirvcrossjnote]: _spirvcrossj_ is a wrapper of the Khronos Group's _spirv-cross_ reflection library and the _glslang_ reference compiler we have developed.
 [^spirvnote]: SPIRV or SPIR-V is a binary bytecode format for shader files, specified by the Khronos Group. It serves as the primary provider of shader programs for Vulkan, but can also be used from OpenGL via vendor-specific extensions, and can be decompiled to plain GLSL or even HLSL.
 
 ### Instancing
