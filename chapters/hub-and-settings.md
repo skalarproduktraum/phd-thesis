@@ -24,6 +24,8 @@ New settings can be added via `Settings.set(name: String, contents: Any)`, or `S
 
 Settings can be queried during runtime via `<T> Settings.get(name: String, defaultValue: T? = null)`. The default value, which is optional, can provide a fallback if necessary. If a setting is not found or cannot be cast to the type requested, an exception is emitted.
 
+For inspection, they can be queried as a string via `Settings.list()`, or their names returned as a `List<String>`, via `Settings.getAllSettings()`.
+
 [^SupersamplingNote]: Supersampling refers to a rendering technique where images are rendered larger than necessary and downscaled later on for displaying in order to remove aliasing artifacts.
 
 
