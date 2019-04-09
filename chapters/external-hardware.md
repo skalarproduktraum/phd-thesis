@@ -1,24 +1,35 @@
 # Input Handling and Integration of External Hardware
 
+In this chapter we describe the input handling subsystem of scenery, and how external hardware, such as head-mounted displays or natural user interfaces can be used. The major design goal for these subsystems was to enable the user to design interactions and tools cross-API — here, we are going to detail how we have achieved that.
+
 ## Input Handling
 
-Input handling is done using using Tobias Pietzsch's _ui-behaviour_ library \TODO{Cite!}. This library provides a distinction of input events into `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement/scroll/click. A `Behaviour` is the triggered action. Vanilla ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from JOGL, GLFW, JavaFX, or headless windows. Further, custom mappings are available for buttons of hand-held controller devices, or VRPN devices.
+Input handling is done using using Tobias Pietzsch's open-source _ui-behaviour_ library[^uibehaviourNote]. The ui-behaviour library is heavily used in the ImageJ/Fiji ecosystem, and provides a handles input events via `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement, scroll, or click. A `Behaviour` is the triggered action. Vanilla ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from JOGL, GLFW, JavaFX, or headless windows. Furthermore, we extended the library to enable custom mappings for buttons of hand-held controller devices, or VRPN[^vrpnnote] devices.
 
 Spatial input, such as HMD positioning and rotations, are handled by the specific implementation of a `TrackerInput`, such as an `OpenVRHMD`[^openvrnote], or a `VRPNTracker`[^vrpnnote]. Multiple of these inputs can coexist peacefully, and will not interfere with each other, but rather augment.
 
-[^openvrnote]: OpenVR or SteamVR is a VR abstraction layer that provides rendering to various VR headsets, and access to the associated input devices. OpenVR has been developed by Valve Software, more information can be found at [github.com/ValveSoftware/OpenVR](https://github.com/ValveSoftware/OpenVR).
+[^uibehaviourNote]: See [github.com/scijava/ui-behaviour/](https://github.com/scijava/ui-behaviour/) for details.
+
+[^openvrnote]: OpenVR or SteamVR is a runtime and abstraction layer that provides a vendor-independent API to various VR headsets, and access to the associated input devices and rendering surfaces. Usable VR headsets include e.g. the Oculus Rift, HTC Vive, or the various Windows Mixed Reality headsets. OpenVR has been developed by Valve Software, more information about the library can be found at [github.com/ValveSoftware/OpenVR](https://github.com/ValveSoftware/OpenVR).
 
 [^vrpnnote]: VRPN (Virtual Reality Periphery Network) is an abstraction layer that enables access to a variety of Virtual Reality-associated input devices, such as tracked stereo glasses, Wiimotes or Flysticks. See [@TaylorII:2001bq].
 
 ## Head-mounted displays and natural/gestural user interface devices
 
-Support for head-mounted displays and control devices is provided by two means:
+Support for head-mounted displays and control devices is at the moment provided by two means:
 
 1. utilising the lwjgl bindings for SteamVR/OpenVR to interface with off-the-shelf HMDs like the Oculus Rift or HTC Vive (see class `OpenVRHMD`).
-2. utilising the custom-built wrappers for the VRPN[@TaylorII:2001bq], the Virtual Reality Periphery Network, library, called jVRPN ([github.com/scenerygraphics/jvrpn](https://github.com/scenerygraphics/jvrpn)). jVRPN is used in scenery to e.g. provide support for DTrack devices used in CAVE systems (see class `TrackedStereoGlasses`).
+2. utilising the custom-built wrappers for VRPN[@TaylorII:2001bq], called jVRPN ([github.com/scenerygraphics/jvrpn](https://github.com/scenerygraphics/jvrpn)). jVRPN is used in scenery to e.g. provide support for DTrack or OptiTrak tracking systems used in CAVE systems or Powerwalls (for more details, see the class `TrackedStereoGlasses` and `VRPNTracker`).
 
-HMDs usually implement the `Display` interface:
-```
+When a new HMD is to be added to scenery, a new class has to be created for the HMD, and that class needs to implement two interfaces:
+
+* `Display`, for querying information about the HMD's rendering surfaces, projection matrices, and state, and
+* `TrackerInput`, for providing spatial information to scenery, about the HMD's position, rotation, and associated input devices.
+
+
+The `Display` interface looks as follows:
+
+```kotlin
 interface Display {
     fun getEyeProjection(eye: Int, nearPlane: Float = 1.0f, farPlane: Float = 1000.0f): GLMatrix
     fun getIPD(): Float
@@ -38,11 +49,13 @@ interface Display {
 }
 ```
 
-This interface provides submission to both OpenGL and Vulkan renderers, which is necessary as they work quite differently. The `update` function is used to update HMD state once per frame, while transformations are cached as much as possible. The renderer will only render to the device if `initializedAndWorking()` returns `true`, and `getWorkingDisplay()` returns a `Display` instance. HMDs can choose to have a compositor to which the resulting renderered image is submitted. If this is not the case, e.g. as it is with tracked stereo glasses for CAVEs, the image is rendered regularly.
+This interface provides submission to both OpenGL and Vulkan renderers, which is necessary as they work quite differently[^OpenGLvsVulkanNote]. The `update` function is used to update HMD state once per frame, while transformations are cached as much as possible. The renderer will only render to the device if `initializedAndWorking()` returns `true`, and `getWorkingDisplay()` returns a `Display` instance. HMDs can choose to have a compositor to which the resulting rendered image is submitted. If this is not the case, e.g. as it is with tracked stereo glasses for CAVEs, the image is rendered regularly.
 
-An HMD might also provide tracking information, in which case it will also implement the `TrackerInput` interface:
+[^OpenGLvsVulkanNote]: In OpenGL, there is e.g. no explicit device selection, as this is done implicitly by the driver. In Vulkan, this is done by the application explicitly, and so information about on which device a rendered texture resides has to be passed to the compositing application, such as the one of SteamVR/OpenVR.
 
-```
+Equally simple is the `TrackerInput` interface:
+
+```kotlin
 interface TrackerInput {
    
     fun getOrientation(): Quaternion
@@ -92,6 +105,9 @@ For calibration, the user is presented with a series of points to look at, which
 After successful calibration, scenery enables the developer to connect the outputs of the eye tracker (in the form of gaze normals, gaze positions, and a confidence rating) to the properties of any object. By default, gaze points are only output in case the confidence reaches more than 90%, leaving the decision which of the higher-confidence samples to use to the developer.
 
 More details about eye tracking can be found in the chapter [Eye Tracking and Gaze-based Interaction], with a use case implemented in the chapter [Attentive Tracking].
+
+
+
 
 
 
