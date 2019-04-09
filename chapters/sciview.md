@@ -1,4 +1,4 @@
-\part{Case studies}
+\part[CASE STUDIES]{Case studies}
 
 # SciView
 

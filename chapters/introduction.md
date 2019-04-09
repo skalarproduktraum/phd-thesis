@@ -1,8 +1,9 @@
 \mainmatter
 
-# Introduction
+\chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 
-## Current Trends and Challenges in Biology
+\section*{Current Trends and Challenges in Biology}
 
 In the last three decades, biology has gone through a remarkable development from being a discipline that is mostly wetlab-based to one  utilising the tools and methods of mathematics, physics, and computer science, becoming more and more reliant and intertwined with them: 
 
@@ -14,15 +15,15 @@ Even more recent developments, like CRISPR/Cas9 [@Jinek:2012hm] or gene drives e
 
 What these developments lack to a certain extent, are ways to again bring the experimenter into focus, both during the experiment, and during analysis, to enable new and flexible ways of interacting the large and complex amounts of data state-of-the-art experiments create, and also with the scientific instruments producing this data.
 
-## Virtual and Augmented Reality
+\section*{Virtual and Augmented Reality}
 
 With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems — from the 1960s — are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq], made famous as _The Mother of All Demos_. In the meantime, and over the course of two Virtual Reality Revolutions — with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992vt]) —  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly specialised and expensive device into the homes  or offices of potential users.
 
-## Natural User Interfaces
+\section*{Natural User Interfaces}
 
 Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect or the Leap Motion), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (such as eye trackers from Tobii or Pupil Labs). Such devices and their interaction modalities are commonly called Natural User Interfaces (NUIs, cite).
 
-## Scope of this thesis and contributions
+\section*{Scope of this thesis and contributions}
 
 In this thesis, we aim to demonstrate that the inclusion of natural user interfaces, combined with Virtual or Augmented Reality, and advanced realtime rendering techniques can enhance the biologist's workflow, and enable new kinds of experiments, _in vivo_ and _in silico_.
 
@@ -38,17 +39,17 @@ Specifically, we will detail the following contributions:
 * _attentive tracking_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
 * _interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_.
 
-## Publications
+\section*{Publications}
 
 Some of the results presented in this thesis have already been published :
 
-### Peer-reviewed Papers
+\subsection*{Peer-reviewed Papers}
 
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
 * Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
 * Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_ (under revision), 2018, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
 
-### Conference Abstracts
+\subsection*{Conference Abstracts}
 
 * __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
 
@@ -60,7 +61,7 @@ Some of the results presented in this thesis have already been published :
 
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
 
-### Papers in Preparation
+\subsection*{Papers in Preparation}
 
 The following papers containing material from this work are currently under preparation:
 
@@ -68,7 +69,7 @@ The following papers containing material from this work are currently under prep
 * __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Sbalzarini, I.F.: scenery - a cross-platform virtual reality visualisation framework for arbitrary geometric and volumetric data.
 * __Günther, U.__, Simson, J, Sbalzarini, I.F., Harrington, K.I.S.: Linear Genetic Programming for robust pupil detection in interactive, virtual reality eye tracking applications.
 
-### Supervision
+\section*{Supervision}
 
 The following students have been supervised by the author in the duration of the thesis:
 
@@ -76,9 +77,8 @@ The following students have been supervised by the author in the duration of the
 * Aryaman Gupta, intern and master student, June - December 2017.
 
 
-## What follows
+\section*{What follows}
 
 In the following, first part of the thesis we are going to introduce the basic concepts and technologies as the _Preliminaries_ that have ultimately led to the challenges addressed in this thesis. We start with _fluorescence microscopy_, describing the developments from first light microscopes to modern lightsheet volumetric microscopes, followed by a chapter about _visual processing_, detailing the detection and processing of visual information in the human nervous system. The visual processing chapter is followed by the _XR_ chapter, describing the historic and current developments in virtual and augmented reality, together termed as _cross reality_, or _XR_. The final chapter of the preliminaries part introduces _Eye Tracking and Gaze-based interaction_, going into detail how a mode of perception can also be used for control purposes. At the end of each of _preliminaries_ chapters, we state specific challenges that will be addressed in the _Case Studies_ in Part Three of this thesis. In Part Two, we describe our visualisation framework _scenery_ in detail, which is the enabling technology for the case studies in Part Three. Finally, in Part Four, we are going to conclude our findings and provide an outlook to future work.
 
 
-\part{Preliminaries}

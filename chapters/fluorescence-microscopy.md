@@ -1,3 +1,5 @@
+\part[PRELIMINARIES]{Preliminaries}
+
 # Fluorescence Microscopy
 
 Fluorescence microscopy is one of the major workhorses of cell, developmental and systems biology. In the most basic version, a fluorescent molecule -- which after receiving photons of a certain, molecule-specific excitation wavelength, emits secondary photons, of longer wavelength -- is introduced into a biological specimen, e.g. as a staining, antibody, or protein intrinsically produced by the specimen after genetic modification.

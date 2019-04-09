@@ -8,7 +8,7 @@ OUTPUTFORMAT=tex
 
 all: thesis.$(OUTPUTFORMAT)
 
-thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) Makefile
+thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) tufte-common-local.tex Makefile
 	@echo "Removing unnecessary fields from bibliography ..."
 	bibtool -i $(BIBLIOGRAPHY) -o thesis.bib -- "delete.field { doi url annote abstract }"
 	@echo "pandoc'ing $(CHAPTERS) to thesis.$(OUTPUTFORMAT)"

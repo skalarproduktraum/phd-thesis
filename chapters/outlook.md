@@ -1,4 +1,4 @@
-\part{Conclusion}
+\part[CONCLUSION]{Conclusion}
 
 
 

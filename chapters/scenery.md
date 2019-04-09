@@ -1,4 +1,4 @@
-\part{scenery}
+\part[SCENERY]{scenery}
 
 # scenery
     
