@@ -1,16 +1,21 @@
-
 chapters/title.md
 chapters/acknowledgements.md
 chapters/toc.md
 chapters/introduction.md
+# part 1 - preliminaries
 chapters/fluorescence-microscopy.md
 chapters/visual-processing.md
 chapters/xr.md
 chapters/eye-tracking.md
 chapters/interface-efficiency.md
+# part 2 - scenery
 chapters/scenery.md
-chapters/design-and-architecture.md
+chapters/hub-and-settings.md
+chapters/rendering.md
+chapters/external-hardware.md
+chapters/clustering.md
 chapters/developing-with-scenery.md
+# part 3 - applications
 chapters/sciview.md
 chapters/attentive-tracking.md
 chapters/apr-rendering.md

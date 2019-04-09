@@ -1,5 +1,5 @@
 PANDOC=pandoc
-CHAPTERS := $(shell cat chapters.list | tr '\n' ' chapters/')
+CHAPTERS := $(shell cat chapters.list | grep -v '\#' | tr '\n' ' chapters/')
 PREAMBLE=tex/preamble.tex
 BIBLIOGRAPHY=bibliography.bib
 CSL=csl/chicago-author-date.csl
