@@ -224,7 +224,7 @@ rendertargets:
   HDR:
     size: 1.0, 1.0
     attachments:
-      HDRBuffer: RGBA_Float32
+      HDRBuffer: RGBA_Float16
       ZBuffer: Depth32
 
 renderpasses:
