@@ -4,7 +4,7 @@
     \thispagestyle{empty}
     \begin{center}
     
-        \vspace*{1cm}
+       
         
        Dissertation No.
        
@@ -29,15 +29,22 @@
         \textit{Diplom-Physiker, Technische Universit{\"a}t Dresden}       
        
        \vspace{0.8cm}          
-        born on 19th May, 1987
-             
-        \vspace{0.5cm}     
-        citizen of Germany
-        
+        born on 19th May, 1987 in Dresden, Germany
+                     
          \vspace{1.5cm}
-         accepted on the recommendation of\\
-         Prof. Dr. sc. techn. Ivo F. Sbalzarini (First advisor)\\
-         Prof. Dr.-Ing. Raimund Dachselt (Fachreferent)
+         \emph{First reviewer}:\\
+         Prof. Dr. sc. techn. Ivo F. Sbalzarini\\
+         Technische Universit{\"a}t Dresden and Max Planck Institute of Molecular Cell Biology and Genetics\\
+         Dresden, Germany\\
+         \vspace{0.5cm}
+         \emph{Second reviewer}:\\
+         James Sharpe, PhD\\
+         EMBL Barcelona, Spain\\
+         \vspace{0.5cm}
+         \emph{Fachreferent:}\\
+         Prof. Dr.-Ing. Raimund Dachselt\\
+         Technische Universit{\"a}t Dresden\\
+         Dresden, Germany
        
 
         
