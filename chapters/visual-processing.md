@@ -1,4 +1,4 @@
-# Visual Processing
+# Introduction to Visual Processing
 
 \begin{figure*}
     \includegraphics{./figures/gray_optic_system.pdf}

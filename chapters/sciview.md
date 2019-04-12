@@ -1,6 +1,6 @@
 \part[CASE STUDIES]{Case studies}
 
-# SciView
+# SciView — integrating scenery into the Fiji ecosystem
 
 ![Screenshot of SciView, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](./figures/scenery-sciview.png)
 

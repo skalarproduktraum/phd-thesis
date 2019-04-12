@@ -1,6 +1,6 @@
-# XR
+# Cross Reality for Pedestrians
 
-_XR_, or _cross reality_, encompasses everything on the spectrum between full virtual environments, and fully real environments. This includes especially virtual reality (VR), augmented reality (AR), and augmented virtuality.
+_Cross reality_, or _XR_, encompasses everything on the spectrum between full virtual environments, and fully real environments. This includes especially virtual reality (VR), augmented reality (AR), and augmented virtuality.
 
 In this chapter we give a brief overview of existing technology and current developments in the areas of virtual and augmented reality. We will explain the benefits of VR and AR, and outline associated challenges and opportunities offered, with an emphasis on biology and imaging. In the end we will sketch issues addressed in this thesis.
 
