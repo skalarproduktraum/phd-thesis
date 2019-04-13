@@ -16,7 +16,6 @@ If bounding boxes are stored along with the nodes, the scenegraph can easily be 
 [^cullingnote]: Frustum culling is the process of determining the objects that are currently in the camera's view frustum, and rendering only those. Acceleration data structures can help with determining the inside set in the same manner as in collusion detection.
 
 
-
 ### Traversal
 
 Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. In scenery, the scenegraph is traversed by default in the same way it is stored. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.
@@ -48,7 +47,7 @@ Some nodes might want to construct their own model and world matrices, overridin
 [^quatnote]: Quaternions are a 4-dimensional extension of complex numbers, that can describe rotations in space. While rotations may as well be represented as matrices, such representations suffer from two problems: a) matrices cannot be smoothly interpolated and b) they may lead to _gimbal locking_, where the sine or cosine of an angle in a rotation matrix lead to a zero entry, making the transformation loose a degree of freedom — further multiplications will not be able to achieve a non-zero rotation around this axis. Quaternions do not suffer from both problems, they are however not as intuitive as other rotation representations such as Euler angles. In scenery, helper routines are provided to convert Euler angles or matrices to quaternions for user convenience.
 
 
-## The Renderers
+## The Rendering Procedure in scenery
 
 In scenery, the contract with the renderer is a thin one: a renderer needs to:
 
@@ -104,91 +103,31 @@ At the time of writing, scenery includes a high-performance Vulkan renderer, use
 
 ### Windowing Systems
 
-On the JavaVM, the main options for drawing (to) windows and related elements are AWT, Swing, and JavaFX. Rendering to AWT and Swing is only supported by the OpenGL renderer, while both renderers support JavaFX. The Vulkan renderer by default uses GLFW to create and interact with windows, GLFW however is not compatible with AWT or Swing, because both have very similar ideas about how event handling should be done in which thread, therefore clashing about it, and leading to software instability.
+On the Java VM, the main options for drawing (to) windows and related elements are AWT, Swing, and JavaFX. In scenery, the currently supported mode for embedding into existing windows is Swing, which is supported by both the OpenGLRenderer and the VulkanRenderer. 
 
-JavaFX is now the predominant mode for building scenery-based applications. However, in OpenGL, buffer copies from the current framebuffer to a JavaFX texture are necessary and incur a performance penalty. With Vulkan, this problem does not exist, as Vulkan exhibits a feature called _permanently mapped buffers_\TODO{link}, which are accessible by both the host and device via DMA, and do not require copying, alleviating the pressure on the PCI express bus incurred by a copy. These PMBs then are ping-ponged for double buffering and provide a very good user and developer experience.
+In development, we had originally started out with using JavaFX, the most modern UI toolkit for the Java VM. JavaFX however has the problem that it works entirely GPU-based, but does not allow the developer to directly access GPU resources. The consequence: Images already generated on the GPU have to be transferred to main memory, and are then again uploaded to the GPU as a texture by JavaFX's internal mechanisms. As bandwidth is usually a limited resource, this leads to severe performance issues, especially when rendering at higher resolutions beyond full HD (1920x1080). Recently, a new project named _DriftFX_ [^DriftFXNote] appeared, which aims to solve this issue by introducing operating system-native OpenGL rendering surfaces into JavaFX, circumventing the double-transfer issue just described. Our hope is we can harness this project in the future, and eventually extend it to support Vulkan as well.
 
-### Rendering with OpenGL
 
-When using OpenGL, the initialisation of the renderer proceeds in the following way:
-
-1. the presence of a virtual reality HMD is checked.
-2. the `RenderConfig` is parsed from a file.
-2. it is checked whether the renderer will be embedded in a `SceneryPanel` for rendering with JavaFX, or if a drawable surface already exists. If both are not the case, a window owned by the renderer is created. After this, a separate animator thread takes over the initialisation.
-3. an OpenGL 4.1 context is initialised. 
-4. a default set of buffers is initialised for:
-	* Uniform Buffer Objects (UBOs)[^ubonote]
-	* light parameters
-	* rendering parameters
-	* Shader Properties
-	* Shader Parameters
-5. a default set of textures is initialised to provide textures in case a `Node`'s textures cannot be found.
-6. the render passes defined by the `RenderConfig` are created, with the necessary framebuffers and attachments.
-7. a heartbeat timer is initialised to record GPU usage (only on Nvidia cards running on Windows) and record performance data.
-
-The renderer then proceeds with scene initialisation, initialising each `Node` in the scene in this way:
-
-1. The `Node` is locked.
-2. a new instance of `OpenGLObjectState` is attached to the `Node`'s `metadata` field
-3. vertex buffers[^vbonote] and vertex array objects[^vaonote] are created.
-4. custom shaders and material properties are initialised.
-5. UBOs for transformations and material properties are initialised.
-6. the renderer checks whether the `Node`'s definition includes any `@ShaderProperty` annotations, for which an additional UBO would be created. \TODO{Add reference to chapter}
-7. The `Node` is marked as initialised and unlocked.
-
-[^ubonote]: Uniform Buffer Objects are collections of properties that are used in the shader, similar to C-style structs. Before, single uniform variables have been stored and updated individually, but UBOs provide a performance benefit due to reduced API overhead and syncronised updates.
-[^vbonote]: Vertex Buffer Objects are the buffers on the GPU that actually contain the vertices of a Node's geometry. In scenery, they are stored in a strided format, meaning that vertices and normals are not stored as `V1V2V3N1N2N3...`, but rather as `V1N1V2N2V3N3`, for improved cache locality.
-[^vaonote]: Vertex Array Objects describe which buffers a rendered object in OpenGL uses, and what the data layouts of these buffers are.
-
-### Rendering with Vulkan
-
-Here it should be emphasised again that Vulkan provides much leaner, close-to-metal access to the GPU's resources. It is therefore more verbose, but does not do as much validation as OpenGL during runtime.
-
-Instead in Vulkan, a _validation layer_ provides guidance to adherance to the standard. While in OpenGL, all state and state changes are continiously checked for sanity, incurring a performance hit, Vulkan skips these checks, and outsources them to validation layers, that may be activated during startup, and usually only used during development or debugging. Compared to OpenGL error messages, Vulkan validation layers provide highly detailed error messages, thus enabling the developer to quickly pinpoint the source of a problem.
-
-When using Vulkan, the initialisation of the renderer proceeds in the following way:
-
-1. the presence of a virtual reality HMD is checked, and window dimensions set accordingly.
-2. The `RenderConfig` is parsed from a render config YAML file.
-3. The renderer checks whether the user has requested the activation of validation layers, and activates them if indicated.
-4. the renderer checks whether the output will be embedded in a `SceneryPanel`. If this is not the case, the renderer will request surface rendering extensions, and create a _Vulkan instance_[^instancenote], if not, the instance will be created without the extensions. Further extensions might be required by the presence of an HMD, e.g. for memory sharing.
-5. A `VulkanDevice`[^devicenote] is created, the renderer defaults to the first device found, but this can be overridden by the user.
-6. A device queue[^queuenote] is created.
-7. A `SwapchainRecreator` is created. This object is responsible for all resources that are resolution-dependent, such as framebuffers and rendering surfaces. It also takes care of initialising the render passes defined by the `RenderConfig`, with the necessary framebuffers and attachments. The swapchain is be one of:
-	* `OpenGLSwapchain`: creates an OpenGL context and enables the Vulkan renderer to draw into that. Necessary for frame-locked rendering e.g. on CAVE systems.
-	* `HeadlessSwapchain`: creates a swapchain without any rendering surfaces, e.g. for server use.
-	* `FXSwapchain`: create a swapchain for rendering into a JavaFX panel. Employs permanently mapped buffers for bandwidth efficiency and inherits from `HeadlessSwapchain`.
-	* `VulkanSwapchain`: creates a regular, window-based swapchain with GLFW. This is the standard case.
-8. the default vertex descriptors[^vdnote] are created.
-9. descriptor pools are created.
-10. default descriptor set layouts and descriptor sets[^dslnote] are prepared.
-11. a default set of textures is initialised to provide textures in case a `Node`'s textures cannot be found.
-12. a heartbeat timer is initialised to record GPU usage (only on Nvidia cards running on Windows) and record performance data.
-13. a dynamically-mananged memory pool for `Node` geometry is allocated.
-
-Let's note here that the Vulkan renderer does not perform explicit scene initialisation on startup, but discovers the `Node`s of a scene during the rendering loop.
-
-[^instancenote]: A _Vulkan instance_ is the basic building block of a Vulkan application.
-[^devicenote]: A _Vulkan device_ contains all the information about a device and its capabilities, and all allocations and executions are made with respect to a particular device, also enabling parallel runs on multiple devices.
-[^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asyncronously by the GPU. A queue may be asked for work completion and can be waited on.
-[^vdnote]: _Vertex descriptors_ describe the vertex layout for rendering and are somewhat comparable to OpenGL's Vertex Array Objects.
-
-[^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
 
 ### Uniform Buffer Serialisation and Updates
 
-UBOs are tentatively updated with each frame before the main rendering loop, guaranteeing that a `Node` that has been added to the scene graph will have it's transformations and properties ready at render time. 
+Uniforms are properties that are communicated to the shader program, and are very similar to C-style structs. Before the advent of OpenGL 4.x and Vulkan, single uniform variables had to be stored and updated individually, leading to a large API overhead. Since OpenGL 4.x and Vulkan, Uniform Buffer Objects (UBOs) are available — instead of storing and updating single uniforms, UBOs are buffers of uniforms, which are updated together, and sent to the GPU. In contrast to single uniforms, this provides two main benefits:
 
-Serialisation of a `Node`'s transformations and properties are handled by the class `UBO`. In that class, member variables of the UBO are stored as a `LinkedHashMap` of a string (for the property name), and a lambda of type `() -> Any` for the value of the property. This mechanism enables determining values of properties that change during runtime, without rewriting the contents of the map. Order in the struct does matter, which is why a linked map is being used. The actual order of the properties is determined via shader introspection. For common data types (floats, doubles, integers, shorts, booleans, vectors, and matrices), `UBO` will determine the necessary size and offset of a certain property, and write the contents of the property to a `ByteBuffer`, according to OpenGL's `std140` buffer rules.
+* less API overhead by being able to serialise many uniforms into a single buffer, and uploading them to the GPU in one API call, and
+* multiple-rate updates of different UBOs — before, uniforms had to be set every time they were used in a shader, now they can be updated only when needed, and for different UBOs, this can mean different update rates, further reducing the original overhead.
 
-After an `UBO` has been serialised for the first time, a hash is calculated from it's current members. Upon revisiting this `UBO`, the previous member hash is compared with the current one, to determine whether re-serialisation is necessary or not.
+In scenery, UBOs belonging to a Node are tentatively updated with each frame before the main rendering loop, guaranteeing that a `Node` that has been added to the scene graph will have its transformations and properties ready at render time. 
+
+Serialisation of a `Node`'s transformations and properties are handled by the class `UBO`. In that class, member variables of the UBO are stored as a `LinkedHashMap` of a string (for the property name), and a lambda of type `() -> Any` for the value of the property. This mechanism enables determining values of properties that change during runtime, without rewriting the contents of the map. Order in the struct does matter, which is why a linked map is being used. The actual order of the properties is determined via shader introspection. For common data types (floats, doubles, integers, shorts, booleans, vectors, and matrices), `UBO` will determine the necessary size and offset of a certain property, and write the contents of the property to a `ByteBuffer`, according to OpenGL's and Vulkan's `std140` buffer rules, storing data in the same memory layout as C-style structs.
+
+After an `UBO` has been serialised for the first time, a hash is calculated from its current members. Upon revisiting this `UBO`, the previous member hash is compared with the current one, to determine whether re-serialisation is necessary or not. In case re-serialisation is not necessary, the buffer backing the UBO will remain untouched and continued to be used in that state. If it needs to be re-serialised, it will also be re-uploaded to the GPU.
 
 ### Push Mode
 
-Push Mode is a rendering optimisation especially for viewer-type applications, where continuous scene changes are not expected. In push mode, the renderer will keep track of updated UBOs and modified scene contents, and only render a frame in the following cases:
+Push Mode is a rendering optimisation especially for viewer-type applications, where continuous scene changes are not expected. In push mode, the renderer will keep track of updated UBOs (as described in [Uniform Buffer Serialisation and Updates]) and modified scene contents, and only render a frame in the following cases:
 
-* an UBO has been updated
-* an object has been added or removed from the currently visible objects
+* an UBO has been updated,
+* an object has been added or removed from the currently visible objects, or
 * an object that is visible has changed it's properties (e.g. uses a different material or texture now)
 
 Buffer swaps may however still take place, so that special care is taken to update all swapchain images before stopping to actively render. This mechanism is implemented using a JDK-provided `CountDownLatch` that starts with the number of swapchain images, and is counted down by one for each render loop pass. When the latch reaches zero, rendering is discontinued until the next update happens.
@@ -234,9 +173,12 @@ In the render config file, both _rendertargets_ and _renderpasses_ are defined. 
 
 The definition must contain one renderpass that outputs to Viewport, otherwise nothing will be rendered.
 
-From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple:
+From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple. The graph is shown in Figure \ref{fig:SimpleRenderpipelineGraph}.
 
-\TODO{add example graph}
+\begin{figure*}
+    \includegraphics{./figures/RenderpipelineExampleSimple.pdf}
+    \caption{The graph representation of the ForwardShading rendering pipeline. Scene passes are shown with red background, postprocessing passes with orange background. Light blue parallelograms are framebuffers. Solid black arrows signify transition from one pass to the next, grey arrows show data dependencies, with squares standing for writes, and circles for reads. Dotted arrows show scenegraph accesses.\label{fig:SimpleRenderpipelineGraph}}
+\end{figure*}
 
 If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
 
@@ -423,7 +365,7 @@ qualitySettings:
       - "HBAO.frag.spv"
 ```
 
-In this rendering pipeline configuration, we apply the following techniques \TODO{add graph}:
+In this rendering pipeline configuration, we apply the following techniques:
 
 * Deferred Shading [@Deering:1988jd], for being able to render a large number of lights by splitting geometry processing and lighting into two separate passes: for every pixel, first, surface normals (with an efficient normal storage, where 3D unit vectors are compressed into a 2D octogon [@Zigolle:2014ase]), surface material properties, and depth are stored into separate buffers in the `Scene` pass, second, the final shading of the pixel is determined from these buffers in the `DeferredLighting` pass.
 * Ambient Occlusion via the HBAO algorithm [@Bavoil:2008a61] in the `AO` pass, with horizontal and vertical blurring in the `AOBlurV` and `AOBlurH` passes,
@@ -431,6 +373,13 @@ In this rendering pipeline configuration, we apply the following techniques \TOD
 * Anti-aliasing of the final image via the Fast approximate anti-aliasing algorithm [@Lottes:200983a] in the `FXAA` pass.
 
 This rendering pipeline configuration also showcases shader properties (see e.g. `Direction` or `Pass.displayWidth` in the `parameters` section of the `AOBlurH` pass). These are explained in more detail in the section [Shader Introspection and Shader Properties].
+
+This more complex rendering pipeline can also be represented as a graph, as shown in Figure \ref{fig:DeferredShadingRenderpipelineGraph}. 
+
+\begin{figure*}
+    \includegraphics{./figures/RenderpipelineExampleDeferredShading.pdf}
+    \caption{The graph representation of the DeferredShading rendering pipeline. Scene passes are shown with red background, postprocessing passes with orange background. Light blue parallelograms are framebuffers. Solid black arrows signify transition from one pass to the next, grey arrows show data dependencies, with squares standing for writes, and circles for reads. Dotted arrows show scenegraph accesses.\label{fig:DeferredShadingRenderpipelineGraph}}
+\end{figure*}
 
 [^ACESnote]: ACES, the Academy Color Encoding System, defines a particular curve for mapping from HDR to LDR color, see [github.com/ampas/aces-dev/tree/v1.0.3](https://github.com/ampas/aces-dev/tree/v1.0.3) for details.
 
@@ -543,5 +492,77 @@ scenery also includes support for loading these data sets, and for that makes us
 ![scenery rendering an out-of-core dataset using the BigDataViewer library.\TODO{add the actual image}\label{fig:sceneryBDV}](./figures/scenery-bdv.png)
 
 \TODO{Add workflow diagram}
+
+## Rendering with OpenGL
+
+### Initialisation
+
+When using OpenGL, the initialisation of the renderer proceeds in the following way:
+
+1. the presence of a virtual reality HMD is checked.
+2. the `RenderConfig` is parsed from a file.
+2. it is checked whether the renderer will be embedded in a `SceneryPanel` for rendering with JavaFX, or if a drawable surface already exists. If both are not the case, a window owned by the renderer is created. After this, a separate animator thread takes over the initialisation.
+3. an OpenGL 4.1 context is initialised. 
+4. a default set of buffers is initialised for:
+	* Uniform Buffer Objects (UBOs)
+	* light parameters
+	* rendering parameters
+	* Shader Properties
+	* Shader Parameters
+5. a default set of textures is initialised to provide textures in case a `Node`'s textures cannot be found.
+6. the render passes defined by the `RenderConfig` are created, with the necessary framebuffers and attachments.
+7. a heartbeat timer is initialised to record GPU usage (only on Nvidia cards running on Windows) and record performance data.
+
+The renderer then proceeds with scene initialisation, initialising each `Node` in the scene in this way:
+
+1. The `Node` is locked.
+2. a new instance of `OpenGLObjectState` is attached to the `Node`'s `metadata` field
+3. vertex buffers[^vbonote] and vertex array objects[^vaonote] are created.
+4. custom shaders and material properties are initialised.
+5. UBOs for transformations and material properties are initialised.
+6. the renderer checks whether the `Node`'s definition includes any `@ShaderProperty` annotations, for which an additional UBO would be created. \TODO{Add reference to chapter}
+7. The `Node` is marked as initialised and unlocked.
+
+[^vbonote]: Vertex Buffer Objects are the buffers on the GPU that actually contain the vertices of a Node's geometry. In scenery, they are stored in a strided format, meaning that vertices and normals are not stored as `V1V2V3N1N2N3...`, but rather as `V1N1V2N2V3N3`, for improved cache locality.
+[^vaonote]: Vertex Array Objects describe which buffers a rendered object in OpenGL uses, and what the data layouts of these buffers are.
+
+## Rendering with Vulkan
+
+### Initialisation
+
+Compared to OpenGL, Vulkan provides much leaner, close-to-metal access to the GPU's resources. It is therefore more verbose, but does not do as much validation as OpenGL during runtime.
+
+Instead in Vulkan, a _validation layer_ provides guidance to adherence to the standard. While in OpenGL, all state and state changes are continuously checked for sanity, incurring a performance hit, Vulkan skips these checks, and outsources them to validation layers, that may be activated during startup, and usually only used during development or debugging. Compared to OpenGL error messages, Vulkan validation layers provide highly detailed error messages, thus enabling the developer to quickly pinpoint the source of a problem.
+
+When using Vulkan, the initialisation of the renderer proceeds in the following way:
+
+1. the presence of a virtual reality HMD is checked, and window dimensions set accordingly.
+2. The `RenderConfig` is parsed from a render config YAML file.
+3. The renderer checks whether the user has requested the activation of validation layers, and activates them if indicated.
+4. the renderer checks whether the output will be embedded in a `SceneryPanel`. If this is not the case, the renderer will request surface rendering extensions, and create a _Vulkan instance_[^instancenote], if not, the instance will be created without the extensions. Further extensions might be required by the presence of an HMD, e.g. for memory sharing.
+5. A `VulkanDevice`[^devicenote] is created, the renderer defaults to the first device found, but this can be overridden by the user.
+6. A device queue[^queuenote] is created.
+7. A `SwapchainRecreator` is created. This object is responsible for all resources that are resolution-dependent, such as framebuffers and rendering surfaces. It also takes care of initialising the render passes defined by the `RenderConfig`, with the necessary framebuffers and attachments. The swapchain is be one of:
+	* `OpenGLSwapchain`: creates an OpenGL context and enables the Vulkan renderer to draw into that. Necessary for frame-locked rendering e.g. on CAVE systems.
+	* `HeadlessSwapchain`: creates a swapchain without any rendering surfaces, e.g. for server use.
+	* `FXSwapchain`: create a swapchain for rendering into a JavaFX panel. Employs permanently mapped buffers for bandwidth efficiency and inherits from `HeadlessSwapchain`.
+	* `VulkanSwapchain`: creates a regular, window-based swapchain with GLFW. This is the standard case.
+8. the default vertex descriptors[^vdnote] are created.
+9. descriptor pools are created.
+10. default descriptor set layouts and descriptor sets[^dslnote] are prepared.
+11. a default set of textures is initialised to provide textures in case a `Node`'s textures cannot be found.
+12. a heartbeat timer is initialised to record GPU usage (only on Nvidia cards running on Windows) and record performance data.
+13. a dynamically-managed memory pool for `Node` geometry is allocated.
+
+Note here that the Vulkan renderer does not perform explicit scene initialisation on startup, but discovers the `Node`s of a scene during the rendering loop.
+
+[^instancenote]: A _Vulkan instance_ is the basic building block of a Vulkan application.
+[^devicenote]: A _Vulkan device_ contains all the information about a device and its capabilities, and all allocations and executions are made with respect to a particular device, also enabling parallel runs on multiple devices.
+[^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asyncronously by the GPU. A queue may be asked for work completion and can be waited on.
+[^vdnote]: _Vertex descriptors_ describe the vertex layout for rendering and are somewhat comparable to OpenGL's Vertex Array Objects.
+
+[^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
+
+In Figure \TODO{Add comparison figure} we provide a visual overview of the initialisation procedures for both renderers.
 
 
