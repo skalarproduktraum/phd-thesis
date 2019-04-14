@@ -27,7 +27,7 @@ In [@Longair:2011snt], the authors present an ImageJ/Fiji plugin for quick and s
     \caption{Simple Neurite Tracer showing tracing neurons in the adult \emph{Drosophila} brain, and neuropils shown in addition to the traced neurites in the old Fiji 3D Viewer\label{fig:SNTOriginal}.}
 \end{figure*}
 
-We have expanded the original code to make SNT work on top of SciView, with an example image shown in Figure \ref{fig:SNTnew}.
+We have expanded the original code to make SNT work on top of SciView, with an example image shown in Figure \ref{fig:sciviewSNT}.
 
 \begin{figure*}
     \includegraphics{./figures/sciviewSNT.png}
