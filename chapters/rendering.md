@@ -473,23 +473,99 @@ where the location 3 defines the instanced model matrix. For Vulkan, scenery wil
 
 ![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.png)
 
-Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectively correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following blending options:
+Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectively correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following compositing options:
 
 * _maximum projection_ (MIP), where each voxel data point along the way is compared to the previous, and the maximum kept,
 * _local maximum projection_ (LMIP), where each voxel data point along the way is compared to the previous, and the maximum kept, but only after reaching a user-defined threshold, and
 * _alpha blending_, where the attenuation of light entering the volume is simulated in a physically plausible manner.
 
-The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. For alpha blending, the ordering of the volumes does matter, and accurate visualisation is only possible if all the volumes occupying the same space are rendering in the same moment.
+The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. 
+
+\begin{marginfigure}
+    \includegraphics{./figures/sciview-alphacompositing.png}
+    \caption{A volume rendered in scenery using local maximum intensity projection, showing the Game of Life in 3D.\label{fig:lmipvolume}}
+\end{marginfigure}
+
+An example of a LMIP-rendered volume is shown in Figure \ref{fig:lmipvolume}.
+
+For alpha blending, the ordering of the volumes does matter, and accurate visualisation is only possible if all the volumes occupying the same space are rendering in the same moment. Alpha blending is based on a physical model, and in the next subsection we are going to derive the front-to-back compositing equations used in scenery, and then discuss options going beyond alpha compositing for added realism:
+
+### Alpha compositing
+
+In general, the total spectral radiance $L_0(\vec{p}, \vec{v})$ — the quantity rendering determines for a pixel — at a point $\vec{p}$ in direction $\vec{v}$ is given by the rendering equation [@Kajiya:1986tre]:
+
+\begin{align}
+L_0(\vec{p}, \vec{v}) & = L_e(\vec{p}, \vec{v}) \\ 
+& + \int_{l \in \Omega} \mathrm{d}\vec{l} L_0(r(\vec{p}, \vec{l}, -\vec{l}) (\vec{n}\cdot\vec{l})^{+},
+\end{align}
+or, 
+
+\begin{align}
+\text{Spectral radiance at}\,\vec{p} \text{ in direction } \vec{v} & = \text{Emission at}\, \vec{p} \text{ in direction } \vec{v}\\
+& + \text{Reflected radiance from hemisphere}\,\Omega.
+\end{align}.
+
+As this integral is recursive — the reflected radiance at a given point $\vec{l}$ depends on previous surface bounces subject to the same integral — it is in general very hard to solve accurately. For this reason, [@Sabella:1984ara] introduces an extension and simplification of the rendering equation for volumetric data: In this volumetric rendering equation, we compute $L(x)$, which is the spectral radiance at a point $x$ along a ray, ignoring previous surface bounces:
+
+\begin{align}
+L(x) = \int_{x}^{y} \mathrm{d}x' \epsilon(x')\exp\left( -\int_{x}^{x'}\mathrm{d}x'' \tau(x'') \right).
+\label{eq:VolumeRenderingEquation}.
+\end{align}
+
+The spectral radiance here depends on $\epsilon(x')$, the emission, and $\tau(x')$, the absorption function, describing the probability of absorbing a photon along unit distance on the ray. Note here that this emission-absorption model completely ignores scattering.
+
+Eq. \ref{eq:VolumeRenderingEquation} can be discretised as
+
+\begin{align}
+L(x) & = \sum_{i} \epsilon_{i} \Delta x\cdot \exp \left( -\sum_{j}^{i-1}\tau_{j} \Delta x \right)\\
+ & =  \sum_{i} \epsilon_{i} \Delta x\cdot \prod_{j=0}^{i-1}\exp \left( -\tau_{j} \Delta x \right).
+\end{align}.
+
+This discretisation gives natural rise to interpretations of (premultiplied alpha) color, and opacity:
+
+\begin{align}
+\alpha_i C_i &= \epsilon_i \Delta x \,\,\text{(color)}\\
+\alpha_i &= 1 - \exp\left( \tau_i \Delta x \right)\,\,\text{(alpha)}.
+\end{align}
+
+With these equations, we can then derive the front-to-back compositing formula for alpha blending: Let $T_{s}^{s'}$ be the composite transparency of front-to-back samples $s, s+1,…,s'$,
+
+\begin{align}
+T_{s}^{s'} &= \prod_{i=s}^{s'}T_i,\,\,\text{then},\\
+C_s &= \alpha_s C_s\\
+T_s &= 1-\alpha_s,\,\,\text{and}\\
+C_{s}^{s'+1} & = C_s^{s'} + \alpha_{s'+1}C_{s'+1}T_s^{s'}\\
+T_{s}^{s'+1} & = \left( 1 - \alpha_{s'+1} \right) T_s^{s'}.
+\end{align}
+
+\begin{marginfigure}
+    \includegraphics{./figures/sciview-alphacompositing.png}
+    \caption{A volume rendered in scenery using alpha compositing, showing the Game of Life in 3D with volumetric ambient occlusion.\label{fig:alphacompositing}}
+\end{marginfigure}
+
+Front-to-back compositing has the benefit that cast rays can be terminated early once $T_{s}^{s'}$ falls below a given threshold (or 0).
+
+An example of an alpha-composited volume rendering is shown in Figure \ref{fig:alphacompositing}.
+
+### Beyond alpha compositing — ambient occlusion and shadowing
+
+### Beyond alpha compositing — path tracing and Metropolis Light Transport
 
 ### Out-of-core rendering
 
 Out-of-core rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
 
-BigDataViewer[@Pietzsch:2015hl] has introduced a pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources.
+BigDataViewer[@Pietzsch:2015hl] has introduced a HDF5[@hdf52017]-based pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources (see Figure \ref{fig:bdvDrosophila} for an example).
+
+\begin{marginfigure}
+    \label{fig:bdvDrosophila}
+    \includegraphics{./figures/bdv.png}
+    \caption{A \emph{Drosophila} dataset rendered by-slice in BigDataViewer. Image courtesy of Tobias Pietzsch.}
+\end{marginfigure}
 
 scenery also includes support for loading these data sets, and for that makes use of a BigDataViewer-provided library. For correct blending of multiple, unregistered volumes, we make use of a custom `ShaderFactory` that creates a custom shader program for any number of volumes used (subject to hardware limitations, of course). An example of multiple volumes rendered using this technique is shown in Figure \ref{fig:sceneryBDV}.
 
-![scenery rendering an out-of-core dataset using the BigDataViewer library.\TODO{add the actual image}\label{fig:sceneryBDV}](./figures/scenery-bdv.png)
+![scenery rendering an out-of-core, multiview _Drosophila_ dataset consisting of three different views (color-coded) using the BigDataViewer integration, volume rendering using maximum intensity projection. \label{fig:sceneryBDV}](./figures/scenery-bdv.png)
 
 \TODO{Add workflow diagram}
 
@@ -520,7 +596,7 @@ The renderer then proceeds with scene initialisation, initialising each `Node` i
 3. vertex buffers[^vbonote] and vertex array objects[^vaonote] are created.
 4. custom shaders and material properties are initialised.
 5. UBOs for transformations and material properties are initialised.
-6. the renderer checks whether the `Node`'s definition includes any `@ShaderProperty` annotations, for which an additional UBO would be created. \TODO{Add reference to chapter}
+6. the renderer checks whether the `Node`'s definition includes any `@ShaderProperty` annotations, for which an additional UBO would be created (see [Uniform Buffer Serialisation and Updates] for details). 
 7. The `Node` is marked as initialised and unlocked.
 
 [^vbonote]: Vertex Buffer Objects are the buffers on the GPU that actually contain the vertices of a Node's geometry. In scenery, they are stored in a strided format, meaning that vertices and normals are not stored as `V1V2V3N1N2N3...`, but rather as `V1N1V2N2V3N3`, for improved cache locality.
@@ -558,7 +634,7 @@ Note here that the Vulkan renderer does not perform explicit scene initialisatio
 
 [^instancenote]: A _Vulkan instance_ is the basic building block of a Vulkan application.
 [^devicenote]: A _Vulkan device_ contains all the information about a device and its capabilities, and all allocations and executions are made with respect to a particular device, also enabling parallel runs on multiple devices.
-[^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asyncronously by the GPU. A queue may be asked for work completion and can be waited on.
+[^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asynchronously by the GPU. A queue may be asked for work completion and can be waited on.
 [^vdnote]: _Vertex descriptors_ describe the vertex layout for rendering and are somewhat comparable to OpenGL's Vertex Array Objects.
 
 [^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.

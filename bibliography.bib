@@ -1,3 +1,30 @@
+@article{ma1994, 
+  title = {{Parallel volume rendering using binary-swap compositing}}, 
+  author = {Ma, Kwan-Liu and Painter, J.S. and Hansen, C.D. and Krogh, M.F.}, 
+  journal = {IEEE Computer Graphics and Applications}, 
+  abstract = {We describe a parallel volume-rendering algorithm, which consists of two parts: parallel ray tracing and parallel compositing. In the most recent implementation on Connection Machine's CM-5 and networked workstations, the parallel volume renderer evenly distributes data to the computing resources available. Without the need to communicate with other processing units, each subvolume is ray traced locally and generates a partial image. The parallel compositing process then merges all resulting partial images in depth order to produce the complete image. The compositing algorithm is particularly effective for massively parallel processing, as it always uses all processing units by repeatedly subdividing the partial images and distributing them to the appropriate processing units. Test results on both the CM-5 and the workstations are promising. They do, however, expose different performance issues for each platform.<>}, 
+  volume = {14}, 
+  pages = {59--68}, 
+  issn = {0272-1716}, 
+  eissn = {1558-1756}, 
+  doi = {10.1109/38.291532}, 
+  year = {1994}
+}
+@article{anonymous, 
+  title = {{SC08\_compositing.pdf}}
+}
+@article{Sabella:1984ara, 
+  title = {{A rendering algorithm for visualizing 3D scalar fields}}, 
+  author = {Sabella, Paolo}, 
+  journal = {ACM SIGGRAPH Computer Graphics}, 
+  abstract = {This paper presents a ray tracing algorithm for rendering 3D scalar fields. An illumination model is developed in which the field is characterized as a varying density emittter with a single level of scattering. This model is equivalent to a particle system in which the particles are sufficiently small. Along each ray cast from the eye, the field is expressed as a function of the ray parameter. The algorithm computes properties of the field along the ray such as the attenuated intensity, the peak density, and the center of gravity, etc., These are mapped into HSV color space to produce an image for visualization.Images produced in this manner are perceived as a varying density 'cloud' where color highlights the computed attributes. The application of this technique is demonstrated for visualizing a three dimensional seismic data set.}, 
+  volume = {22}, 
+  pages = {51--58}, 
+  issn = {0097-8930}, 
+  doi = {10.1145/378456.378476}, 
+  read = {false}, 
+  year = {1988}
+}
 @article{kajiya1984, 
   title = {{Ray tracing volume densities}}, 
   author = {Kajiya, James T. and Herzen, Brian P Von}, 
@@ -22,7 +49,7 @@
   read = {false}, 
   year = {2011}
 }
-@article{kajiya1986, 
+@article{Kajiya:1986tre, 
   title = {{The rendering equation}}, 
   author = {Kajiya, James T.}, 
   journal = {ACM SIGGRAPH Computer Graphics}, 
@@ -31,6 +58,7 @@
   pages = {143--150}, 
   issn = {0097-8930}, 
   doi = {10.1145/15922.15902}, 
+  read = {false}, 
   year = {1986}
 }
 @article{Lottes:200983a, 
@@ -62,6 +90,7 @@ for Independent Unit Vectors}},
   volume = {57}, 
   pages = {21--31}, 
   issn = {0167-9457}, 
+  eissn = {1872-7646}, 
   doi = {10.1016/j.humov.2017.11.002}, 
   year = {2018}
 }
