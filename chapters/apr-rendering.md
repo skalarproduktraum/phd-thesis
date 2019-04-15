@@ -2,7 +2,7 @@
 
 
 
-The work presented in this chapter has been done in collaboration with Bevan Cheeseman, Sbalzarini Lab, MPI-CBG, and is partially published in Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
+The work presented in this chapter has been done in collaboration with Bevan Cheeseman, Sbalzarini Lab, MPI-CBG, and is partially published in Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2018 ([bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061))
 
 
 
