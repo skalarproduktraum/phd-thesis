@@ -30,6 +30,12 @@ For the this project, we have chosen the _Pupil_ eye trackers produced by _Pupil
 
 Eye positions, size, etc. are subject to large individual differences. It is therefore required to calibrate the eye trackers before each use, to be able to get reliable gaze data out. In case of regular, glasses-mounted eye trackers, _Pupil_ offers an integrated calibration procedure, while for HMD-based settings, we need to create our own calibration routine. The calibration has to be redone over time, this is not actually a negative aspect, but can help with a good integration of the calibration procedure into the virtual world presented to the user.
 
-In our custom calibration routine, we show the user 8 different points, lying on a circle, at which he has to look. These 8 points cover most of the field of view and enable the Pupil software to establish a one-to-one relation between measured pupil position and the screen space point the user's gaze is directed to.
+Our custom calibration routine works as follows:
+
+ 1. we show the user a single highlighted point located on a circle in the center of the screen, the user is instructed to follow the highlighted point with his eyes,
+ 2. after acquiring enough samples for calibration, the screen space position of the calibration point is sent to Pupil,
+ 3. the next, randomly selected point out of a set of 10 equidistant points on the circle is shown to the user,
+ 4. after all points have been gazed at by the user, Pupil's calibration routine will try to construct a correspondence between the gaze vectors of both eyes and the screen-space coordinates submitted \TODO{add information on Pupil's calibration procedure}, 
+ 5. if the calibration routine is successful, the calibration interface will be hidden, and the regular application can continue. If the calibration routine is not successful, we restart from 1. until successful or until the user cancels.
 
 \TODO{Add calibration image}
