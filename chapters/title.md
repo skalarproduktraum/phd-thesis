@@ -34,7 +34,7 @@
          \vspace{1.5cm}
          \emph{First reviewer}:\\
          Prof. Dr. sc. techn. Ivo F. Sbalzarini\\
-         Technische Universit{\"a}t Dresden and Max Planck Institute of Molecular Cell Biology and Genetics\\
+         Technische Universit{\"a}t Dresden \& Max Planck Institute of Molecular Cell Biology and Genetics\\
          Dresden, Germany\\
          \vspace{0.5cm}
          \emph{Second reviewer}:\\
