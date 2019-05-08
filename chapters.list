@@ -10,10 +10,10 @@ chapters/eye-tracking.md
 chapters/interface-efficiency.md
 # part 2 - scenery
 chapters/scenery.md
-chapters/hub-and-settings.md
 chapters/rendering.md
 chapters/external-hardware.md
 chapters/distributed-rendering.md
+chapters/hub-and-settings.md
 chapters/future-directions.md
 chapters/developing-with-scenery.md
 # part 3 - applications

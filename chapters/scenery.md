@@ -6,9 +6,9 @@ In the chapters before, we have highlighted the needs of systems biology for fle
 
 In order to address these needs, we have chosen to develop our own visualisation framework: _scenery_, enabling prototyping and the delivery of multimodal, customisable, and interactive scientific visualisations, running on top of the Java Virtual Machine (JavaVM/JVM). scenery can be used on both desktop machines, and on distributed setups, such as the ones commonly used for CAVE systems or Powerwalls.
 
-In this chapter, we are going to introduce the framework, starting with the development of ClearVolume which later ignited the development of scenery. Subsequently, we outline the exact design goals and decisions made along the way, and compare scenery to existing frameworks and related works, followed by a high-level description of its components. 
+In this chapter, we are going to introduce the framework, starting with the development of ClearVolume [@Royer:2015tg], which later ignited the development of scenery. Subsequently, we outline the exact design goals and decisions made along the way, and compare scenery to existing frameworks and related works, followed by a high-level description of its components. 
 
-This chapter is then followed by the architecture chapter, going into deeper details for each of scenery's building blocks. As last part of this section, we introduce a development model for scenery-based applications.
+After this chapter, we will introduce scenery's subsystems in more detail.
 
 ## ClearVolume
 
@@ -175,5 +175,4 @@ At the outermost architectural layer, the scenery framework consists of seven ma
 
 The construction and interplay of all the components is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
 
-In the next chapter, [Design and Architecture], we are going to describe the details of all of the software components.
-
+In the next chapters, we are going to introduce the most important subsystems of scenery, namely those for [Rendering], [Input Handling and Integration of External Hardware], and for [Distributed Rendering]. These chapters are followed by a brief description of the [Other Subsystems] in scenery, and [Future Development Directions]. 
