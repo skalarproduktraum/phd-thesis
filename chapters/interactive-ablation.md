@@ -68,11 +68,18 @@ In terms of volumetric cuts, the authors of [@Brugues:2012fx] use a their femtos
 
 From our survey of related works and use cases, we can observe the following:
 
+Current interfaces for laser ablation usually utilise a 2D window with different controls for moving around, and often do not feature a 3D view of the specimen, as shown in Figure \ref{fig:LaserAblation2D}. Such systems provide support for planar cuts, in the form of lines, circles, or rectangles.
+
+\begin{figure*}
+    \includegraphics{./figures/LaserAblation2DInterface.png}
+    \caption{A window-based 2D interface for laser ablation. Laser and stage controls for movement are shown in the tabs on the upper left, power controls for the ablation unit on the lower left. The view of the specimen is shown at the center, with the current cut overlaid as a circle. Reproduced from [@Oswald:2010pr].\label{ref:LaserAblation2D}}
+\end{figure*}
+
 Complex, three-dimensional cuts are very hard to perform on a regular screen from an interaction perspective —  it is very hard to translate from an image projected on a 2D screen to a — potentially moving — 3D volumetric specimen, and even with sophisticated techniques as in [@Peng:2014bu], it can become overwhelming for the user. Nevertheless, complex geometries need to be investigated in order to better understand the biophysics of e.g. the cellular cortex. 
 
 Furthermore, it is preferable to use lightsheet microscopes for their superior speed and gentle imaging as instruments for 3D ablation purposes: Their particular way of mounting samples is extremely beneficial for quickly moving the sample in three directional axis plus one rotational axis, something that is not possible with e.g. confocal microscopes.
 
-## Prototyping, Stage 1
+## First Prototype
 
 As a first prototype, we developed a browser-based (threejs, [https://threejs.org](https://threejs.org)) prototype that makes use of the _LeapMotion_ gesture controller. A screenshot of the prototype can be seen in Figure \ref{fig:LMAblationPrototype}. The workflow of the prototype is
 
@@ -89,7 +96,14 @@ Additionally, we abandoned browser-based prototyping after this first iteration,
 
 ![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](./figures/LeapMotionLaserAblationPrototype.png)
 
-## Prototyping, Stage 2
+## Second Prototype
+
+\TODO{Add specifications and requirements}
+
+\begin{figure}
+    \includegraphics{./figures/vr_ablation_demo.png}
+    \caption{Demonstration of a possible ablation modality utilising virtual reality on the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. Dataset courtesy of Loïc Royer.\label{fig:VRLaserAblationDemo}}
+\end{figure}
 
 ## Proposed Hardware Realisation
 
