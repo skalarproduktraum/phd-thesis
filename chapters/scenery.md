@@ -1,6 +1,6 @@
-\part[SCENERY]{scenery}
+\part[VR and AR FOR SYSTEMS BIOLOGY]{VR and AR for Systems Biology}
 
-# scenery — VR/AR Visualisation for Systems Biology
+# scenery — Democratising VR/AR Visualisation for Systems Biology
     
 In the chapters before, we have highlighted the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customisable visualisations, and reproducibility. 
 
@@ -162,6 +162,11 @@ Unfortunately, JOGL is not actively maintained anymore, and we aim to fully swit
 [^offheapnote]: Off-heap memory is memory that is not managed by the JavaVM. In the case of LWJGL3, on Windows `malloc()` is used for allocations, while on Linux and macOS, the high-performance memory allocator _jemalloc_ (jemalloc.net](http://jemalloc.net)) is used. Both allocators provide a better alternative to using Java's Direct Byte Buffers that incur a large performance penalty over raw `malloc()` calls, and are also a sparse resource, available only in a size determined at program startup. In LWJGL3, a thread-local memory stack is provided in addition, enabling high-speed temporary allocations. For details about memory allocation strategies in LWJGL3, see [blog.lwjgl.org/memory-management-in-lwjgl-3/](https://blog.lwjgl.org/memory-management-in-lwjgl-3/).
 
 ## Component overview
+
+\begin{figure}
+    \includegraphics{./figures/scenery-architecture.pdf}
+    \caption{A high-level overview of scenery's components.\label{fig:SceneryArchitecture}}
+\end{figure}
 
 At the outermost architectural layer, the scenery framework consists of seven main software components:
 
