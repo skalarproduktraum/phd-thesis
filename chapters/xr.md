@@ -1,4 +1,4 @@
-# Cross Reality for Pedestrians
+# A Short Introduction to Cross Reality
 
 _Cross reality_, or _XR_, encompasses everything on the spectrum between full virtual environments, and fully real environments. This includes especially virtual reality (VR), augmented reality (AR), and augmented virtuality.
 
