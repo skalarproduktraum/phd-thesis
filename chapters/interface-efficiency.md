@@ -141,7 +141,7 @@ Here, curly brackets denote one or multiple elements, square brackets optional e
 | \cellcolor{blue!10}\textbf{M}ental | Mentally preparing a physical action. | $1.35$ |
 | \cellcolor{blue!10}\textbf{R}(t) | Response time of the system. | $t$ |
 | \cellcolor{blue!10}\textbf{K}eystroke | Pressing a key, including modifiers. | $0.2$ avg. |
-| \cellcolor{green!10}\textbf{P}ointing | Pointing to a target, subject to Fitts's Law (or extensions).  | $1.1$ [^PointingNote] |
+| \cellcolor{green!10}\textbf{P}ointing | Pointing to a target, subject to Fitts's Law (or extensions).  | $1.1$ \citep{Murata:2001ebc,Erazo:2015d6c} |
 | \cellcolor{green!10}\textbf{Pr}eparation | Preparation of the execution of movements. | t |
 | \cellcolor{green!10}\textbf{W}alk | Walking to reach a target area. | t |
 | \cellcolor{green!10}\textbf{Re}traction | Retracting an arm after the execution of a movement. | t |
@@ -156,6 +156,4 @@ Table: The operators in our extended model, colour-coded according to \ref{eq:Ph
 
 
 
-
-[^PointingNote]: Following [@Murata:2001ebc; @Erazo:2015d6c].
 
