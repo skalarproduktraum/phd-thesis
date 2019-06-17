@@ -46,8 +46,9 @@ Some of the results presented in this thesis have already been published :
 \subsection*{Peer-reviewed Papers}
 
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images_. _Nature Communications_, 9(5160), 2018, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
-* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_ (under revision), 2018, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
+* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
+* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery — scenery – Flexible Virtual Reality Visualisation on the Java VM. Submitted to _IEEE VIS_, 2019, [arXiv preprint](https://arxiv.org/abs/)
 
 \subsection*{Conference Abstracts}
 
@@ -66,7 +67,6 @@ Some of the results presented in this thesis have already been published :
 The following papers containing material from this work are currently under preparation:
 
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji.
-* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Sbalzarini, I.F.: scenery - a cross-platform virtual reality visualisation framework for arbitrary geometric and volumetric data.
 * __Günther, U.__, Simson, J, Sbalzarini, I.F., Harrington, K.I.S.: Linear Genetic Programming for robust pupil detection in interactive, virtual reality eye tracking applications.
 
 \section*{Supervision}
