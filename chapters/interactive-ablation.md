@@ -108,6 +108,14 @@ For the second prototype, we choose a VR setup using an HTC Vive HMD, with two c
 
 ### Description of study
 
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/VRAblationPrototype.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video demo of the VR ablation prototype. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+\end{marginfigure}
+
 In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in it's DNA's histones, such that the chromosomes (and also the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
 
 The users can control movement with the touchpad of the left-hand controller, and also move around physically, as they are being tracked by the VR system. The right-hand controller can then be used to activate a wand-like tool to designate areas for ablation. The prototype was designed such that there is no undo function, but a cut drawn, once finished, would be performed instantly.
@@ -124,34 +132,65 @@ After an introduction to the software and familiarisation with the dataset, the 
 
 Performing all of these tasks took 5 to 10 minutes per user.
 
-After the study, the users were asked again for their wellbeing, for different aspects of the prototype, the likelihood of adoption of VR-steered laser ablation, as well as for simulator sickness using the SSQ scoring system \cite{kennedy1993}, a scoring system taking 16 different symptoms of discomfort — ranging over nausea, oculomotor, and disorientation symptoms —  into consideration to calculate a final, weighted score.  After filling out our questionaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the interview. 
+After the study, the users were asked for the following aspects:
+
+*  again, for their wellbeing, 
+*  for different aspects of the prototype, the likelihood of adoption of VR-steered laser ablation, 
+*  for physical and mental demands, assessed by the NASA-TLX (_Task Load Index_) [@Hart:1988tlx] scoring system, and
+*  for symptoms of simulator sickness using the SSQ scoring system \cite{kennedy1993} (SSQ takes 16 different symptoms of discomfort — ranging over nausea, oculomotor, and disorientation symptoms —  into consideration to calculate a final, weighted score).
+
+For standardised evaluation, we choose NASA-TLX and SSQ, as they perfectly matched our application setting, do not interfere with the study process itself, and have been widely used and validated. Newer methods to assess motion sickness in real or virtual environments, such as [@keshavarz2011] have not been used, as they have been designed to assess motion sickness during the course of the study, which would have caused interference with the tasks the user were asked to perform.
+
+After filling out our questionnaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the follow-up interview. 
 
 \begin{figure}
     \includegraphics{./figures/vr_ablation_demo.png}
-    \caption{Demonstration of a possible ablation modality utilising virtual reality on the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. Dataset courtesy of Loïc Royer.\label{fig:VRLaserAblationDemo}}
+    \caption{Demonstration of a possible ablation modality utilising virtual reality on the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. Dataset courtesy of Loïc Royer.\label{fig:VRLaserAblationDemo}}
 \end{figure}
+
+### Results — General Questions
+
+\begin{figure*}
+    \includegraphics{./figures/VRAGeneral.pdf}
+    \caption{Results of the general questions section of the user study.\label{fig:VRAGeneral}}
+\end{figure*}
+
+Results for the general questions section of the study questionnaire are shown in Figure \ref{fig:VRAGeneral}. Users were universally satisfied with the quality and usability of the prototype, and were not irritated by having to perform tasks they are used to in 2D in a VR environment. They generally reported that showing the dataset in human size scales and positions — in the study, the dataset is shown with a height of $1.5\,\mathrm{m}$, hovering $1.5\,\mathrm{m}$ above (virtual) ground — was well chosen. They did not have trouble learning the interface, and were in general ready to use the interface within a few minutes. While the users felt that the way of visualising the dataset supported the performed tasks well, a number of users criticised the fidelity of the visualisation and indicated in the follow-up interview they would like e.g. adjustable transfer functions, as the opacity of the dataset sometimes interfered with the tasks. In terms of input modality — the users were given state-of-the-art handheld VR controllers — users were mostly satisfied, only a few users would have liked different input modalities more. In the follow-up interviews these users indicated that a pencil-like interface would feel more precise than a handheld controller. 
 
 ### Results — Acceptance and Potential Adoption
 
 \begin{figure*}
     \includegraphics{./figures/VRAAdoption.pdf}
-    \caption{Results of the adoption questions section of the study.\label{ref:VRAAdoption}}
+    \caption{Results of the adoption questions section of the study.\label{fig:VRAAdoption}}
 \end{figure*}
 
-### Results — Wellbeing and Simulator Sickness
+### Results — Wellbeing, Workload, and Simulator Sickness
 
-All users tolerated the usage of the prototype very well. The changes in wellbeing before and after the study were minimal, with the most-reported problem being \TODO{add more information here}.
+All users tolerated the usage of the prototype very well. The average total SSQ score was $6.2\pm6.7$. Compared to the calibration sample in [@kennedy1993], this is a very low score, as only the 60th percentile was in that realm, and the mean of the calibration sample was $9.8\pm15.0$, nearly $1.5$-times the score in our study.
 
-The average total SSQ score was $6.2\pm6.7$. Compared to the calibration sample in [@kennedy1993], this is a very low score, as only the 60th percentile was in that realm, and the mean of the calibration sample was $9.8\pm15.0$, nearly $1.5$-times the score in our study.
+The users in the test had various degrees of previous exposure to VR systems before. We found a correlation between a history of VR usage and low SSQ scores (see Figure \ref{fig:VRACorrelation}). Furthermore, a history of VR usage correlated well with low TLX scores, and a general appreciation of the visualisation, size (in VR), and positioning of the dataset in the study. In Figure \ref{fig:VRACorrelation} it can also be seen that wellbeing — indicate by the _Concentrated_, _Motivated_, _Headache_, _Tired_, _Dry/Aching Eyes_, and _Nausea_ data points taken before and after the study — was not affected by the test in a significant manner. This finding is confirmed by the low SSQ scores obtained.
 
-The users in the test had various degrees of previous exposure to VR systems before. We did not find a correlation between previous VR exposure and experience of discomfort or motion sickness. \TODO{Check this and add correlation values}.
+\begin{figure*}
+    \includegraphics{./figures/VRATLX.pdf}
+    \caption{Task Load Index results in the user study.\label{fig:VRATLX}}
+\end{figure*}
 
-### Results — Correlations
+Workload evaluation results are shown in Figure \ref{fig:VRATLX}. Users generally reported very low mental and physical demands in the study, and mostly did not have to work hard to achieve the desired results. Single users felt that the task was a bit hurried or rushed, or that the mental demand was slightly high. Users in general did not feel insecure or annoyed performing the task using the proposed interface. 
+
+Both wellbeing and workload results indicate that using the proposed VR interface is very comfortable for the users and allows them to perform 3-dimensional ablation/selection tasks with ease, and without experiencing motion sickness.
+
+### Results — Further correlations
 
 \begin{figure*}
     \includegraphics[height=14cm]{./figures/VRACorrelationShort.pdf}
-    \caption{Correlations between questions in the questionnaire, only including SSQ summary score. For full correlation plot, please see \ref{fig:VRACorrelationFull}.\label{ref:VRACorrelation}}
+    \caption{Correlations between questions in the questionnaire, only including SSQ summary score. For full correlation plot, please see \ref{fig:VRACorrelationFull}.\label{fig:VRACorrelation}}
 \end{figure*}
+
+In the correlation matrix in Figure \ref{fig:VRACorrelation} a few more interesting correlations can be seen:
+
+* Positive answers to the Adoption questions correlate well with affirmative answers to in the General section about fidelity and naturalness of the prototype, indicating the the subjects answered these questions truthfully.
+* Individual TLX and SSQ scores anticorrelate with wellbeing scores, indicating that the less well a user felt before or after the study, the more demanding the tasks were scored, and the more sick the subject felt afterwards.
+* Questions in the General section did not correlate well with each other, indicating that each of them provides a valuable and independent data point.
 
 ### Requested Changes and Additions
 
@@ -164,3 +203,17 @@ In the interviews conducted after the study, users were asked to comment further
 * __Toolbelt__: The already existing freeform mode will be combined into a toolbelt — e.g. attached to a VR controller, with the user being able to seamlessly switch between different tools. The toolbelt will also offer the possibility to create custom tools, e.g. by scripting.
 
 These changes will be implemented in a future version of the software.
+
+
+## Future Work
+
+The next prototype of the software will incorporate the changes proposed in the previous section. 
+
+While we have focussed on the task of laser ablation, we believe that the interactions we have proposed are also applicable to other tasks in microscopy that require an area selection, such as optogenetics/photoconversion [@Boyden:2005cd], where photoactivatable proteins are used to steer cellular functions.
+
+In terms of high-fidelity visualisation, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user.
+
+Finally, we aim to provide an open-source/open-hardware solution to perform both laser ablation and optogenetics tasks with the assistance of VR interfaces.
+
+__Note to reviewers:__ The third prototype and the hardware realisation part are planned to be added until the thesis defense.
+
