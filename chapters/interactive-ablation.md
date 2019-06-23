@@ -66,6 +66,8 @@ In terms of volumetric cuts, the authors of [@Brugues:2012fx] use a their femtos
 
 ## Observations
 
+\TODO{Ask Romina for wing disc example stack to show complex geometry, and Brugues lab for spindle}
+
 From our survey of related works and use cases, we can observe the following:
 
 Current interfaces for laser ablation usually utilise a 2D window with different controls for moving around, and often do not feature a 3D view of the specimen, as shown in Figure \ref{fig:LaserAblation2D}. Such systems provide support for planar cuts, in the form of lines, circles, or rectangles.
@@ -90,21 +92,75 @@ As a first prototype, we developed a browser-based (threejs, [https://threejs.or
 Within a limited user study, we identified two main issues with this approach:
 
 1. Orientation of the specimen using keyboard and mouse is error-prone and was noted to be not very comfortable and intuitive, especially when combined with subsequent gestural interaction,
-2. the gestural interaction was found to be imprecise, as a feeling of 3-dimensionality or immersion did not come up when being restricted to a regular, flat screen.
+2. the gestural interaction was found to be imprecise, as a feeling of 3-dimensionality or immersion did not come up when being restricted to a regular, flat screen without any VR functionality.
 
-Additionally, we abandoned browser-based prototyping after this first iteration, as loading times were already too long when using the geometry model of 26MiB, and would be even longer if volumetric data would be used. We want to note here that this initial experience also contributed to the decision to start the development of scenery.
+We abandoned browser-based prototyping after this first iteration, as loading times were already too long when using the geometry model of 26MiB, and would be even longer if any volumetric data would be used — such data can easily reach many GiB. We want to note here that this initial experience also contributed to the decision to start the development of scenery, such that we can efficiently prototype software that enables interaction with geometry data, and large volumetric data.
 
 ![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](./figures/LeapMotionLaserAblationPrototype.png)
 
+## Proposed Hardware Realisation
+
+![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
+
 ## Second Prototype
 
-\TODO{Add specifications and requirements}
+For the second prototype, we choose a VR setup using an HTC Vive HMD, with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes, and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
+
+### Description of study
+
+In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in it's DNA's histones, such that the chromosomes (and also the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
+
+The users can control movement with the touchpad of the left-hand controller, and also move around physically, as they are being tracked by the VR system. The right-hand controller can then be used to activate a wand-like tool to designate areas for ablation. The prototype was designed such that there is no undo function, but a cut drawn, once finished, would be performed instantly.
+
+For the study, we contacted 8 expert users of laser ablation and asked for their participation in the study. All of them agreed to take part after being informed about contents and goal of the study, and eventual risks and adverse health effects arising from the use of VR glasses. The tests subjects were not compensated for taking part in the study.
+
+Before the start of the study, users were asked for their familiarity with smartphone-based VR, computer-based VR, and standalone VR, as well as for their current wellbeing.
+
+After an introduction to the software and familiarisation with the dataset, the users were asked to perform the following tasks:
+
+* perform several cuts in the chromosomes of the uppermost cell
+* perform one triangular cut in centrosomes of the uppermost cell, and one in the centrosome of the lower cell
+* perform several cuts in the metaphase plates that form in the lower cell after playing half the dataset.
+
+Performing all of these tasks took 5 to 10 minutes per user.
+
+After the study, the users were asked again for their wellbeing, for different aspects of the prototype, the likelihood of adoption of VR-steered laser ablation, as well as for simulator sickness using the SSQ scoring system \cite{kennedy1993}, a scoring system taking 16 different symptoms of discomfort — ranging over nausea, oculomotor, and disorientation symptoms —  into consideration to calculate a final, weighted score.  After filling out our questionaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the interview. 
 
 \begin{figure}
     \includegraphics{./figures/vr_ablation_demo.png}
     \caption{Demonstration of a possible ablation modality utilising virtual reality on the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. Dataset courtesy of Loïc Royer.\label{fig:VRLaserAblationDemo}}
 \end{figure}
 
-## Proposed Hardware Realisation
+### Results — Acceptance and Potential Adoption
 
-![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
+\begin{figure*}
+    \includegraphics{./figures/VRAAdoption.pdf}
+    \caption{Results of the adoption questions section of the study.\label{ref:VRAAdoption}}
+\end{figure*}
+
+### Results — Wellbeing and Simulator Sickness
+
+All users tolerated the usage of the prototype very well. The changes in wellbeing before and after the study were minimal, with the most-reported problem being \TODO{add more information here}.
+
+The average total SSQ score was $6.2\pm6.7$. Compared to the calibration sample in [@kennedy1993], this is a very low score, as only the 60th percentile was in that realm, and the mean of the calibration sample was $9.8\pm15.0$, nearly $1.5$-times the score in our study.
+
+The users in the test had various degrees of previous exposure to VR systems before. We did not find a correlation between previous VR exposure and experience of discomfort or motion sickness. \TODO{Check this and add correlation values}.
+
+### Results — Correlations
+
+\begin{figure*}
+    \includegraphics[height=14cm]{./figures/VRACorrelationShort.pdf}
+    \caption{Correlations between questions in the questionnaire, only including SSQ summary score. For full correlation plot, please see \ref{fig:VRACorrelationFull}.\label{ref:VRACorrelation}}
+\end{figure*}
+
+### Requested Changes and Additions
+
+In the interviews conducted after the study, users were asked to comment further on the presented prototype and suggest improvements and additions. For the next iteration, we decided to implement the following features and changes:
+
+* __Confirm and Undo__: In addition to the regular freeform mode with immediate ablation after completing the drawing, another mode, where the target shape is drawn first, and confirmed after additional inspection was requested. In this mode, undo or erase will be possible  as well.
+* __Brush size__: The ablation laser by default has a specific cut size. By combination of multiple shots, larger cuts can be created. In the interface, this can then be handled in a similar way as brush size adjustments in applications like _Photoshop_.
+* __Template mode__: Many cuts the user has to perform are to be reproducible over a set of different specimen. For that reason, a template mode will be added, where a shape defined at one point can be reused later, optionally after translating, scaling or rotating it.
+* __Semi-automatic Guides__: In 2D/3D or presentation applications, such as _Autodesk Maya_, _Adobe Photoshop_ or _Apple Keynote_, interactive guides exist to help the user with element alignment. Users often perform ablations relative to one or more specific landmarks, such as centrosomes in the mitotic spindle, or these dots in the Drosophila wingdisc \TODO{Ask Romina what these dots are called}. Semi-automatic guides will be added such that they can indicate to the user which are the best points or contours for ablation.
+* __Toolbelt__: The already existing freeform mode will be combined into a toolbelt — e.g. attached to a VR controller, with the user being able to seamlessly switch between different tools. The toolbelt will also offer the possibility to create custom tools, e.g. by scripting.
+
+These changes will be implemented in a future version of the software.
