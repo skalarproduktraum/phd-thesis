@@ -182,6 +182,7 @@ The average total SSQ score was $6.2\pm6.7$. Compared to the calibration sample 
 The users in the test had mostly a low degree of previous exposure to VR systems before (see Figure \ref{fig:VRAHistory}). Those who had previous exposure to VR games or applications were mostly happy with it. 
 
 We found a correlation between a history of VR usage and low SSQ scores (see Figure \ref{fig:VRACorrelation}), indicating there might be a training effect. Furthermore, a history of VR usage correlated well with low TLX scores, and a general appreciation of the visualisation, size, and positioning of the dataset in the study. 
+
 \begin{figure*}
     \includegraphics{./figures/VRATLX.pdf}
     \caption{Task Load Index (TLX) results in the user study.\label{fig:VRATLX}}
@@ -205,7 +206,7 @@ Users seemed unsure whether the technique presents an improvement in terms of sp
 ### Results — Further correlations
 
 \begin{figure*}
-    \includegraphics[height=14cm]{./figures/VRACorrelationShort.pdf}
+    \includegraphics[height=16cm]{./figures/VRACorrelationShort.pdf}
     \caption{Correlations between questions in the questionnaire, only including SSQ summary score. For full correlation plot, please see Appendix \ref{fig:VRACorrelationFull}.\label{fig:VRACorrelation}}
 \end{figure*}
 
@@ -217,12 +218,18 @@ In the correlation matrix in Figure \ref{fig:VRACorrelation} a few more interest
 
 ### Requested Changes and Additions
 
+\begin{marginfigure}
+    \includegraphics{./figures/DrosophilaPupalWingLandmarks.png}
+    \caption{Sensory organs in the \emph{Drosophila melanogaster} pupal wing circled in green. These can be used as landmarks for laser ablation. Image courtesy of Romina Piscitello, Eaton Lab, MPI-CBG.\label{fig:DrosophilaPupalWing}}
+\end{marginfigure}
+
+
 In the interviews conducted after the study, users were asked to comment further on the presented prototype and suggest improvements and additions. From this feedback, we decided to implement the following features and changes:
 
 * __Confirm and Undo__: In addition to the regular freeform mode with immediate ablation after completing the drawing, another mode, where the target shape is drawn first, and confirmed after additional inspection was requested. In this mode, undo or erase will be possible  as well.
 * __Brush size__: The ablation laser by default has a specific cut size. By combination of multiple shots, larger cuts can be created. In the interface, this can then be handled in a similar way as brush size adjustments in applications like _Adobe Photoshop_.
 * __Template mode__: Many cuts a user has to perform are to be reproducible over a set of different specimen. For that reason, a template mode will be added, where a shape defined at one point can be reused later, optionally after translating, scaling or rotating it.
-* __Semi-automatic Guides__: In 2D/3D or presentation applications, such as _Autodesk Maya_, _Adobe Photoshop_ or _Apple Keynote_, interactive guides exist to help the user with element alignment. Users often perform ablations relative to one or more specific landmarks, such as centrosomes in the mitotic spindle, or these dots in the Drosophila wingdisc \TODO{Ask Romina what these dots are called}. Semi-automatic guides will be added such that they can indicate to the user which are the optimal points or contours for ablation. The semi-automatic guides will also be scriptable so they can be adjusted for a specific experiment.
+* __Semi-automatic Guides__: In 2D/3D or presentation applications, such as _Autodesk Maya_, _Adobe Photoshop_ or _Apple Keynote_, interactive guides exist to help the user with element alignment. Users often perform ablations relative to one or more specific landmarks, such as centrosomes in the mitotic spindle, or these dots in the Drosophila pupal wing (see Figure \ref{fig:DrosophilaPupalWing} for an example what such a landmark might be). Semi-automatic guides will be added such that they can indicate to the user which are the optimal points or contours for ablation. The semi-automatic guides will also be scriptable so they can be adjusted for a specific experiment.
 * __Toolbelt__: The already existing freeform mode will be combined into a toolbelt, e.g., attached to a VR controller, with the user being able to seamlessly switch between different tools. The toolbelt will also offer the possibility to create custom tools by scripting.
 
 These changes will be implemented in a future version of the software.
