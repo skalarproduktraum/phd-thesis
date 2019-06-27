@@ -665,12 +665,12 @@ In the loop case, we arrive at very inefficient assembly containing a lot of jum
 
 \begin{figure*}
     \includegraphics{./figures/MM_fma.pdf}
-    \caption{Generated assembly for the loop-based matrix multiplication with FMA, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\ref{fig:MMfma}}
+    \caption{Generated assembly for the loop-based matrix multiplication with FMA, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\label{fig:MMfma}}
 \end{figure*}
 
 \begin{figure*}
     \includegraphics{./figures/MM_unrolled_loop.pdf}
-    \caption{Generated assembly for the loop-unrolling matrix multiplication, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\ref{fig:MMloop}}
+    \caption{Generated assembly for the loop-unrolling matrix multiplication, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\label{fig:MMunrolled}}
 \end{figure*}
 
 The following table shows the results for the different routines for matrix multiplications, with the benchmarks run on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz using the Java Microbenchmarking Harness:
