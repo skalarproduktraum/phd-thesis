@@ -6,7 +6,7 @@
 
 Fiji [@schindelin2012fiji] is a widely-used — as of April 2019, it has been cited over 10000 times — open-source distribution of ImageJ for biological image analysis (Fiji stands for "Fiji is just ImageJ"). It is now the predominant ImageJ [@Schneider:2012nihi] distribution and recently had its  its underlying infrastructure modernised tremendously, e.g. by replacing its basic image processing library with imglib2 [@Pietzsch:2012img] in an effort to replace the original ImageJ 1.x with a newer replacement, dubbed ImageJ2, which has brought better interoperability and better overall design [@Rueden:2017ij2]. 
 
-The original way of doing 3D visualisation in Fiji is the 3D Viewer [@Schmid:2010gm], which has now become dated a bit and is not being actively developed anymore, necessitating a replacement After the start of the development of scenery in early 2016, we started the development of a replacement for 3D Viewer, named _sciview_. sciview builds heavily on the infrastructure provided by the Fiji, SciJava[^SciJavaNote], and ImageJ2 projects[@Rueden:2017ij2].
+The original way of doing 3D visualisation in Fiji is the 3D Viewer [@Schmid:2010gm], which has now become dated a bit and is not being actively developed anymore, necessitating a replacement. After the start of the development of scenery in early 2016, we started the development of a replacement for 3D Viewer, named _sciview_. sciview builds heavily on the infrastructure provided by the Fiji, SciJava[^SciJavaNote], and ImageJ2 projects[@Rueden:2017ij2].
 
 In this chapter, we are going to introduce sciview and explain how intertwining scenery and the ImageJ2/Fiji ecosystem creates a new powerful tool for interactive visualisations in the life sciences. We start by introducing the ImageJ2/Fiji ecosystem  in more detail, focussing on the developer side and explaining how the various parts are used in our project.
 
@@ -22,6 +22,7 @@ We make use of three main components from the ImageJ2 effort:
 * ImgLib2 [@Pietzsch:2012img], which decouples image representation from processing and storage.
 
 SciJava common provides us with several services that enable integration into ImageJ2/Fiji installations:
+
 * the `PluginService` for dynamic plugin discovery at runtime,
 * the `EventService`, for publishing and subscribing to scenery-related events, such as Node additions, removals and changes,
 * the `IOService` for providing access to file input/output, e.g. via SCIFIO.
@@ -35,12 +36,6 @@ All commands the user can execute from the sciview main window are implemented a
         menu = { @Menu(label = "Edit", weight = EDIT), //
                  @Menu(label = "Add Volume", weight = EDIT_ADD_VOLUME) })
 public class AddVolume implements Command {
-
-    @Parameter
-    private LogService log;
-
-    @Parameter
-    private OpService ops;
 
     @Parameter
     private SciView sciView;
@@ -69,13 +64,15 @@ public class AddVolume implements Command {
 }
 ```
 
-This example code shows one of the prime features of ImageJ2: the separation between data model and view (or GUI). All of the class members annotated as `@Parameter` are going to be either populated or used by SciJava's plugin infrastructure — the members referring to `Dataset`, or any kind of `Service` will be auto-populated with open files or services at hand from the current instance, so e.g. the parameter `sciView` will point to the current sciview instance. Members labelled `@Parameter` with no relation to a service will be user-editable parameters shown in the GUI dialog. How this `Command` is rendered in the default ImageJ2 Swing GUI is shown in Figure \ref{fig:SciViewAddVolume}.
+This example code shows one of the prime features of ImageJ2: the separation between data model and view (or GUI). All of the class members annotated as `@Parameter` are going to be either populated or used by SciJava's plugin infrastructure — the members referring to `Dataset`, or any kind of `Service` will be auto-populated with open files or services at hand from the current instance, so e.g. the parameter `sciView` will point to the current sciview instance. Members labelled `@Parameter` with no relation to a service will be user-editable parameters shown in the GUI dialog. How this `Command` is rendered in the default ImageJ2 Swing GUI is shown in Figure \ref{fig:SciViewAddVolume}. Such parameters can be named (`label`), given minimum and maximum boundaries, or styled as a particular widget.
 
 \begin{marginfigure}
     \label{fig:SciViewAddVolume}
     \includegraphics{./figures/sciview-addvolume.png}
     \caption{sciview's \emph{Add Volume} dialog, shown in the default ImageJ2 Swing GUI.}
 \end{marginfigure}
+
+At the moment, all automatically-generated GUIs are generated for Swing.  The generation system however is abstract enough such that Swing can be replaced by e.g. JavaFX in the future.
 
 ## Example Use Cases
 
