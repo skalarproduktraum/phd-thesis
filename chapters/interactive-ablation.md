@@ -2,9 +2,11 @@
 
 The investigation of biological phenomena not only rests on observation of such, but also on the ability to interfere with them. Especially where biomechanical and biophysical questions need to be answered, _laser ablation_ or _microsurgery_ plays an important role and conveys the possibility to destroy cells or parts of tissues, while not interfering with their neighbours, in a manner much more precise than purely mechanical manipulation could achieve.
 
-## Introduction to Microsurgery
+Nowadays, experiments in this realm are carried out with simple slice-based 2D user interfaces, while the specimen and processes investigated get spatiotemporally more and more complex. 
 
-### Biophysical Principles
+In this chapter, we introduce the use of virtual reality to microsurgery to overcome this problem. We present two prototypes that we developed to investigate user satisfaction and compatibility, and propose a microscope design that will incorporate an ablation system that can be steered in virtual reality. The prototypes presented require flexible visualisation of both geometric data and large, time-series volumetric data, as well as integration of additional hardware such as VR HMDs and controllers, we show how our visualisation framework, introduced in the chapter [scenery — Democratising VR/AR Visualisation for Systems Biology], enabled those developments. First, we start with an introduction to microsurgery and the underlying biophysical principles.
+
+## Introduction to Microsurgery
 
 For the interaction of light with biological tissue, five different regimes exist, depending on the applied power density. These are shown in table {@tbl:LaserInteractions}[@Niemz:2007laa].
 
@@ -24,9 +26,9 @@ For the interaction of light with biological tissue, five different regimes exis
 
 Table: Regimes for light interacting with biological tissue. {#tbl:LaserInteractions}
 
-In case of photochemical interaction, chemical reactions are triggered by the application of laser light, with most of the effects origination from decay products of these chemicals, and not the laser itself[@Niemz:2007laa].
+In case of _photochemical interaction_, chemical reactions are triggered by the application of laser light, with most of the effects originate from decay products of these chemicals, and not the laser itself[@Niemz:2007laa].
 
-Thermal interaction in turn is characterized by non-local tissue damage due to vaporisation, coagulation, carbonisation or melting. This is not desirable for precise manipulation on the cellular or tissue level, as clearly visible in Figure \ref{fig:thermal_interaction}.
+_Thermal interaction_ in turn is characterized by extended tissue damage due to vaporisation, coagulation, carbonisation or melting. This is not desirable for precise manipulation on the cellular or tissue level, as clearly visible in Figure \ref{fig:thermal_interaction}.
 
 In case of very high plasma energies, _photodisruption_ occurs and is marked by both shock-wave generation and/or cavitation, which also leaves surrounding tissue damaged and is therefore not desirable for microsurgery.
 
@@ -62,7 +64,7 @@ On the interaction side, [@Peng:2014bu] demonstrated the _Virtual Finger_ system
 
 [@Oswald:2010pr] demonstrated a versatile laser ablation setup on top of a confocal microscope that is able to perform cuts with rates in the $1\,\mathrm{kHz}$ range over an area of $100 \times 100\,\mathrm{µm}^2$. 
 
-In terms of volumetric cuts, the authors of [@Brugues:2012fx] used a their femtosecond infrared laser to perform plane-like cuts composed of many, micrometer-spaced lines inside the spindle apparatus of a _Xenopus_ nucleus.
+In terms of volumetric cuts, the authors of [@Brugues:2012fx] used a femtosecond infrared laser to perform plane-like cuts composed of many, micrometer-spaced lines inside the spindle apparatus of a _Xenopus_ nucleus.
 
 ## Observations
 
@@ -77,7 +79,7 @@ Current interfaces for laser ablation often do not feature a 3D view of the spec
     \caption{A window-based 2D interface for laser ablation. Laser and stage controls for movement are shown in the tabs on the upper left, power controls for the ablation unit on the lower left. The view of the specimen is shown at the center, with the current cut overlaid as a circle. Reproduced from \citep{Oswald:2010pr}.\label{fig:LaserAblation2D}}
 \end{figure*}
 
-Complex, three-dimensional cuts are hard to perform on a regular screen from an interaction perspective —  it is hard to translate from an image projected on a 2D screen to a — potentially moving — 3D volumetric specimen, and even with sophisticated techniques as in [@Peng:2014bu], it can become overwhelming for the user. Nevertheless, complex geometries need to be investigated in order to better understand the biophysics of e.g. the cellular cortex. 
+Complex, three-dimensional cuts are hard to perform on a regular screen from an interaction perspective —  it is hard to translate from an image projected on a 2D screen to a — potentially moving — 3D volumetric specimen, and even with sophisticated techniques as in [@Peng:2014bu], it can become overwhelming for the user. Nevertheless, complex geometries need to be investigated in order to better understand the biophysics of, e.g., the cellular cortex.
 
 Most of the systems surveyed use a confocal microscope as a basis. In many use cases, lightsheet microscopes could be used for their superior speed and gentle imaging as instruments for 3D ablation purposes. Their particular way of mounting samples can beneficial for quickly moving the sample in three directional axis plus one rotational axis, something that is not possible with e.g. confocal microscopes. Even if the sample requires to be mounted on a microscopy slide, variations of the original lightsheet microscope design exist that have similar geometries as confocal microscopes.
 
@@ -98,12 +100,6 @@ We abandoned browser-based prototyping after this first iteration, as loading ti
 
 ![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](./figures/LeapMotionLaserAblationPrototype.png)
 
-## Proposed Hardware Realisation
-
-In our proposed setup, we are going to use a lightsheet microscope of the SPIM variety to overcome the speed and phototoxicity issues of confocal microscopes in order to provide the user with instant feedback, and to treat the sample more gently, potentially for repeated application of cuts.
-
-![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
-
 ## Second Prototype
 
 \begin{figure}
@@ -111,7 +107,7 @@ In our proposed setup, we are going to use a lightsheet microscope of the SPIM v
     \caption{Screenshot of the second virtual reality-powered laser ablation prototype. In the prototype, we show the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. The task of the user is to draw in cuts using VR controllers. See text for a full description. Dataset courtesy of Loïc Royer (MPI-CBG/CZI).\label{fig:VRLaserAblationDemo}}
 \end{figure}
 
-For the second prototype, we choose a VR setup using an HTC Vive HMD with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
+The software for the second prototype was developed with our visualisation framework _scenery_, described in detail in the chapter [scenery — Democratising VR/AR Visualisation for Systems Biology]. We switched away from browser-based prototyping, as the amounts of volumetric data required to be handled in the demo are too large for browser-based software, and because _scenery_ is an ideal toolkit for such prototype, due to its support for large volumetric data and VR devices. We choose a VR setup using an HTC Vive HMD with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
 
 ### Description of study
 
@@ -123,20 +119,20 @@ For the second prototype, we choose a VR setup using an HTC Vive HMD with two co
     Scan this QR code to go to a video demo of the VR ablation prototype. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
 \end{marginfigure}
 
-In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in it's DNA's histones, such that the chromosomes (and also the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
+In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in the histones of its DNA, such that the chromosomes (and, to a lesser extent, the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
 
 \begin{marginfigure}
     \includegraphics{./figures/vive-controllers-vra.pdf}
     \caption{Controls for second prototype\label{fig:VRAControllers}. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.}
 \end{marginfigure}
 
-The users can control movement with the touchpad of the left-hand controller, and also move around physically, as they are being tracked by the VR system. The right-hand controller can then be used to activate a wand-like tool to designate areas for ablation. See \ref{fig:VRAControllers} for a visual representation of the controls.
+The users can control movement with the touchpad of the left-hand controller, and also move around physically, as they are being tracked by the VR system in an area of about 2m by 3m. The right-hand controller can then be used to activate a wand-like tool to designate areas for ablation. See \ref{fig:VRAControllers} for a visual representation of the controls.
 
 For simplicity, the prototype was designed such that there is no undo function, but a cut drawn, once finished, would be performed instantly. In real use, this is most probably not a universal solution, but may have benefits in certain situations, where interaction speed has a higher priority than precision.
 
-For the study, we contacted 8 expert users of laser ablation and asked for their participation in the study. All of them agreed to take part after being informed about contents and goal of the study, and eventual risks and adverse health effects arising from the use of VR glasses. The tests subjects were not compensated for taking part in the study.
+We conducted a study with 8 experts in laser ablation (average age of 31, 4 female, 4 male, all right-handed, and recruited from different labs of the Max Planck Institute of Molecular Cell Biology and Genetics). The study subjects were informed about contents and goal of the study, and eventual risks and adverse health effects arising from the use of VR glasses. The study subjects were not compensated for taking part in the study.
 
-Before the start of the study, users were asked for their familiarity with smartphone-based VR, computer-based VR, and standalone VR, as well as for their current wellbeing.
+Before the start of the study, users were asked about their familiarity with smartphone-based VR, computer-based VR, and standalone VR, as well as for their current wellbeing.
 
 After an introduction to the software and familiarisation with the dataset, the users were asked to perform the following tasks:
 
@@ -146,7 +142,7 @@ After an introduction to the software and familiarisation with the dataset, the 
 
 Performing all of these tasks took 5 to 10 minutes per user.
 
-After the study, the users were asked for the following aspects:
+After the study, the users were asked about the following aspects:
 
 *  again, for their wellbeing, 
 *  for different aspects of the prototype, the likelihood of adoption of VR-steered laser ablation, 
@@ -166,6 +162,8 @@ After filling out our questionnaire, the users were asked to participate in an a
 \end{figure*}
 
 Results for the general questions section of the study questionnaire are shown in Figure \ref{fig:VRAGeneral}. Users were universally satisfied with the quality and usability of the prototype, and were not irritated by having to perform tasks in VR they were previously only used to with 2D interfaces. They generally reported that showing the dataset in human size scales and positions — in the study, the dataset is shown with a height of $1.5\,\mathrm{m}$, hovering $1.5\,\mathrm{m}$ above (virtual) ground — was well chosen. They did not have trouble learning the interface, and were in general ready to use the interface within a few minutes. While the users felt that the way of visualising the dataset supported the performed tasks well, a number of users criticised the fidelity of the visualisation and indicated in the follow-up interview they would like e.g. adjustable transfer functions, as the opacity of the dataset sometimes interfered with the tasks. In terms of input modality — the users were given state-of-the-art handheld VR controllers — users were mostly satisfied, only a few users would have liked different input modalities more. In the follow-up interviews these users indicated that a pencil-like interface would feel more precise than the HTC Vive controllers used. 
+
+In general, the very positive user response shows that most of the design decisions in the prototype have proven correct, so it can be refined further, and then deployed to control an actual physical system.
 
 
 ### Results — Wellbeing, Workload, and Simulator Sickness
@@ -232,7 +230,13 @@ In the interviews conducted after the study, users were asked to comment further
 * __Semi-automatic Guides__: In 2D/3D or presentation applications, such as _Autodesk Maya_, _Adobe Photoshop_ or _Apple Keynote_, interactive guides exist to help the user with element alignment. Users often perform ablations relative to one or more specific landmarks, such as centrosomes in the mitotic spindle, or these dots in the Drosophila pupal wing (see Figure \ref{fig:DrosophilaPupalWing} for an example what such a landmark might be). Semi-automatic guides will be added such that they can indicate to the user which are the optimal points or contours for ablation. The semi-automatic guides will also be scriptable so they can be adjusted for a specific experiment.
 * __Toolbelt__: The already existing freeform mode will be combined into a toolbelt, e.g., attached to a VR controller, with the user being able to seamlessly switch between different tools. The toolbelt will also offer the possibility to create custom tools by scripting.
 
-These changes will be implemented in a future version of the software.
+These changes will be implemented in a future version of the software. The proposed changes can be easily integrated in our scenery-based prototype.
+
+## Proposed Hardware Realisation
+
+In our proposed setup, we are going to use a lightsheet microscope of the SPIM variety to overcome the speed and phototoxicity issues of confocal microscopes in order to provide the user with instant feedback, and to treat the sample more gently, potentially for repeated application of cuts.
+
+![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
 
 
 ## Future Work
