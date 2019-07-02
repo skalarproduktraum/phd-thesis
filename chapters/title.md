@@ -10,7 +10,7 @@
        
         \vspace*{1cm}
         
-       \large{ \textbf{ \uppercase{Natural User Interfaces Enable New Experiments in Systems Biology}}}
+       \large{ \textbf{ \uppercase{A Modular and Open-Source Framework for Virtual Reality Visualisation and Interaction in Bioimaging}}}
         
         \vspace{0.5cm}
         
