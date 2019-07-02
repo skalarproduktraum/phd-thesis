@@ -15,7 +15,8 @@ chapters/external-hardware.md
 chapters/distributed-rendering.md
 chapters/other-subsystems.md
 chapters/future-directions.md
-chapters/developing-with-scenery.md
+# Developing with scenery chapter, removed for the moment
+# chapters/developing-with-scenery.md
 # part 3 - applications
 chapters/sciview.md
 chapters/attentive-tracking.md
