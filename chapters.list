@@ -7,7 +7,8 @@ chapters/fluorescence-microscopy.md
 chapters/visual-processing.md
 chapters/xr.md
 chapters/eye-tracking.md
-chapters/interface-efficiency.md
+# Don't put interface efficiency chapter for the moment
+# chapters/interface-efficiency.md
 # part 2 - scenery
 chapters/scenery.md
 chapters/rendering.md
