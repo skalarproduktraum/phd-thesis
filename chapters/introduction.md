@@ -35,7 +35,7 @@ Specifically, we will detail the following contributions:
 
 * _scenery_, a framework for creating visualisation and interaction interfaces with both volumetric and geometric data, supporting virtual and augmented reality, and clustered rendering.
 * _SciView_, a plugin for the Fiji/ImageJ ecosystem, make scenery's flexible visualisation solutions available to the end user.
-* rendering the _Adaptive Particle Representation_[@Cheeseman:ia], which can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. The APR is a new computational particle-based representation of image and volume data that can significantly reduce both storage and processing cost. All rendering algorithms are implemented on top of _scenery_.
+* rendering the _Adaptive Particle Representation_[@Cheeseman:2018b12], which can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. The APR is a new computational particle-based representation of image and volume data that can significantly reduce both storage and processing cost. All rendering algorithms are implemented on top of _scenery_.
 * _attentive tracking_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
 * _interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_.
 
