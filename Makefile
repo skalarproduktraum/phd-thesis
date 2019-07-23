@@ -21,6 +21,7 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLAT
 		-V subparagraph -V lof -V lot --top-level-division=chapter \
 		--template=$(TEMPLATE) \
 		metadata.yaml $(CHAPTERS) -s -o $@
+	# sed -ie 's/\\cite[t,p]{/\\cite{/g' thesis.tex
 	./latexmk-fast.sh thesis.tex
 	rm -f thesis.bib
 
