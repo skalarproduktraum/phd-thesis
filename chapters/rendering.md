@@ -547,10 +547,6 @@ Front-to-back compositing has the benefit that cast rays can be terminated early
 
 An example of an alpha-composited volume rendering is shown in Figure \ref{fig:alphacompositing}.
 
-### Beyond alpha compositing — ambient occlusion and shadowing
-
-### Beyond alpha compositing — path tracing and Metropolis Light Transport
-
 ### Out-of-core rendering
 
 Out-of-core rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
