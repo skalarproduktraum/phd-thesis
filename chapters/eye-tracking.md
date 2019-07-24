@@ -107,5 +107,22 @@ With e.g. Facebook also evaluating eye tracking for foveated rendering for their
 
 [^oculuseyetrackingnote]: See e.g. [uploadvr.com/oculus-is-working-on-eye-tracking-technology-for-next-generation-of-vr/](https://uploadvr.com/oculus-is-working-on-eye-tracking-technology-for-next-generation-of-vr/) or [uploadvr.com/oculus-patented-new-eye-tracking-device-days-acquiring-eye-tribe/](https://uploadvr.com/oculus-patented-new-eye-tracking-device-days-acquiring-eye-tribe/).
 
-## Review of Interaction Techniques
+## Classification of Gaze-based User Interfaces
+
+\begin{figure*}
+    \includegraphics{eye-tracking-classification.pdf}
+    \caption{Classification of gaze-based interaction. Left: According to \citep{Duchowski:2017ii}, Right: according to \citep{stellmach2013}. Figure reproduced from \citep{stellmach2013}.\label{fig:EyeTrackingClassification}}
+\end{figure*}
+
+Several classifications of gaze-based user interfaces have been proposed:
+
+* [@Duchowski:2017ii] proposes a distinction between _interactive_ and _diagnostic_ eye tracking systems, and further discerns the interactive systems into _selective_ and _gaze-contingent_ systems. Gaze-contingent systems, where the user's gaze is utilised to determine e.g. the current area of interest, are then divided into screen-based and model-based systems. See Figure \ref{fig:EyeTrackingClassification}L for a depiction.
+* [@stellmach2013] extends on Duchowski's classification, keeping the distinction between interactive and diagnostic eye tracking, but discerning the interactive part into _gaze-directed pointing_, _eye-based clicking_, and _eye gestures_. Pointing is further distinguished into by precision (precise, coarse) or abstraction (point, target, or area-based). Gaze-contingent interaction is included in the gaze-directed pointing branch. See Figure \ref{fig:EyeTrackingClassification}R for a depiction.
+* [@hirzle2019] introduces another classification scheme, specialised for the use with head-mounted AR or VR displays. Their scheme aims at both at the classification of existing applications, and at an ideation tools to create new interactions. Hirzle's approach classifies based on the use of _device type_ (VR or AR), _display type_ (monoscopic or stereoscopic), _world knowledge_ (based on [@Milgram:1995cl], full or none). World knowledge deserves more explanation: It describes how much the computer knows about the surrounding world of the user — none means no knowledge, and full means complete knowledge of geometry and also semantics. In the case of VR, the computer can only have full information about the user's surroundings, while in AR, only an overlay image could be presented to the user, or the device could have almost complete knowledge of the surroundings by scanning it, such as state-of-the-art devices such as the HoloLens or the MagicLeap do.
+
+
+\begin{figure}
+    \includegraphics{hirzle-classification.pdf}
+    \caption{Gaze-based interaction classification according to \citep{hirzle2019}. In this figure, the interaction-centric view on the classification is shown, with specific interaction tasks classified into the respective fields. Figure reproduced from \citep{hirzle2019}.}
+\end{figure}
 
