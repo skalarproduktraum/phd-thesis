@@ -19,10 +19,11 @@ chapters/future-directions.md
 # Developing with scenery chapter, removed for the moment
 # chapters/developing-with-scenery.md
 # part 3 - applications
-chapters/sciview.md
 chapters/attentive-tracking.md
-chapters/apr-rendering.md
 chapters/interactive-ablation.md
+chapters/apr-rendering.md
+chapters/sciview.md
+# back matter
 chapters/outlook.md
 chapters/appendix-start.md
 chapters/appendix-questionnaire-vrablation.md
