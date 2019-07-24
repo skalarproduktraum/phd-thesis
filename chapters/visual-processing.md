@@ -28,7 +28,7 @@ The processing of visual stimuli happens in multiple stages: In Figure \ref{fig:
 
 Light enters the anterior chamber of the eye, travelling through the iris, then traversing the the vitreous humour (a gelatineous substance filling the interior of the eye) to the retina. 
 
-Evolution has optimised the refractive index of the human cornea to yield an optimal air/cornea boundary, rendering the final image sharp on the retina. The lens, held in place by the ciliary body, and the suspensory ligaments, focuses the incident light onto the retina, and especially on the most sensitive part of the retina, the fovea. The fovea is about $1.5\,\mathrm{mm}$ in diameter and contains the most photoreceptor-dense region — $300000/\mathrm{mm}^2$ compared to $\approx 100000/\mathrm{mm}^2$ in the periphery [@Duchowski:2017ii; Snowden:2012wu]. 
+Evolution has optimised the refractive index of the human cornea to yield an optimal air/cornea boundary, rendering the final image sharp on the retina. The lens, held in place by the ciliary body, and the suspensory ligaments, focuses the incident light onto the retina, and especially on the most sensitive part of the retina, the fovea. The fovea is about $1.5\,\mathrm{mm}$ in diameter and contains the most photoreceptor-dense region — $300000/\mathrm{mm}^2$ compared to $\approx 100000/\mathrm{mm}^2$ in the periphery [@Duchowski:2017ii; @Snowden:2012wu]. 
 
 Foveal, or central vision only makes up about 5º of the field of vision.  In the most central part of the fovea, the foveola, about 133 cones per degree of visual angle lead to a resolvable frequency of 66 cycles/º, while at the fovea, the frequency already drop by about half, to 35 cycles/º [@Duchowski:2017ii]. In Figure \ref{fig:peripheral_vision}, we show a scheme of the different ranges of vision in humans, with the region below 30º being the _field of useful vision_. The movements of the eye, described in the next section, [Eye movements], are able to make up for the small field of useful vision by constantly scanning a scene. 
 
@@ -69,7 +69,7 @@ Following the classifications from [@Snowden:2012wu] and [@Duchowski:2017ii], ey
     \caption{Example time series of saccadic eye movements: The movement starts after an initial processing delay of about $150\,\mathrm{ms}$, followed by fast movement for about $50-100\,\mathrm{ms}$. Image reproduced from \citep{Snowden:2012wu}.}
 \end{marginfigure}
 
-In the context of 2-dimensional localisation of gaze directions, fixations, saccades, and smooth pursuits are the most important eye movements. Vergence movements would also be interesting to detect and use, but considering that contemporary head-mounted VR displays are using regular, flat screen, with no possibility of actual scene depth, this is not yet a priority. Future displays are going to provide focus cues as well and will most probably change that [@Huang:2015ce; @Jang:2017dr; @Sun:2017ia].
+In the context of 2-dimensional localisation of gaze directions, fixations, saccades, and smooth pursuits are the most important eye movements. Vergence movements in turn can be used for 3-dimensional gaze estimation, e.g. by detecting independent gaze directions for each eye, and finding the intersection [@Mlot2016]. Future developments in display technology, where focus points can be modulated [@Huang:2015ce; @Jang:2017dr; @Sun:2017ia] will probably make that even more interesting.
 
 All of the described movements are optimisations to provide the best image possible, using "the world's worst camera" [@Duchowski:2017ii]. We continue our discussion with the retina, the translator of photons to neural impulses.
 
@@ -85,17 +85,24 @@ At the retina, the processing of incident photons starts in the true sense of th
 
 The retina of mammals has a somewhat odd architecture, seen in Figure \ref{fig:retina_architecture}: The light is entering from the bottom of the image, so the light has to travel through a dense forest of neurons before reaching the photoactive rods and cones. This kind of architecture is called _inverted retina architecture_. What the true benefits of an inverted architecture are remains a matter of debate.  
 
-There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, rather than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. The neural tissue of the eyes has also been shown to act as waveguide for incoming photons, probably a mechanism to counter photon scattering through it[@Franze:20077e7]. One tradeoff is the existence of the blind spot where the optic nerve exits the eye, mended in most cases by the presence of two eyes, the [Eye movements] described before, and the upstream neural processing. 
+There are good reasons for the inverted architecture, such as easier supply of blood to the back side of the retina, rather than the front, which is very much needed by the (in terms of chemical energy) power-hungry photoreceptor cells. The neural tissue of the eyes has also been shown to act as waveguide for incoming photons, probably a mechanism to counter photon scattering through it [@Franze:20077e7]. One tradeoff is the existence of the blind spot where the optic nerve exits the eye, mended in most cases by the presence of two eyes, the [Eye movements] described before, and the upstream neural processing. 
 
 After traversing this neuronal maze, photons reach the true actors of photon reception, the _rods_ and _cones_.
 
 ### Rods and cones
 
+\begin{marginfigure}
+    \includegraphics{rods-and-cones.pdf}
+    \caption{The distribution of rods and cones in dependence of the visual angle. While the distribution of cones sharply peaks around the fovea, the distribution of rods falls off way slower in the periphery, and rods do not exist entirely at the fovea. Adapted from \citep{Duchowski:2017ii}.\label{fig:RodsAndCones}}
+\end{marginfigure}
+
 These are the workhorses of the retina, responding in different lighting intensity conditions: While rods are highly sensitive in dim conditions,  the _scotopic_ regime, even responding to single-photon stimuli (_rhodopsin_ is responsible for the actual reception in rods, and absorbs green light most strongly), cones respond more sensitively in high-intensity conditions, the _mesopic_ regime. While cones exist in long-wavelength, middle-wavelength, and short-wavelength flavours, often called red, green, and blue, rods only exist in a single flavour. 
 
 Coming back to the distribution of photoreceptors among the retina, both types also follow different patterns: While most — $150000/\mathrm{mm}^2$ — of the rods exist around $12^\circ-15^\circ$ of visual angle, the density of cones peaks at the fovea at $0^\circ$ of visual angle, also with about $150000/mm^2$. The cone density falls off sharply outside the fovea, reaching a density as low as $\approx 15000/mm^2$ at $15^\circ$. 
 
-There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012wu].
+There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012wu]. See Figure \ref{fig:RodsAndCones} for a graph of the distribution.
+
+The perceptual consequences of this distribution are interesting: While the sensitivity to color changes in the periphery sinks quite drastically due to the reduced number of cones, contrast sensitivity due to rods is still quite high.
 
 ### Retinal ganglion cells
 
@@ -134,9 +141,9 @@ The M and P cells have complimentary functional characteristics, with certain si
 
 The function of the K cells remains a bit nebulous: They might play a role in motion detection and where-and-when processing [@Eiber:20182bf] and regulate other visual pathways [@Martin:2019cd1], and most likely are heterogeneous and form subpopulations [@Casagrande:1994tp].
 
-The most striking fact about the LGN is that it does not receive most of its input from the retinal ganglion cells, but actually from the visual cortex itself. Through this feedback loop, the LGN is able to play a vital role in the direction of visual attention, focussing and vergence of the eyes, and stereoscopic mapping of the visual field.
+Another striking fact about the LGN is that it does not receive most of its input from the retinal ganglion cells, but actually from the visual cortex itself. Through this feedback loop, the LGN is able to play a vital role in the direction of visual attention, focussing, and vergence of the eyes, as well as in stereoscopic mapping of the visual field.
 
-Just as the retinal ganglion cells provide a spatial coding of their inputs, the LGN provides a temporal coding, resulting in an even more efficient transmission of information.
+Just as the retinal ganglion cells provide a spatial coding of their inputs by forming receptive fields, the LGN provides a temporal coding, resulting in an even more efficient transmission of information.
 
 In terms of functional relevance to eye movements, the LGN plays an important role in the execution of saccades [@Krebs:20105e6], as well as indirectly controlling the ciliary muscles for vergence and focus described in [Optical Path].
 
@@ -167,21 +174,28 @@ The hypercolumns can contain three different types of cells:
 
 ## Consequences for the Design of Eye-based Interfaces
 
-from Duchowski:
+From the architecture of the visual system, we can draw a series of conclusions on how eye-based user interfaces need to be designed (in extension of [@Duchowski:2017ii]):
 
-* chrominance can be coded with less resolution outside the fovea
-* luminance should be coded with higher resolution in the periphery, because there are still a high number of cones in the periphery
-* contrast sensitivity should be high in the periphery region, as the magnocellular ganglion cells respond most strongly to that area
-* temporal resolution must be available in the periphery, careful with sudden-onset bright objects, they might steal attention
-* spatial resolution should be high in the foveal area, and degrade smoothly in the surroundings, high-frequency detail in the periphery should be made available just-in-time to anticipate fixation changes
+* _Cones fall off sharply outside the foveal region, high number of rods still exists in the periphery_ $\Rightarrow$ Color information (chrominance) can fall off as sharply outside the foveal region, while brightness (luminance) should not degrade as fast.
+* _Magnocellular ganglion cells respond most strongly to stimuli in the periphery_ $\Rightarrow$ contrast changes should only happen on purpose there, as the visual system can react strongly to objects appearing suddenly in the periphery, responding e.g. with a saccade to the new highly salient object. Interfaces where gaze is used as selection modality, or where gaze is used more passively, e.g. to indicate current attention (gaze-contingent interfaces, see [Review of Interaction Techniques]) or which actively manage the users attention (attentive user interfaces) need to take special care about this.
+* _Saccades lead to temporary blindness (saccadic suppression)_ $\Rightarrow$ eye tracking information correlated with e.g. saliency during a saccade might not be useful.
+* _Smooth movements are not possible without smooth pursuit movements_ $\Rightarrow$ the limited possibility of voluntary, smooth movement needs to be taken into consideration e.g. when designing eye gesture-based interfaces.
+* _Eye movements have characteristic velocities and durations_ $\Rightarrow$ can be taken into consideration for systemic modelling of  eye movements. As consequence, gaze-contingent or attentive user interfaces must not react too fast or require too swift user interaction.
+* _Eye tracking is not instant_ $\Rightarrow$ the processing delay of eye tracking hardware and software also needs to be taken into account.
 
-additionally:
+## Challenges and Opportunities
 
-* the delay, velocity, and duration of eye movements has to be taken into account, such as the processing delay that occurs with saccades, and the following temporary phase of blindness due to saccadic suppression
+### Efficient representation of volumetric data
 
-## Challenges
+Adaptive sampling and by that, data reduction is done very efficiently already by the retinal ganglion cells. In [Retinal ganglion cells], we discussed that by the formation of receptive fields, these cells already reduce the data that has to be transmitted through the optic nerve from 4 GiB/s to about 30 MiB/s. Is it possible to use a similar approach for data reduction in the processing of volumetric data? In the chapter [Rendering the Adaptive Particle Representation] we discuss a data reduction technique, the Adaptive Particle Representation [@Cheeseman:2018b12] inspired exactly by that.
 
-* _Can we harness the knowledge gained about the human visual system to more efficiently control and steer data analysis or scientific instruments?_
-* _Can we apply data reduction techniques implemented by e.g. the receptive fields of the human retina for efficient data reduction for image storage and/or processing?_
+### Object tracking with support of the visual system
+
+A task often encountered in image-based developmental and systems biology is the tracking of objects in volumetric data. One example is to identify cells in consecutive volumetric images that correspond to each other. Another example is the tracing of neurons from large still images, to ultimate generate a connectome — a representation of which neuron connects to which — in an effort to identify functional connections and correlations (see e.g. [@Swanson:2016ht] for a review). In the chapter [Attentive Tracking — or — Tracking for Tracking] for a prototype of how to use smooth pursuit eye movements for cell tracking. Solving such tracking problems via eye tracking further requires robust eye tracking algorithms, a topic we also briefly touch in that chapter.
+
+
+### Optimal Viewpoint Determination by Modelling Visual Attention
+
+Models for modelling visual attention based on image content have already been proposed [@Itti:2001cl; @Gao:2014a3e]. In the context of image analysis and visualisation of large datasets it is becoming more important to find optimal viewpoints, e.g. for exploration, education or presentation purposes. A computational model of visual attention can help here to select the visually most interesting or salient images and viewer positions. One could imagine feeding the model with a random selection of viewpoints on the dataset, and evolving them in a manner they converge to the most salient points. Another option would be a combination of eye tracking and saliency modelling: The area the user is looking at could be analysed for the most salient neighbourhood, and the dataset translated or rotated accordingly. Both are however beyond the scope of this work, but might be pursued in the future.
 
 
