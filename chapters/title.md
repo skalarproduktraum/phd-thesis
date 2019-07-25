@@ -6,7 +6,7 @@
     
        
         
-       Dissertation No.
+    
        
         \vspace*{1cm}
         
