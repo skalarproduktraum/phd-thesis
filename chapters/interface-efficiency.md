@@ -64,7 +64,7 @@ While these six heuristics may seem arbitrary at first glance, they have a deepe
 _The discussion in this section follows chapter 4.2.3 of [@Raskin:2000thi]_
 
 \begin{marginfigure}
-    \includegraphics{./figures/laser-power-interfaces.pdf}
+    \includegraphics{laser-power-interfaces.pdf}
     \caption{Two examples of how interfaces for adjusting laser power on a microscope could be designed. See text for theoretical comparison. \label{fig:LaserPowerInterfaces}}
 \end{marginfigure}
 

@@ -10,7 +10,7 @@ After this chapter, we will introduce scenery's subsystems in more detail.
 
 ## ClearVolume
 
-![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset. From [@Royer:2015tg].\label{fig:cvfiji}](./figures/ClearVolumeFiji.png)
+![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset. From [@Royer:2015tg].\label{fig:cvfiji}](ClearVolumeFiji.png)
 
 The work presented in this section has been developed in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Eugene Myers, MPI-CBG, and has been published in 
 Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
@@ -26,10 +26,10 @@ The discerning features of ClearVolume are:
 * _Image quality measurement_ — again utilising the source/sink architecture for data, we added a flexible evaluator of image sharpness to the system, where in the default settings the Tenengrad image sharpness measure is used (see Figure \ref{fig:ClearVolume}c), and
 * _Fiji & KNIME integration_ — as ClearVolume supports visualising volumetric data from a microscope or any other source, we have developed plugins for Fiji[@Schindelin:2012ir] and KNIME, in addition to the integration with MicroManager[@Edelstein:2010gf] and National Instruments LabVIEW (see Figure \ref{fig:cvfiji}).
 
-![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments. With low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are filled in most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} From [@Royer:2015tg]](./figures/ClearVolumeMultipassVsNaive.pdf)
+![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments. With low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are filled in most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} From [@Royer:2015tg]](ClearVolumeMultipassVsNaive.pdf)
 
 
-![__a__: Data flow in a ClearVolume-augmented microscopy application, __b__: Local or remote visualisation using ClearVolume, __c__: Evaluation of data fitness/sharpness and drift correction applied, __d__: Multi-colour compositing.\label{fig:ClearVolume} From [@Royer:2015tg].](./figures/ClearVolumeMainFigure.pdf)
+![__a__: Data flow in a ClearVolume-augmented microscopy application, __b__: Local or remote visualisation using ClearVolume, __c__: Evaluation of data fitness/sharpness and drift correction applied, __d__: Multi-colour compositing.\label{fig:ClearVolume} From [@Royer:2015tg].](ClearVolumeMainFigure.pdf)
 
 In the time since its publication, ClearVolume has proven to be a useful tool for a multitude of use cases, such as microscope development and usage [@Royer:2016fh; @Kumar:2018rvi], method development for live imaging [@Boothe:20178ad], and the visualisation of correlative light microscopy/electron microscopy data [@Russell:2016711].
 
@@ -162,7 +162,7 @@ Unfortunately, JOGL is not actively maintained anymore, and we aim to fully swit
 ## Component overview
 
 \begin{figure}
-    \includegraphics{./figures/scenery-architecture.pdf}
+    \includegraphics{scenery-architecture.pdf}
     \caption{A high-level overview of scenery's components.\label{fig:SceneryArchitecture}}
 \end{figure}
 

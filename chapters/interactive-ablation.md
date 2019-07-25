@@ -11,7 +11,7 @@ In this chapter, we introduce the use of virtual reality to microsurgery to over
 For the interaction of light with biological tissue, five different regimes exist, depending on the applied power density. These are shown in table {@tbl:LaserInteractions}[@Niemz:2007laa].
 
 \begin{marginfigure}
-    \includegraphics{./figures/thermal_interaction.png}
+    \includegraphics{thermal_interaction.png}
     \caption{Coagulated tissue samples, a: Uterine tissue of a Wistar Rat, using a 10W continious wave laser, b: Human cornea coagulated with 120 pulses of $5\,\mathrm{mJ}$ from an Er:YAG laser. Reproduced from  \citep{Niemz:2007laa}.}
     \label{fig:thermal_interaction}
 \end{marginfigure}
@@ -36,7 +36,7 @@ Tuning down the energy density by one to two orders of magnitude, we come to the
 
 
 \begin{marginfigure}
-    \includegraphics{./figures/plasma_ablation.png}
+    \includegraphics{plasma_ablation.png}
     \caption{a: Cut in a human cornea sample achieved with an picosecond Nd:YAG laser, b: $1x1mm^2$ cut in a human tooth sample with 16000 $1\,\mathrm{mJ}$ pulses, with cracking only due to EM sample preparation. Reproduced from  \citep{Niemz:2007laa}.}
     \label{fig:plasma_ablation}
 \end{marginfigure}
@@ -75,7 +75,7 @@ From our survey of related works and use cases in the previous section, we obser
 Current interfaces for laser ablation often do not feature a 3D view of the specimen, but usually utilise a 2D window with different controls for moving around, as shown in Figure \ref{fig:LaserAblation2D}. Such systems provide support for planar cuts, in the form of lines, circles, and rectangles.
 
 \begin{figure*}
-    \includegraphics{./figures/LaserAblation2DInterface.png}
+    \includegraphics{LaserAblation2DInterface.png}
     \caption{A window-based 2D interface for laser ablation. Laser and stage controls for movement are shown in the tabs on the upper left, power controls for the ablation unit on the lower left. The view of the specimen is shown at the center, with the current cut overlaid as a circle. Reproduced from \citep{Oswald:2010pr}.\label{fig:LaserAblation2D}}
 \end{figure*}
 
@@ -98,12 +98,12 @@ We identified two major issues with this approach:
 
 We abandoned browser-based prototyping after this first iteration, as loading times were already too long when using the geometry model of 26MiB, and would be even longer if any volumetric data would be used — such data can easily reach many GiB. We want to note here that this initial experience also contributed to the decision to start the development of scenery, such that we can efficiently prototype software that enables interaction with geometry data, and large volumetric data.
 
-![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](./figures/LeapMotionLaserAblationPrototype.png)
+![Screenshot of the _LeapMotion_-based interaction prototype, where the user has delineated a tubular structure along the _C. elegans_' gonad system. _C. elegans_ model courtesy of [openworm.org](https://www.openworm.org).\label{fig:LMAblationPrototype}](LeapMotionLaserAblationPrototype.png)
 
 ## Second Prototype
 
 \begin{figure}
-    \includegraphics{./figures/vr_ablation_demo.png}
+    \includegraphics{vr_ablation_demo.png}
     \caption{Screenshot of the second virtual reality-powered laser ablation prototype. In the prototype, we show the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. The task of the user is to draw in cuts using VR controllers. See text for a full description. Dataset courtesy of Loïc Royer (MPI-CBG/CZI).\label{fig:VRLaserAblationDemo}}
 \end{figure}
 
@@ -122,7 +122,7 @@ The software for the second prototype was developed with our visualisation frame
 In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in the histones of its DNA, such that the chromosomes (and, to a lesser extent, the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
 
 \begin{marginfigure}
-    \includegraphics{./figures/vive-controllers-vra.pdf}
+    \includegraphics{vive-controllers-vra.pdf}
     \caption{Controls for second prototype\label{fig:VRAControllers}. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.}
 \end{marginfigure}
 
@@ -157,7 +157,7 @@ After filling out our questionnaire, the users were asked to participate in an a
 ### Results — General Questions
 
 \begin{figure*}
-    \includegraphics{./figures/VRAGeneral.pdf}
+    \includegraphics{VRAGeneral.pdf}
     \caption{Results of the general questions section of the user study.\label{fig:VRAGeneral}}
 \end{figure*}
 
@@ -169,7 +169,7 @@ In general, the very positive user response shows that most of the design decisi
 ### Results — Wellbeing, Workload, and Simulator Sickness
 
 \begin{figure*}
-    \includegraphics{./figures/VRAHistory.pdf}
+    \includegraphics{VRAHistory.pdf}
     \caption{History of previous VR usage and satisfaction in our study group.\label{fig:VRAHistory}}
 \end{figure*}
 
@@ -182,7 +182,7 @@ The users in the test had mostly a low degree of previous exposure to VR systems
 We found a correlation between a history of VR usage and low SSQ scores (see Figure \ref{fig:VRACorrelation}), indicating there might be a training effect. Furthermore, a history of VR usage correlated well with low TLX scores, and a general appreciation of the visualisation, size, and positioning of the dataset in the study. 
 
 \begin{figure*}
-    \includegraphics{./figures/VRATLX.pdf}
+    \includegraphics{VRATLX.pdf}
     \caption{Task Load Index (TLX) results in the user study.\label{fig:VRATLX}}
 \end{figure*}
 
@@ -193,7 +193,7 @@ Both wellbeing and workload results indicate that using the proposed VR interfac
 ### Results — Acceptance and Potential Adoption
 
 \begin{figure*}
-    \includegraphics{./figures/VRAAdoption.pdf}
+    \includegraphics{VRAAdoption.pdf}
     \caption{Results of the adoption questions section of the study.\label{fig:VRAAdoption}}
 \end{figure*}
 
@@ -204,7 +204,7 @@ Users seemed unsure whether the technique presents an improvement in terms of sp
 ### Results — Further correlations
 
 \begin{figure*}
-    \includegraphics[height=16cm]{./figures/VRACorrelationShort.pdf}
+    \includegraphics[height=16cm]{VRACorrelationShort.pdf}
     \caption{Correlations between questions in the questionnaire, only including SSQ summary score. For full correlation plot, please see Appendix \ref{fig:VRACorrelationFull}.\label{fig:VRACorrelation}}
 \end{figure*}
 
@@ -217,7 +217,7 @@ In the correlation matrix in Figure \ref{fig:VRACorrelation} a few more interest
 ### Requested Changes and Additions
 
 \begin{marginfigure}
-    \includegraphics{./figures/DrosophilaPupalWingLandmarks.png}
+    \includegraphics{DrosophilaPupalWingLandmarks.png}
     \caption{Sensory organs in the \emph{Drosophila melanogaster} pupal wing circled in green. These can be used as landmarks for laser ablation. Image courtesy of Romina Piscitello, Eaton Lab, MPI-CBG.\label{fig:DrosophilaPupalWing}}
 \end{marginfigure}
 
@@ -236,7 +236,7 @@ These changes will be implemented in a future version of the software. The propo
 
 In our proposed setup, we are going to use a lightsheet microscope of the SPIM variety to overcome the speed and phototoxicity issues of confocal microscopes in order to provide the user with instant feedback, and to treat the sample more gently, potentially for repeated application of cuts.
 
-![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](./figures/ablation-module.png)
+![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](ablation-module.png)
 
 
 ## Future Work

@@ -24,7 +24,7 @@ Furthermore, Nielsen introduces[@Nielsen:kq] several case studies, coming to the
 
 \begin{marginfigure}
     \label{fig:NielsenUsability}
-    \includegraphics{./figures/nielsen-iterative-improvements.png}
+    \includegraphics{nielsen-iterative-improvements.png}
     \caption{Usability as a function of iterations. From \citep{Nielsen:kq}.}  
 \end{marginfigure}
 

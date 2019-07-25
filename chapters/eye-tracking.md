@@ -9,7 +9,7 @@ In this section, we're introducing common eye tracking technologies, and in the 
 ### Search Coil Contact Lenses
 
 \begin{marginfigure}
-    \includegraphics{./figures/ScleralEyeTracking.png}
+    \includegraphics{ScleralEyeTracking.png}
     \caption{Scleral search coil contact lens eye tracking schematic, reproduced from \citep{Robinson:1963wf}.\label{fig:ScleralEyeTracking}}
 \end{marginfigure}
 
@@ -18,7 +18,7 @@ Search Coil Contact Lenses constitute the earliest[@Robinson:1963wf] and probabl
 ### Electrooculography
 
 \begin{marginfigure}
-    \includegraphics{./figures/Electrooculography.png}
+    \includegraphics{Electrooculography.png}
     \caption{Electrooculography in use, still image reproduced from \href{https://www.youtube.com/watch?v=-QXGiZBDkUw}{Biopac Student Lab, youtu.be/QXGiZBDkUw}\label{fig:eog}}
 \end{marginfigure}
 
@@ -27,16 +27,16 @@ In electrooculography, the user's eyes are tracked by measuring potential change
 ### Videooculography and Purkinje Imaging
 
 \begin{marginfigure}
-    \includegraphics{./figures/PupilEyeTracker.png}
+    \includegraphics{PupilEyeTracker.png}
     \caption{A videooculography setup, the Pupil Pro headset. Reproduced from \citep{Kassner:2014kh}.\label{fig:VideoOculography}}
 \end{marginfigure}
 
 In videooculography, the user's eyes are imaged by one camera per eye, focused on the pupil. Contemporary devices use infrared light to either track the pupil directly, or to image reflections created by the anterior and posterior surfaces of the cornea — the Purkinje images, see Figure \ref{fig:PurkinjeImages} — which can then be used to calculate a vector between the pupil's center and the reflection to determine the point the user is looking at [@Gneo:2012kn]. This technique requires calibration in the beginning, and might also drift in longer tracking sessions. Yet, it is very unintrusive, and only requires a camera mounted to either an existing or new set of glasses (see Figure \ref{fig:VideoOculography}), or a set of two cameras mounted inside a HMD (see Figure \ref{fig:HMDEyeTracking}). VOG yields a high spatial accuracy (~1º), while temporal accuracy suffers a bit due to camera and processing latencies (~3-5ms).
 
-![Videooculography using a HMD-based eye tracker from Pupil Labs, mounted on an HTC Vive. Image reproduced from [pupil-labs.com/vr-ar](https://pupil-labs.com/vr-ar/).\label{fig:HMDEyeTracking}](./figures/PupilEyeTrackerHMD.png)
+![Videooculography using a HMD-based eye tracker from Pupil Labs, mounted on an HTC Vive. Image reproduced from [pupil-labs.com/vr-ar](https://pupil-labs.com/vr-ar/).\label{fig:HMDEyeTracking}](PupilEyeTrackerHMD.png)
 
 \begin{marginfigure}
-    \includegraphics{./figures/PurkinjeImages.png}
+    \includegraphics{PurkinjeImages.png}
     \caption{The physical origin of Purkinje images P1 to P4: \emph{P1}, reflection on anterior corneal surface; \emph{P2}, reflection on the posterior corneal surface; \emph{P3}, reflection on the anterior surface of the lens; \emph{P4}, reflection on posterior surface of the lens. Image (cc) by Z22, \href{https://commons.wikimedia.org/wiki/File:Diagram_of_four_Purkinje_images.svg}{Wikimedia Commons}.\label{fig:PurkinjeImages}}
 \end{marginfigure}
 

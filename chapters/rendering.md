@@ -176,7 +176,7 @@ The definition must contain one renderpass that outputs to Viewport, otherwise n
 From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple. The graph is shown in Figure \ref{fig:SimpleRenderpipelineGraph}.
 
 \begin{figure*}
-    \includegraphics{./figures/RenderpipelineExampleSimple.pdf}
+    \includegraphics{RenderpipelineExampleSimple.pdf}
     \caption{The graph representation of the ForwardShading rendering pipeline. Scene passes are shown with red background, postprocessing passes with orange background. Light blue parallelograms are framebuffers. Solid black arrows signify transition from one pass to the next, grey arrows show data dependencies, with squares standing for writes, and circles for reads. Dotted arrows show scenegraph accesses.\label{fig:SimpleRenderpipelineGraph}}
 \end{figure*}
 
@@ -377,7 +377,7 @@ This rendering pipeline configuration also showcases shader properties (see e.g.
 This more complex rendering pipeline can also be represented as a graph, as shown in Figure \ref{fig:DeferredShadingRenderpipelineGraph}. 
 
 \begin{figure*}
-    \includegraphics{./figures/RenderpipelineExampleDeferredShading.pdf}
+    \includegraphics{RenderpipelineExampleDeferredShading.pdf}
     \caption{The graph representation of the DeferredShading rendering pipeline. Scene passes are shown with red background, postprocessing passes with orange background. Light blue parallelograms are framebuffers. Solid black arrows signify transition from one pass to the next, grey arrows show data dependencies, with squares standing for writes, and circles for reads. Dotted arrows show scenegraph accesses.\label{fig:DeferredShadingRenderpipelineGraph}}
 \end{figure*}
 
@@ -471,7 +471,7 @@ where the location 3 defines the instanced model matrix. For Vulkan, scenery wil
 
 ## Rendering of Volumetric Data
 
-![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](./figures/raycasting.png)
+![Volume raycasting schematic, 1. casting a ray through the volume, 2. defining sampling points, 3. calculation of lighting at the sampling points, 4. accumulation of the lit samples into a single pixel and alpha value](raycasting.png)
 
 Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectively correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following compositing options:
 
@@ -482,7 +482,7 @@ Volume rendering in scenery is done via volume raycasting, where a ray for each 
 The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. 
 
 \begin{marginfigure}
-    \includegraphics{./figures/sciview-alphacompositing.png}
+    \includegraphics{sciview-alphacompositing.png}
     \caption{A volume rendered in scenery using local maximum intensity projection, showing the Game of Life in 3D.\label{fig:lmipvolume}}
 \end{marginfigure}
 
@@ -539,7 +539,7 @@ T_{s}^{s'+1} & = \left( 1 - \alpha_{s'+1} \right) T_s^{s'}.
 \end{align}
 
 \begin{marginfigure}
-    \includegraphics{./figures/sciview-alphacompositing.png}
+    \includegraphics{sciview-alphacompositing.png}
     \caption{A volume rendered in scenery using alpha compositing, showing the Game of Life in 3D with volumetric ambient occlusion.\label{fig:alphacompositing}}
 \end{marginfigure}
 
@@ -555,13 +555,13 @@ BigDataViewer[@Pietzsch:2015hl] has introduced a HDF5[@hdf52017]-based pyramid i
 
 \begin{marginfigure}
     \label{fig:bdvDrosophila}
-    \includegraphics{./figures/bdv.png}
+    \includegraphics{bdv.png}
     \caption{A \emph{Drosophila} dataset rendered by-slice in BigDataViewer. Image courtesy of Tobias Pietzsch.}
 \end{marginfigure}
 
 scenery also includes support for loading these data sets, and for that makes use of a BigDataViewer-provided library. An example of multiple volumes rendered using this technique is shown in Figure \ref{fig:sceneryBDV}.
 
-![scenery rendering an out-of-core, multiview _Drosophila_ dataset consisting of three different views (color-coded) using the BigDataViewer integration. volume rendering using maximum intensity projection. On the left-hand side, the transfer function has been adjusted to make boundaries between the different subvolumes visible more clearly. \label{fig:sceneryBDV}](./figures/ooc-drosophila.png)
+![scenery rendering an out-of-core, multiview _Drosophila_ dataset consisting of three different views (color-coded) using the BigDataViewer integration. volume rendering using maximum intensity projection. On the left-hand side, the transfer function has been adjusted to make boundaries between the different subvolumes visible more clearly. \label{fig:sceneryBDV}](ooc-drosophila.png)
 
 Volumetric data for out-of-core rendering is stored in tiles of up to $2^31$ voxels. Tiles are addressed with 64bit, leading to a theoretical maximum data size of $2^94$ voxels. Tiles are stored in a GPU cache. The cache is organised into small, uniformly-sized blocks storing a particular tile of the volume in the resolution pyramid. All tiles are padded by one voxel to avoid bleeding artifacts. To render a particular view of a volume, we determine the base resolution, such that the screen resolution is matched for the voxel closest to the observer. We then prepare a 3D lookup texture (LUT) where each voxel corresponds to a volume block at base resolution. Each voxel in the LUT stores the coordinates of a tile in the in cache, as well as the resolution level relative to the base level, encoded as RGBA quadruple. For each visible volume tile, we determine the ideal resolution by the distance to the observer. 
 
@@ -573,7 +573,7 @@ This approach enables to render multiple volumes simultaneously, by adding addit
 
 To produce the correct shader for multiple volumes, which can also change in number, we make use of a custom `ShaderFactory` that can ingest the shader code generated by BigVolumeViewer, and transform it to scenery's conventions. ShaderFactories are created for a particular number of volumes (e.g. 3 out-of-core volumes, mixed with 2 regular ones), and cached up to a count of 8 factories. A sketch of the workflow is shown in Figure \ref{fig:sceneryBVV}.
 
-![Workflow for translating between BigVolumeViewer and scenry. \label{fig:sceneryBVV}](./figures/outofcore-workflow.pdf)
+![Workflow for translating between BigVolumeViewer and scenry. \label{fig:sceneryBVV}](outofcore-workflow.pdf)
 
 ## Rendering with OpenGL
 
@@ -670,12 +670,12 @@ By using the _hsdis_ utility of the Java Development Kit, it is possible to glim
 In the loop case, we arrive at very inefficient assembly containing a lot of jumps, but also AVX512 SIMD (single instruction, multiple data) instructions (see Figure \ref{fig:MMloop}) — although they are only scalar operations, while ideally they'd be vectorised. In contrast, the FMA-based and unrolled loop version (see Figures \ref{fig:MMfma} and \ref{fig:MMunrolled}) yield better assembly code with less jumps, and more AVX512 commands, leading to less CPU cycles needed for the matrix multiplication. The AVX512 commands however operate only on the 128bit SSE registers (`xmm0-15`), while for optimal performance they should use the 512bit AVX512 registers `zmm0-31`, or at least the 256bit AVX registers `ymm0-15`.
 
 \begin{figure*}
-    \includegraphics{./figures/MM_fma.pdf}
+    \includegraphics{MM_fma.pdf}
     \caption{Generated assembly for the loop-based matrix multiplication with FMA, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\label{fig:MMfma}}
 \end{figure*}
 
 \begin{figure*}
-    \includegraphics{./figures/MM_unrolled_loop.pdf}
+    \includegraphics{MM_unrolled_loop.pdf}
     \caption{Generated assembly for the loop-unrolling matrix multiplication, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\label{fig:MMunrolled}}
 \end{figure*}
 

@@ -1,7 +1,7 @@
 # Introduction to Visual Processing
 
 \begin{figure*}
-    \includegraphics{./figures/gray_optic_system.pdf}
+    \includegraphics{gray_optic_system.pdf}
     \caption{Schematic overview of the paths from the eye to the visual cortex, with the parts discussed in this chapter highlighted in italics. Adapted from \emph{Anatomy of the Human Body}\citep{Gray:1878ahb}, Public Domain.\label{fig:processing_overview}}
 \end{figure*}
 
@@ -21,7 +21,7 @@ The processing of visual stimuli happens in multiple stages: In Figure \ref{fig:
 ## Optical Path
 
 \begin{marginfigure}
-    \includegraphics{./figures/EyeSchematic.pdf}
+    \includegraphics{EyeSchematic.pdf}
     \label{fig:eye_diagram}
     \caption{Anatomy of the human eye — Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Schematic_diagram_of_the_human_eye_en.svg}{Rhcastilhos and Jmarchn, Wikimedia Commons}.}
 \end{marginfigure}
@@ -33,7 +33,7 @@ Evolution has optimised the refractive index of the human cornea to yield an opt
 Foveal, or central vision only makes up about 5º of the field of vision.  In the most central part of the fovea, the foveola, about 133 cones per degree of visual angle lead to a resolvable frequency of 66 cycles/º, while at the fovea, the frequency already drop by about half, to 35 cycles/º [@Duchowski:2017ii]. In Figure \ref{fig:peripheral_vision}, we show a scheme of the different ranges of vision in humans, with the region below 30º being the _field of useful vision_. The movements of the eye, described in the next section, [Eye movements], are able to make up for the small field of useful vision by constantly scanning a scene. 
 
 \begin{marginfigure}
-    \includegraphics{./figures/peripheral_vision.png}
+    \includegraphics{peripheral_vision.png}
     \label{fig:peripheral_vision}
     \caption{Ranges for peripheral and central vision in humans. Central or foveal vision offers the highest acuity. Image (cc) by \href{https://commons.wikimedia.org/wiki/File:Peripheral_vision.svg}{Zyxwv99, Wikimedia Commons}.}
 \end{marginfigure}
@@ -48,7 +48,7 @@ Vergence however is only one kind of the movements the eye can perform, so let's
 ### Eye movements
 
 \begin{marginfigure}
-    \includegraphics{./figures/EyeMuscles.jpg}
+    \includegraphics{EyeMuscles.jpg}
     \label{fig:EyeMuscles}
     \caption{Muscles of the human eye. Image (cc) by \href{http://patricklynch.net}{Patrick Lynch, Wikimedia Commons}.}
 \end{marginfigure}
@@ -64,7 +64,7 @@ Following the classifications from [@Snowden:2012wu] and [@Duchowski:2017ii], ey
 [^suppressionnote]: The most visible effect of saccadic suppression in humans is the lack of motion blur during saccadic eye movements, opposed to e.g. fast head movements.
 
 \begin{marginfigure}
-    \includegraphics{./figures/SaccadeTimeSeries.pdf}
+    \includegraphics{SaccadeTimeSeries.pdf}
     \label{fig:SaccadicMovements}
     \caption{Example time series of saccadic eye movements: The movement starts after an initial processing delay of about $150\,\mathrm{ms}$, followed by fast movement for about $50-100\,\mathrm{ms}$. Image reproduced from \citep{Snowden:2012wu}.}
 \end{marginfigure}
@@ -77,7 +77,7 @@ All of the described movements are optimisations to provide the best image possi
 
 \begin{marginfigure}
     \label{fig:retina_architecture}
-    \includegraphics{./figures/retina-architecture.pdf}
+    \includegraphics{retina-architecture.pdf}
     \caption{Inverted retinal architecture of mammals. Adapted, original illustration (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
 \end{marginfigure}
 
@@ -156,7 +156,7 @@ The Superior Colliculus is heavily involved in the control of the eye movements.
 ## The Visual Cortex
 
 \begin{marginfigure}
-    \includegraphics{./figures/v1-layers.jpg}
+    \includegraphics{v1-layers.jpg}
     \caption{\label{fig:v1_architecture}Correlation of the layered architecture in the LGN (lower half) with the cell layers in the Primary Visual Cortex (upper half): Neurons from the magnocellular, parvocellular and koniocellular LGN layers project into similar sublayers of the cortex. Observe that V1 layer L6 also projects back to the LGN. Reproduced from \citep{Thomson:2010de}.}
 \end{marginfigure}
 

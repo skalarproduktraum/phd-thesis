@@ -16,28 +16,28 @@ If the surroundings of the user are actually visible, e.g. via a set of glasses 
 
 In the case of a mix of both, where there is a direct connection or overlap between the virtual, simulated world, and the real world, the setting is termed _mixed reality_. _Mixed reality_ might take place anywhere in the _virtuality continuum_, except the extremal points of fully real environments, or fully virtual environments, while _cross reality_ encompasses the full spectrum [@Milgram:1995cl]. 
 
-![\label{fig:virtuality}Virtuality continuum according to [@Milgram:1995cl], where mixed reality encompasses all settings that are not the extremal points, and cross reality encloses the extremal points as well.](figures/virtuality_continuum.pdf)
+![\label{fig:virtuality}Virtuality continuum according to [@Milgram:1995cl], where mixed reality encompasses all settings that are not the extremal points, and cross reality encloses the extremal points as well.](virtuality_continuum.pdf)
 
 ## Historic Perspective — 1800s to 1990s
 
 The first virtual reality "glasses" have been introduced in the 1850's, as so-called _stereoscopes_, looking not unlike contemporary head-mounted displays. In the stereoscopes, the user would insert a postcard that is split in the middle in two parts, showing the subject of the postcard from two slightly different perspectives corresponding the capturing an image with two eyes, as in the human visual system. 
 
 \begin{marginfigure}
-    \includegraphics{./figures/stereoscope.png}
+    \includegraphics{stereoscope.png}
     \caption{\label{fig:stereoscope}The stereoscope.}
 \end{marginfigure}
 
 In the early 1950, the _Sensorama_ was introduced, an immersive movie theater, that not only included stereoscopic visuals, but also wind, sound, and even smell. The machine is shown in Figure \ref{fig:sensorama}.
 
 \begin{marginfigure}
-    \includegraphics{./figures/sensorama.png}
+    \includegraphics{sensorama.png}
     \caption{\label{fig:sensorama}The sensorama. Image reproduced from Sensorama, Inc. advertisement, 1962.}
 \end{marginfigure}
 
 With computer graphics still in it's infancy, the first steps towards a head-mounted display mainly for military purposes, were made in 1968 by Ivan Sutherland [@Sutherland:1968im]. Sutherland developed a glasses-based virtual reality system (actually, augmented reality) that consisted of cathode-ray tubes mounted on the users head, with images being directed to the eyes by the means of mirrors. The tracking system for the contraption was suspended from the ceiling, looming over the user, hence the name of the system, _The Sword of Damocles_. _The Sword of Damocles_ could display wireframe models of geometric objects overlaid onto the user's surroundings, and adapted to the viewpoint that had been calculated by the tracking system.
 
 \begin{marginfigure}
-    \includegraphics{./figures/sword-of-damocles.png}
+    \includegraphics{sword-of-damocles.png}
     \caption{\label{fig:damocles}The \emph{Sword of Damocles}. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.}
 \end{marginfigure}
 
@@ -49,7 +49,7 @@ In the 1990s, interesting applications for various VR settings were explored in 
 
 \begin{marginfigure}
     \label{fig:GROPE}
-    \includegraphics{./figures/ProteinDocking.png}
+    \includegraphics{ProteinDocking.png}
     \caption{Protein docking example using the haptic \emph{GROPE-III} system. Users reported a radically improved situational awareness from using the system. From \citep{Brooks:1990be2}.}
 \end{marginfigure}
 
@@ -74,27 +74,27 @@ After showing several prototypes of head-mounted displays, Palmer Luckey, a form
 
 \begin{marginfigure}
     \label{fig:OculusRiftPrototype}
-    \includegraphics{./figures/OculusRiftPrototype.jpg}
+    \includegraphics{OculusRiftPrototype.jpg}
     \caption{An early Oculus Rift prototype. Image courtesy of Engadget.}
 \end{marginfigure}
 
 \begin{marginfigure}
     \label{fig:OculusRiftHMD}
-    \includegraphics{./figures/OculusRiftHMD.jpg}
+    \includegraphics{OculusRiftHMD.jpg}
     \caption{The Oculus Rift Virtual Reality HMD. Public domain.}
 \end{marginfigure}
 
 On the side of augmented reality, Microsoft has been selling the developer kit of the _HoloLens_ since 2016. The HoloLens is an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The HoloLens features _inside-out tracking_, where no external tracking hardware is needed, apart from the cameras inside the HMD itself. On the software side, the HoloLens supports rendering directly on the device via Direct3D11, or via low-latency remote rendering (named Holographic Remoting) on a separate computer, and streamed image transfer, with the images encoded as H264 video stream, and corrected by the HoloLens on-the-fly with affine transformations for rotations and translations, to compensate for network latency. In early 2019, Microsoft announced the _HoloLens 2_, with improved field of view, latency, and physical footprint (see Figure \ref{fig:HoloLens2}).
 
 \begin{marginfigure}
-    \includegraphics{./figures/HoloLens2.jpg}
+    \includegraphics{HoloLens2.jpg}
     \caption{The HoloLens 2. Promotional picture, from \href{http://microsoft.com/en-us/hololens}{microsoft.com/en-us/hololens}.\label{fig:HoloLens2}}
 \end{marginfigure}
 
 Another available AR headset (as of 2019) is the _Magic Leap One_, featuring advanced optics, with three planes of focus, and a dedicated processing unit (dubbed _light pack_) featuring 8 GiB RAM and an ARM-architecture Nvidia Tegra X2 with an integrated Pascal-generation GPU with 256 CUDA cores, tentatively providing more compute power than the HoloLens. Also on contrast to the HoloLens that runs Windows 10, the Magic Leap One runs a custom Linux distribution named Lumin OS. 
 
 \begin{marginfigure}
-    \includegraphics{./figures/MagicLeap.png}
+    \includegraphics{MagicLeap.png}
     \caption{The Magic Leap AR Headset. Promotional picture, from \href{http://magicleap.com}{magicleap.com}.\label{fig:MagicLeap}}
 \end{marginfigure}
 

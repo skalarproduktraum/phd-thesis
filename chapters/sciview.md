@@ -1,6 +1,6 @@
 # SciView — integrating scenery into ImageJ2 & Fiji
 
-![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](./figures/sciview-gameoflife.png)
+![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](sciview-gameoflife.png)
 
 Fiji [@schindelin2012fiji] is a widely-used — as of April 2019, it has been cited over 10000 times — open-source distribution of ImageJ for biological image analysis (Fiji stands for "Fiji is just ImageJ"). It is now the predominant ImageJ [@Schneider:2012nihi] distribution and recently had its  its underlying infrastructure modernised tremendously, e.g. by replacing its basic image processing library with imglib2 [@Pietzsch:2012img] in an effort to replace the original ImageJ 1.x with a newer replacement, dubbed ImageJ2, which has brought better interoperability and better overall design [@Rueden:2017ij2]. 
 
@@ -66,7 +66,7 @@ This example code shows one of the prime features of ImageJ2: the separation bet
 
 \begin{marginfigure}
     \label{fig:SciViewAddVolume}
-    \includegraphics{./figures/sciview-addvolume.png}
+    \includegraphics{sciview-addvolume.png}
     \caption{sciview's \emph{Add Volume} dialog, shown in the default ImageJ2 Swing GUI.}
 \end{marginfigure}
 
@@ -76,10 +76,10 @@ At the moment, all automatically-generated GUIs are generated for Swing.  The ge
 
 ### Zebrafish development
 
-![Screenshot of SciView, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](./figures/scenery-sciview.png)
+![Screenshot of SciView, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
 
 \begin{marginfigure}
-    \includegraphics{./figures/developmental-timelapse.png}
+    \includegraphics{developmental-timelapse.png}
     \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in SciView, from \citep{Daetwyler:2018e8d}.}
     \label{fig:developmental_timelapse_sciview}
 \end{marginfigure}
@@ -89,14 +89,14 @@ At the moment, all automatically-generated GUIs are generated for Swing.  The ge
 In [@Longair:2011snt], the authors present an ImageJ/Fiji plugin for quick and semiautomatic tracing of neurons, even in noisy datasets. An image of the Simple Neurite Tracer (SNT) plugin running is shown in Fig \ref{fig:SNTOriginal}
 
 \begin{figure*}
-    \includegraphics{./figures/SimpleNeuriteTracer.png}
+    \includegraphics{SimpleNeuriteTracer.png}
     \caption{Simple Neurite Tracer showing tracing neurons in the adult \emph{Drosophila} brain, and neuropils shown in addition to the traced neurites in the old Fiji 3D Viewer\label{fig:SNTOriginal}.}
 \end{figure*}
 
 We have expanded the original code to make SNT work on top of SciView, with an example image shown in Figure \ref{fig:sciviewSNT}.
 
 \begin{figure*}
-    \includegraphics{./figures/sciviewSNT.png}
+    \includegraphics{sciviewSNT.png}
     \caption{Simple Neurite Tracer running on top of sciview.\label{fig:sciviewSNT}}
 \end{figure*}
 

@@ -12,7 +12,7 @@ We will first discuss the tracking and tracing problems usually encountered in b
 
 For the initial prototype, within _scenery_ we created a virtual reality-based crowded environment consisting of many differently-sized and differently-colored boxes. A black sphere is performing random motions through them, and the user was instructed to follow this sphere, and not lose sight of them. A screenshot of the prototype can be see in \ref{fig:attentive_tracking_prototype}.
 
-![\label{fig:attentive_tracking_prototype}2D Screenshot of the attentive tracking prototype. The sphere to be tracked can be seen in the upper left corner of the image. See the text for details.](./figures/attentive_tracking_prototype.png)
+![\label{fig:attentive_tracking_prototype}2D Screenshot of the attentive tracking prototype. The sphere to be tracked can be seen in the upper left corner of the image. See the text for details.](attentive_tracking_prototype.png)
 
 This prototype was tested with an HTC Vive on a set of 5 biologists and people from related areas that have to perform manual tracking, without telling them first that they should actually perform a tracking problem. And while manual tracking is usually perceived as a tedious, boring and annoying task, the test subjects have described following the sphere in VR as interesting and fun.
 
@@ -33,7 +33,7 @@ In addition to being open, data gathered by the software is available to externa
 ### Pupil 2D and 3D detection
 
 \begin{marginfigure}
-    \includegraphics{./figures/pupil-pupil_detection.png}
+    \includegraphics{pupil-pupil_detection.png}
     \caption{Pupil detection in the \emph{Pupil} software. Image reproduced from \citep{Kassner:2014kh}.\label{fig:Pupil2DDetection}}.
 \end{marginfigure}
 

@@ -29,11 +29,11 @@ The confocal microscope was developed in the 1960s by Marvin Minsky, one of the 
 
 \begin{marginfigure}
     \label{fig:ConfocalActinFilaments}
-    \includegraphics{./figures/confocal-actin-filaments.png}
+    \includegraphics{confocal-actin-filaments.png}
     \caption{Z projection of a phalloidin-labeled osteosarcoma cancer cell, making actin filaments visible. Image taken on a Zeiss LSM780 confocal microscope. Image (cc) by Howard Vidin, Wikimedia Commons}  
 \end{marginfigure}
 
-![\label{fig:confocal_principle}Confocal microscope operating principle,  10: Arc lamp (laser, nowadays), 12: Illumination pinhole, 16: Dichroic mirror, 22: specimen, 26: Pinhole, 28: Photomultiplier diode (Public Domain, from Marvin Minksky's original patent application).](./figures/confocal_principle.png)
+![\label{fig:confocal_principle}Confocal microscope operating principle,  10: Arc lamp (laser, nowadays), 12: Illumination pinhole, 16: Dichroic mirror, 22: specimen, 26: Pinhole, 28: Photomultiplier diode (Public Domain, from Marvin Minksky's original patent application).](confocal_principle.png)
 
 ### Image formation
 
@@ -68,7 +68,7 @@ The lightsheet microscope also has the benefit that samples can be mounted in a 
 ### Data rates
 
 \begin{marginfigure}
-    \includegraphics{./figures/spim_data_rate.pdf}
+    \includegraphics{spim_data_rate.pdf}
     \caption{Comparison of the data produced by different microscope types within 24 hours. Adapted from \citep{Reynaud:2015dx}.}
     \label{fig:spim_data_rate}
 \end{marginfigure}

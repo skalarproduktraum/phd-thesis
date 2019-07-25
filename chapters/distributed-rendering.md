@@ -1,6 +1,6 @@
 # Distributed Rendering
 
-![A user interacting with a _Drosophila_ dataset rendered on a clustered 4-sided CAVE setup with 5 machines, image courtesy of the MPI-CBG Photolab, MPI-CBG, Dresden.](./figures/scenery-cave.jpg)
+![A user interacting with a _Drosophila_ dataset rendered on a clustered 4-sided CAVE setup with 5 machines, image courtesy of the MPI-CBG Photolab, MPI-CBG, Dresden.](scenery-cave.jpg)
 
 scenery includes support for parallel rendering on multiple machines. While all scenery-based applications are in principle ready to be run on multiple machines in concert, a bit of configuration is required. This chapter details the necessary steps, starting with the geometry definition for multi-projector/multi-screen environments, followed by an explanation what steps are necessary on the software side. We end the chapter with information about how scenery keeps the information on all machines synchronised.
 

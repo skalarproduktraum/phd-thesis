@@ -12,7 +12,7 @@ The Adaptive Particle Representation (APR) [@Cheeseman:2018b12] is a representat
 
 ## Theory
 
-![High-level overview of the APR construction pipeline: _1._ Input image _2._ Determination of the gradient magnitude and local intensity scale, allowing to adjust for local intensity variations across the image _3._ Estimation of the Local Resolution _4._ Construction of the Resolution Function from the Optimal Valid Particle Cell set _5._ The final APR as combination of the Optimal Valid Particle Cell set $\mathcal{V}$ and the Particle Set $\mathcal{P}$. Image reproduced from \citep{Cheeseman:2018b12}.\label{fig:APRPipeline}](./figures/apr-pipeline.pdf)
+![High-level overview of the APR construction pipeline: _1._ Input image _2._ Determination of the gradient magnitude and local intensity scale, allowing to adjust for local intensity variations across the image _3._ Estimation of the Local Resolution _4._ Construction of the Resolution Function from the Optimal Valid Particle Cell set _5._ The final APR as combination of the Optimal Valid Particle Cell set $\mathcal{V}$ and the Particle Set $\mathcal{P}$. Image reproduced from \citep{Cheeseman:2018b12}.\label{fig:APRPipeline}](apr-pipeline.pdf)
 
 As bottlenecks in fluorescence microscopy not only exist with storage, but also with processing of the generated imagery, underlying the APR are four representation criteria:
 
@@ -48,7 +48,7 @@ Second, If now the Resolution Function $R(y)$ is further restricted to consist o
 
 ### Particle Cells
 
-![Formation of the Optimal Valid Particle Set in the case that the local particle cell set $\mathcal{L}$ only has one cell. Image reproduced from  \citep{Cheeseman:2018b12}. \label{fig:OVPCFormation}](./figures/apr-ovpc.pdf)
+![Formation of the Optimal Valid Particle Set in the case that the local particle cell set $\mathcal{L}$ only has one cell. Image reproduced from  \citep{Cheeseman:2018b12}. \label{fig:OVPCFormation}](apr-ovpc.pdf)
 
 The blocks constituting the Resolution Function must be powers of $1/2$ the image edge length in pixels $|\Omega|$[^sizenote]. The piecewise constant Resolution Function which is then defined by the upper edges of these blocks is called the _Implied Resolution Function_ $R^*(y)$, and it's blocks are called the _Particle Cells_, which all have a side length of $|\Omega|/2^l$. $l$ is called the _Particle Cell Level_ and ranges from $l_{\mathrm{min}}=1$, where the corresponding block has half the size of the original image, to $l_{\mathrm{max}}$, corresponding to blocks of pixel size.
 
@@ -136,7 +136,7 @@ The Pulling Scheme has the following properties:
 * _Separability_ — The OVPC set can be found by considering each particle cell in $\mathcal{L}$ on its own, and afterwards combining them into one set, covering the whole image. See Figure \ref{fig:APRsep} for a visualisation.
 * _Redundancy_ — When constructing $\mathcal{V}$, all particle cells in $\mathcal{L}$ that have descendants can be ignored, as descendants imply either the same or a tighter constraint on the Resolution Function.
 
-![Separability property of the Pulling Scheme: In the first two parts, the construction of $R^*(y)$ is shown for two separate particle cells, $c_{19,6}$ and $c_{38,6}$. In the third part of the figure, their combination into the Local Particle set $\mathcal{L}$ is shown. Image reproduced from \citep{Cheeseman:2018b12}.\label{fig:APRsep}](./figures/apr-separability.pdf)
+![Separability property of the Pulling Scheme: In the first two parts, the construction of $R^*(y)$ is shown for two separate particle cells, $c_{19,6}$ and $c_{38,6}$. In the third part of the figure, their combination into the Local Particle set $\mathcal{L}$ is shown. Image reproduced from \citep{Cheeseman:2018b12}.\label{fig:APRsep}](apr-separability.pdf)
 
 ### Creating the APR from the Optimal Valid Particle Cell set
 
@@ -157,7 +157,7 @@ If we venture outside of just image processing and turn to (realtime) rendering,
 * _Sparse Voxel Octrees_ (SVOs) [@Laine:EffectiveSVO; @Crassin:2011uo] work by voxelising a given geometry, with the actual voxels being stored in an octree data structure as final leaf nodes. SVOs are great for storing very large mesh data, but cannot efficiently represent volumetric data as we try to achieve. 
 * _VDB_ [@Museth:2013gw] uses B+trees [@Bayer:2002ds] to hierarchically represent volumetric data. From the spatial organisation, VDB is closest to our approach, although the leaf nodes of their tree do still contain voxels instead of particles. Figure \ref{fig:vdb2d} shows a 2D representation of a VDB dataset.
 
-![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](./figures/vdb2d.png)
+![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](vdb2d.png)
 
 ## Integration into _scenery_
 
@@ -192,7 +192,7 @@ The first prototype developed for APR visualisation, named _dive_, came to be be
 
 dive was able to primitively visualise APR datasets as point clouds, with no postprocessing applied (see Figure \ref{fig:dive}), but included limited support for the Oculus Rift DK2 HMD. It was also written from scratch using OpenGL 3.3 and SDL, where the need for a much quicker prototyping solution became apparent, as this cost much more time than it should have.
 
-![Visualisation of a partial _Danio rerio_ vasculature dataset using _dive_ as a point cloud. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:dive}](./figures/dive.png)
+![Visualisation of a partial _Danio rerio_ vasculature dataset using _dive_ as a point cloud. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:dive}](dive.png)
 
 ### User feedback
 
@@ -245,15 +245,15 @@ Particle normals can be stored with the regular APR data as additional property,
 
 [^demonote]: See [github.com/skalarproduktraum/aprrenderer](https://github.com/skalarproduktraum/aprrenderer) for demo code.
 
-![Image of a APR-based segmentation of _Danio rerio_ head vasculature visualised as point-based graphics. Particles are coloured by distance to the camera. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:APRvasculature}](./figures/apr-vasculature.png)
+![Image of a APR-based segmentation of _Danio rerio_ head vasculature visualised as point-based graphics. Particles are coloured by distance to the camera. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:APRvasculature}](apr-vasculature.png)
 
-![Image of a APR-based direct particle rendering of a _Drosophila melanogaster_ embryo after cellularisation. Particles are here colored by level, with blue signifying the highest-resolution level, and red the lowest-resolution level. Dataset courtesy of Loïc Royer, MPI-CBG Dresden & Chen-Zuckerberg Biohub, San Francisco, USA\label{fig:APRdrosophila}](./figures/apr-drosophila.png)
+![Image of a APR-based direct particle rendering of a _Drosophila melanogaster_ embryo after cellularisation. Particles are here colored by level, with blue signifying the highest-resolution level, and red the lowest-resolution level. Dataset courtesy of Loïc Royer, MPI-CBG Dresden & Chen-Zuckerberg Biohub, San Francisco, USA\label{fig:APRdrosophila}](apr-drosophila.png)
 
 ## Particle-based maximum intensity projection
 
-![Comparison of maximum intensity projections of a _Danio rerio_ (zebrafish) vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](./figures/apr-raycasting.png)
+![Comparison of maximum intensity projections of a _Danio rerio_ (zebrafish) vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](apr-raycasting.png)
 
-![Comparison of maximum intensity projections of a _Triboleum castaneum_ (red flour beetle) dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Akanksha Jain, Tomancak Lab, MPI-CBG Dresden\label{fig:TriboliumPixelVsAPR}](./figures/apr-tribolium.png)
+![Comparison of maximum intensity projections of a _Triboleum castaneum_ (red flour beetle) dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Akanksha Jain, Tomancak Lab, MPI-CBG Dresden\label{fig:TriboliumPixelVsAPR}](apr-tribolium.png)
 
 Maximum intensity projects of datasets are one of the most common visualisations used in fluorescence microscopy, therefore it needs to be supported on the APR.
 
