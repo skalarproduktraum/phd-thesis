@@ -3,6 +3,7 @@ chapters/acknowledgements.md
 chapters/toc.md
 chapters/introduction.md
 # part 1 - preliminaries
+chapters/part-introduction.md
 chapters/fluorescence-microscopy.md
 chapters/visual-processing.md
 chapters/xr.md
@@ -10,6 +11,7 @@ chapters/eye-tracking.md
 # Don't put interface efficiency chapter for the moment
 # chapters/interface-efficiency.md
 # part 2 - scenery
+chapters/part-scenery.md
 chapters/scenery.md
 chapters/rendering.md
 chapters/external-hardware.md
@@ -19,11 +21,13 @@ chapters/future-directions.md
 # Developing with scenery chapter, removed for the moment
 # chapters/developing-with-scenery.md
 # part 3 - applications
+chapters/part-case-studies.md
 chapters/attentive-tracking.md
 chapters/interactive-ablation.md
 chapters/apr-rendering.md
 chapters/sciview.md
 # back matter
+chapters/part-conclusions.md
 chapters/outlook.md
 chapters/appendix-start.md
 chapters/appendix-questionnaire-vrablation.md

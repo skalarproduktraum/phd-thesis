@@ -1,5 +1,3 @@
-\part[CASE STUDIES]{Case studies}
-
 # SciView — integrating scenery into ImageJ2 & Fiji
 
 ![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](./figures/sciview-gameoflife.png)

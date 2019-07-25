@@ -1,5 +1,3 @@
-\part[VR and AR FOR SYSTEMS BIOLOGY]{VR and AR for Systems Biology}
-
 # scenery — Democratising VR/AR Visualisation for Systems Biology
     
 In the chapters before, we have highlighted the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customisable visualisations, and reproducibility. 

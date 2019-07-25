@@ -1,5 +1,3 @@
-\part[Introduction]{Introduction}
-
 # Fluorescence Microscopy
 
 Fluorescence microscopy is one of the major techniques used in cell, developmental and systems biology. In the most basic version, a fluorescent molecule is introduced into the biological specimen, staining it. The early fluorescent markers used (e.g. FITC, Hoechst), are however highly cytotoxic and incompatible with life, and can therefore only be used for fixed specimen. Newer developments led the the introduction of fluorescent proteins into to organism of interest  via genetic engineering. These fluorescent proteins are biocompatible and can therefore be used to study processes in a living organism.
