@@ -6,10 +6,12 @@
 % Headers and page numbering 
 \usepackage{fancyhdr}
 \usepackage{fontspec}
+\usepackage{epigraph}
 \usepackage{titlesec}
 \usepackage[toc,page]{appendix}
 \usepackage{pdfpages}
 \usepackage{qrcode}
+\usepackage{xpatch}
 \pagestyle{plain}
  
 % Fonts and typesetting
@@ -62,6 +64,21 @@
   {\Huge\yellowbox}
 \titleformat*{\section}{\LARGE\headingfont}
 \titleformat*{\subsection}{\Large\headingfont}
+\makeatletter
+\titleformat{\part}[display]
+  {\Huge\headingfont\filright}
+  {\partname~\thepart:}
+  {0pt}
+  {\thispagestyle{epigraph}\Huge\yellowbox}
+\makeatother
+\setlength\epigraphwidth{0.6\textwidth}
+
+\makeatletter
+\xpatchcmd\epigraphhead
+ {\let\@evenfoot}
+ {\let\@oddfoot\@empty\let\@evenfoot}
+ {}{}
+\makeatother
 
 % Set colour of links to black so that they don't show up when printed
 \usepackage{hyperref}
@@ -88,6 +105,9 @@
 
 % TODO command
 \newcommand{\TODO}[1]{\colorbox{OrangeRed}{\textcolor{White}{\textbf{\emph{TODO:} #1}}}}
+
+% Epigraph
+\newcommand{\myepigraph}[2]{\epigraphhead[450]{#1\par\hspace*{\fill}\textsc{---#2}}}
 
 \hypersetup{
     linkcolor={blue},
