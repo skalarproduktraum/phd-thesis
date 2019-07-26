@@ -10,7 +10,7 @@ all: thesis.$(OUTPUTFORMAT)
 
 thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) tufte-common-local.tex chapters.list chapters/statement-of-authorship.md Makefile
 	@echo "Removing unnecessary fields from bibliography ..."
-	bibtool -i $(BIBLIOGRAPHY) -o thesis.bib -- "delete.field { doi url annote abstract }"
+	bibtool -i $(BIBLIOGRAPHY) -o thesis.bib -- "delete.field { url annote abstract }"
 	@echo "pandoc'ing $(CHAPTERS) to thesis.$(OUTPUTFORMAT)"
 	@echo " "
 	$(PANDOC) -F pandoc-latex-environment -F pandoc-tablenos \
