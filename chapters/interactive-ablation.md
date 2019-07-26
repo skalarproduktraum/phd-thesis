@@ -234,10 +234,23 @@ These changes will be implemented in a future version of the software. The propo
 
 ## Proposed Hardware Realisation
 
-In our proposed setup, we are going to use a lightsheet microscope of the SPIM variety to overcome the speed and phototoxicity issues of confocal microscopes in order to provide the user with instant feedback, and to treat the sample more gently, potentially for repeated application of cuts.
+In our proposed setup, we are going to use a lightsheet microscope of the SPIM variety as default to overcome the speed and inflexible mounting issues of confocal microscopes in order to provide the user with instant feedback, and to treat the sample more gently, potentially for repeated application of cuts.
 
-![3D rendering of the UV ablation module, original design by Michael Weber, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, Wisconsin, USA.\label{fig:UVcutterRendering}](ablation-module.png)
+![Beam paths of our proposed hardware solution, based on a X-SPIM version of the OpenSPIM, with two illumination and two detection arms, and the UV ablation unit coupled into one of the detection arms. See text for details. Figure extended from X-OpenSPIM design by Johannes Girstmair.\label{fig:OpenSPIMAblation}](openspim-ablation.pdf)
 
+The ablation unit design we propose is based on the design of [@Oswald:2010pr]. In Oswald's original design, the ablation unit was coupled to a spinning disk confocal microscope, and the design is already quite modular. We want to keep the modularity of the unit, such that it can also be used with other microscopes, e.g. spinning disk confocals as in the original, because some samples might need mounting on a glass slide.  _C. elegans_ adults for example do not enjoy embedding into agarose as it is common in lightsheet microscopy, while _Danio rerio_ or _Drosophila_ specimen tolerate it excellently.
+
+A sketch of the setup is shown in Figure \ref{fig:OpenSPIMAblation}. The ablation unit is connected to an extension of the OpenSPIM microscope [@Pitrone:2013ki] for double-sided illumination and double-sided detection developed by Johannes Girstmair at UCL London and MPI-CBG, Dresden dubbed X-SPIM [@girstmair2016]. The X-SPIM design has the benefit that the sample can be more evenly illuminated from two sides, limiting the need for multi-angle acquisitions where the sample needs to be rotated, as light can only penetrate biological tissue to a limited extent. While more complex than the original OpenSPIM design, even an X-SPIM is still way less complex than a spinning disk confocal microscope and can be built by an experience microscopist within a day.
+
+The ablation unit itself consists of the following parts:
+
+* A 355nm Nd:YAG picosecond-pulsed UV laser, providing the necessary power output to reach the plasma-induced ablation regime described in [Introduction to Microsurgery]. The laser provides high-energy pulses of $10\,\mu\mathrm{J}$ with a rate of up to $1\,\mathrm{kHz}$, with a pulse width of $500\,\mathrm{ps}$, yielding power densities of up to $10\,\mathrm{TW}\cdot\mathrm{cm}^{-3}$.
+* An Acousto-optical modulator (AOM) is used to be able to quickly change the laser power to reach the optimal regime for ablation. The AOM works by diffracting the beam by phonon waves in a silicium dioxide crystal. The first diffraction order of the beam then is adjustable between $0-80\mathrm{\%}$ of the original input power.
+* Two galvanometric mirrors for steering in the X and Y axis are used to  steer the UV laser beam in an f$\Theta$ lens. An f$\Theta$ lens translates a beam of incidence angle $\Theta$ by $f\cdot\Theta$, where $f$ is the focal length of the lens. It is used in our proposed setup instead of the scanning telescope in the original setup.
+
+The total magnification of the system has to be designed to overfill the entrance aperture of the objective, in our case the upper detection objective. The exact specifications of the objective to use are still under consideration. The setup will then contain an adjustable beam expander such that the ablation unit can be adapted to multiple systems.
+
+For computer control of the microscope, the ClearControl interactive/automatic microscope control software ([github.com/clearcontrol/clearcontrol](https://github.com/clearcontrol/clearcontrol)) has been ported by Robert Haase and Johannes Girstmair to support the OpenSPIM hardware components. We have further coupled ClearControl with scenery and sciview to facilitate live visualisation and control.
 
 ## Future Work
 
