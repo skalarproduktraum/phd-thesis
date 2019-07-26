@@ -191,7 +191,7 @@ Adaptive sampling and by that, data reduction is done very efficiently already b
 
 ### Object tracking with support of the visual system
 
-A task often encountered in image-based developmental and systems biology is the tracking of objects in volumetric data. One example is to identify cells in consecutive volumetric images that correspond to each other. Another example is the tracing of neurons from large still images, to ultimate generate a connectome — a representation of which neuron connects to which — in an effort to identify functional connections and correlations (see e.g. [@Swanson:2016ht] for a review). In the chapter [Attentive Tracking — or — Tracking for Tracking] for a prototype of how to use smooth pursuit eye movements for cell tracking. Solving such tracking problems via eye tracking further requires robust eye tracking algorithms, a topic we also briefly touch in that chapter.
+A task often encountered in image-based developmental and systems biology is the tracking of objects in volumetric data. One example is to identify cells in consecutive volumetric images that correspond to each other. Another example is the tracing of neurons from large still images, to ultimate generate a connectome — a representation of which neuron connects to which — in an effort to identify functional connections and correlations (see e.g. [@Swanson:2016ht] for a review). In the chapter [track2track — Eye Tracking for Object Tracking in Volumetric Data] for a prototype of how to use smooth pursuit eye movements for cell tracking. Solving such tracking problems via eye tracking further requires robust eye tracking algorithms, a topic we also briefly touch in that chapter.
 
 
 ### Optimal Viewpoint Determination by Modelling Visual Attention

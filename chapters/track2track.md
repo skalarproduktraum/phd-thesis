@@ -1,4 +1,4 @@
-# Attentive Tracking — or — Tracking for Tracking
+# track2track — Eye Tracking for Object Tracking in Volumetric Data
 
 In this chapter, we are going to detail the attentive tracking strategy for augmenting biological tracking and tracing tasks with gaze data in order to make easier to do.
 
