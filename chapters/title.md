@@ -31,7 +31,7 @@
        \vspace{0.8cm}          
         born on 19th May, 1987 in Dresden, Germany
                      
-         \vspace{1.5cm}
+         \vspace{1.2cm}
          \emph{First reviewer}:\\
          Prof. Dr. sc. techn. Ivo F. Sbalzarini\\
          Technische Universit{\"a}t Dresden \& Max Planck Institute of Molecular Cell Biology and Genetics\\
@@ -39,7 +39,7 @@
          \vspace{0.5cm}
          \emph{Second reviewer}:\\
          James Sharpe, PhD\\
-         EMBL Barcelona, Spain\\
+         European Molecular Biology Laboratory\\ Barcelona, Spain\\
          \vspace{0.5cm}
          \emph{Fachreferent:}\\
          Prof. Dr.-Ing. Raimund Dachselt\\
