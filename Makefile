@@ -8,7 +8,7 @@ OUTPUTFORMAT=tex
 
 all: thesis.$(OUTPUTFORMAT)
 
-thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) tufte-common-local.tex chapters.list Makefile
+thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLATE) tufte-common-local.tex chapters.list chapters/statement-of-authorship.md Makefile
 	@echo "Removing unnecessary fields from bibliography ..."
 	bibtool -i $(BIBLIOGRAPHY) -o thesis.bib -- "delete.field { doi url annote abstract }"
 	@echo "pandoc'ing $(CHAPTERS) to thesis.$(OUTPUTFORMAT)"
@@ -19,6 +19,7 @@ thesis.$(OUTPUTFORMAT): $(CHAPTERS) $(PREAMBLE) $(CSL) $(BIBLIOGRAPHY) $(TEMPLAT
 		-V fontsize=12pt -V documentclass:tufte-book \
 		-V classoption:a4paper -V papersize:a4 -V classoption:openright \
 		-V subparagraph -V lof -V lot --top-level-division=chapter \
+		--include-after-body=chapters/statement-of-authorship.md \
 		--template=$(TEMPLATE) \
 		metadata.yaml $(CHAPTERS) -s -o $@
 	# sed -ie 's/\\cite[t,p]{/\\cite{/g' thesis.tex
