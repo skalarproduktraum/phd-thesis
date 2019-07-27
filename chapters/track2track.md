@@ -62,10 +62,10 @@ At the time of writing, HTC's extended version of their _Vive Pro_ HMD, the _Viv
 
 ### Pupil 2D and 3D detection
 
-\begin{marginfigure}
+\begin{figure}
     \includegraphics{pupil-pupil_detection.png}
-    \caption{Pupil detection in the \emph{Pupil} software. Image reproduced from \citep{Kassner:2014kh}.\label{fig:Pupil2DDetection}}.
-\end{marginfigure}
+    \caption{Pupil detection in the \emph{Pupil} software. See text for a description of the steps. Image reproduced from \citep{Kassner:2014kh}.\label{fig:Pupil2DDetection}}.
+\end{figure}
 
 Using three user-defined parameters, pupil intensity range, and pupil min/max diameter, _Pupil_ extracts the pupil from the camera images as follows (from [@Kassner:2014kh]):
 
