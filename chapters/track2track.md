@@ -35,6 +35,14 @@ Taking one of the two away, would however lead to issues:
 * When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, e.g., Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer.
 
 ## Tracking cells in early Platynereis development
+
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Platynereis100Timepoints.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video showing the early development of a \emph{Platynereis} embryo. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+\end{marginfigure}
  
 ## Design Process
 
@@ -134,6 +142,14 @@ The data can also be smoothed with a moving window average down the time axis. A
 To reliably connect cells together over several timepoints, we use an incremental graph-based approach utilising all spines that expose local maxima.
 
 ## Results
+
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackPlatynereis.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+\end{marginfigure}
 
 ## Discussion and Future Work
 
