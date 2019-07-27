@@ -2,7 +2,7 @@
 
 In this chapter, we are going to detail the track2track strategy for augmenting biological tracking tasks with gaze data in order to make easier and faster to do.
 
-We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into track2track.
+We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into track2track, and finally show a proof-of-concept that the strategy works e.g. in the case of tracking cells during the early development of _Platynereis_ embryos.
 
 ## Tracking Problems in Biology and Challenges
 
@@ -29,6 +29,13 @@ The user can be tasked to follow a cell with his eyes, the gaze direction record
 
 With the addition of virtual reality to the mix, we can first help the user with orientation in the dataset, and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers or spurious pupil detections, or even foveate the rendering of the volumetric dataset.
 
+Taking one of the two away, would however lead to issues:
+
+* When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex (VOR, see [Eye movements] in the [Introduction to Visual Processing] chapter).
+* When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, e.g., Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer.
+
+## Tracking cells in early Platynereis development
+ 
 ## Design Process
 
 ### Initial Prototype
@@ -89,7 +96,9 @@ Our custom calibration routine works as follows:
 
 \TODO{Add calibration image}
 
-## Tracking Procedure
+
+
+## Tracking Procedure — Getting the Hedgehog
 
 ## Analysis of the Hedgehog
 
@@ -102,19 +111,27 @@ After all rays have been collected for a tracking step, all further track data i
 * the timepoint of the volume it belongs to, and
 * a list of samples taken in uniform spacing along the ray, along with the spacing. 
 
-How this collection looks visually is depicted in Figure \ref{fig:hedgehog}.
+How this collection looks visually in 3D is depicted in Figure \ref{fig:hedgehog}. In the depicted image, the tracking user's position is the intersection of all spines, which are shown here in an elongated way for visualisation purposes. The spines are color-coded by timepoint.
 
-![The hedgehog of a tracking step of a single cell through 100 timepoints in a Platynereis dataset. Each spine is color-coded by timepoint, with early timepoints shown in green, and later ones in yellow. Dataset courtesy of Mette Handberg-Thorsager, Tomancak Lab, MPI-CBG.\label{fig:hedgehog}](hedgehog.png)
+![The hedgehog of a tracking step of a single cell through 100 timepoints in a Platynereis dataset. In the dataset, a Histone marker is used for fluorescence. Each spine is color-coded by timepoint, with early timepoints shown in green, and later ones in yellow. Dataset courtesy of Mette Handberg-Thorsager, Tomancak Lab, MPI-CBG.\label{fig:hedgehog}](hedgehog.png)
+
+Additionally, the hedgehog can be represented in two dimensions, with time on the Y axis, and depth along a given ray along the X axis. An example of that is shown in Figure \ref{fig:rawHedgehog}. In this figure it is clearly visible that the rays do have different lengths, which is due to the angle they intersect the dataset. Also note that each line on the Y axis represents one gaze sample, of which we collect up to 60 per second, leading to 1614 samples in the plot (16 samples per timepoint on average).
 
 \begin{marginfigure}
     \includegraphics{hedgehog-raw.png}
-    \caption{The raw plot of the hedgehog rays. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom.\label{fig:rawHedgehog}}
+    \caption{The raw plot of the hedgehog rays. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. See text for details.\label{fig:rawHedgehog}}
 \end{marginfigure}
+
+The data can also be smoothed with a moving window average down the time axis. An example of that with the same dataset as before is shown in Figure \ref{fig:labelledHedgehog}. In this plot we additionally show the local maxima along each ray in red. The track of the cell we were following is clearly visible. As there are movements of the user, and other cells or objects might appear in front of the cell the user is tracking, the challenge is now how to reliably use the temporal information contained in the hedgehog to find a track for the cell.
 
 \begin{marginfigure}
     \includegraphics{hedgehog-with-maxima.png}
-    \caption{The same hedgehog with local maxima marked. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. Local maxima are shown in red.\label{fig:labelledHedgehog}}
+    \caption{The same hedgehog with local maxima marked. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
 \end{marginfigure}
+
+### Graph-based temporal tracking
+
+To reliably connect cells together over several timepoints, we use an incremental graph-based approach utilising all spines that expose local maxima.
 
 ## Results
 
