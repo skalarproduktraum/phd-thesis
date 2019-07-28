@@ -82,7 +82,6 @@
 
 % Set colour of links to black so that they don't show up when printed
 \usepackage{hyperref}
-\hypersetup{colorlinks=true, linkcolor=black}
 
 % letter spacing — workaround needed by tufte-book package
 % Set up the spacing using fontspec features
@@ -110,6 +109,10 @@
 \newcommand{\myepigraph}[2]{\epigraphhead[450]{#1\par\hspace*{\fill}\textsc{---#2}}}
 
 \hypersetup{
+    bookmarksdepth=3,
+    bookmarksopen=true,
+    bookmarksopenlevel=2,
+    bookmarksnumbered=true,
     linkcolor={MidnightBlue},
     citecolor={MidnightBlue},
     urlcolor={MidnightBlue}
