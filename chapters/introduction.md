@@ -46,29 +46,28 @@ Some of the results presented in this thesis have already been published :
 
 \subsection*{Peer-reviewed Papers}
 
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
-* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
 * __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery — scenery – Flexible Virtual Reality Visualisation on the Java VM. Submitted to _IEEE VIS_, 2019, [arXiv preprint 1906.06726](https://arxiv.org/abs/1906.06726)
+* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
+
+
 
 \subsection*{Conference Abstracts}
 
-* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
-
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015
-
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016
-
-* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018
 
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
+* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015
+* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
 
 \subsection*{Papers in Preparation}
 
 The following papers containing material from this work are currently under preparation:
 
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji.
-* __Günther, U.__, Simson, J, Sbalzarini, I.F., Harrington, K.I.S.: Linear Genetic Programming for robust pupil detection in interactive, virtual reality eye tracking applications.
+* __Günther, U.__, Simson, J., Sbalzarini, I.F., Harrington, K.I.S.: Linear Genetic Programming for robust pupil detection in interactive, virtual reality eye tracking applications.
 
 \section*{Supervision}
 
