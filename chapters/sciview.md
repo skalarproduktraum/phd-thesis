@@ -6,7 +6,7 @@ Fiji [@schindelin2012fiji] is a widely-used — as of April 2019, it has been ci
 
 The original way of doing 3D visualisation in Fiji is the 3D Viewer [@Schmid:2010gm], which has now become dated a bit and is not being actively developed anymore, necessitating a replacement. After the start of the development of scenery in early 2016, we started the development of a replacement for 3D Viewer, named _sciview_. sciview builds heavily on the infrastructure provided by the Fiji, SciJava[^SciJavaNote], and ImageJ2 projects[@Rueden:2017ij2].
 
-In this chapter, we are going to introduce sciview and explain how intertwining scenery and the ImageJ2/Fiji ecosystem creates a new powerful tool for interactive visualisations in the life sciences. We start by introducing the ImageJ2/Fiji ecosystem  in more detail, focussing on the developer side and explaining how the various parts are used in our project.
+In this chapter, we are going to introduce sciview and explain how intertwining scenery and the ImageJ2/Fiji ecosystem creates a new powerful tool for interactive visualisations in the life sciences. We start by introducing the ImageJ2/Fiji ecosystem  in more detail, focussing on the developer side and explaining how the various parts are used in our project. After that, we introduce examplary use cases that have not been possible before, and projects that are enabled by scenery and sciview.
 
 [^SciJavaNote]: See [scijava.org](https://scijava.org) and [imagej.net/SciJava](https://imagej.net/SciJava) for more information about the projects.
 
@@ -100,5 +100,18 @@ We have expanded the original code to make SNT work on top of SciView, with an e
     \caption{Simple Neurite Tracer running on top of sciview.\label{fig:sciviewSNT}}
 \end{figure*}
 
+### Constrained Segmentation of the Zebrafish heart
+
+### Agent-based Simulations
+
+We have utilized sciview to visualise agent-based simulations with large numbers of agents. By adapting the existing agent- and physics-based simulation toolkit _brevis_ [@brevis2019], we were able to increase the number of agents that can be visualised at interactive frame rates by a factor of 10, from originally 1000, on a notebook equipped with a Nvidia Quadro P4000 GPU with 8 GB of graphics memory. 
+
+![An agent-based simulation of 10000 independent agents simulated using _brevis_ and visualised using _sciview_. See text for details.\label{fig:agentbased}](agentbased-simulation.pdf)
+
+This performance improvement enables previous studies of swarms with evolving behaviours to be revisited under conditions that may enable new levels of emergent behaviour [@harrington2017; @gold2014]. In Figure~\ref{fig:agentbased}, we show 10,000 agents using flocking rules inspired by [@reynolds1987] to collectively form a sphere.
+
+Subsequently, we were able to increase the number of agents, pushing the limits of scenery. The highest number of agents we could achieve was 2.500.000, although the framerate drops significantly to about 2-5 fps, as the GPU becomes overwhelmed with vertex and geometry processing.
+
+## Conclusions and Future Work
 
 
