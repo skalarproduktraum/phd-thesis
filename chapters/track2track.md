@@ -108,6 +108,24 @@ Our custom calibration routine works as follows:
 
 ## Tracking Procedure — Getting the Hedgehog
 
+\begin{marginfigure}
+    \includegraphics{vive-controllers-t2t.pdf}
+    \caption{Controller bindings for using \emph{track2track}. See text for details. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.\label{fig:T2TControls}}
+\end{marginfigure}
+
+After calibration and before starting the tracking procedure for a single cell, the user can position himself freely in space, and also move to the right position in time for the dataset. All of these functions can be performed using the HTC Vive handheld controllers. The controller bindings are shown in Figure \ref{fig:T2TControls}, with them the user can perform the following:
+
+* Move the dataset by holding the left-hand trigger and moving the controller around,
+* use the directional pad on the left-hand controller to move forward, back, left, right, with respect to the direction the user is looking into,
+* start and stop tracking by pressing the right-hand trigger,
+* play and pause the dataset by pressing the right-hand menu button,
+* playing the dataset faster or slower by pressing the right-hand directional pad up or down, and 
+* stepping through the timepoints of the dataset by pressing the right-hand directional pad left or right.
+
+To adjust for handedness of the user, the controller mappings can be swapped with each other. 
+
+The user can start the tracking process as soon as he is ready and has found the cell he wants to track. Starting a tracking step will start playing the dataset if it is currently paused. When tracking is active, gaze directions and other metadata are collected, and can be analysed automatically in the next step. The limitation at the moment is that the user _has_ to look at a trackable object when the tracking step is started, in order to seed the analysis algorithm.
+
 ## Analysis of the Hedgehog
 
 After all rays have been collected for a tracking step, all further track data is derived from the set of rays, which we call the _hedgehog_. An individual ray we dub _spine_, as it is more than just the ray with orientation and direction, but also contains information about:
@@ -139,9 +157,50 @@ The data can also be smoothed with a moving window average down the time axis. A
 
 ### Graph-based temporal tracking
 
-To reliably connect cells together over several timepoints, we use an incremental graph-based approach utilising all spines that expose local maxima.
+\begin{figure*}
+    \includegraphics{t2t-ray.pdf}
+    \caption{An example profile of a ray through a volumetric dataset. X axis is step along the ray, Y axis volume sample value. In this case, there are two local maxima along the ray, one close to the observer, at index 70, and another one further away at 284.\label{fig:T2TExampleRay}}
+\end{figure*}
 
-## Results
+To reliably connect cells together over several timepoints, we use an incremental graph-based approach utilising all spines that expose local maxima. An exemple ray through a volume is shown in Figure \ref{fig:T2TExampleRay}. In the figure, the step along the ray is shown on the X axis, while the Y axis shows the value of the volume at that point of the ray. We assume that when starting a tracking step, the user is looking at an unoccluded object that will be visible as a local maximum along the ray to seed the algorithm.
+
+\begin{figure*}
+    \includegraphics{t2t-algorithm.pdf}
+    \caption{A graphical depiction of the incremental graph-search algorithm used to extract tracks from a hedgehog. Time runs along the X axis. $s_1$ is the initial seed point to start tracking at. The algorithm is currently at $s_3$, determining how to proceed to $s_4$. In this case, the middle track with $d=1$ wins, as it is the shortest world-space distance away from the current point.\label{fig:T2TAlgorithm}}
+\end{figure*}
+
+For each timepoint, we have collected a variable number of spines, whose count varies between 0 and 60. Zero spines might be obtained, e.g., in case that the user blinks. To connect the initial seed point with the other correct spines correctly, we step through the list of spines one-by-one and connect the currently active point with the local maximum on the next spine that has the lowest world-space distance. With this weighting we can exclude cases where another object was briefly moving between the user and the actually tracked object. The process of connecting one local maximum to the next, closest one can be understood as a version of \emph{dynamic fringe-saving A*}-search [@sun2009] on a grid world, where all rays get extended the the maximum length in the whole hedgehog along the X axis, and time flows along the Y axis. A graphical representation of the algorithm is given in Figure \ref{fig:T2TAlgorithm} and the algorithm summarised in Algorithm \ref{alg:T2T}.
+
+\begin{algorithm}
+  \SetKwData{Image}{image}
+  \SetKwData{hedgehog}{$\mathcal{H}$}
+  \SetKwData{spines}{$\mathcal{S}$}
+  \SetKwData{spine}{$s$}
+  \SetKwData{current}{$v_\mathrm{current}$}
+  \SetKwData{closest}{$i_\mathrm{closest}$}
+  \SetKwFunction{FindIndexOfClosestMax}{FindIndexOfClosestMax}
+​	\KwData{Hedgehog $\mathcal{H}$ with spines $\mathcal{S}$}
+	\KwResult{Track $\mathcal{T}$, consisting of points $p_i$}
+​	\BlankLine
+​	
+	  \current \leftarrow \spines first\;
+		\ForAll{ Spine $s$ $\in$ \hedgehog $\backslash$ \current }{
+    		\tcc{Find index of the closest local maximum}
+    		\closest \leftarrow \FindIndexOfClosestMax(\current, $||\cdot||^2$)\;
+    		\tcc{If no maximum found, skip to next spine}
+    		\If{\closest == null}{
+        		skip to next $s$\;
+    		}
+    		$v.$position \leftarrow $s$.origin + $s$.direction \cdot \closest\;
+    		\current \leftarrow $v$\;
+    		$\mathcal{T} + v$
+    }
+
+	\caption{Algorithm for evaluation of the hedgehog in \emph{track2track}.\label{alg:T2T} See text for a detailed explanation of the steps.} 
+\end{algorithm}
+
+
+## Preliminary Results
 
 \begin{marginfigure}
     \begin{center}
@@ -151,6 +210,19 @@ To reliably connect cells together over several timepoints, we use an incrementa
     Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
 \end{marginfigure}
 
+\begin{marginfigure}
+    \includegraphics{t2t-track.png}
+    \caption{A reconstructed cell track in a \emph{Platynereis} embryo. \TODO{Replace image}.\label{fig:T2TReconstructedTrack}}
+\end{marginfigure}
+
+Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See Figure \ref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
+
 ## Discussion and Future Work
+
+In this chapter we have introduced the _track2track_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve a significant speedup compared to manually tracking cells. 
+
+However, before we can bring this strategy into actual use for biologists, we need to do two things: First, perform a user test to figure out usability issues and improvements. Second, implement interactions that allow to track or proofread lineage trees. Such an interaction could, e.g., include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division. For large lineages however, track2track will unfortunately not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. We can probably further increase the usefulness of track2track by not just searching for local maxima along rays, but actually extract, e.g.,  centroids of cells.
+
+Ultimately, we would like to integrate track2track into existing tracking software, such that it can be helpful for a more general audience. Current developments in eye tracking hardware indicate falling prices in the near future, such that those devices might become way more common soon. Alternatively, one could imagine just having one or two eye  tracking-enabled HMDs, and make them available to users in a bookable item-facility-like manner.
 
 
