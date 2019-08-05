@@ -128,5 +128,13 @@
 % look in the figures path by default
 \graphicspath{{../figures/}{figures/}{./}{../figures/external/}{figures/external/}}
 
+\newlength\publishedboxwidth
+\setlength{\publishedboxwidth}{\dimexpr\textwidth-2\fboxsep}
+\usepackage[skins]{tcolorbox}
+\definecolor{publishedbg}{RGB}{230,230,230}
+\tcbset{commonstyle/.style={boxrule=0pt,sharp corners,enhanced jigsaw,nobeforeafter,boxsep=0pt,left=\fboxsep,right=\fboxsep}}
+\newtcolorbox{publishedin}{commonstyle,colback=publishedbg}
+
+
 % DOI linking with hyperref
 \renewcommand{\doi}[1]{\href{http://doi.org/#1}{DOI: #1}}

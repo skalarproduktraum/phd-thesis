@@ -1,4 +1,10 @@
 # scenery — Democratising VR/AR for Systems Biology
+
+\begin{publishedin}
+The work presented in this part has been partially published in\\
+\vspace{0.5em} 
+\textbf{Günther, U.}, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. \emph{IEEE VIS}, 2019. \href{https://arxiv.org/abs/1906.06726}{arXiv preprint 1906.06726}.
+\end{publishedin}
     
 In the chapters before, we have highlighted the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customisable visualisations, and reproducibility. 
 
@@ -12,8 +18,11 @@ After this chapter, we will introduce scenery's subsystems in more detail.
 
 ![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset. From [@Royer:2015tg].\label{fig:cvfiji}](ClearVolumeFiji.png)
 
-The work presented in this section has been developed in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Eugene Myers, MPI-CBG, and has been published in 
-Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W., 2015. _ClearVolume: open-source live 3D visualization for light-sheet microscopy_. _Nature Methods_, 12(6), p.480.
+\begin{publishedin}
+The work presented in this section has been developed in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Myers Lab, MPI-CBG, and has been published in\\
+\vspace{0.5em} 
+Royer, L.A., Weigert, M., \textbf{Günther, U.}, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. \emph{Nature Methods}, 2015.
+\end{publishedin}
 
 ClearVolume is a visualisation library enabling live, realtime visualisation of lightsheet microscopy data, with the capability of being integrated directly into an existing microscopy setup — ClearVolume can be used in conjunction with commonly-used microscopy control software, like MicroManager[@Edelstein:2010gf] or National Instruments LabVIEW.
 
