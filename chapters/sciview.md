@@ -1,4 +1,4 @@
-# SciView — integrating scenery into ImageJ2 & Fiji
+# sciview — Integrating scenery into ImageJ2 & Fiji
 
 ![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](sciview-gameoflife.png)
 
@@ -76,11 +76,11 @@ At the moment, all automatically-generated GUIs are generated for Swing.  The ge
 
 ### Zebrafish development
 
-![Screenshot of SciView, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
+![Screenshot of sciview, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
 
 \begin{marginfigure}
     \includegraphics{developmental-timelapse.png}
-    \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in SciView, from \citep{Daetwyler:2018e8d}.}
+    \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in sciview, from \citep{Daetwyler:2018e8d}.}
     \label{fig:developmental_timelapse_sciview}
 \end{marginfigure}
 
@@ -93,7 +93,7 @@ In [@Longair:2011snt], the authors present an ImageJ/Fiji plugin for quick and s
     \caption{Simple Neurite Tracer showing tracing neurons in the adult \emph{Drosophila} brain, and neuropils shown in addition to the traced neurites in the old Fiji 3D Viewer\label{fig:SNTOriginal}.}
 \end{figure*}
 
-We have expanded the original code to make SNT work on top of SciView, with an example image shown in Figure \ref{fig:sciviewSNT}.
+We have expanded the original code to make SNT work on top of sciview, with an example image shown in Figure \ref{fig:sciviewSNT}.
 
 \begin{figure*}
     \includegraphics{sciviewSNT.png}
