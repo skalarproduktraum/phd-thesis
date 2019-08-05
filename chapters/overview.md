@@ -46,10 +46,10 @@ Some of the results presented in this thesis have already been published :
 
 \subsection*{Peer-reviewed Papers}
 
-* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery — scenery – Flexible Virtual Reality Visualisation on the Java VM. Submitted to _IEEE VIS_, 2019, [arXiv preprint 1906.06726](https://arxiv.org/abs/1906.06726)
-* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019, [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1)
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019, [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061)
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 12(6), p.480, 2015
+* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery — scenery – Flexible Virtual Reality Visualisation on the Java VM. _IEEE VIS_, 2019. [arXiv preprint 1906.06726](https://arxiv.org/abs/1906.06726).
+* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019. [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1).
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019. [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061).
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 2015.
 
 
 
