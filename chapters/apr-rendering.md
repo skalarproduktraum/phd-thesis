@@ -193,14 +193,14 @@ The first prototype developed for APR visualisation, named _dive_, came to be be
 
 dive was able to primitively visualise APR datasets as point clouds, with no postprocessing applied (see Figure \ref{fig:dive}), but included limited support for the Oculus Rift DK2 HMD. It was also written from scratch using OpenGL 3.3 and SDL, where the need for a much quicker prototyping solution became apparent, as this cost much more time than it should have.
 
-![Visualisation of a partial _Danio rerio_ vasculature dataset using _dive_ as a point cloud. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA.\label{fig:dive}](dive.png)
+![Visualisation of a _Drosophila_ dataset using _dive_ as a point cloud.  The original dataset size is 960 MiB, while the APR only consumes 70 MiB. Dataset courtesy of Tomancak Lab, MPI-CBG Dresden.\label{fig:dive}](dive.png)
 
 ### User feedback
 
 A demo of _dive_ was shown at the 2014 BioImageInformatics conference in Leuven, Belgium. In addition, it was tested on 2 more lab members internally. The main points collected were:
 
 * flat colouring leads to a false impression of the dataset
-* dataset loading times were considered good, especially as the original dataset is about 500MiB, and the APR dataset around 20MiB \TODO{verify actual size}.
+* dataset loading times were considered good, especially as the original dataset is about 960MiB, and the APR dataset only 70MiB.
 * filtering based on particle properties should be possible
 
 ## Second prototype
