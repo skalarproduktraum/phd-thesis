@@ -6,7 +6,8 @@
 % Headers and page numbering 
 \usepackage{fancyhdr}
 \usepackage{fontspec}
-\usepackage{epigraph}
+\usepackage{nextpage,epigraph}
+\usepackage{tex/epipart}
 \usepackage{titlesec}
 \usepackage[toc,page]{appendix}
 \usepackage{pdfpages}
@@ -58,10 +59,11 @@
 
 \newcommand{\yellowbox}[1]{\colorbox{yellow}{#1}}
 \titleformat{\chapter}[display]
-  {\LARGE\headingfont}
+  {\LARGE\headingfont\begin{minipage}{\linewidth}}
   {\chaptertitlename\ \thechapter}
   {0pt}
   {\Huge\yellowbox}
+  [\end{minipage}]
 \titleformat*{\section}{\LARGE\headingfont}
 \titleformat*{\subsection}{\Large\headingfont}
 \makeatletter
