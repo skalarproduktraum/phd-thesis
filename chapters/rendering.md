@@ -66,7 +66,7 @@ This design decision was made such that scenery can support a variety of differe
 
 The Renderer interface in scenery is defined as:
 
-```kotlin
+\begin{lstlisting}[language=Kotlin, caption=Renderer interface definition.\label{lst:RendererInterface}]
 abstract class Renderer : Hubable {
     abstract fun initializeScene()
     abstract fun render()
@@ -92,7 +92,7 @@ abstract class Renderer : Hubable {
 
     ...
 }
-```
+\end{lstlisting}
 
 
 A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run synchronous with scenery's main loop.
@@ -136,9 +136,9 @@ The push mode mechanism also guarantees that all updates to the scene's content 
 
 ### Configurable Rendering Pipelines
 
-scenery provides configurable rendering pipelines which can contain multiple passes over the scene's geometry, or postprocessing (fullscreen) passes. The renderpasses are read from a YAML file, that looks e.g. like the following one for forward shading with HDR postprocessing:
+scenery provides configurable rendering pipelines which can contain multiple passes over the scene's geometry, or postprocessing (fullscreen) passes. The renderpasses are read from a YAML file. A simple example for a forward shading pipeline with HDR postprocessing can be seen in Listing \ref{lst:SimpleForwardShading}.
 
-```yaml
+\begin{lstlisting}[language=YAML, caption={Simple forward shading rendering pipeline definition.}, label=lst:SimpleForwardShading]
 name: Forward Shading
 description: Forward Shading Pipeline, with HDR postprocessing
 
@@ -167,7 +167,7 @@ renderpasses:
     parameters:
       Gamma: 1.7
       Exposure: 1.5
-```
+\end{lstlisting}
 
 In the render config file, both _rendertargets_ and _renderpasses_ are defined. A _rendertarget_ consists of a framebuffer name, a framebuffer size, and a set of attachments of the framebuffer that can have different data types. A _renderpass_ consists of a pass name, a type -- geometry or quad (for postprocessing) --, a set of default shaders, and defined _inputs_ and _outputs_. The renderpass may also define a set of _shader parameters_, which are handed over to the shader via the `UBO` mechanism, and supports all the data types supported by `UBO`.
 
@@ -184,9 +184,8 @@ If a DAG cannot be formed from the given definition, `RenderConfigReader` will e
 
 Render configs are switchable during runtime and will cause the renderer to destroy and recreate its rendering framebuffers. This mechanism is e.g. used to toggle stereo rendering during runtime.
 
-Let's also show a more complex rendering pipeline configuration:
-
-```yaml
+\begin{fullwidth}
+\begin{lstlisting}[language=YAML, caption={Deferred Shading rendering pipeline definition, with forward shading for transparent geometry as separate step, HDR, and FXAA antialiasing as postprocessing steps.}, label=lst:DeferredShadingPipeline, multicols=2]
 name: Deferred Shading
 description: Deferred Shading, with HDR postprocessing and FXAA
 sRGB: true
@@ -363,9 +362,10 @@ qualitySettings:
     AO.shaders:
       - "FullscreenQuadFrustum.vert.spv"
       - "HBAO.frag.spv"
-```
+\end{lstlisting}
+\end{fullwidth}
 
-In this rendering pipeline configuration, we apply the following techniques:
+A more complex rendering pipeline definition is shown in Listing \ref{lst:DeferredShadingPipeline}. In this rendering pipeline configuration, we apply the following techniques:
 
 * Deferred Shading [@Deering:1988jd], for being able to render a large number of lights by splitting geometry processing and lighting into two separate passes: for every pixel, first, surface normals (with an efficient normal storage, where 3D unit vectors are compressed into a 2D octogon [@Zigolle:2014ase]), surface material properties, and depth are stored into separate buffers in the `Scene` pass, second, the final shading of the pixel is determined from these buffers in the `DeferredLighting` pass.
 * Ambient Occlusion via the HBAO algorithm [@Bavoil:2008a61] in the `AO` pass, with horizontal and vertical blurring in the `AOBlurV` and `AOBlurH` passes,
@@ -480,13 +480,6 @@ Volume rendering in scenery is done via volume raycasting, where a ray for each 
 * _alpha blending_, where the attenuation of light entering the volume is simulated in a physically plausible manner.
 
 The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. 
-
-\begin{marginfigure}
-    \includegraphics{sciview-alphacompositing.png}
-    \caption{A volume rendered in scenery using local maximum intensity projection, showing the Game of Life in 3D.\label{fig:lmipvolume}}
-\end{marginfigure}
-
-An example of a LMIP-rendered volume is shown in Figure \ref{fig:lmipvolume}.
 
 For alpha blending, the ordering of the volumes does matter, and accurate visualisation is only possible if all the volumes occupying the same space are rendering in the same moment. Alpha blending is based on a physical model, and in the next subsection we are going to derive the front-to-back compositing equations used in scenery, and then discuss options going beyond alpha compositing for added realism:
 
