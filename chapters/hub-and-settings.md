@@ -1,4 +1,4 @@
-# Other Subsystems
+# Hub and Settings
 
 In this chapter, we will briefly talk about the Hub and Settings systems of scenery: The Hub is the communications backbone of scenery, while the Settings store gathers user- and system-defined settings from various places and makes them available to the scenery in a type-safe manner.
 

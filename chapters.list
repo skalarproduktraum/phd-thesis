@@ -16,7 +16,7 @@ chapters/scenery.md
 chapters/rendering.md
 chapters/external-hardware.md
 chapters/distributed-rendering.md
-chapters/other-subsystems.md
+chapters/hub-and-settings.md
 chapters/future-directions.md
 # Developing with scenery chapter, removed for the moment
 # chapters/developing-with-scenery.md
