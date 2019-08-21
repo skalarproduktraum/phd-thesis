@@ -18,7 +18,9 @@ If bounding boxes are stored along with the nodes, the scenegraph can easily be 
 
 ### Traversal
 
-Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. In scenery, the scenegraph is traversed by default in the same way it is stored. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.
+Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. Depth-first traversal is also used by default in scenery. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.
+
+The exception to normal scenegraph traversal is [Instancing], where copies of a node are not added as children, but to the special `instances` property as performance optimisation. See the section on instancing for details.
 
 ### The Nodes
 
@@ -42,14 +44,12 @@ The transforms are calculated by a `Node`s `updateWorld(recursive: Boolean, forc
 
 Some nodes might want to construct their own model and world matrices, overriding the behaviour of `updateWorld`: this can be achieved by setting the `wantsComposeModel` flag to `false`.
 
-\TODO{Add scene graph figure}
-
 [^quatnote]: Quaternions are a 4-dimensional extension of complex numbers, that can describe rotations in space. While rotations may as well be represented as matrices, such representations suffer from two problems: a) matrices cannot be smoothly interpolated and b) they may lead to _gimbal locking_, where the sine or cosine of an angle in a rotation matrix lead to a zero entry, making the transformation loose a degree of freedom — further multiplications will not be able to achieve a non-zero rotation around this axis. Quaternions do not suffer from both problems, they are however not as intuitive as other rotation representations such as Euler angles. In scenery, helper routines are provided to convert Euler angles or matrices to quaternions for user convenience.
 
 
 ## The Rendering Procedure in scenery
 
-In scenery, the contract with the renderer is a thin one: a renderer needs to:
+In scenery, the contract with the renderer is thin. A renderer needs to:
 
 * be able to render something (`render()` function),
 * initialize a scene (`initializeScene()` function),
@@ -60,7 +60,7 @@ In scenery, the contract with the renderer is a thin one: a renderer needs to:
 * toggle push mode (`pushMode` property, see [Push Mode] section),
 * hold settings (`settings` property),
 * hold a window (`window` property), and
-* close.
+* close itself.
 
 This design decision was made such that scenery can support a variety of different rendering backends, after discovering that OpenGL — which scenery started with as only renderer — and Vulkan do not map well to each other. With this architecture we are more easily able to extend rendering support in the future to e.g. software renderers, or external ray tracing frameworks.
 
@@ -90,12 +90,13 @@ abstract class Renderer : Hubable {
     abstract var lastFrameTime: Float
     abstract var renderConfigFile: String
 
+    // more functions follow here
     ...
 }
 \end{lstlisting}
 
 
-A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. In the opposite case, the renderer will run synchronous with scenery's main loop.
+A renderer may also run in its own thread, but must indicate that properly by setting `managesRenderLoop`, as e.g. done by the OpenGL renderer. Otherwise, the renderer will run synchronous with scenery's main loop.
 
 A renderer may store its own metadata related to a `Node` in its `metadata` field. This field is cleared upon the removal of a `Node` from the scene. The `metadata` must be uniquely named, such that renderers — which could be running in parallel — do not interfere with each other's `metadata`.
 
@@ -105,9 +106,9 @@ At the time of writing, scenery includes a high-performance Vulkan renderer, use
 
 On the Java VM, the main options for drawing (to) windows and related elements are AWT, Swing, and JavaFX. In scenery, the currently supported mode for embedding into existing windows is Swing, which is supported by both the OpenGLRenderer and the VulkanRenderer. 
 
-In development, we had originally started out with using JavaFX, the most modern UI toolkit for the Java VM. JavaFX however has the problem that it works entirely GPU-based, but does not allow the developer to directly access GPU resources. The consequence: Images already generated on the GPU have to be transferred to main memory, and are then again uploaded to the GPU as a texture by JavaFX's internal mechanisms. As bandwidth is usually a limited resource, this leads to severe performance issues, especially when rendering at higher resolutions beyond full HD (1920x1080). Recently, a new project named _DriftFX_ [^DriftFXNote] appeared, which aims to solve this issue by introducing operating system-native OpenGL rendering surfaces into JavaFX, circumventing the double-transfer issue just described. Our hope is we can harness this project in the future, and eventually extend it to support Vulkan as well.
+In development, we had originally started out with using JavaFX, the most modern UI toolkit for the Java VM. JavaFX however has the problem that it works entirely GPU-based, but unfortunately does not allow the developer to directly access GPU resources, keeping them hidden and inaccessible. The consequence: Images already generated on the GPU have to be transferred to main memory, and are then again uploaded to the GPU as a texture by JavaFX's internal mechanisms. As bandwidth is usually a limited resource, this leads to severe performance issues, especially when rendering at higher resolutions beyond full HD (1920x1080). Recently, a new project named _DriftFX_ [^DriftFXNote] appeared, which aims to solve this issue by introducing operating system-native OpenGL rendering surfaces into JavaFX, circumventing the double-transfer issue just described. Our hope is we can harness this project in the future, and eventually extend it to support Vulkan as well.
 
-
+[^DriftFXNote]: The DriftFX project ([github.com/eclipse-efx/efxclipse-drift/](https://github.com/eclipse-efx/efxclipse-drift/)) provides an extension for JavaFX to allow direct use of OpenGL. As this project appeared only very recently, we have not yet evaluated it.
 
 ### Uniform Buffer Serialisation and Updates
 
@@ -120,7 +121,7 @@ In scenery, UBOs belonging to a Node are tentatively updated with each frame bef
 
 Serialisation of a `Node`'s transformations and properties are handled by the class `UBO`. In that class, member variables of the UBO are stored as a `LinkedHashMap` of a string (for the property name), and a lambda of type `() -> Any` for the value of the property. This mechanism enables determining values of properties that change during runtime, without rewriting the contents of the map. Order in the struct does matter, which is why a linked map is being used. The actual order of the properties is determined via shader introspection. For common data types (floats, doubles, integers, shorts, booleans, vectors, and matrices), `UBO` will determine the necessary size and offset of a certain property, and write the contents of the property to a `ByteBuffer`, according to OpenGL's and Vulkan's `std140` buffer rules, storing data in the same memory layout as C-style structs.
 
-After an `UBO` has been serialised for the first time, a hash is calculated from its current members. Upon revisiting this `UBO`, the previous member hash is compared with the current one, to determine whether re-serialisation is necessary or not. In case re-serialisation is not necessary, the buffer backing the UBO will remain untouched and continued to be used in that state. If it needs to be re-serialised, it will also be re-uploaded to the GPU.
+After an UBO has been serialised for the first time, a hash is calculated from its current members. Upon revisiting this `UBO`, the previous member hash is compared with the current one, to determine whether re-serialisation is necessary or not. In case re-serialisation is not necessary, the buffer backing the UBO will remain untouched and continued to be used in that state. If it needs to be re-serialised, it will also be re-uploaded to the GPU.
 
 ### Push Mode
 
@@ -136,7 +137,9 @@ The push mode mechanism also guarantees that all updates to the scene's content 
 
 ### Configurable Rendering Pipelines
 
-scenery provides configurable rendering pipelines which can contain multiple passes over the scene's geometry, or postprocessing (fullscreen) passes. The renderpasses are read from a YAML file. A simple example for a forward shading pipeline with HDR postprocessing can be seen in Listing \ref{lst:SimpleForwardShading}.
+scenery provides configurable rendering pipelines which can contain multiple passes over the scene's geometry, or postprocessing (fullscreen) passes. 
+
+The renderpasses are read from a YAML file. A simple example for a forward shading pipeline with HDR postprocessing can be seen in Listing \ref{lst:SimpleForwardShading}: In this simple pipeline, the scene contents are rendered in a single pass into the 16bit RGBA floating point rendertarget HDR (line 5) by the `Scene` rendering pass (line 11). The HDR postprocessing is done in the `PostprocessHDR` pass (line 18), which outputs to the viewport.
 
 \begin{lstlisting}[language=YAML, caption={Simple forward shading rendering pipeline definition.}, label=lst:SimpleForwardShading]
 name: Forward Shading
@@ -173,7 +176,7 @@ In the render config file, both _rendertargets_ and _renderpasses_ are defined. 
 
 The definition must contain one renderpass that outputs to Viewport, otherwise nothing will be rendered.
 
-From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG), which in the forward shading case will be relatively simple. The graph is shown in Figure \ref{fig:SimpleRenderpipelineGraph}.
+From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG). The resulting graph for the forward shading example in Listing \ref{lst:SimpleForwardShading} is shown in Figure \ref{fig:SimpleRenderpipelineGraph}.
 
 \begin{figure*}
     \includegraphics{RenderpipelineExampleSimple.pdf}
@@ -182,7 +185,7 @@ From the definition in the YAML file, `RenderConfigReader` will try to form a di
 
 If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
 
-Render configs are switchable during runtime and will cause the renderer to destroy and recreate its rendering framebuffers. This mechanism is e.g. used to toggle stereo rendering during runtime.
+Render configs are switchable during runtime and switching will cause the renderer to destroy and recreate its rendering framebuffers — while all other loaded textures and resources are preserved. This mechanism is e.g. used to toggle stereo rendering during runtime, and can facilitate rapid prototyping. In addition, the renderer can watch used shader files actively for changes, try to compile them, and, if compilation and linking is successful, replace them on-the-fly. To toggle this behaviour, `Renderer.watchShaders()` can be called.
 
 \begin{fullwidth}
 \begin{lstlisting}[language=YAML, caption={Deferred Shading rendering pipeline definition, with forward shading for transparent geometry as separate step, HDR, and FXAA antialiasing as postprocessing steps.}, label=lst:DeferredShadingPipeline, multicols=2]
@@ -367,10 +370,10 @@ qualitySettings:
 
 A more complex rendering pipeline definition is shown in Listing \ref{lst:DeferredShadingPipeline}. In this rendering pipeline configuration, we apply the following techniques:
 
-* Deferred Shading [@Deering:1988jd], for being able to render a large number of lights by splitting geometry processing and lighting into two separate passes: for every pixel, first, surface normals (with an efficient normal storage, where 3D unit vectors are compressed into a 2D octogon [@Zigolle:2014ase]), surface material properties, and depth are stored into separate buffers in the `Scene` pass, second, the final shading of the pixel is determined from these buffers in the `DeferredLighting` pass.
-* Ambient Occlusion via the HBAO algorithm [@Bavoil:2008a61] in the `AO` pass, with horizontal and vertical blurring in the `AOBlurV` and `AOBlurH` passes,
-* tone-mapping of the 16bit HDR color output of the `DeferredLighting` pass in the `HDR` pass, using the ACES tone mapping operator[^ACESnote], and
-* Anti-aliasing of the final image via the Fast approximate anti-aliasing algorithm [@Lottes:200983a] in the `FXAA` pass.
+* Deferred Shading [@Deering:1988jd], for being able to render a large number of lights by splitting geometry processing and lighting into two separate passes: for every pixel, first, surface normals (with an efficient normal storage, where 3D unit vectors are compressed into a 2D octogon [@Zigolle:2014ase]), surface material properties, and depth are stored into separate buffers in the `Scene` pass (line 35), second, the final shading of the pixel is determined from these buffers in the `DeferredLighting` pass (line 90).
+* Ambient Occlusion via the HBAO algorithm [@Bavoil:2008a61] in the `AO` pass, with horizontal and vertical blurring in the `AOBlurV` and `AOBlurH` passes (lines 43, 60, and 75),
+* tone-mapping of the 16bit HDR color output of the `DeferredLighting` pass in the `HDR` pass, using the ACES tone mapping operator[^ACESnote] (line 120), and
+* Anti-aliasing of the final image via the Fast approximate anti-aliasing algorithm [@Lottes:200983a] in the `FXAA` pass (line 130).
 
 This rendering pipeline configuration also showcases shader properties (see e.g. `Direction` or `Pass.displayWidth` in the `parameters` section of the `AOBlurH` pass). These are explained in more detail in the section [Shader Introspection and Shader Properties].
 
@@ -389,15 +392,14 @@ In scenery, scene object discovery (determining which objects are to be rendered
 
 The main rendering loop will proceed after the visible objects have been determined:
 
-\TODO{add rendering flow diagram}
 The main loop then proceeds as follows:
 
 1. Loop through the flow of renderpasses, except Viewport pass:
-	1. determine the kind of pass 	
-	2. bind framebuffers for output
-	3. blit contents of inputs into output framebuffer (if configured)
-	4. set pass configuration and blending options
-	5. iterate through scene objects (if scene pass or light pass) or draw fullscreen quad (if quad/postprocessing pass), and bind UBOs and buffers for each object as necessary
+	a. determine the kind of pass 	
+	b. bind framebuffers for output
+	c. blit contents of inputs into output framebuffer (if configured)
+	d. set pass configuration and blending options
+	e. iterate through scene objects (if scene pass or light pass) or draw fullscreen quad (if quad/postprocessing pass), and bind UBOs and buffers for each object as necessary
 2. Run the viewport pass in the same way as (5), but siphon out data for third-party consumers (video recording, screenshots,...) if necessary
 3. Swap buffers.
 
@@ -456,7 +458,7 @@ layout(set = 2, binding = 0, std140) uniform ShaderParameters {
 
 ### Instancing
 
-Instancing can be done by defining a `Node`'s `instanceMaster` property as `true` and adding other `Nodes` to its `instances` property. Instances are not part of the regular scene graph for improved discovery performance, but their transformation matrices are updated in the same manner. Instanced properties can be added to the master node's `instancedProperties` hash map, and are serialised in the same manner as UBOs. As instances are not allowed to depend on each other, the serialisation is done in parallel in a number of worker threads using coroutines, such that tens of thousands of instances can be updated at interactive frame rates.
+Instancing can be done by defining a `Node`'s `instanceMaster` property as `true` and adding other `Nodes` to its `instances` property. Instances are not part of the regular scene graph for improved discovery performance, but their transformation matrices are updated in the same manner. Instanced properties can be added to the master node's `instancedProperties` hash map, and are serialised in the same manner as UBOs. As instances are not allowed to depend on each other, the serialisation is done in parallel in a number of worker threads using coroutines, such that hundreds of thousands of instances can be updated at interactive frame rates.
 
 To use instancing, the user needs to provide a custom shader that declares the properties set in `instancedProperties`, e.g. as in
 
@@ -466,8 +468,9 @@ layout(location = 1) in vec3 vertexNormal;
 layout(location = 2) in vec2 vertexTexCoord;
 layout(location = 3) in mat4 iModelMatrix;
 ```
-where the location 3 defines the instanced model matrix. For Vulkan, scenery will automatically derive a fitting vertex description consisting of both `VkVertexInputAttributeDescription`s and `VkVertexInputBindingDescription`s (see `VulkanRenderer::vertexDescriptionFromInstancedNode`).
+where the location 3 defines the instanced model matrix. For both Vulkan and OpenGL, scenery will automatically derive a fitting vertex description.
 
+It is important to note here that a matrix occupies more than a single vertex input, such that the next available location after the 4x4 matrix `iModelMatrix` would be location 7.
 
 ## Rendering of Volumetric Data
 
@@ -475,8 +478,8 @@ where the location 3 defines the instanced model matrix. For Vulkan, scenery wil
 
 Volume rendering in scenery is done via volume raycasting, where a ray for each screen pixel, originating at the camera's near plane is shot perspectively correct through the piece of volumetric data, accumulating color and alpha information along the way. The accumulation function is customisable and can be used to realise e.g. the following compositing options:
 
-* _maximum projection_ (MIP), where each voxel data point along the way is compared to the previous, and the maximum kept,
-* _local maximum projection_ (LMIP), where each voxel data point along the way is compared to the previous, and the maximum kept, but only after reaching a user-defined threshold, and
+* _maximum intensity projection_ (MIP), where each voxel data point along the way is compared to the previous, and the maximum kept,
+* _local maximum intensity projection_ (LMIP), where each voxel data point along the way is compared to the previous, and the maximum kept, but only after reaching a user-defined threshold, and
 * _alpha blending_, where the attenuation of light entering the volume is simulated in a physically plausible manner.
 
 The first two of those, MIP and LMIP, are commutative in the sense that volumes superimposed on top of each other will lead to the same result, no matter in which order they are being rendered. 
@@ -485,36 +488,36 @@ For alpha blending, the ordering of the volumes does matter, and accurate visual
 
 ### Alpha compositing
 
-In general, the total spectral radiance $L_0(\vec{p}, \vec{v})$ — the quantity rendering determines for a pixel — at a point $\vec{p}$ in direction $\vec{v}$ is given by the rendering equation [@Kajiya:1986tre]:
+In general, the total spectral radiance $L_0(\vec{p}, \vec{v})$ — the quantity rendering determines for a pixel — at a point $\vec{p}$ in direction $\vec{v}$ is given by the rendering equation [@Kajiya:1986tre], where $\vec{l}$ is the light direction, and $\vec{n}$ the surface normal:
 
 \begin{align}
-L_0(\vec{p}, \vec{v}) & = L_e(\vec{p}, \vec{v}) \\ 
-& + \int_{l \in \Omega} \mathrm{d}\vec{l} L_0(r(\vec{p}, \vec{l}, -\vec{l}) (\vec{n}\cdot\vec{l})^{+},
+L_0(\vec{p}, \vec{v}) & = \textcolor{ForestGreen}{L_e(\vec{p}, \vec{v})} \\ 
+& + \textcolor{Cerulean}{\int_{l \in \Omega} \mathrm{d}\vec{l} L_0(r(\vec{p}, \vec{l}, -\vec{l}) (\vec{n}\cdot\vec{l})^{+}},
 \end{align}
 or, 
 
-\begin{align}
-\text{Spectral radiance at}\,\vec{p} \text{ in direction } \vec{v} & = \text{Emission at}\, \vec{p} \text{ in direction } \vec{v}\\
-& + \text{Reflected radiance from hemisphere}\,\Omega.
-\end{align}.
+\begin{align*}
+\text{Spectral radiance at}\,\vec{p} \text{ in direction } \vec{v} & = \textcolor{ForestGreen}{\text{Emission at}\, \vec{p} \text{ in direction } \vec{v}}\\
+& + \textcolor{Cerulean}{\text{Reflected radiance from hemisphere}\,\Omega}.
+\end{align*}
 
 As this integral is recursive — the reflected radiance at a given point $\vec{l}$ depends on previous surface bounces subject to the same integral — it is in general very hard to solve accurately. For this reason, [@Sabella:1984ara] introduces an extension and simplification of the rendering equation for volumetric data: In this volumetric rendering equation, we compute $L(x)$, which is the spectral radiance at a point $x$ along a ray, ignoring previous surface bounces:
 
 \begin{align}
 L(x) = \int_{x}^{y} \mathrm{d}x' \epsilon(x')\exp\left( -\int_{x}^{x'}\mathrm{d}x'' \tau(x'') \right).
-\label{eq:VolumeRenderingEquation}.
+\label{eq:VolumeRenderingEquation}
 \end{align}
 
 The spectral radiance here depends on $\epsilon(x')$, the emission, and $\tau(x')$, the absorption function, describing the probability of absorbing a photon along unit distance on the ray. Note here that this emission-absorption model completely ignores scattering.
 
-Eq. \ref{eq:VolumeRenderingEquation} can be discretised as
+Eq. \ref{eq:VolumeRenderingEquation} can be discretised as Riemann sum,
 
 \begin{align}
 L(x) & = \sum_{i} \epsilon_{i} \Delta x\cdot \exp \left( -\sum_{j}^{i-1}\tau_{j} \Delta x \right)\\
  & =  \sum_{i} \epsilon_{i} \Delta x\cdot \prod_{j=0}^{i-1}\exp \left( -\tau_{j} \Delta x \right).
 \end{align}.
 
-This discretisation gives natural rise to interpretations of (premultiplied alpha) color, and opacity:
+This discretisation gives natural rise to interpretations of  color (pre-multiplied by the alpha value), and opacity:
 
 \begin{align}
 \alpha_i C_i &= \epsilon_i \Delta x \,\,\text{(color)}\\
@@ -542,7 +545,7 @@ An example of an alpha-composited volume rendering is shown in Figure \ref{fig:a
 
 ### Out-of-core rendering
 
-Out-of-core rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
+Out-of-core (OOC) rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
 
 BigDataViewer[@Pietzsch:2015hl] has introduced a HDF5[@hdf52017]-based pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources (see Figure \ref{fig:bdvDrosophila} for an example).
 
@@ -556,7 +559,7 @@ scenery also includes support for loading these data sets, and for that makes us
 
 ![scenery rendering an out-of-core, multiview _Drosophila_ dataset consisting of three different views (color-coded) using the BigDataViewer integration. volume rendering using maximum intensity projection. On the left-hand side, the transfer function has been adjusted to make boundaries between the different subvolumes visible more clearly. \label{fig:sceneryBDV}](ooc-drosophila.png)
 
-Volumetric data for out-of-core rendering is stored in tiles of up to $2^31$ voxels. Tiles are addressed with 64bit, leading to a theoretical maximum data size of $2^94$ voxels. Tiles are stored in a GPU cache. The cache is organised into small, uniformly-sized blocks storing a particular tile of the volume in the resolution pyramid. All tiles are padded by one voxel to avoid bleeding artifacts. To render a particular view of a volume, we determine the base resolution, such that the screen resolution is matched for the voxel closest to the observer. We then prepare a 3D lookup texture (LUT) where each voxel corresponds to a volume block at base resolution. Each voxel in the LUT stores the coordinates of a tile in the in cache, as well as the resolution level relative to the base level, encoded as RGBA quadruple. For each visible volume tile, we determine the ideal resolution by the distance to the observer. 
+Volumetric data for out-of-core rendering is stored in tiles of up to $2^{31}$ voxels. Tiles are addressed with 64bit, leading to a theoretical maximum data size of $2^{94}$ voxels, or about 20000 Yottabyte. Tiles are stored in a GPU cache. The cache is organised into small, uniformly-sized blocks storing a particular tile of the volume in the resolution pyramid. All tiles are padded by one voxel to avoid bleeding artifacts. To render a particular view of a volume, we determine the base resolution, such that the screen resolution is matched for the voxel closest to the observer. We then prepare a 3D lookup texture (LUT) where each voxel corresponds to a volume block at base resolution. Each voxel in the LUT stores the coordinates of a tile in the in cache, as well as the resolution level relative to the base level, encoded as RGBA quadruple. For each visible volume tile, we determine the ideal resolution by the distance to the observer. 
 
 If a tile requested is already present in the cache, we encode its coordinates in the corresponding LUT voxel. Should a tile not yet be present in the cache, we enqueue the missing block for asynchronous loading through the cache layer of BigDataViewer. Recently-loaded blocks are inserted into the cache texture. The cache has least-recently used (LRU) behaviour, such that the oldest tiles are the first ones to be replaced. Missing blocks are substituted by lower-resolution data while not yet available.
 
@@ -564,11 +567,16 @@ When the LUT is prepared, volume rendering proceeds by raycasting, while adaptin
 
 This approach enables to render multiple volumes simultaneously, by adding additional LUTs for each volume. Non-out-of-core volumes can be rendered as well, such then do not require additional LUTs.
 
-To produce the correct shader for multiple volumes, which can also change in number, we make use of a custom `ShaderFactory` that can ingest the shader code generated by BigVolumeViewer, and transform it to scenery's conventions. ShaderFactories are created for a particular number of volumes (e.g. 3 out-of-core volumes, mixed with 2 regular ones), and cached up to a count of 8 factories. A sketch of the workflow is shown in Figure \ref{fig:sceneryBVV}.
+To produce the correct shader for multiple volumes, which can also change in number, we make use of a custom `ShaderFactory` that can ingest the shader code generated by BigVolumeViewer, and transform it to scenery's conventions. ShaderFactories are created for a particular number of volumes, e.g., 3 out-of-core (OOC) volumes, mixed with 2 regular ones, and cached up to a count of 8 factories. A sketch of the workflow is shown in Figure \ref{fig:sceneryBVV}.
 
-![Workflow for translating between BigVolumeViewer and scenry. \label{fig:sceneryBVV}](outofcore-workflow.pdf)
+\begin{figure*}
+    \includegraphics{outofcore-workflow.pdf}
+    \caption{Workflow for translating between BigVolumeViewer and scenery. \label{fig:sceneryBVV}}
+\end{figure*}
 
 ## Rendering with OpenGL
+
+In this section, we will introduce how a scene is rendered with OpenGL, to compare it with Vulkan lateron. 
 
 ### Initialisation
 
@@ -601,7 +609,11 @@ The renderer then proceeds with scene initialisation, initialising each `Node` i
 [^vbonote]: Vertex Buffer Objects are the buffers on the GPU that actually contain the vertices of a Node's geometry. In scenery, they are stored in a strided format, meaning that vertices and normals are not stored as `V1V2V3N1N2N3...`, but rather as `V1N1V2N2V3N3`, for improved cache locality.
 [^vaonote]: Vertex Array Objects describe which buffers a rendered object in OpenGL uses, and what the data layouts of these buffers are.
 
+### Rendering
+
 ## Rendering with Vulkan
+
+After having introduced the rendering steps in OpenGL, in this section we do the same for the newer, high-performance Vulkan API.
 
 ### Initialisation
 
@@ -638,21 +650,30 @@ Note here that the Vulkan renderer does not perform explicit scene initialisatio
 
 [^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
 
-In Figure \TODO{Add comparison figure} we provide a visual overview of the initialisation procedures for both renderers.
+### Rendering
 
 ## Performance
+
+The Java Virtual Machine is quite an unorthodox choice for realtime rendering. One reason might be that the JVM is still perceived as slow, especially when compared to close-to-metal languages like C or C++.
+
+In this section, we compare performance of matrix multiplications on the Java VM with native code. Matrix multiplications in our context are particularly representative, as they occur in large amounts when doing scene graph traversals, in order to compute node positioning, scaling, and rotation in space.
+
+At the end of this section, we additionally compare the performance of the OpenGL and Vulkan renderers with each other.
 
 ### Performance of Matrix multiplications on the Java Virtual Machine
 
 _The code for the performance comparison can be found at [github.com/skalarproduktraum/java-autovectorisation-test](https://github.com/skalarproduktraum/java-autovectorisation-test)_
 
-The Java Virtual Machine is quite an unorthodox choice for realtime rendering. One reason might be that the JVM is still perceived as slow, especially when compared to close-to-metal languages like C or C++.
 
-Recent studies\TODO{cite!} have shown however that the performance of JVM-based software is at least on par with other Virtual Machine-based languages (such as C#), and does not lag behind C/C++ much — usually a factor of two.
+Recent studies in the _Computer Languages Benchmark Game_[^BenchmarkGameNote], which benchmarks different languages in scenarios such as computing Mandelbrot sets or n-body simulations, have shown that the performance of JVM-based software is on par with other VM-based languages (such as C# or Julia), or even Intel Fortran, and does not lag behind C/C++ much — usually a factor of two (see also Figure \ref{fig:PerfComparison}, benchmarking with "toy example" should however always be taken with a grain of salt, as real-world performance may be influenced by a variety of other factors).
+
+![Comparison of different languages with the _Computer Languages Benchmark Game_, as of August 2019. Figure from [benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html).](fastest-08-2019.pdf)
+
+[^BenchmarkGameNote]: See [benchmarksgame-team.pages.debian.net/benchmarksgame/](https://benchmarksgame-team.pages.debian.net/benchmarksgame/).
 
 High-performing code on the JVM is usually written by understanding what optimisations the JVM does in which case, and not trying to outsmart the JVM. For parts of the code the JVM determines as performance hotspots, the bytecode is taken and compiled to native code _just-in-time_, usually leading to near-native performance. In this subsection, we will investigate a specific performance case, namely matrix multiplications. For any transformations in 3D, matrix multiplications play a crucial role, and are often executed thousands of times per second for a moderately complex scene.
 
-For our comparison, we consider three different ways to do matrix multiplications, defined as $C = \sum_{i}\sum_{j}A_i B_j$:
+For our comparison, we consider three different ways to do matrix multiplications, defined as $C_{ij} = \sum_{k} A_{ik} B_{kj}$:
 
 * _loop-based_, where the two sums are implemented as loops over the floating-point numbers stored in float arrays,
 * _loop-based with FMA_, where the two sums are implemented as loops over the floating-point numbers stored in float arrays, and the summation is done by the FMA (fused multiply-add) instruction, which executes a $a \cdot b + c$ operation in one CPU cycle (supported since Java 9), and
@@ -660,7 +681,7 @@ For our comparison, we consider three different ways to do matrix multiplication
 
 By using the _hsdis_ utility of the Java Development Kit, it is possible to glimpse into the assembly code that gets generated by the JVM, after passing the flags `-XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly` to the JVM on startup.
 
-In the loop case, we arrive at very inefficient assembly containing a lot of jumps, but also AVX512 SIMD (single instruction, multiple data) instructions (see Figure \ref{fig:MMloop}) — although they are only scalar operations, while ideally they'd be vectorised. In contrast, the FMA-based and unrolled loop version (see Figures \ref{fig:MMfma} and \ref{fig:MMunrolled}) yield better assembly code with less jumps, and more AVX512 commands, leading to less CPU cycles needed for the matrix multiplication. The AVX512 commands however operate only on the 128bit SSE registers (`xmm0-15`), while for optimal performance they should use the 512bit AVX512 registers `zmm0-31`, or at least the 256bit AVX registers `ymm0-15`.
+In the loop case, we arrive at very inefficient assembly containing a lot of jumps, but also AVX512 SIMD (single instruction, multiple data) instructions mixed with SSE SIMD instructions — although they are only scalar operations, while ideally they'd be vectorised. In addition, the mixing of AVX and SSE registers incurs a performance penalty (the assembly is not shown here due to its length). In contrast, the FMA-based and unrolled loop version (see Figures \ref{fig:MMfma} and \ref{fig:MMunrolled}) yield better assembly code with less jumps, and more AVX512 commands, leading to less CPU cycles needed for the matrix multiplication. The AVX512 commands however operate only on the 128bit SSE registers (`xmm0-15`), while for optimal performance they should use the 512bit AVX512 registers `zmm0-31`, or at least the 256bit AVX registers `ymm0-15`.
 
 \begin{figure*}
     \includegraphics{MM_fma.pdf}
@@ -672,20 +693,53 @@ In the loop case, we arrive at very inefficient assembly containing a lot of jum
     \caption{Generated assembly for the loop-unrolling matrix multiplication, ran on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz.\label{fig:MMunrolled}}
 \end{figure*}
 
-The following table shows the results for the different routines for matrix multiplications, with the benchmarks run on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz using the Java Microbenchmarking Harness:
+The following table shows the results for the different routines for matrix multiplications, with the benchmarks run on JDK 9.0.4, macOS 10.12.6, Intel Core i7-4980HQ CPU @ 2.80GHz using the Java Microbenchmarking Harness (timings given are averaged over 10 iterations, with 5 iterations of warm-up before):
 
-| Routine | Timing |
+| Routine | Timing ± Std.Dev. |
 |:--|:--|
 | Loop-based | 27.664±0.782ns |
 | Loop-based, FMA | 24.553±0.774ns |
 | Unrolled loop | 21,906±0.389ns |
+| Unrolled loop | 21,906±0.389ns |
+| _C++ loop-based_ (`gcc -O1`) | 25.6ns |
+| _C++ AVX512_ (`gcc -O3`) | 3.2ns |
 
-Table: Matrix multiplications routines on the JVM compared. {#tbl:MatrixMultiplicationComparison}
+Table: 4x4 matrix multiplications routines on the JVM compared with native C++ routines. {#tbl:MatrixMultiplicationComparison}
+
+Ideally, 4x4 matrix multiplication would utilise both AVX512 commands and registers. This can be achieved with hand-written C code, see Listing \ref{lst:AVX512MatMult} for an example. 
+
+\begin{lstlisting}[language=C++, caption={Example code for 4x4 matrix multiplication using AVX512 intrinsics. Source: \href{gist.github.com/rygorous/4172889}{https://gist.github.com/rygorous/4172889}.}, label=lst:AVX512MatMult, float]
+#include <immintrin.h>
+#include <intrin.h>
+
+union Mat44 {
+    float m[4][4];
+    __m128 row[4];
+};
+
+void matmult_AVX_8(Mat44 &out, const Mat44 &A, const Mat44 &B)
+{
+    _mm256_zeroupper();
+    __m256 A01 = _mm256_loadu_ps(&A.m[0][0]);
+    __m256 A23 = _mm256_loadu_ps(&A.m[2][0]);
+    
+    __m256 out01x = twolincomb_AVX_8(A01, B);
+    __m256 out23x = twolincomb_AVX_8(A23, B);
+
+    _mm256_storeu_ps(&out.m[0][0], out01x);
+    _mm256_storeu_ps(&out.m[2][0], out23x);
+}
+\end{lstlisting}
+
+As can be seen from the table, the unoptimised C++ version of loop-based 4x4 matrix multiplication is in the same timing region as the loop-based Java version. The AVX512 is way faster, though. In the future, the JVM will gain native support for using SSE and AVX intrinsics manually in the language, almost certainly closing that gap. This initiative runs under the name _Project Panama_, and preview releases can be found at [openjdk.java.net/projects/panama](https://openjdk.java.net/projects/panama). scenery has already been tested successfully with the preview releases of Project Panama, benchmarks will be conducted in the future once the Project Panama API for intrinsics stabilises more.
 
 
-### Comparative performance of the OpenGL and Vulkan Renderers
+## Summary
 
-### Performance Comparison with Other Software Packages
+In this chapter, we have introduced the rendering architecture of scenery, discussed the renderer interface, and special scenery features like semi-automatic instancing and custom rendering pipelines. We discussed the differences between the OpenGL and Vulkan renderers, and compared a performance-critical operation in the context of the JVM and native code.
+
+For future work, we refer the reader to the [Future Development Directions] chapter, which summarises the future targets for all components of scenery.
+
 
 
 
