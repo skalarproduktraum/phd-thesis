@@ -4,32 +4,33 @@
 
 Fiji [@schindelin2012fiji] is a widely-used — as of April 2019, it has been cited over 10000 times — open-source distribution of ImageJ for biological image analysis (Fiji stands for "Fiji is just ImageJ"). It is now the predominant ImageJ [@Schneider:2012nihi] distribution and recently had its  its underlying infrastructure modernised tremendously, e.g. by replacing its basic image processing library with imglib2 [@Pietzsch:2012img] in an effort to replace the original ImageJ 1.x with a newer replacement, dubbed ImageJ2, which has brought better interoperability and better overall design [@Rueden:2017ij2]. 
 
-The original way of doing 3D visualisation in Fiji is the 3D Viewer [@Schmid:2010gm], which has now become dated a bit and is not being actively developed anymore, necessitating a replacement. After the start of the development of scenery in early 2016, we started the development of a replacement for 3D Viewer, named _sciview_. sciview builds heavily on the infrastructure provided by the Fiji, SciJava[^SciJavaNote], and ImageJ2 projects[@Rueden:2017ij2].
+The original way of doing 3D visualisation in Fiji is the 3D Viewer [@Schmid:2010gm], which has now become dated and is not actively developed anymore, necessitating a replacement. After the start of the development of scenery in early 2016, we started the development of a replacement for 3D Viewer, named _sciview_. sciview builds heavily on the infrastructure provided by the Fiji, SciJava[^SciJavaNote], and ImageJ2 projects [@Rueden:2017ij2].
 
-In this chapter, we are going to introduce sciview and explain how intertwining scenery and the ImageJ2/Fiji ecosystem creates a new powerful tool for interactive visualisations in the life sciences. We start by introducing the ImageJ2/Fiji ecosystem  in more detail, focussing on the developer side and explaining how the various parts are used in our project. After that, we introduce examplary use cases that have not been possible before, and projects that are enabled by scenery and sciview.
+In this chapter, we introduce sciview and explain how intertwining scenery and the ImageJ2/Fiji ecosystem creates a new powerful tool for interactive visualisations in the life sciences. We start by introducing the ImageJ2/Fiji ecosystem  in more detail, focussing on the developer side and explaining how the various parts are used in our project. After that, we introduce examplary use cases that have not been possible before, and projects that are enabled by scenery and sciview.
 
 [^SciJavaNote]: See [scijava.org](https://scijava.org) and [imagej.net/SciJava](https://imagej.net/SciJava) for more information about the projects.
 
 ## Integration into the ImageJ2 & Fiji ecosystem
 
-With its basis, SciJava common, ImageJ2 focuses very heavily on modularisation, extensibility, and interoperability. At the core of ImageJ2 is the support for N-dimensional image data, going beyond the "traditional" stack of 2D images from  microscopy, and extending towards multispectral and hyperspectral images, which might even include information about wavelengths, sample counts, polarisation states, etc. On the interoperability side, the SciJava infrastructure enables simple integration of write-once plugins into several different software suites, such as ImageJ2/Fiji, KNIME [@Berthold:2008kni], or Icy [@Chaumont:2012icy].
+With its basis, SciJava common, ImageJ2 focuses heavily on modularisation, extensibility, and interoperability. At the core of ImageJ2 is the support for N-dimensional image data, going beyond the "traditional" stack of 2D images from  microscopy, and extending towards multispectral and hyperspectral images, which might even include information about wavelengths, sample counts, polarisation states, etc. On the interoperability side, the SciJava infrastructure enables simple integration of write-once plugins into several different software suites, such as ImageJ2/Fiji, KNIME [@Berthold:2008kni], and Icy [@Chaumont:2012icy].
 
 We make use of three main components from the ImageJ2 effort: 
+
 * SciJava common, for providing core abstractions for extensible applications, such as for plugins and commands (more on that in a moment),
 * SCIFIO, the _SCientific Image Format Input and Output_ library, facilitating image input and output in various formats, as well as interoperability between them, and
 * ImgLib2 [@Pietzsch:2012img], which decouples image representation from processing and storage.
 
-SciJava common provides us with several services that enable integration into ImageJ2/Fiji installations:
+SciJava common provides several services that enable integration into ImageJ2/Fiji installations:
 
 * the `PluginService` for dynamic plugin discovery at runtime,
-* the `EventService`, for publishing and subscribing to scenery-related events, such as Node additions, removals and changes,
-* the `IOService` for providing access to file input/output, e.g. via SCIFIO.
+* the `EventService`, for publishing and subscribing to scenery-related events, such as Node additions, removals, and changes,
+* the `IOService` for providing access to file input/output, e.g., via SCIFIO.
 
 sciview itself is implemented as a SciJava `Service`, the `SciViewService`. A user can create a new sciview instance by running `SciViewService.createSciView()`, or get an already active instance by `SciViewService.getActiveSciView()`. sciview instances can also be named, and later accessed independently via `SciViewService.getSciView(name: String)`.
 
-All commands the user can execute from the sciview main window are implemented as SciJava `Command` `Plugins`. As a simple and instructive example, the `Command` that adds the `Edit > Add Volume` command looks as follows:
+All commands the user can execute from the sciview main window are implemented as SciJava `Command` `Plugins`. As a simple and instructive example, the `Command` that adds the `Edit > Add Volume` menu item is shown in \cref{lst:SciJavaCommand}.
 
-```java
+\begin{lstlisting}[float, language=Java, caption={Example SciJava Command for adding a volume to a sciview scene.}, label=lst:SciJavaCommand]
 @Plugin(type = Command.class, menuRoot = "SciView", //
         menu = { @Menu(label = "Edit", weight = EDIT), //
                  @Menu(label = "Add Volume", weight = EDIT_ADD_VOLUME) })
@@ -60,23 +61,33 @@ public class AddVolume implements Command {
     }
 
 }
-```
+\end{lstlisting}
 
-This example code shows one of the prime features of ImageJ2: the separation between data model and view (or GUI). All of the class members annotated as `@Parameter` are going to be either populated or used by SciJava's plugin infrastructure — the members referring to `Dataset`, or any kind of `Service` will be auto-populated with open files or services at hand from the current instance, so e.g. the parameter `sciView` will point to the current sciview instance. Members labelled `@Parameter` with no relation to a service will be user-editable parameters shown in the GUI dialog. How this `Command` is rendered in the default ImageJ2 Swing GUI is shown in Figure \ref{fig:SciViewAddVolume}. Such parameters can be named (`label`), given minimum and maximum boundaries, or styled as a particular widget.
+This example code illustrates one of the prime features of ImageJ2: the separation between data model and view (or GUI). All of the class members annotated as `@Parameter` are going to be either populated or used by SciJava's plugin infrastructure — the members referring to `Dataset`, or any kind of `Service` will be auto-populated with open files or services at hand from the current instance, so the parameter `sciView` will, e.g., point to the current sciview instance. Members labelled `@Parameter` with no relation to a service will be user-editable parameters shown in the GUI dialog. How this `Command` is rendered in the default ImageJ2 Swing GUI is shown in Figure \ref{fig:SciViewAddVolume}. Such parameters can be named (`label`), given minimum and maximum boundaries, or styled as a particular widget.
 
 \begin{marginfigure}
     \label{fig:SciViewAddVolume}
     \includegraphics{sciview-addvolume.png}
-    \caption{sciview's \emph{Add Volume} dialog, shown in the default ImageJ2 Swing GUI.}
+    \caption{A simple example for an automatically-generated UI: sciview's \emph{Add Volume} dialog, shown in the default ImageJ2 Swing GUI.}
 \end{marginfigure}
 
-At the moment, all automatically-generated GUIs are generated for Swing.  The generation system however is abstract enough such that Swing can be replaced by e.g. JavaFX in the future.
+At the moment, all automatically-generated GUIs are using Swing. The generation system however is abstract enough such that Swing can be replaced by JavaFX or another UI toolkit in the future.
 
 ## Example Use Cases
+
+The remainder of this chapter is intended to showcase applications of sciview. We will introduce three examples and discuss how sciview has helped in creating them.
 
 ### Zebrafish development
 
 ![Screenshot of sciview, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
+
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/ZebrafishVascularDevelopment.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video demo of zebrafish vasculature development visualised in sciview. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+\end{marginfigure}
 
 \begin{marginfigure}
     \includegraphics{developmental-timelapse.png}
@@ -95,18 +106,65 @@ In [@Longair:2011snt], the authors present an ImageJ/Fiji plugin for quick and s
 
 We have expanded the original code to make SNT work on top of sciview, with an example image shown in Figure \ref{fig:sciviewSNT}.
 
-\begin{figure*}
-    \includegraphics{sciviewSNT.png}
-    \caption{Simple Neurite Tracer running on top of sciview.\label{fig:sciviewSNT}}
-\end{figure*}
+\TODO{Add sciview figure}
 
 ### Constrained Segmentation of the Zebrafish heart
+
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/ConstrainedSegmentation.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video demo of the constrained segmentation. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+\end{marginfigure}
+
+In this use case, sciview is utilised to simplify the segmentation procedure for parts of the zebrafish heart by introducing interactive mesh-based cropping as a pre-segmentation step.
+
+Segmentation of intricate structures, such as the zebrafish heart, using simple, off-the-shelf algorithms and suites such as _Weka_, is often hampered by oversegmentation or noise. If the user can interactively constrain the region to be segmented, the performance of such algorithms can be increased tremendously.
+
+The approach is the following:
+
+1. The user roughly selects points that define a convex shape around the region of interest for segmentation with ImageJ's point selection tool,
+2. the image is visualised as 3D volume in sciview, and the points from the point selection are shown as spheres within the volume,
+3. the user moves the points around, either using a mouse, or VR controllers, until they constrain the dataset in a satisfactory manner (see \cref{fig:ConstrainedSegmentation}a),
+4. a convex hull is calculated from such points using sciview's `InteractiveConvexMesh` command,
+5. the convex hull is used to determine what is the inside the relevant region of the volumetric dataset, and outside parts are removed or set to zero (see \cref{fig:ConstrainedSegmentation}b).
+6. the resulting dataset is used with a trainable _Weka_ segmenter in 3D.
+
+For the last step, less than 10 annotations had to be manually performed, resulting in a good segmentation quality as shown in \cref{fig:ConstrainedSegmentationResult}. This approach involves a tractable effort, and is able to effectively reduce formerly impossible segmentation problem to doable ones.
+
+\begin{figure}
+    \includegraphics{constrained-segmentation.png}
+    \caption{Constraining a volumetric image for segmentation using the \emph{thingy} command in SciView. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentation}}
+\end{figure}
+
+\begin{marginfigure}
+    \includegraphics{segmented-pericardium.png}
+    \caption{Constrained segmentation result using a trainable Weka segmenter on the volume cropped before as shown in \cref{fig:ConstrainedSegmentation}. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentationResult}}
+\end{marginfigure}
+
+
+
+
+
+### EmbryoGen — Generating test data for algorithmic analysis of lightsheet imaging data
+
+\begin{figure*}
+    \includegraphics{embryogen.png}
+    \caption{Visualisation of a simulated \emph{Drosophila} embryo using \emph{EmbryoGen} in sciview. The cells are shown as green spheres, while the equilibrating forces acting on them are shown as arrows on the right side where the cells are hidden. Courtesy of Vladimir Ulman, Tomancak and Jug Lab, MPI-CBG and Center for Systems Biology Dresden.\label{fig:EmbryoGen}}
+\end{figure*}
+
+\begin{figure}
+    \includegraphics{embryogen-opticalflow.png}
+    \caption{Visualisation of the optical flow generated by a simulated \emph{Drosophila} embryo using \emph{EmbryoGen} in sciview. Courtesy of Vladimir Ulman, Tomancak and Jug Lab, MPI-CBG and Center for Systems Biology Dresden.\label{fig:EmbryoGenOpticalFlow}}
+\end{figure}
+
 
 ### Agent-based Simulations
 
 We have utilized sciview to visualise agent-based simulations with large numbers of agents. By adapting the existing agent- and physics-based simulation toolkit _brevis_ [@brevis2019], we were able to increase the number of agents that can be visualised at interactive frame rates by a factor of 10, from originally 1000, on a notebook equipped with a Nvidia Quadro P4000 GPU with 8 GB of graphics memory. 
 
-![An agent-based simulation of 10000 independent agents simulated using _brevis_ and visualised using _sciview_. See text for details.\label{fig:agentbased}](agentbased-simulation.pdf)
+![An agent-based simulation of 10000 independent agents simulated using _brevis_ and visualised using _sciview_. See text for details.\label{fig:agentbased}](agentbased-simulation.png)
 
 This performance improvement enables previous studies of swarms with evolving behaviours to be revisited under conditions that may enable new levels of emergent behaviour [@harrington2017; @gold2014]. In Figure~\ref{fig:agentbased}, we show 10,000 agents using flocking rules inspired by [@reynolds1987] to collectively form a sphere.
 
