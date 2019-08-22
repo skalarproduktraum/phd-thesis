@@ -256,7 +256,7 @@ For computer control of the microscope, the ClearControl interactive/automatic m
 
 The next prototype of the software will incorporate the changes proposed in the previous section. 
 
-While we have focussed on the task of laser ablation, we believe that the interactions we have proposed are also applicable to other tasks in microscopy that require an surface or volume selection, such as optogenetics and photoconversion [@Boyden:2005cd], where photoactivatable proteins are used to steer cellular functions.
+While we have focussed on the task of laser ablation, we believe that the interactions we have proposed are also applicable to other tasks in microscopy that require an surface or volume selection, such as optogenetics and photoconversion [@Boyden:2005cd], where photoactivatable proteins are used to steer cellular functions, or focused light-induced cytoplasmic streaming (FLUCS) [@mittasch2018], where intracellular flows can be induced by scanning a focused laser over the specimen.
 
 In terms of high-fidelity visualisation, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user.
 
