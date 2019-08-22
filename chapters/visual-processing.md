@@ -1,9 +1,11 @@
 # Introduction to Visual Processing
 
-\begin{figure*}
-    \includegraphics{gray_optic_system.pdf}
-    \caption{Schematic overview of the paths from the eye to the visual cortex, with the parts discussed in this chapter highlighted in italics. Adapted from \emph{Anatomy of the Human Body}\citep{Gray:1878ahb}, Public Domain.\label{fig:processing_overview}}
-\end{figure*}
+\begin{figure}
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{gray_optic_system.pdf}
+    \caption{Schematic overview of the paths from the eye to the visual cortex, with the parts discussed in this chapter highlighted in italics. Adapted from \emph{Anatomy of the Human Body} \citep{Gray:1878ahb}, Public Domain.\label{fig:processing_overview}}
+    \end{center}
+\end{figure}
 
 In this chapter, we introduce the human visual system, the anatomy of the human eye and its physical capabilities and movements, as well as the processing happening to incoming photons in the retina and further downstream, in the central nervous system. 
 
