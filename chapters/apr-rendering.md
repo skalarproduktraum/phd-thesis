@@ -45,7 +45,7 @@ R(y) \leq L(y^*), \forall y: |y-y^*|\leq R(y)\label{eq:resbound},
 \end{align}
 with $L(y)=E\sigma(y)/|\nabla I|$, with $\nabla I$ being the gradient of the image. This inequality is called the _Resolution Bound_ and $L$ the _Local Resolution Estimate_. If the underlying image is assumed to be differentiable everywhere, and $\sigma(y)$ assumed to be sufficiently smooth, the Resolution Bound is stricter than the Reconstruction Condition, and an $R(y)$ subject to it will yield an equal or better representation accuracy. 
 
-Second, If now the Resolution Function $R(y)$ is further restricted to consist only of square blocks, the optimal Resolution Function can be found in $\mathcal{O}(N)$.
+Second, the Resolution Function $R(y)$ is further restricted to consist only of square blocks, whose sizes are powers of two. Then, the optimal Resolution Function can be found in $\mathcal{O}(N)$.
 
 ### Particle Cells
 
@@ -72,7 +72,7 @@ _A set of Particle Cells $\mathcal{V}$ will define an Implied Resolution Functio
 
 ### Pulling Scheme
 
-With this definition, we can go on the describe the Pulling Scheme for finding the OVPC set in $\mathcal{O}(N)$ time. The name arises from the behaviour of a cell in $\mathcal{L}$ that pulls the resolution function down, leading to smaller particle cells across the image.
+With this definition, we can go on to describe the Pulling Scheme for finding the OVPC set in $\mathcal{O}(N)$ time. The name arises from the behaviour of a cell in $\mathcal{L}$ that pulls the resolution function down, leading to smaller particle cells across the image.
 
 The algorithm for the pulling scheme is summarised in Algorithm \ref{alg:PullingScheme}.
 
@@ -134,7 +134,7 @@ The algorithm for the pulling scheme is summarised in Algorithm \ref{alg:Pulling
 The Pulling Scheme has the following properties:
 
 * _Predictability and self-similar structure_ — neighbouring particle cells never differ by more than one level from each other, and are arranged in a fixed pattern around the smallest particle cells in the set. This structure is independent of the level itself and results in self-similarity between the levels. From this property, the OVPC set $\mathcal{V}$ can easily be constructed from any LPC set $\mathcal{L}$ with a single particle cell $c_{i,l}$.
-* _Separability_ — The OVPC set can be found by considering each particle cell in $\mathcal{L}$ on its own, and afterwards combining them into one set, covering the whole image. See Figure \ref{fig:APRsep} for a visualisation.
+* _Separability_ — The OVPC set can be found by considering each particle cell in $\mathcal{L}$ on its own, and afterwards combining them into one set covering the whole image, using a minimum operation on the particle cells. See Figure \ref{fig:APRsep} for a visualisation.
 * _Redundancy_ — When constructing $\mathcal{V}$, all particle cells in $\mathcal{L}$ that have descendants can be ignored, as descendants imply either the same or a tighter constraint on the Resolution Function.
 
 ![Separability property of the Pulling Scheme: In the first two parts, the construction of $R^*(y)$ is shown for two separate particle cells, $c_{19,6}$ and $c_{38,6}$. In the third part of the figure, their combination into the Local Particle set $\mathcal{L}$ is shown. Image reproduced from \citep{Cheeseman:2018b12}.\label{fig:APRsep}](apr-separability.pdf)
@@ -153,18 +153,21 @@ Finally, the APR is formed from both the Optimal Valid Particle Cell set $\mathc
 
 Adaptive sampling and multiresolution approaches have quite a history in  image processing: Ranging from pyramid image representations [@adelson1984pyramid], over super-pixels [@achanta2012slic; @amat2012fast], wavelet decompositions, level-set methods [@monasse2000fast], dictionary-based sparse representations [@davis1997adaptive], to adaptive mesh representations [@demaret2002scattered; @wang1996use; @yang2003fast], and dimensionality reduction [@schmid2013high; @heemskerk2015tissue]. None of these methods however are able to guarantee all the Reconstruction Criteria we have outlined earlier.
 
-If we venture outside of just image processing and turn to (realtime) rendering, there are two additional techniques that bear a similarity:
+If we venture outside of just image processing and turn to (realtime) rendering, there are two additional techniques that bear a similarity to the APR:
 
 * _Sparse Voxel Octrees_ (SVOs) [@Laine:EffectiveSVO; @Crassin:2011uo] work by voxelising a given geometry, with the actual voxels being stored in an octree data structure as final leaf nodes. SVOs are great for storing very large mesh data, but cannot efficiently represent volumetric data as we try to achieve. 
 * _VDB_ [@Museth:2013gw] uses B+trees [@Bayer:2002ds] to hierarchically represent volumetric data. From the spatial organisation, VDB is closest to our approach, although the leaf nodes of their tree do still contain voxels instead of particles. Figure \ref{fig:vdb2d} shows a 2D representation of a VDB dataset.
 
-![Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. (Image reproduced from [@Museth:2013gw], branching factors here are chosen for visualisation purposes, and are chosen larger in practise).\label{fig:vdb2d}](vdb2d.png)
+\begin{figure*}
+    \includegraphics{vdb2d.png}
+    \caption{Representation of a narrow-band level set stored in the VDB data structure. The lower left part shows the tree structure of a 1D VDB representation of the circle above, with the sparse representation displayed at the bottom left. On the right, the 2D structure of the circle represented as VDB is shown. Branching factors here are chosen for visualisation purposes, and are chosen larger in practise (Reproduced from \citep{Museth:2013gw}).\label{fig:vdb2d}}
+\end{figure*}
 
 ## Integration into _scenery_
 
-Our APR software library, _libapr_ is written in C++ and available at [github.com/cheesema/libapr](https://github.com/cheesema/libapr). For interfacing with _scenery_, and the JavaVM ecosystem in general, we have developed a SWIG [@Workshop:uc] ([swig.org](https://swig.org)) wrapper that exposes nearly all of the _libapr_ functionality to Java. The wrapper functionality is part of the main repository.
+Our APR software library, _libapr_ is written in C++ and available at [github.com/cheesema/libapr](https://github.com/cheesema/libapr). For interfacing with _scenery_, and the JavaVM ecosystem in general, we have developed a SWIG [@Workshop:uc] ([swig.org](https://swig.org)) wrapper that exposes nearly all of the _libapr_ functionality to Java. The wrapper functionality is part of the main repository of _libapr_.
 
-SWIG works by creating an _interface definition file_ that specifies all header files that need to be wrapped, in our library this file can be found in the root directory as `libapr.i`, and is quite short. The interface definition also includes additional code that is needed to make the wrapping work, e.g. for renaming functions in the case that naming rules clash between wrapper and wrappee, or for specialising templated code. It also includes custom allocator/deallocator code for the `APR` and `ExtraParticleData`[^epdclassnote] class, as memory management between garbage-collected languages and non-garbage-collected ones is not straightforward: In our case, both those classes will retain references to a loaded APR, such that it does not get garbage collected by the VM.
+SWIG works by creating an _interface definition file_ that specifies all header files that need to be wrapped. In our library this file can be found in the root directory as `libapr.i`, and is quite short. The interface definition also includes additional code that is needed to make the wrapping work, e.g., for renaming functions in the case that naming rules clash between wrapper and wrappee, or for specialising templated code. It also includes custom allocator/deallocator code for the `APR` class and `ExtraParticleData`[^epdclassnote] class, as memory management between garbage-collected languages and non-garbage-collected ones is not straightforward. In our case, both those classes will retain references to a loaded APR, such that it does not get garbage collected by the VM.
 
 [^epdclassnote]: The `ExtraParticleData` class contains functionality for attaching additional properties to particles, such as intensities.
 
@@ -174,65 +177,64 @@ SWIG does not have very good support for templated code, and the APR library is 
 
 ### Future Directions
 
-We are exploring alternatives to SWIG, such as JavaCPP ([github.com/bytedeco/javacpp](https://github.com/bytedeco/javacpp), which has better support for state-of-the-art C++ features, and also includes an automatic wrapper generator, as well as the possibility for manual adjustments, which SWIG provides with the interface definition file.
+We are exploring alternatives to SWIG, such as JavaCPP ([github.com/bytedeco/javacpp](https://github.com/bytedeco/javacpp)), which has better support for state-of-the-art C++ features, and also includes an automatic wrapper generator, as well as the possibility for manual adjustments, which SWIG provides with the interface definition file.
 
-A prototype of that effort has been developed by Krzysztof Gonciarz and can be found at [github.com/krzysg/LibAPR-java-wrapper](https://github.com/krzysg/LibAPR-java-wrapper).
+A prototype of this effort has been developed by Krzysztof Gonciarz and can be found at [github.com/krzysg/LibAPR-java-wrapper](https://github.com/krzysg/LibAPR-java-wrapper).
 
 ## Goals
 
 For visualising the Adaptive Particle Representation, we set the following goals:
 
 * the software has to handle the APR datasets in realtime
-* the software needs to be integrated at some point with the existing Fiji/ImageJ ecosystem, i.e. it needs to be usable from Java
+* the software needs to be capable of integration with the existing Fiji/ImageJ ecosystem, i.e. it needs to be usable from Java
 * the software needs to support virtual reality visualisation
-* the software needs to make use of the attributes provided by the APR particles, such as position, normals, etc.
+* the software needs to make use of the attributes provided by the APR particles, such as position, normals, etc., such that they can be used for visualisation or selection purposes.
 
 ## Initial prototype
 
 The first prototype developed for APR visualisation, named _dive_, came to be before scenery development even had started.
 
-dive was able to primitively visualise APR datasets as point clouds, with no postprocessing applied (see Figure \ref{fig:dive}), but included limited support for the Oculus Rift DK2 HMD. It was also written from scratch using OpenGL 3.3 and SDL, where the need for a much quicker prototyping solution became apparent, as this cost much more time than it should have.
+It was able to primitively visualise APR datasets as point clouds, with no postprocessing applied (see Figure \ref{fig:dive}), but included limited support for the Oculus Rift DK2 HMD. It was also written from scratch using OpenGL 3.3 and SDL, where the need for a much quicker prototyping solution became apparent, as development efforts using this approach were not sustainable going forward.
 
 ![Visualisation of a _Drosophila_ dataset using _dive_ as a point cloud.  The original dataset size is 960 MiB, while the APR only consumes 70 MiB. Dataset courtesy of Tomancak Lab, MPI-CBG Dresden.\label{fig:dive}](dive.png)
 
 ### User feedback
 
-A demo of _dive_ was shown at the 2014 BioImageInformatics conference in Leuven, Belgium. In addition, it was tested on 2 more lab members internally. The main points collected were:
+A poster and demo of _dive_ was shown at the 2014 BioImageInformatics conference in Leuven, Belgium. In addition, it was tested by 2 more lab members internally. The main points collected were:
 
 * flat colouring leads to a false impression of the dataset
 * dataset loading times were considered good, especially as the original dataset is about 960MiB, and the APR dataset only 70MiB.
-* filtering based on particle properties should be possible
+* filtering based on particle properties was desired to be possible.
 
 ## Second prototype
 
-The second prototype built was based on _scenery_ already, and included a port of the code used in _dive_ for importing the APR files. This port resulted in the creation of the Java wrappers discussed in [Integration into _scenery_].
+The second prototype built was based on _scenery_, and included a port of the code used in _dive_ for importing the APR files. This port resulted in the creation of the Java wrappers discussed in [Integration into _scenery_].
 
-This new iteration now had support for particle properties, as well as HDR and Ambient Occlusion as postprocessing options, as provided by default by scenery. A visualisation with AO on/off is shown in Figure \ref{fig:aprAO}. The second prototype did not include support for VR headsets, as this was still work in progress in scenery back then.
+This new implementation now had support for particle properties, as well as HDR and Ambient Occlusion as postprocessing options, as provided by default by scenery. A visualisation with Ambient Occlusion (AO) on/off is shown in Figure \ref{fig:aprAO}. The second prototype did not include support for VR headsets, as this was still work in progress in scenery back then.
 
-\begin{figure*}
+\begin{figure}
     \includegraphics{apr-ao.png}
     \caption{Visualisation of a \emph{Danio rerio} vasculature dataset using scenery. Top: Ambient occlusion on, revealing the details of the vasculature. Bottom: Ambient occlusion off. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden \& Morgridge Institute for Research, Madison, USA.\label{fig:aprAO}}
-\end{figure*}
+\end{figure}
 
 ### User feedback
 
  Compared to the first prototype, user feedback now was better:
 
  * Ambient Occlusion was well liked, as it gives the dataset a more plastic, more detailed appearance and highlights small details.
- * Custom colormaps introduce more customisation options.
+ * Custom colormaps make the visualisation of APR datasets more flexible.
  * Filtering can help to create segmentation-like visualisations easily.
 
-However, there were also negative comments:
+The following additions were requested:
 
 * 3D model-like appearance is unusual for microscopy datasets, biologists are more used to maximum intensity projections or alpha blending-based renderings.
-* Re-addition of Virtual Reality support would be nice.
-* It would be good if filtering on the particles could be interactively controlled.
+* While filtering based on particle properties was now possible upon loading the dataset, it would be better if filtering could be controlled interactively.
 
 ## Particle-based rendering in scenery
 
 For interactive rendering of the APR, we have integrated the Java wrapper with _scenery_[^demonote]. In scenery, we render the APR as point-based graphics, and subject it to the same postprocessing steps as all other renderings (such as screen-space ambient occlusion, and HDR exposure correction).
 
-For point-based rendering, positions and intensities for particles for all levels of the APR are reconstructed according to Eq. \ref{eq:ParticlePosition}, and stored in a `Mesh`, with the following mapping:
+For point-based rendering, positions and intensities of particles on all levels of the APR are reconstructed according to Eq. \ref{eq:ParticlePosition}, and stored in a `Mesh`, with the following mapping:
 
 | scenery Node property | APR contents |
 |:--|:--|
@@ -242,25 +244,29 @@ For point-based rendering, positions and intensities for particles for all level
 
 Table: APR-to-scenery mapping for particle properties. {#tbl:APRtoScenery}
 
-Particle normals can be stored with the regular APR data as additional property, but they might also be computed on-the-fly. The vertex data is then rendered with a custom shader that provides multiple options for colouring the particles, such as colouring by level, by distance to observer, or intensity. The shader also enables thresholding of the particles, resulting in a very simple way to render isosurfaces and segmentations. An example segmentation of _D. rerio_ head vasculature is shown in Figure \ref{fig:APRvasculature} and an example direct particle rendering of a _Drosophila melanogaster_ embryo is shown in Figure \ref{fig:APRdrosophila}
+Particle normals can be stored with the regular APR data as additional property, but they might also be computed on-the-fly. The vertex data is then rendered with a custom shader that provides multiple options for colouring the particles, such as colouring by level, by distance to observer, or intensity. The shader also enables thresholding of the particles, resulting in a very simple way to render visualisations of an APR similar to isosurfaces and segmentations by just selecting particles with a given intensity. An example segmentation of _D. rerio_ head vasculature using graph cuts is shown in Figure \ref{fig:APRvasculature}, and an example direct particle rendering of a _Drosophila melanogaster_ embryo is shown in Figure \ref{fig:APRdrosophila}.
 
 [^demonote]: See [github.com/skalarproduktraum/aprrenderer](https://github.com/skalarproduktraum/aprrenderer) for demo code.
 
-![Image of a APR-based segmentation of _Danio rerio_ head vasculature visualised as point-based graphics. Particles are coloured by distance to the camera. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:APRvasculature}](apr-vasculature.png)
+![Image of an APR-based segmentation of _Danio rerio_ head vasculature visualised as point-based graphics. Particles are coloured by distance to the camera. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:APRvasculature}](apr-vasculature.png)
 
-![Image of a APR-based direct particle rendering of a _Drosophila melanogaster_ embryo after cellularisation. Particles are here colored by level, with blue signifying the highest-resolution level, and red the lowest-resolution level. Dataset courtesy of Loïc Royer, MPI-CBG Dresden & Chen-Zuckerberg Biohub, San Francisco, USA\label{fig:APRdrosophila}](apr-drosophila.png)
+![Image of a APR-based direct particle rendering of a _Drosophila melanogaster_ embryo after cellularisation. Particles are here colored by level, with blue signifying the highest-resolution level, and red the lowest-resolution level. Dataset courtesy of Loïc Royer, MPI-CBG Dresden & Chan-Zuckerberg Biohub, San Francisco, USA, obtained using a custom-built automatic lightsheet microscope.\label{fig:APRdrosophila}](apr-drosophila.png)
 
 ## Particle-based maximum intensity projection
 
-![Comparison of maximum intensity projections of a _Danio rerio_ (zebrafish) vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA\label{fig:PixelVsAPR}](apr-raycasting.png)
+![Comparison of maximum intensity projections of a _Danio rerio_ (zebrafish) vasculature dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden & Morgridge Institute for Research, Madison, USA, obtained using a custom-built lightsheet microscope.\label{fig:PixelVsAPR}](apr-raycasting.png)
 
-![Comparison of maximum intensity projections of a _Triboleum castaneum_ (red flour beetle) dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the lower particle cells become visible. Dataset courtesy of Akanksha Jain, Tomancak Lab, MPI-CBG Dresden\label{fig:TriboliumPixelVsAPR}](apr-tribolium.png)
+![Comparison of maximum intensity projections of a _Tribolium castaneum_ (red flour beetle) dataset with __a__ the maximum intensity projection based on the original pixel data and __b__ the maximum intensity projection based on the APR. Visually, there is no perceivable difference, only when the contrast is exaggerated, blocking artifacts from the larger, lower resolution particle cells become visible. Dataset courtesy of Akanksha Jain, Tomancak Lab, MPI-CBG Dresden, obtained using a Zeiss Lightsheet Z1 microscope.\label{fig:TriboliumPixelVsAPR}](apr-tribolium.png)
 
-Maximum intensity projects of datasets are one of the most common visualisations used in fluorescence microscopy, therefore it needs to be supported on the APR.
+Maximum intensity projections of datasets are among the most common visualisations used in fluorescence microscopy, therefore they need to be supported on the APR as well.
 
-The algorithm for achieving this is relatively simple: First, we create a Mipmap of the original image dimensions down to the lowest level, iterating over all particles, and adding the interpolated pixel intensity to the corresponding pixel. Second, the resulting per-level images are blended together to yield the final maximum intensity projection. More formally, this algorithm is stated in Algorithm \ref{alg:MaxProjectionAPR}.
+The algorithm for achieving this is relatively simple: 
 
-Two example rendering resulting from this algorithm are shown in Figures \ref{fig:PixelVsAPR} and \ref{fig:TriboliumPixelVsAPR}, where it is also compared with a maximum intensity projection from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the lowest particle cell levels will appear when the contrast is exaggerated.
+1. create a multi-resolution representation of the original image dimensions down to the lowest resolution (largest) particle cell level, which each level having a factor 2 lower resolution than the one before,
+2. iterate over all particles in the APR dataset, and adding the interpolated pixel intensity to the determined pixel position,
+3. the resulting per-level images are blended together to yield the final maximum intensity projection. More formally, this algorithm is stated in Algorithm \ref{alg:MaxProjectionAPR}.
+
+Two example renderings resulting from this algorithm are shown in Figures \ref{fig:PixelVsAPR} and \ref{fig:TriboliumPixelVsAPR}, where they are compared with a maximum intensity projections from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the largest, lowest resolution particle cell levels will appear when the contrast is exaggerated.
 
 \begin{algorithm}
   \SetKwData{Image}{image}
@@ -285,7 +291,7 @@ Two example rendering resulting from this algorithm are shown in Figures \ref{fi
 	    	\Presult \leftarrow \Blend{\Presult, \Image}
 		}
 	}
-	\caption{Maximum Projection on the APR.\label{alg:MaxProjectionAPR}} 
+	\caption{Maximum Intensity Projection on the APR.\label{alg:MaxProjectionAPR}} 
 \end{algorithm}
 
 
@@ -293,9 +299,9 @@ Two example rendering resulting from this algorithm are shown in Figures \ref{fi
 
 ## Particle-based volume rendering of the APR on the GPU
 
-Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. By just gathering particles on a per-level basis, it does also not make use of the space decomposition inherent to the APR. In this section, we present an alternative algorithm that solves these problems and makes the APR accessible as a basis for interactive volume rendering of large datasets.
+Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. By just gathering particles on a per-level basis, it does also not make use of the space decomposition inherent to the APR. In this section, we present an alternative algorithm that solves these problems and makes the APR suitable as a basis for interactive volume rendering of large datasets.
 
-In addition, the methodology we proposed in [Particle-based rendering in scenery], while certainly easy, does not deal well with the high number of particles an APR might contain, especially not when these particles occupy very little screen space, need to be depth-sorted, and blended together. In such cases, the performance can degrade very quickly. Furthermore, the typical user of the APR might not be used to particle-based renderings, but rather to volume renderings of microscopy data.
+In addition, the methodology we proposed in [Particle-based rendering in scenery], while simple, does not deal well APRs containing more then 1 or 2 million particles, especially not when a lot of small particles occupy very little screen space, need to be depth-sorted, and blended together. In such cases, the performance can degrade very quickly. Furthermore, the typical user of the APR might not be used to particle-based renderings, but rather to volume renderings of microscopy data.
 
 \begin{figure}
     \includegraphics{apr-decomposition.pdf}
@@ -316,7 +322,7 @@ In addition, the methodology we proposed in [Particle-based rendering in scenery
   \SetKwFunction{SIntensity}{$I(I_i, \vec{h})$}
   \SetKwFunction{RayOrigin}{$\vec{o}$}
   \SetKwFunction{RayOriginNew}{$\vec{o}'$}
-​	\KwResult{Intensity per-ray, $\hat{I}$}
+​	\KwResult{Intensity per pixel, $\hat{I}$, computed along the ray}
 ​	\BlankLine
 ​	
 	\Fn{volumerender\_apr\_for\_ray($\mathcal{V}$, $\mathcal{P}$, $\vec{o}$, $\vec{d}$)}
@@ -339,7 +345,7 @@ In addition, the methodology we proposed in [Particle-based rendering in scenery
 	\caption{Volume rendering of the APR.\label{alg:VolumeRenderingAPR} See text for a detailed explanation of the steps.} 
 \end{algorithm}
 
-Our approach bears similarity to the algorithm proposed in [@knoll2019], where radial basis functions are used as a basic primitive to emulate rasterisation-based billboard splatting via raytracing. Compared to [@knoll2019], we however do not need to build an acceleration data structure, as the APR already provides a decomposition of space from which the particles can efficiently be accessed. See Figure \ref{fig:aprDecomposition} for an example how the APR decomposes space into cells in an example dataset. Using this decomposition the dataset can be traversed efficiently for raycasting. The particles in the APR then also have a naturally-defined bounding box, and can be interpolated using Gaussians/Radial Basis Functions, or a piecewice constant function. For calculating the intersection of a particle $i$ at position $\vec{p}_i$ with radius $r_i$ with a ray of normalised direction $\vec{d}$ and origin $\vec{o}$, the hit point $\vec{h}$ is given as 
+Our approach bears similarity to the algorithm proposed in [@knoll2019], where radial basis functions are used as a basic primitive to emulate rasterisation-based billboard splatting via raytracing. Compared to [@knoll2019], we however do not need to build an acceleration data structure, as the APR already provides a decomposition of space from which the particles can efficiently be accessed. See Figure \ref{fig:aprDecomposition} for an example how the APR decomposes space into cells in an example dataset. Using this decomposition, the dataset can be traversed efficiently for raycasting. The particles in the APR then also have a naturally-defined bounding box, and can be interpolated using Gaussians/Radial Basis Functions, or a piecewice constant function (or for that matter, any custom interpolation method). For calculating the intersection of a particle $i$ at position $\vec{p}_i$ with radius $r_i$ with a ray of normalised direction $\vec{d}$ and origin $\vec{o}$, the hit point $\vec{h}$ is given as 
 
 \begin{align}
     \vec{h} & = \vec{o} + \left|\vec{p}_i - \vec{o}\right| \cdot \vec{d}.
@@ -353,20 +359,18 @@ Depending on whether to reconstruct using a Gaussian or a piecewise constant fun
     \label{eq:SampledIntensity}
 \end{align}
 
-where $I_i$ is the intensity of the particle $i$. The algorithm for APR traversal for a single ray of origin $\vec{o}$, direction $\vec{d}$, and maximum length $d_\mathrm{max}$ is then given as algorithm in algorithm \ref{alg:VolumeRenderingAPR}.
-
-The proposed algorithm is currently being implemented in scenery.
+where $I_i$ is the intensity of the particle $i$. The algorithm for APR traversal for a single ray of origin $\vec{o}$, direction $\vec{d}$, and maximum length $d_\mathrm{max}$ is given in \cref{alg:VolumeRenderingAPR}.
 
 ## Discussion and Future Work
 
-In this chapter, we have introduced the Adaptive Particle Representation (APR) and provided a brief summary of how it is constructed from a given image. We have shown the evolution of rendering the APR, going from an initial, unshaded prototype, over particle-based rendering with interpolated surface normals and ambient occlusion, to maximum projection and a proposal for actual volume rendering on the APR data structures.
+We have introduced different visualisation and rendering techniques for the Adaptive Particle Representation (APR), and provided a brief summary of how it is constructed from a given image. We have shown the evolution of rendering the APR, going from an initial, unshaded prototype, over particle-based rendering with interpolated surface normals and ambient occlusion, to maximum intensity projection and a proposal for volume rendering on the APR data structures.
 
-At the moment, we are finalising the interfacing of the `libapr` C++ code with Java code, such that scenery can also benefit in full from the APR data structures and transfer these directly to the GPU without any conversions necessary such that the algorithm described in [Particle-based volume rendering of the APR on the GPU] can be implemented efficiently and without resorting to additional data structures. When the integration is done and verified, we want to perform benchmarking, comparing regular volume rendering to volume rendering on the APR, which will likely provide a large speedup, especially when going to extremely large datasets, but sparse volumetric datasets of >100 TB, where the APR can play out its full potential.
+At the moment, we are finalising the interfacing of the `libapr` C++ code with Java code, such that scenery can fully benefit from the APR data structures and transfer these directly to the GPU without any conversions necessary such that the algorithm described in [Particle-based volume rendering of the APR on the GPU] can be implemented efficiently and without resorting to additional data structures. When the integration is done and verified, we want to perform benchmarking, comparing regular volume rendering to volume rendering on the APR. We expect a large speedup compared to pixel-based images, especially for large, but sparse volumetric datasets of >100 TB, where the APR can show its full potential.
 
-Additionally, the spatial sampling of the APR is currently being extended to the time domain by Bevan Cheeseman (APR+t). For multi-timepoint datasets, this is going to provide an additional boost in data reduction, such that volume rendering multi-timepoint datasets with high individual timepoint sizes could also become much faster.
+Additionally, the spatial sampling of the APR is currently being extended to the time domain by Bevan Cheeseman (APR+t). For multi-timepoint datasets, this is going to provide additional data reduction, such that volume rendering of multi-timepoint datasets with high timepoint sizes could also become much faster.
 
-On the applications side, remote 3D collaboration on volumetric datasets is currently hampered by the need to either possess or transfer the dataset to all participants — for gigabyte-sized datasets a nuisance, for terabyte-sized datasets nearly impossible without time-intensive preparation, and sharing of data via sneakernet. Alternatively, browser-based approaches like CATMAID [@Anonymous:2009fx] can be used, but suffer from latency — especially in the case of VR/AR rendering — and the need of centralised, fast hardware. 
+On the applications side, remote 3D collaboration on volumetric datasets is currently hampered by the need to either possess or transfer the dataset to all participants — for gigabyte-sized datasets a nuisance, for terabyte-sized datasets nearly impossible without time-consuming preparation, and sharing of data via sneakernet. Alternatively, browser-based approaches like CATMAID [@Anonymous:2009fx] can be used, but suffer from high latency — especially in the case of VR/AR rendering — and the need for centralised, fast hardware. 
 
-The APR, and especially  the APR+t provides a way out here, by reaching data reduction rates of 20-100, moving gigabytes to megabytes, and terabytes to gigabytes. As scenery already includes capabilities for synchronisation over the network, remote 3D collaboration on large volumetric datasets is an interesting research avenue for the future.
+The APR, and especially the APR+t, provides a way out here, by reaching data reduction rates of 20-100 times, moving gigabytes to megabytes, and terabytes to gigabytes. As scenery already includes capabilities for synchronisation over the network, remote 3D collaboration on large volumetric datasets is an interesting research avenue for the future.
 
 
