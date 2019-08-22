@@ -667,7 +667,7 @@ _The code for the performance comparison can be found at [github.com/skalarprodu
 
 Recent studies in the _Computer Languages Benchmark Game_[^BenchmarkGameNote], which benchmarks different languages in scenarios such as computing Mandelbrot sets or n-body simulations, have shown that the performance of JVM-based software is on par with other VM-based languages (such as C# or Julia), or even Intel Fortran, and does not lag behind C/C++ much — usually a factor of two (see also Figure \ref{fig:PerfComparison}, benchmarking with "toy example" should however always be taken with a grain of salt, as real-world performance may be influenced by a variety of other factors).
 
-![Comparison of different languages with the _Computer Languages Benchmark Game_, as of August 2019. Figure from [benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html).](fastest-08-2019.pdf)
+![Comparison of different languages with the _Computer Languages Benchmark Game_, as of August 2019. Figure from [benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html](https://benchmarksgame-team.pages.debian.net/benchmarksgame/which-programs-are-fastest.html).\label{fig:PerfComparison}](fastest-08-2019.pdf)
 
 [^BenchmarkGameNote]: See [benchmarksgame-team.pages.debian.net/benchmarksgame/](https://benchmarksgame-team.pages.debian.net/benchmarksgame/).
 
