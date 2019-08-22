@@ -1,6 +1,6 @@
 # Towards Interactive Virtual Reality Laser Ablation
 
-The investigation of biological phenomena not only rests on observation of such, but also on the ability to interfere with them. Especially where biomechanical and biophysical questions need to be answered, _laser ablation_ or _microsurgery_ plays an important role and conveys the possibility to destroy cells or parts of tissues, while not interfering with their neighbours, in a manner much more precise than purely mechanical manipulation could achieve.
+The investigation of biological phenomena not only rests on observation of such, but also on the ability to interfere with them. Especially where biomechanical and biophysical questions need to be answered, _laser ablation_ or _microsurgery_ plays an important role. In laser ablation, a high-powered, and usually pulsed, UV or IR laser is used to destroy cells or parts of tissues precisely, while not interfering with their neighbours, in a manner much more precise than purely mechanical manipulation could achieve.
 
 Nowadays, experiments in this realm are carried out with simple slice-based 2D user interfaces, while the specimen and processes investigated get spatiotemporally more and more complex. 
 
@@ -240,7 +240,7 @@ In our proposed setup, we are going to use a lightsheet microscope of the SPIM v
 
 The ablation unit design we propose is based on the design of [@Oswald:2010pr]. In Oswald's original design, the ablation unit was coupled to a spinning disk confocal microscope, and the design is already quite modular. We want to keep the modularity of the unit, such that it can also be used with other microscopes, e.g. spinning disk confocals as in the original, because some samples might need mounting on a glass slide.  _C. elegans_ adults for example do not enjoy embedding into agarose as it is common in lightsheet microscopy, while _Danio rerio_ or _Drosophila_ specimen tolerate it excellently.
 
-A sketch of the setup is shown in Figure \ref{fig:OpenSPIMAblation}. The ablation unit is connected to an extension of the OpenSPIM microscope [@Pitrone:2013ki] for double-sided illumination and double-sided detection developed by Johannes Girstmair at UCL London and MPI-CBG, Dresden dubbed X-SPIM [@girstmair2016]. The X-SPIM design has the benefit that the sample can be more evenly illuminated from two sides, limiting the need for multi-angle acquisitions where the sample needs to be rotated, as light can only penetrate biological tissue to a limited extent. While more complex than the original OpenSPIM design, even an X-SPIM is still way less complex than a spinning disk confocal microscope and can be built by an experience microscopist within a day.
+A sketch of the setup is shown in Figure \ref{fig:OpenSPIMAblation}. The ablation unit is connected to an extension of the OpenSPIM microscope [@Pitrone:2013ki] for double-sided illumination and double-sided detection developed by Johannes Girstmair at UCL London and MPI-CBG, Dresden dubbed X-SPIM [@girstmair2016]. The X-SPIM design has the benefit that the sample can be more evenly illuminated from two sides, limiting the need for multi-angle acquisitions where the sample needs to be rotated, as light can only penetrate biological tissue to a limited extent. While more complex than the original OpenSPIM design, even an X-SPIM is less complex than a spinning disk confocal microscope and can be built by an experience microscopist within a day.
 
 The ablation unit itself consists of the following parts:
 
@@ -258,7 +258,7 @@ The next prototype of the software will incorporate the changes proposed in the 
 
 While we have focussed on the task of laser ablation, we believe that the interactions we have proposed are also applicable to other tasks in microscopy that require an surface or volume selection, such as optogenetics and photoconversion [@Boyden:2005cd], where photoactivatable proteins are used to steer cellular functions, or focused light-induced cytoplasmic streaming (FLUCS) [@mittasch2018], where intracellular flows can be induced by scanning a focused laser over the specimen.
 
-In terms of high-fidelity visualisation, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user.
+To improve the fidelity of the visualisation during the ablation procedure, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user (also see [Future Development Directions] more more details).
 
 Finally, we aim to provide an open-source/open-hardware solution to perform both laser ablation and optogenetics tasks with the assistance of VR interfaces, based on a customised OpenSPIM microscope.
 

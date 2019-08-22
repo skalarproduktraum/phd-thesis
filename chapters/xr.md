@@ -1,6 +1,6 @@
 # A Short Introduction to Cross Reality
 
-_Cross reality_, or _XR_, encompasses everything on the spectrum between full virtual environments, and fully real environments. This includes especially virtual reality (VR), augmented reality (AR), and augmented virtuality.
+_Cross reality_, or _XR_, encompasses everything on the spectrum between fully virtual environments, and fully real environments. This includes especially virtual reality (VR), augmented reality (AR), and augmented virtuality.
 
 In this chapter we give a brief overview of existing technology and current developments in the areas of virtual and augmented reality. We will explain the benefits of VR and AR, and outline associated challenges and opportunities offered, with an emphasis on biology and imaging. In the end we will sketch issues addressed in this thesis.
 
@@ -41,7 +41,7 @@ With computer graphics still in it's infancy, the first steps towards a head-mou
     \caption{\label{fig:damocles}The \emph{Sword of Damocles}. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.}
 \end{marginfigure}
 
-Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the aforementioned lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves developed for NASA that would react to virtual objects and the user's grip [@Zimmerman:19875d6]. 
+Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves developed for NASA that would react to virtual objects and the user's grip [@Zimmerman:19875d6]. 
 In addition to the personal systems based on head-mounted displays, room-scale systems such as the _CAVE_ [@CruzNeira:1992vt] — a backronym for _CAVE Automatic Virtual Environment_ — were developed in the mid-1990s. In contrast to the HMDs, these systems use the tracking of the user not to display a perspective-corrected image on a screen attached to the user's head, but on a (front or back-)projected wall or display at a distance to the user. Compared to HMDs, such CAVEs have the benefit that multiple people can use it simultaneously, with the constraint that only a single person will see the fully correct three-dimensional, immersive image. 
 CAVE systems have found a large user base in the automative industry, and in architecture and design [@DeFanti:2010cp].
 
@@ -57,7 +57,7 @@ Another fascinating idea from the 90s is the omnidirectional treadmill for explo
 
 Unfortunately, the First Virtual Reality Revolution was not successful, at least from a commercial point of view — and most of the companies betting on its success went out of business until 1998 [@Jerald:201667e]. Some reasons for the failure were: 
 
-* Due to the high cost of the systems, few were able to afford them, and often the systems remained only in research use,
+* Due to the high cost of the systems, few people and labs were able to afford them, and often the systems remained only in research use,
 * ergonomics issues arising both from the size and weight of the systems prevented usage for more than a short period of time, with Randy Pausch stating, "approximately 10% of the visitors adamantly decline the opportunity to wear a head-mounted display" [@Bryson:19942f4], and
 * the visual fidelity then-contemporary computers could produce when rendering digital 3-dimensional imagery were simply neither good enough nor fast enough to provide a fully convincing, not sickness-inducing, experience.
 
@@ -66,7 +66,7 @@ Unfortunately, the First Virtual Reality Revolution was not successful, at least
 
 ## Current Developments
 
-The currently ongoing _Second Virtual Reality Revolution_ has been enabled — at least in part — by the little displays that are used in smart phones, and the gyroscopic sensors used alongside them. 
+The currently ongoing _Second Virtual Reality Revolution_ has been enabled — at least in part — by the development of low-cost, high-resolution displays that are used in smart phones, and the gyroscopic sensors used alongside them. 
 
 The displays used in mobile phones form the ideal basis for ergonomic and lightweight head-mounted displays, as they feature both a low physical footprint, low energy use, and the right size and resolution to be put right in front of the eyes.
 
@@ -151,4 +151,4 @@ In settings where a head-mounted display is used by many different people, such 
 ## Challenges
 
 * _Can we use VR/AR for visualising microscopy data after acquisition, and provide a measurable benefit for the user from that?_ — Visualisation might occur both at the time of acquisition (e.g. for checking correct imaging parameters), or later on, at the time of evaluation of the data. Both cases have in common that the user will most probably need to interact with the outside environment to adjust the microscope, or just to take notes. It would therefore be not beneficial to encumber the user inside a fully virtual environment, but rather augment the existing environment with the data that has been acquired. Intuitive interactions, in which the users e.g. sifts through a set of time points of a microscopy dataset much alike to sifting through a pile of papers, would enhance the acceptance of such modalities.
-* _Can we use VR/AR to control microscopes during acquisition and do e.g. laser ablation experiments more efficiently?_ — This use case can make use of both augmented and virtual reality settings: While augmented reality would benefit the user at design time of the instrument, e.g. by overlaying rulers, angles, and component descriptions on the optical table. Virtual reality on the other hand could be beneficial while performing e.g. laser ablation or optogenetic experiments undisturbed, in a fully immersive environment, fully concentrated on the specimen.
+* _Can we use VR/AR to control microscopes and do e.g. laser ablation experiments more efficiently?_ — This use case can make use of both augmented and virtual reality settings: While augmented reality would benefit the user at design time of the instrument, e.g. by overlaying rulers, angles, and component descriptions on the optical table. Virtual reality on the other hand could be beneficial while performing e.g. laser ablation or optogenetic experiments undisturbed, in a fully immersive environment, fully concentrated on the specimen.

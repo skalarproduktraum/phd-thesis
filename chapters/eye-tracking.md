@@ -72,7 +72,7 @@ The Midas Touch Problem is intimately linked with the _Double Role of Gaze_: whi
 
 Both issues can be addressed e.g. by providing the user with an additional means to confirm that the selection action is actually the one he intends to perform. This can be achieved with a variety of means:
 
-* _dwell time-/blink-based selection_, where an action is only triggered after the user has rested his gaze on the object [@Jacob:1990hz], or blinked once or multiple times as confirmation [@jacob:1993; @Ashtiani:2010dw]. Anyway, these solutions lead to additional delays for the input, which, depending on the intent might or might not be a problem:  If fast interaction is intended, e.g. for selecting highly salient objects in fast succession, dwell/blink-based confirmation is problematic, while when interacting e.g. with locked-in patients, it may provide an excellent way for communicating [@Ashtiani:2010dw].
+* _dwell time-/blink-based selection_, where an action is only triggered after the user has rested his gaze on the object [@Jacob:1990hz], or blinked once or multiple times as confirmation [@jacob:1993; @Ashtiani:2010dw]. These solutions lead to additional delays for the input, which, depending on the intent might or might not be a problem:  If fast interaction is intended, e.g. for selecting highly salient objects in fast succession, dwell/blink-based confirmation is problematic, while when interacting e.g. with locked-in patients, it may provide an excellent way for communicating [@Ashtiani:2010dw].
 * _multimodal interaction_, where the user can utilise an additional device to confirm his intent, for example by pressing a button on a keyboard[@Castellina:vg], using an additional touchpad [@Meena:2017bn],   a foot pedal or foot mat [@Klamka:2015ka, @Hatscher:2017bi], or free-air pinch gestures [@Pfeuffer:2017jk].
 * _computer vision techniques_, where visual attention and saliency [@Itti:2001cl] is modelled computationally, to determine which is the most probably object of attention at the moment [@Wu:2015kt; @Theis:2018tw].
 
@@ -159,7 +159,7 @@ In this chapter, we have introduced the various modalities that can be used for 
 
 ### Gaze-based object tracking
 
-At the end of the [Visual Processing] chapter, in the section [Object tracking with support of the visual system] we have already introduced the idea to utilise the power of the human visual system to follow objects for the purpose of tracking them. Such a system would fall into the category of gaze-contingent interaction. Furthermore, it would go beyond what is proposed in e.g. [@bruder2019], in the sense that it would need to handle multi-timepoint images on-the-fly, and combine it with an extension of the Radial Pursuit technique presented in [@piumsomboon2017]. See [track2track — Eye Tracking for Object Tracking in Volumetric Data] for details.
+At the end of the [Introduction to Visual Processing] chapter, in the section [Object tracking with support of the visual system] we have already introduced the idea to utilise the power of the human visual system to follow objects for the purpose of tracking them. Such a system would fall into the category of gaze-contingent interaction. Furthermore, it would go beyond what is proposed in e.g. [@bruder2019], in the sense that it would need to handle multi-timepoint images on-the-fly, and combine it with an extension of the Radial Pursuit technique presented in [@piumsomboon2017]. See the chapter [track2track — Eye Tracking for Object Tracking in Volumetric Data] for details.
 
 ### Robust Pupil Segmentation
 

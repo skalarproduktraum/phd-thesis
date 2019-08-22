@@ -1,10 +1,10 @@
 # Input Handling and Integration of External Hardware
 
-In this chapter we describe the input handling subsystem of scenery, and how external hardware, such as head-mounted displays or natural user interfaces can be used. The major design goal for these subsystems was to enable the user to design interactions and tools cross-API — here, we are going to detail how we have achieved that.
+Here we describe the input handling subsystem of scenery, and how external hardware, such as head-mounted displays or natural user interfaces can be used. The major design goal for these subsystems was to enable the user to design interactions and tools cross-API — here, we are going to detail how we have achieved that.
 
 ## Input Handling
 
-Input handling is done using using Tobias Pietzsch's open-source _ui-behaviour_ library[^uibehaviourNote]. The ui-behaviour library is heavily used in the ImageJ/Fiji ecosystem, and provides a handles input events via `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement, scroll, or click. A `Behaviour` is the triggered action. Vanilla ui-behaviour is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from JOGL, GLFW, JavaFX, or headless windows. Furthermore, we extended the library to enable custom mappings for buttons of hand-held controller devices, or VRPN[^vrpnnote] devices.
+Input handling is done using using Tobias Pietzsch's open-source _ui-behaviour_ library[^uibehaviourNote]. The ui-behaviour library is heavily used in the ImageJ/Fiji ecosystem, and provides a handles input events via `InputTriggers` and `Behaviours`. An `InputTrigger` is the related to the physical event, such as a key press, or a mouse movement, scroll, or click. A `Behaviour` is the triggered action. _ui-behaviour_ is able to handle AWT input events. For scenery, we have extended the library to also be able to handle events originating from JOGL, GLFW, JavaFX, or headless windows. Furthermore, we extended the library to enable custom mappings for buttons of hand-held controller devices, or VRPN[^vrpnnote] devices.
 
 Spatial input, such as HMD positioning and rotations, are handled by the specific implementation of a `TrackerInput`, such as an `OpenVRHMD`[^openvrnote], or a `VRPNTracker`[^vrpnnote]. Multiple of these inputs can coexist peacefully, and will not interfere with each other, but rather augment.
 
@@ -73,14 +73,14 @@ interface TrackerInput {
 }
 ```
 
-In this interface, the noteworthy functions are `getPoseForEye()`, which returns a transformation matrix relative to the origin containing translational and rotational information per-eye. Furthermore, an HMD may provide multiple tracked devices, such as nunchucks, which can be queried via `getTrackedDevices()`. `attachToNode()` then facilitates their attachment to any `Node` in the scene graph, which subsequently inherits the transformations of the tracked device. A model for such a device may be provided by the HMD via `loadModelForMesh()`. Our implementation of SteamVR HMDs provides the correct mesh for a given HMD via this function.
+In this interface, the noteworthy functions are `getPoseForEye()`, which returns a transformation matrix relative to the origin containing translational and rotational information separately for each eye. Furthermore, an HMD may provide multiple tracked devices, such as nunchucks, which can be queried via `getTrackedDevices()`. Via `attachToNode()` a controller can be attached any `Node` in the scene graph (most likely one representing a 3D model of the controller), which subsequently inherits the transformations of the tracked device. A suitable model for such a device may be provided by the HMD via `loadModelForMesh()`. Our implementation of SteamVR HMDs provides the correct mesh for a given HMD via this function.
 
 
 ## Augmented Reality and the Hololens
 
-_scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform (see class `Hololens`). The Hololens includes its own CPU and GPU, due to size constraints they are however not very powerful, and especially if it comes to rendering of volumetric datasets, completely underpowered.
+_scenery_ also includes support for the Microsoft Hololens, a stand-alone, untethered augmented reality headset, based on the Universal Windows Platform (see class `Hololens`). The Hololens includes its own CPU and GPU, due to size constraints they are, however, not very powerful, and especially when it comes to rendering of volumetric datasets, underpowered.
 
-To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a kind of proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ request-reply socket, while receiving of per-frame pose data is handled with an additional, publish-subscribe socket due to better latency.
+To get around this issue, we have developed a thin, Direct3D-based client application for the Hololens that makes use of Hololens Remoting, a proprietary streaming protocol developed by Microsoft[^remotingnote]. This client receives pose data from the Hololens, as well as all other parameters required to generate correct images, such as the projection matrices for each eye. This data is then forwarded to a Hololens interface within scenery, based on the regular HMD interface. Initial communication to acquire rendering parameters is done via a ZeroMQ request-reply socket, while receiving of per-frame pose data is handled with an additional, publish-subscribe socket due to better latency.
 
 The Hololens remoting applications are usually fed by data rendered with Direct3D, which lets us immediately recognise the problem that _scenery_ can only render via OpenGL and Vulkan at the present moment. 
 
@@ -98,11 +98,11 @@ The inclusion of the keyed mutex information into the `vkQueueSubmit` call in th
 
 ## Eye Tracking
 
-scenery includes support for the Pupil Labs eye tracking solution[@Kassner:2014kh]([www.pupil-labs.com](https://www.pupil-labs.com)), implemented in the class `PupilEyeTracker`. This class communicates with the Pupil Labs software _Pupil Capture_ or _Pupil Service_ via ZeroMQ, with msgpack data serialisation. Our implementation provides HMD-based screen-space and world-space calibration, reporting of the gaze positions, normals, timestamps, and confidences.
+scenery includes support for the Pupil Labs eye tracking solution [@Kassner:2014kh]([www.pupil-labs.com](https://www.pupil-labs.com)), implemented in the class `PupilEyeTracker`. This class communicates with the Pupil Labs software _Pupil Capture_ or _Pupil Service_ via ZeroMQ, with msgpack data serialisation. Our implementation provides HMD-based screen-space and world-space calibration, reporting of the gaze positions, normals, timestamps, and confidences.
 
 For calibration, the user is presented with a series of points to look at, which serve to establish a connection between the eye tracker's captured direction of gaze with a screen-space or world-space position in the scene. For each calibration point, 80 different samples are taken to account for microsaccades, and the first 20 are discarded to exclude those samples that might still include eye movement, while the user is moving from one point to the next. After finishing the calibration, the user is informed of successful or unsuccessful calibration, and can repeat the calibration, if necessary.
 
-After successful calibration, scenery enables the developer to connect the outputs of the eye tracker (in the form of gaze normals, gaze positions, and a confidence rating) to the properties of any object. By default, gaze points are only output in case the confidence reaches more than 90%, leaving the decision which of the higher-confidence samples to use to the developer.
+After successful calibration, scenery enables the developer to connect the outputs of the eye tracker (in the form of gaze normals, gaze positions, and a confidence rating) to the properties of any object. By default, gaze points are only output in case the confidence reaches more than 80%, leaving the decision to the developer which of the higher-confidence samples to use.
 
 More details about eye tracking can be found in the chapter [Eye Tracking and Gaze-based Interaction], with a use case implemented in the chapter [track2track — Eye Tracking for Object Tracking in Volumetric Data].
 

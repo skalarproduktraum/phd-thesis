@@ -95,7 +95,7 @@ After traversing this neuronal maze, photons reach the true actors of photon rec
 
 \begin{marginfigure}
     \includegraphics{rods-and-cones.pdf}
-    \caption{The distribution of rods and cones in dependence of the visual angle. While the distribution of cones sharply peaks around the fovea, the distribution of rods falls off way slower in the periphery, and rods do not exist entirely at the fovea. Adapted from \citep{Duchowski:2017ii}.\label{fig:RodsAndCones}}
+    \caption{The distribution of rods and cones in dependence of the visual angle. While the distribution of cones sharply peaks around the fovea, the distribution of rods falls off slower in the periphery, and rods do not exist entirely at the fovea. Adapted from \citep{Duchowski:2017ii}.\label{fig:RodsAndCones}}
 \end{marginfigure}
 
 These are the workhorses of the retina, responding in different lighting intensity conditions: While rods are highly sensitive in dim conditions,  the _scotopic_ regime, even responding to single-photon stimuli (_rhodopsin_ is responsible for the actual reception in rods, and absorbs green light most strongly), cones respond more sensitively in high-intensity conditions, the _mesopic_ regime. While cones exist in long-wavelength, middle-wavelength, and short-wavelength flavours, often called red, green, and blue, rods only exist in a single flavour. 

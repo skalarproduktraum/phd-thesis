@@ -1,4 +1,4 @@
-# track2track — Eye Tracking for Object Tracking in Volumetric Data
+# track2track — Eye Tracking for Cell Tracking
 
 We are going to detail the track2track strategy for augmenting biological tracking tasks with eye gaze data in order to make them easier and faster to do.
 
@@ -236,7 +236,7 @@ Preliminary results show that cell tracks can be reliably reconstructed by "just
 
 ## Discussion and Future Work
 
-In this chapter we have introduced the _track2track_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve a significant speedup compared to manually tracking cells. 
+In this chapter we have introduced the _track2track_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve an order of magnitude speedup compared to manually tracking cells. 
 
 Before we can bring this strategy into actual use for biologists, we need to do three more things: 
 
@@ -244,7 +244,7 @@ Before we can bring this strategy into actual use for biologists, we need to do 
 * Second, implement interactions that allow to track or proofread lineage trees. Such an interaction could for example include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division. 
 * Third, track2track has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets.
 
-We foresee the limitation that for tracking large lineages entirely, track2track will not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. Furthermore, track2track could be used in conjunction with an automatic tracking algorithm that provides uncertainty scores, and only be applied in regions where the algorithm cannot cross a given uncertainty threshold. We can probably further increase the usefulness of track2track by not just searching for local maxima along rays, but actually extract the centroids of cells.
+We foresee the limitation that for tracking large lineages entirely, track2track will not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. Furthermore, track2track could be used in a divide-and-conquer manner in conjunction with an automatic tracking algorithm that provides uncertainty scores, and only be applied in regions where the algorithm cannot cross a given uncertainty threshold. We could further increase the usefulness of track2track by not just searching for local maxima along rays, but actually extract the centroids of cells.
 
 Ultimately, we would like to integrate track2track into existing tracking software, such that it can be helpful for a more general audience. Current developments in eye tracking hardware indicate falling prices in the near future, such that those devices might become way more common soon. Alternatively, one could imagine just having one or two eye  tracking-enabled HMDs, and make them available to users in a bookable item-facility-like manner.
 

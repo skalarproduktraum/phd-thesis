@@ -299,7 +299,7 @@ Two example renderings resulting from this algorithm are shown in Figures \ref{f
 
 ## Particle-based volume rendering of the APR on the GPU
 
-Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. By just gathering particles on a per-level basis, it does also not make use of the space decomposition inherent to the APR. In this section, we present an alternative algorithm that solves these problems and makes the APR suitable as a basis for interactive volume rendering of large datasets.
+Unfortunately, the algorithm presented in the previous section only works well on the CPU, as it requires a lot of random accesses to change pixel values, and therefore does not map well to the massively parallel architecture of GPUs. By just gathering particles on a per-level basis, it does not use of the space decomposition inherent to the APR. In this section, we present an alternative algorithm that solves these problems and makes the APR suitable as a basis for interactive volume rendering of large datasets.
 
 In addition, the methodology we proposed in [Particle-based rendering in scenery], while simple, does not deal well APRs containing more then 1 or 2 million particles, especially not when a lot of small particles occupy very little screen space, need to be depth-sorted, and blended together. In such cases, the performance can degrade very quickly. Furthermore, the typical user of the APR might not be used to particle-based renderings, but rather to volume renderings of microscopy data.
 
@@ -371,6 +371,6 @@ Additionally, the spatial sampling of the APR is currently being extended to the
 
 On the applications side, remote 3D collaboration on volumetric datasets is currently hampered by the need to either possess or transfer the dataset to all participants — for gigabyte-sized datasets a nuisance, for terabyte-sized datasets nearly impossible without time-consuming preparation, and sharing of data via sneakernet. Alternatively, browser-based approaches like CATMAID [@Anonymous:2009fx] can be used, but suffer from high latency — especially in the case of VR/AR rendering — and the need for centralised, fast hardware. 
 
-The APR, and especially the APR+t, provides a way out here, by reaching data reduction rates of 20-100 times, moving gigabytes to megabytes, and terabytes to gigabytes. As scenery already includes capabilities for synchronisation over the network, remote 3D collaboration on large volumetric datasets is an interesting research avenue for the future.
+The APR, and especially the APR+t, provides a solution here, by reaching  20 to 100-fold data reduction, moving gigabytes to megabytes, and terabytes to gigabytes. As scenery already includes capabilities for synchronisation over the network, remote 3D collaboration on large volumetric datasets is an interesting research avenue for the future.
 
 

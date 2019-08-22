@@ -1,7 +1,7 @@
 \mainmatter
 
-\chapter*{Overview}
-\addcontentsline{toc}{chapter}{Overview}
+\chapter*{Overview and Contributions}
+\addcontentsline{toc}{chapter}{Overview and Contributions}
 
 \section*{Current Trends and Challenges in Biology}
 
@@ -13,7 +13,7 @@ Investigating biological systems in two dimensions has already led to fascinatin
 
 Even more recent developments, like CRISPR/Cas9 [@Jinek:2012hm] or gene drives enable us to manipulate specimen in ways and on fast timescales thought impossible before. 
 
-What these developments lack to a certain extent, are ways to again bring the experimenter into focus, both during the experiment, and during analysis, to enable new and flexible ways of interacting the large and complex amounts of data state-of-the-art experiments create, and also with the scientific instruments producing this data.
+What these developments lack to a certain extent, are ways to again bring the experimenter into the loop, both during the experiment, and during analysis, to enable new and flexible ways of interacting the large and complex amounts of data state-of-the-art experiments create, and also with the scientific instruments producing this data.
 
 \section*{Virtual and Augmented Reality}
 
