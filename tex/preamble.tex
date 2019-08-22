@@ -40,10 +40,6 @@
     ItalicFont = *-Italic, 
     BoldItalicFont = *-BoldItalic]{EBGaramond}
 
-% Set figure legends and captions to be smaller sized sans serif font
-%\usepackage[font={footnotesize}]{caption}
-\usepackage[caption=false]{subfig}
-
 \usepackage{siunitx}
 
 % Adjust spacing between lines to 1.5
@@ -166,13 +162,15 @@
 	commentstyle=\color{OliveGreen},
     numberstyle=\tiny\color{Gray},
     numbersep=5pt,
-    captionpos=b
+    captionpos=b,
+    abovecaptionskip=1.2em
 	}
 
+
 % YAML in listings
-\newcommand\YAMLcolonstyle{\color{red}\ttfamily}
-\newcommand\YAMLkeystyle{\color{black}\ttfamily\scriptsize\linespread{0.7}}
-\newcommand\YAMLvaluestyle{\color{blue}\ttfamily}
+\newcommand\YAMLcolonstyle{\color{OliveGreen}\ttfamily}
+\newcommand\YAMLkeystyle{\color{MidnightBlue}\ttfamily\scriptsize\linespread{0.7}}
+\newcommand\YAMLvaluestyle{\color{YellowGreen}\ttfamily}
 
 \makeatletter
 
@@ -189,7 +187,7 @@
   sensitive=false,
   comment=[l]{\#},
   morecomment=[s]{/*}{*/},
-  commentstyle=\color{purple}\ttfamily,
+  commentstyle=\color{Gray}\ttfamily,
   stringstyle=\YAMLvaluestyle\ttfamily,
   moredelim=[l][\color{orange}]{\&},
   moredelim=[l][\color{magenta}]{*},
@@ -208,3 +206,8 @@
 
 \newcommand\ProcessThreeDashes{\llap{\color{cyan}\ttfamily-{-}-}}
  
+% needs caption package, collides with tufte-book
+%\DeclareCaptionFormat{lstlisting}{\normalfont\small #1#2#3}
+%\captionsetup[lstlisting]{font=small,labelfont=small}
+%
+\usepackage[capitalise,noabbrev]{cleveref}
