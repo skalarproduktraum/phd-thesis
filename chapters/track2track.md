@@ -38,7 +38,13 @@ In terms of the design space for gaze interaction on head-mounted displays intro
 
 ## Tracking cells in early Platynereis development
 
-_Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_, with some examples shown in \cref{fig:PlatynereisCellShapes}. \TODO{Add cell shape figure.}
+\begin{figure*}
+    \includegraphics{cell-shapes.pdf}
+    \caption{Diversity of cell shapes in early \emph{Platynereis} development, taken from the first 100 timesteps of a developmental timelapse. Dataset courtesy of Mette Handberg-Thorsager, Tomancak Lab, MPI-CBG.}
+    \label{fig:PlatynereisCellShapes}
+\end{figure*}
+
+_Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_, with some examples shown in \cref{fig:PlatynereisCellShapes}.
 
 \begin{marginfigure}
     \begin{center}
