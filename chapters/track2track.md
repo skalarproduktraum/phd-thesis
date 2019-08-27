@@ -18,7 +18,7 @@ All of these automated approaches however have in common that they need manual c
 
 The challenges of this step are twofold:
 
-* Image data from fluorescence microscopy can be very inhomogeneous, with inhomogeneity stemming from both the distribution of fluorescent proteins, and from the diversity of cell shapes. Deriving general algorithms that can capture both regular and very deformed cells is a highly challenging task.
+* Image data from fluorescence microscopy can be very inhomogeneous, with inhomogeneity stemming from both the distribution of fluorescent proteins, and from the diversity of cell shapes. Deriving general algorithms that can capture both regular and very deformed cells or nuclei is a highly challenging task.
 * Manually curation of cell lineages is very tedious at the moment, as the users have to go through each timepoint and connect cells between the timepoints. This is often done on a per-slice basis and by mouse, leading to a time-consuming process. Manually tracking a single cell through 100 timepoints with this process can take up to 30 minutes, and tracking a single dataset whole can take many months.
 
 ## Design Space
@@ -40,13 +40,13 @@ In terms of the design space for gaze interaction on head-mounted displays intro
 
 \begin{figure*}
     \includegraphics{cell-shapes.pdf}
-    \caption{Diversity of cell shapes in early \emph{Platynereis} development, taken from the first 100 timesteps of a developmental timelapse. Dataset courtesy of Mette Handberg-Thorsager, Tomancak Lab, MPI-CBG.}
+    \caption{Diversity of nuclear shapes in early \emph{Platynereis} development, taken from the first 100 timesteps of a developmental timelapse. Dataset courtesy of Mette Handberg-Thorsager, Tomancak Lab, MPI-CBG.}
     \label{fig:PlatynereisCellShapes}
 \end{figure*}
 
-_Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_, with some examples shown in \cref{fig:PlatynereisCellShapes}.
+_Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_. Their membranes are inherently hard to segment, also due to the stochastic distribution of fluorescent markers. Alternatively, nuclei can be tracked, but their shapes vary as well, with some examples shown in \cref{fig:PlatynereisCellShapes}.
 
-\begin{marginfigure}
+\begin{marginfigure}[4cm]
     \begin{center}
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Platynereis100Timepoints.mp4}
     \end{center}
