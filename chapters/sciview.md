@@ -1,5 +1,12 @@
 # sciview — Integrating scenery into ImageJ2 & Fiji
 
+\begin{publishedin}
+The work presented in this chapter has been done in collaboration with Tobias Pietzsch (MPI-CBG), Curtis Rueden (University of Wisconsin, Madison), Stephan Daetwyler (MPI-CBG and UT Southwestern, Texas), and Kyle I.S. Harrington (University of Idaho, Moscow, and HHMI Janelia Farm), and is currently being prepared for publication as\\\\
+
+\vspace{0.5em} 
+
+Günther, U., Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview — Next-generation 3D visualisation for ImageJ \& Fiji.\end{publishedin}
+
 ![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](sciview-gameoflife.png)
 
 Fiji [@schindelin2012fiji] is a widely-used — as of April 2019, it has been cited over 10000 times — open-source distribution of ImageJ for biological image analysis (Fiji stands for "Fiji is just ImageJ"). It is now the predominant ImageJ [@Schneider:2012nihi] distribution and recently had its  its underlying infrastructure modernised tremendously, e.g. by replacing its basic image processing library with imglib2 [@Pietzsch:2012img] in an effort to replace the original ImageJ 1.x with a newer replacement, dubbed ImageJ2, which has brought better interoperability and better overall design [@Rueden:2017ij2]. 
@@ -12,7 +19,7 @@ In this chapter, we introduce sciview and explain how intertwining scenery and t
 
 ## Integration into the ImageJ2 & Fiji ecosystem
 
-With its basis, SciJava common, ImageJ2 focuses heavily on modularisation, extensibility, and interoperability. At the core of ImageJ2 is the support for N-dimensional image data, going beyond the "traditional" stack of 2D images from  microscopy, and extending towards multispectral and hyperspectral images, which might even include information about wavelengths, sample counts, polarisation states, etc. On the interoperability side, the SciJava infrastructure enables simple integration of write-once plugins into several different software suites, such as ImageJ2/Fiji, KNIME [@Berthold:2008kni], and Icy [@Chaumont:2012icy].
+With its basis, SciJava common, ImageJ2 focuses heavily on modularisation, extensibility, and interoperability. At the core of ImageJ2 is the support for N-dimensional image data, going beyond the "traditional" stack of 2D images from  microscopy, and extending towards multispectral and hyperspectral images, which might even include information about wavelengths, sample counts, polarisation states, etc. On the interoperability side, the SciJava infrastructure enables simple integration of write-once plugins into several different software suites, such as ImageJ2/Fiji, KNIME [@berthold2008], and Icy [@Chaumont:2012icy].
 
 We make use of three main components from the ImageJ2 effort: 
 
@@ -79,8 +86,6 @@ The remainder of this chapter is intended to showcase applications of sciview. W
 
 ### Zebrafish development
 
-![Screenshot of sciview, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
-
 \begin{marginfigure}
     \begin{center}
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/ZebrafishVascularDevelopment.mp4}
@@ -89,24 +94,57 @@ The remainder of this chapter is intended to showcase applications of sciview. W
     Scan this QR code to go to a video demo of zebrafish vasculature development visualised in sciview. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
 \end{marginfigure}
 
+![Screenshot of sciview, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
+
+For the publication [@Daetwyler:2018e8d] we developed a custom visualisation pipeline to cope with the terabytes of image data generated in experiments which simultaneously image multiple _Danio rerio_ embryos over the course of several days in order to investigate vascular development. Note here that this was developed before scenery gained support for out-of-core volume rendering, so alternative techniques had to be employed to create timelapse videos of vascular development. The resulting script for controlling sciview to create the animation shown in \cref{fig:developmental_timelapse_sciview} and the supplementary video is shown in \cref{lst:ZebrafishTimelapse} — it reads all TIFF files from a given location (line 19 onward), and iterate through them one-by-one (line 23), saving a screenshot on each iteration (line 35).
+
 \begin{marginfigure}
     \includegraphics{developmental-timelapse.png}
     \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in sciview, from \citep{Daetwyler:2018e8d}.}
     \label{fig:developmental_timelapse_sciview}
 \end{marginfigure}
 
-### Simple Neurite Tracer
+\begin{lstlisting}[language=JavaScript, label=lst:ZebrafishTimelapse]
+// import necessary packages
+importPackage(java.nio.file);
+importPackage(java.io);
+importPackage(java.lang);
+importPackage(java.util);
 
-In [@Longair:2011snt], the authors present an ImageJ/Fiji plugin for quick and semiautomatic tracing of neurons, even in noisy datasets. An image of the Simple Neurite Tracer (SNT) plugin running is shown in Fig \ref{fig:SNTOriginal}
+// get sciview object
+var sc = sciView.getActiveSciView();
 
-\begin{figure*}
-    \includegraphics{SimpleNeuriteTracer.png}
-    \caption{Simple Neurite Tracer showing tracing neurons in the adult \emph{Drosophila} brain, and neuropils shown in addition to the traced neurites in the old Fiji 3D Viewer\label{fig:SNTOriginal}.}
-\end{figure*}
+// get scene object
+var scene = sc.getAllSceneNodes()[0].parent;
 
-We have expanded the original code to make SNT work on top of sciview, with an example image shown in Figure \ref{fig:sciviewSNT}.
+// get imported volume, number 6 in the array
+var fish = scene.children[6];
+// scale to half the original size
+fish.renderScale = 0.5;
 
-\TODO{Add sciview figure}
+// get all TIFF files and sort by name
+var files = new File("C:/my/fish/data/tiff/combined/angle000/").listFiles();
+Arrays.sort(files, 0, files.length-1);
+
+// iterate over all files
+for(i = 0; i < files.length-1; i++) {
+    var f = Paths.get(files[i]);
+    fish.readFrom(f, true);
+    Thread.sleep(1500);
+    
+    // adjust transfer function range and LUT
+    fish.trangemin = 0.0;
+    fish.trangemax = 255.0;
+    sc.setColormap(fish, lut.loadLUT(lut.findLUTs().get("VirtualFishAssignment.lut")));
+    Thread.sleep(500);
+    
+    // take a screenshot (which is saved to disk)
+    sc.takeScreenshot();
+    Thread.sleep(1500);
+}
+\end{lstlisting}
+
+
 
 ### Constrained Segmentation of the Zebrafish heart
 
@@ -144,15 +182,20 @@ For the last step, less than 10 annotations had to be manually performed, result
 \end{marginfigure}
 
 
-
-
-
 ### EmbryoGen — Generating test data for algorithmic analysis of lightsheet imaging data
 
 \begin{figure*}
     \includegraphics{embryogen.png}
     \caption{Visualisation of a simulated \emph{Drosophila} embryo using \emph{EmbryoGen} in sciview. The cells are shown as green spheres, while the equilibrating forces acting on them are shown as arrows on the right side where the cells are hidden. Courtesy of Vladimir Ulman, Tomancak and Jug Lab, MPI-CBG and Center for Systems Biology Dresden.\label{fig:EmbryoGen}}
 \end{figure*}
+
+Vladimir Ulman (Tomancak Lab, MPI-CBG) has developed a software, _EmbryoGen_, to create artificial, but realistic-looking images of developing _Drosophila_ embryos. EmbryoGen was developed in order to be able to compare segmentation and tracking algorithms with actual ground truth data, which is normally not available for microscope-acquired fluorescence microscopy datasets, as the _actual_ information about cell positions, shape, etc. is simply not available, but only a representation based on fluorescence is captured.
+
+![EmbryoGen architecture, with the actual simulation written in C++ talking to scenery and sciview via a ZeroMQ-based protocol. See text for details.\label{fig:EmbryoGenArchitecture}](embryogen-communication.pdf)
+
+EmbryoGen's visualisation is based on scenery and sciview, in order to harness the simultaneous visualisation of mesh data, coming from simulated cell shapes and positions, and volumetric data, calculated from the simulated cells. Employing a client-server architecture, EmbryoGen has the actual simulation code written in C++, and communicates with scenery and sciview via a simple, ZeroMQ-based protocol. A sketch of the architecture is shown in \cref{fig:EmbryoGenArchitecture}. The support of instancing in scenery (see [Instancing]) is also helpful in this particular use case, as the number of simulated cells can easily reach many 10000.
+
+The visualisation of the simulation is used for debugging and demonstration purposes: The cells can be visualised individually (see \cref{fig:EmbryoGen}, with cells shown in green, and the forces acting on them as white arrows. Furthermore, the optical flow induced by the cells moving can be visualised (see \cref{fig:EmbryoGenOpticalFlow}.
 
 \begin{figure}
     \includegraphics{embryogen-opticalflow.png}
@@ -170,6 +213,17 @@ This performance improvement enables previous studies of swarms with evolving be
 
 Subsequently, we were able to increase the number of agents, pushing the limits of scenery. The highest number of agents we could achieve was 2.500.000, although the framerate drops significantly to about 2-5 fps, as the GPU becomes overwhelmed with vertex and geometry processing.
 
+## Simulation and visualisation of neural growth
+
+
+
 ## Conclusions and Future Work
 
+In the future, we want to integrate sciview even tighter with the existing ImageJ ecosystem, for example by making image processing commands available in a context-based menu that can also be used in VR/AR, such that image processing tasks can be executed without having to put down the headset.
+
+In order to make sciview more interoperable with other ecosystems, we will provide wrapper libraries. Such a library has already been developed to use sciview from Python, enabling use of, e.g., SciPy, Numpy, TensorFlow, or PyTorch[^PythonFrameworkNote].
+
+[^PythonFrameworkNote]: SciPy and Numpy (see [scipy.org](https://scipy.org)) are Python frameworks for scientific computing, while TensorFlow ([tensorflow.org](https://tensorflow.org)) and PyTorch ([pytorch.org](https://pytorch.org)) are widely-used frameworks for GPU-accelerated deep learning and neural network prototyping.
+
+While the current GUI of sciview is based on Swing, we would like to provide support for JavaFX in the future as well. If Fiji/ImageJ2 also move to JavaFX, this would provide a very powerful combination, as it opens up the possibility to also run on touch-based devices, such as smartphones and tablets.
 
