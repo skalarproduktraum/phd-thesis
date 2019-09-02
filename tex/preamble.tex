@@ -138,7 +138,7 @@
 
 
 % DOI linking with hyperref
-\renewcommand{\doi}[1]{\href{http://doi.org/#1}{DOI: #1}}
+\renewcommand{\doi}[1]{\href{http://doi.org/#1}{DOI: \nolinkurl{#1}}}
 
 
 % Code Listings
@@ -211,3 +211,19 @@
 %\captionsetup[lstlisting]{font=small,labelfont=small}
 %
 \usepackage[capitalise,noabbrev]{cleveref}
+
+
+% JavaScript
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+\lstdefinelanguage{JavaScript}{
+  keywords={break, case, catch, continue, debugger, default, delete, do, else, false, finally, for, function, if, in, instanceof, new, null, return, switch, this, throw, true, try, typeof, var, void, while, with},
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  morestring=[b]',
+  morestring=[b]",
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  sensitive=true
+}
+
