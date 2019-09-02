@@ -6,7 +6,7 @@ After having introduced a high-level overview of scenery in the previous chapter
 
 A scenegraph is a data structure that organises objects in a hierarchical manner, in a tree or graph structure, where each node in the graph has its own transformation properties. In that way, it is very easy to describe spatial and organisational relations between objects, such as a car tyre belonging to a car, and the tyre moving with the parent object _car_ (inheriting its transformations), when it moves.
 
-In general, a scenegraph can contain connections between multiple nodes. In scenery, we use a scenegraph approach that is closer to a tree representation, because that structure more easily enables parallel scene element discovery [@boudier2015gpu].
+In general, a scenegraph can contain connections between multiple nodes. In scenery, we use a scenegraph approach that is closer to a tree representation, because that structure more easily enables parallel scene element discovery [@boudier2015].
 
 If bounding boxes are stored along with the nodes, the scenegraph can easily be extended to also include _bounding volume hierarchies_ that can enable more efficient collision detection[^collisionnote] or frustum culling[^cullingnote].
 
