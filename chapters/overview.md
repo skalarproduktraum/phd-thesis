@@ -17,7 +17,7 @@ What these developments lack to a certain extent, are ways to again bring the ex
 
 \section*{Virtual and Augmented Reality}
 
-With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems — from the 1960s — are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq], made famous as _The Mother of All Demos_. In the meantime, and over the course of two Virtual Reality Revolutions — with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992vt]) —  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly specialised and expensive device into the homes  or offices of potential users.
+With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems — from the 1960s — are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq], made famous as _The Mother of All Demos_. In the meantime, and over the course of two Virtual Reality Revolutions — with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992fa]) —  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly specialised and expensive device into the homes  or offices of potential users.
 
 \section*{Natural User Interfaces}
 
@@ -56,11 +56,12 @@ Some of the results presented in this thesis have already been published :
 \subsection*{Conference Abstracts}
 
 
+* Gupta, A., __Günther, U.__, Incardona, P., Aydin, A.D., Dachselt, R., Gumhold, S., Sbalzarini, I.F.: A Framework for Interactive Virtual Reality _In Situ_ Visualisation of Parallel Numerical Simulations. _The 9th IEEE Symposium on Large Data Analysis and Visualization at IEEE VIS_, 2019 (accepted, [arXiv preprint 1337.13337](https://arxiv.org/abs/1906.06726)).
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
-* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015
-* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014
+* __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018.
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016.
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - open-source 4D live visualisation for light-sheet microscopy. _Focus on Microscopy_, Göttingen, 2015.
+* __Günther, U.__, Cheeseman, B.L., Tomancak, P., Sbalzarini, I.F.: dive into data — immersive 3D particle visualisation, _BioImageInformatics_, Leuven, 2014.
 
 \subsection*{Papers in Preparation}
 
@@ -75,6 +76,7 @@ The following students have been supervised by the author in the duration of the
 
 * Sahil Loomba, intern, May - August 2014.
 * Aryaman Gupta, intern and master student, June - December 2017.
+* Luke J. Hyman, intern, August - September 2018.
 
 
 \section*{What follows}
