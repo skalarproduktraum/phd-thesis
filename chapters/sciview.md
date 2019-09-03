@@ -213,10 +213,6 @@ This performance improvement enables previous studies of swarms with evolving be
 
 Subsequently, we were able to increase the number of agents, pushing the limits of scenery. The highest number of agents we could achieve was 2.500.000, although the framerate drops significantly to about 2-5 fps, as the GPU becomes overwhelmed with vertex and geometry processing.
 
-## Simulation and visualisation of neural growth
-
-
-
 ## Conclusions and Future Work
 
 In the future, we want to integrate sciview even tighter with the existing ImageJ ecosystem, for example by making image processing commands available in a context-based menu that can also be used in VR/AR, such that image processing tasks can be executed without having to put down the headset.
@@ -224,6 +220,8 @@ In the future, we want to integrate sciview even tighter with the existing Image
 In order to make sciview more interoperable with other ecosystems, we will provide wrapper libraries. Such a library has already been developed to use sciview from Python, enabling use of, e.g., SciPy, Numpy, TensorFlow, or PyTorch[^PythonFrameworkNote].
 
 [^PythonFrameworkNote]: SciPy and Numpy (see [scipy.org](https://scipy.org)) are Python frameworks for scientific computing, while TensorFlow ([tensorflow.org](https://tensorflow.org)) and PyTorch ([pytorch.org](https://pytorch.org)) are widely-used frameworks for GPU-accelerated deep learning and neural network prototyping.
+
+Furthermore, we would like to provide better interoperability with simulation frameworks such as Morpheus [@Starruss:2014Morpheus], to better facilitate the visualisation and analysis of experimental data in conjunction with data from models and simulations. In this context, we have already done preliminary work for simulating and visualising the growth of artificial neurons in conjunction with Simple Neurite Tracer [@Longair:2011snt]. 
 
 While the current GUI of sciview is based on Swing, we would like to provide support for JavaFX in the future as well. If Fiji/ImageJ2 also move to JavaFX, this would provide a very powerful combination, as it opens up the possibility to also run on touch-based devices, such as smartphones and tablets.
 
