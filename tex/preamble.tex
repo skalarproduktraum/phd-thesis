@@ -227,3 +227,5 @@
   sensitive=true
 }
 
+% Use cleveref to actually show numbers in front the the section names
+\renewcommand{\hyperlink}[2]{\cref{#1}, \emph{#2}}
