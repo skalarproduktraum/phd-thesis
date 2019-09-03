@@ -104,7 +104,7 @@ For calibration, the user is presented with a series of points to look at, which
 
 After successful calibration, scenery enables the developer to connect the outputs of the eye tracker (in the form of gaze normals, gaze positions, and a confidence rating) to the properties of any object. By default, gaze points are only output in case the confidence reaches more than 80%, leaving the decision to the developer which of the higher-confidence samples to use.
 
-More details about eye tracking can be found in the chapter [Eye Tracking and Gaze-based Interaction], with a use case implemented in the chapter [track2track — Eye Tracking for Object Tracking in Volumetric Data].
+More details about eye tracking can be found in [Eye Tracking and Gaze-based Interaction], with a use case implemented in [track2track: Eye Tracking for Cell Tracking].
 
 
 

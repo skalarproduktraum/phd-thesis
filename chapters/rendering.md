@@ -20,7 +20,7 @@ If bounding boxes are stored along with the nodes, the scenegraph can easily be 
 
 Scenegraphs can be traversed in a variety of ways, such as depth-first traversal. Depth-first traversal is also used by default in scenery. The renderer can make further optimisations, such as drawing it in front-to-back order, where spatial sorting is applied after gathering nodes, e.g. to draw transparent objects in the correct way.
 
-The exception to normal scenegraph traversal is [Instancing], where copies of a node are not added as children, but to the special `instances` property as performance optimisation. See the section on instancing for details.
+The exception to normal scenegraph traversal is _instancing_ (described in detail in [Instancing]), where copies of a node are not added as children, but to the special `instances` property as performance optimisation. See the section on instancing for details.
 
 ### The Nodes
 
@@ -57,7 +57,7 @@ In scenery, the contract with the renderer is thin. A renderer needs to:
 * resize a (eventually existing) viewport (`reshape()` function),
 * become embedded inside an existing window, e.g. from JavaFX or Swing (`embedIn` property),
 * change the rendering quality (`setRenderingQuality()` function),
-* toggle push mode (`pushMode` property, see [Push Mode] section),
+* toggle push mode (`pushMode` property, also see [Push Mode]),
 * hold settings (`settings` property),
 * hold a window (`window` property), and
 * close itself.
@@ -738,7 +738,7 @@ As can be seen from the table, the unoptimised C++ version of loop-based 4x4 mat
 
 In this chapter, we have introduced the rendering architecture of scenery, discussed the renderer interface, and special scenery features like semi-automatic instancing and custom rendering pipelines. We discussed the differences between the OpenGL and Vulkan renderers, and compared a performance-critical operation in the context of the JVM and native code.
 
-For future work, we refer the reader to the [Future Development Directions] chapter, which summarises the future targets for all components of scenery.
+For future work, we refer the reader to [Future Development Directions], which summarises the future targets for all components of scenery.
 
 
 

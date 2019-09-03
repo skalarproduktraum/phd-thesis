@@ -1,4 +1,4 @@
-# track2track — Eye Tracking for Cell Tracking
+# track2track: Eye Tracking for Cell Tracking
 
 We are going to detail the track2track strategy for augmenting biological tracking tasks with eye gaze data in order to make them easier and faster to do.
 
@@ -25,13 +25,13 @@ The challenges of this step are twofold:
 
 We intend to tackle this problem by using a combination of eye tracking and virtual reality. 
 
-The user can be tasked to follow a cell with his/her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system, as described in the chapter [Introduction to Visual Processing], is excellent in following moving objects smoothly, and in datasets used for cell tracking, the cells can also be assumed to move smoothly. Interestingly, the particular kind of eye movement we are exploiting here, _smooth pursuits_ — see the section [Eye movements] in [Introduction to Visual Processing] for details — is rather underexplored in human-computer interaction. To the author's knowledge, only [@piumsomboon2017] use it in their _Radial Pursuit_ technique. In _Radial Pursuit_, the user can select an object by following it in a scene with his eyes, and it will become more "lensed-out" the longer he does that.
+The user can be tasked to follow a cell with his/her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system, as described in [Introduction to Visual Processing], is excellent in following moving objects smoothly, and in datasets used for cell tracking, the cells can also be assumed to move smoothly. Interestingly, the particular kind of eye movement we are exploiting here, _smooth pursuits_ — see [Eye movements] for details — is rather underexplored in human-computer interaction. To the author's knowledge, only [@piumsomboon2017] use it in their _Radial Pursuit_ technique. In _Radial Pursuit_, the user can select an object by following it in a scene with his eyes, and it will become more "lensed-out" the longer he does that.
 
 With the addition of virtual reality to the mix, we can first help the user with orientation in the dataset, and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers or spurious pupil detections, or even foveate the rendering of the volumetric dataset.
 
 Taking one of the two away, would lead to issues:
 
-* When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex (VOR, see [Eye movements] in the [Introduction to Visual Processing] chapter).
+* When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex (VOR, see [Eye movements]).
 * When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, such as Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer, especially when the user needs to move inside the dataset.
 
 In terms of the design space for gaze interaction on head-mounted displays introduced by [@hirzle2019], we utilise (stereoscopic) VR with full world information, combined with binocular eye tracking.

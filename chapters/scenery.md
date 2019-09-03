@@ -187,4 +187,4 @@ At the outermost architectural layer, the scenery framework consists of seven ma
 
 The construction and interplay of all the components is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
 
-In the next chapters, we are going to introduce the most important subsystems of scenery, namely those for [Rendering], [Input Handling and Integration of External Hardware], and for [Distributed Rendering]. These chapters are followed by a brief description of the [Other Subsystems] in scenery, and [Future Development Directions]. 
+In the next chapters, we are going to introduce the most important subsystems of scenery, namely those for rendering, input handling and integration of external hardware, and for distributed rendering. These chapters are followed by a brief description of the remaining subsystems in scenery. We conclude the description of scenery with [Future Development Directions]. 

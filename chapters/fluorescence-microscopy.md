@@ -91,7 +91,7 @@ To really tame the data, one has to think of an alternative data representation,
 
 Such a representation has been developed [@Cheeseman:2018b12], named the _Adaptive Particle Representation_ (APR). The APR non-uniformly resamples images and stores information only where it actually is, saving a lot of storage space, especially for sparsely populated images, such as from fluorescence microscopes. 
 
-In the chapter [Rendering the Adaptive Particle Representation] we are going to talk about how to use this representation for fast and efficient rendering of lightsheet microscopy data.
+In [Rendering the Adaptive Particle Representation], we are going to talk about how to use this representation for fast and efficient rendering of lightsheet microscopy data.
 
 ### Smart microscopy requires smart interactions
 
@@ -106,5 +106,5 @@ All these microscopes, envisioned, and already existing, have in common that the
 * In the case of _Drosophila_ wingdisc formations, investigations of tissue tensions and mechanics have so far been focused only on flat pieces of tissue, which do not constitute the main part of development, and are actually hard to find in the developing embryo. 3D interaction in that scenario can provide the user with easy access to more complex geometries to perform ablation experiments in.
 * In the case of retinal development, which takes place on highly curved surfaces and in complex volumes, additional 3D interactions for ablation and optogenetics can lead to more insight into defects in retinal development, of which human medicine might ultimately benefit.
 
-For these use cases, we are going into deeper detail in the chapter [Interactive Laser Ablation], developing an interactive demo of how such interactions might take place in the future, on a microscope, equipped with 3D virtual reality glasses, or from a room-scale virtual reality system. Additionally, in the chapter [track2track — Eye Tracking for Object Tracking in Volumetric Data], we discuss a new way to approach tracking and tracing problems on images resulting from fluorescence microscopy by utilising eye tracking.
+For these use cases, we are going into deeper detail in [Towards Interactive Virtual Reality Laser Ablation], developing an interactive demo of how such interactions might take place in the future, on a microscope, equipped with 3D virtual reality glasses, or from a room-scale virtual reality system. Additionally, in [track2track: Eye Tracking for Cell Tracking], we discuss a new way to approach tracking and tracing problems on images resulting from fluorescence microscopy by utilising eye tracking.
 

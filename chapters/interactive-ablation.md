@@ -4,7 +4,7 @@ The investigation of biological phenomena not only rests on observation of such,
 
 Nowadays, experiments in this realm are carried out with simple slice-based 2D user interfaces, while the specimen and processes investigated get spatiotemporally more and more complex. 
 
-In this chapter, we introduce the use of virtual reality to microsurgery to overcome this problem. We present two prototypes that we developed to investigate user satisfaction and compatibility, and propose a microscope design that will incorporate an ablation system that can be steered in virtual reality. The prototypes presented require flexible visualisation of both geometric data and large, time-series volumetric data, as well as integration of additional hardware such as VR HMDs and controllers, we show how our visualisation framework, introduced in the chapter [scenery — Democratising VR/AR Visualisation for Systems Biology], enabled those developments. First, we start with an introduction to microsurgery and the underlying biophysical principles.
+In this chapter, we introduce the use of virtual reality to microsurgery to overcome this problem. We present two prototypes that we developed to investigate user satisfaction and compatibility, and propose a microscope design that will incorporate an ablation system that can be steered in virtual reality. The prototypes presented require flexible visualisation of both geometric data and large, time-series volumetric data, as well as integration of additional hardware such as VR HMDs and controllers, we show how our visualisation framework, introduced in  [scenery — Democratising VR/AR Visualisation for Systems Biology], enabled those developments. First, we start with an introduction to microsurgery and the underlying biophysical principles.
 
 ## Introduction to Microsurgery
 
@@ -26,7 +26,7 @@ For the interaction of light with biological tissue, five different regimes exis
 
 Table: Regimes for light interacting with biological tissue. {#tbl:LaserInteractions}
 
-In case of _photochemical interaction_, chemical reactions are triggered by the application of laser light, with most of the effects originate from decay products of these chemicals, and not the laser itself[@Niemz:2007laa].
+In case of _photochemical interaction_, chemical reactions are triggered by the application of laser light, with most of the effects originate from decay products of these chemicals, and not the laser itself [@Niemz:2007laa].
 
 _Thermal interaction_ in turn is characterized by extended tissue damage due to vaporisation, coagulation, carbonisation or melting. This is not desirable for precise manipulation on the cellular or tissue level, as clearly visible in Figure \ref{fig:thermal_interaction}.
 
@@ -89,7 +89,7 @@ As a first prototype, we developed a browser-based (threejs, [https://threejs.or
 
 1. orient the specimen of _C. elegans_ in the desired way by using keyboard and mouse,
 2. form a circular structure with thumb and index finger, and draw the desired tubular structure into the aligned worm, and finally
-3. a cylindrical tube is calculated from the defined circular samples via Centripetal Catmull-Rom spline interpolation[@Catmull:1974cf]. Catmull-Rom splines have been chosen here as they always go through their control points, and do not form cusps, which both are desirable properties for surfaces later to be used in laser ablation.
+3. a cylindrical tube is calculated from the defined circular samples via Centripetal Catmull-Rom spline interpolation [@Catmull:1974cf]. Catmull-Rom splines have been chosen here as they always go through their control points, and do not form cusps, which both are desirable properties for surfaces later to be used in laser ablation.
 
 We identified two major issues with this approach:
 
@@ -107,7 +107,7 @@ We abandoned browser-based prototyping after this first iteration, as loading ti
     \caption{Screenshot of the second virtual reality-powered laser ablation prototype. In the prototype, we show the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. The task of the user is to draw in cuts using VR controllers. See text for a full description. Dataset courtesy of Loïc Royer (MPI-CBG/CZI).\label{fig:VRLaserAblationDemo}}
 \end{figure}
 
-The software for the second prototype was developed with our visualisation framework _scenery_, described in detail in the chapter [scenery — Democratising VR/AR Visualisation for Systems Biology]. We switched away from browser-based prototyping, as the amounts of volumetric data required to be handled in the demo are too large for browser-based software, and because _scenery_ is an ideal toolkit for such prototype, due to its support for large volumetric data and VR devices. We choose a VR setup using an HTC Vive HMD with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
+The software for the second prototype was developed with our visualisation framework _scenery_, described in detail in [scenery — Democratising VR/AR Visualisation for Systems Biology]. We switched away from browser-based prototyping, as the amounts of volumetric data required to be handled in the demo are too large for browser-based software, and because _scenery_ is an ideal toolkit for such prototype, due to its support for large volumetric data and VR devices. We choose a VR setup using an HTC Vive HMD with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
 
 ### Description of study
 
@@ -258,7 +258,7 @@ The next prototype of the software will incorporate the changes proposed in the 
 
 While we have focussed on the task of laser ablation, we believe that the interactions we have proposed are also applicable to other tasks in microscopy that require an surface or volume selection, such as optogenetics and photoconversion [@Boyden:2005cd], where photoactivatable proteins are used to steer cellular functions, or focused light-induced cytoplasmic streaming (FLUCS) [@mittasch2018], where intracellular flows can be induced by scanning a focused laser over the specimen.
 
-To improve the fidelity of the visualisation during the ablation procedure, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user (also see [Future Development Directions] more more details).
+To improve the fidelity of the visualisation during the ablation procedure, we want to to extend our software framework to support better rendering algorithms [@Kroes:2012bo; @igouchkine2017] to provide better visual assistance and guidance to the user (also see [Future Development Directions] for more details).
 
 Finally, we aim to provide an open-source/open-hardware solution to perform both laser ablation and optogenetics tasks with the assistance of VR interfaces, based on a customised OpenSPIM microscope.
 
