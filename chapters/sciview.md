@@ -1,11 +1,6 @@
 # sciview — Integrating scenery into ImageJ2 & Fiji
 
-\begin{publishedin}
-The work presented in this chapter has been done in collaboration with Tobias Pietzsch (MPI-CBG), Curtis Rueden (University of Wisconsin, Madison), Stephan Daetwyler (MPI-CBG and UT Southwestern, Texas), and Kyle I.S. Harrington (University of Idaho, Moscow, and HHMI Janelia Farm), and is currently being prepared for publication as\\\\
-
-\vspace{0.5em} 
-
-Günther, U., Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview — Next-generation 3D visualisation for ImageJ \& Fiji.\end{publishedin}
+\alreadypublished{The work presented in this chapter has been done in collaboration with Tobias Pietzsch (MPI-CBG), Curtis Rueden (University of Wisconsin, Madison), Stephan Daetwyler (MPI-CBG and UT Southwestern, Texas), and Kyle I.S. Harrington (University of Idaho, Moscow, and HHMI Janelia Farm), and is currently being prepared for publication as:}{\textbf{Günther, U.}, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview — Next-generation 3D visualisation for ImageJ \& Fiji.}
 
 ![Screenshot of the sciview main window, showing the Game of Life 3D demo.\label{fig:SciViewMainWindow}](sciview-gameoflife.png)
 
@@ -94,11 +89,15 @@ The remainder of this chapter is intended to showcase applications of sciview. W
     Scan this QR code to go to a video demo of zebrafish vasculature development visualised in sciview. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
 \end{marginfigure}
 
+\alreadypublished{The visualisations shown in this section have been published as part of:}{Daetwyler S., \textbf{Günther, U.}, Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. \emph{Development}, 2019. \href{https://www.biorxiv.org/content/10.1101/478149v1}{bioRxiv preprint 478149}.}
+
 ![Screenshot of sciview, showing a multicolour segmentation of _Danio rerio_ vasculature. Dataset courtesy of Stephan Daetwyler, Huisken Lab, MPI-CBG Dresden and Morgridge Institute for Research, Madison, USA.\label{fig:SciViewScreenshot}](scenery-sciview.png)
+
+
 
 For the publication [@Daetwyler:2018e8d] we developed a custom visualisation pipeline to cope with the terabytes of image data generated in experiments which simultaneously image multiple _Danio rerio_ embryos over the course of several days in order to investigate vascular development. Note here that this was developed before scenery gained support for out-of-core volume rendering, so alternative techniques had to be employed to create timelapse videos of vascular development. The resulting script for controlling sciview to create the animation shown in \cref{fig:developmental_timelapse_sciview} and the supplementary video is shown in \cref{lst:ZebrafishTimelapse} — it reads all TIFF files from a given location (line 19 onward), and iterate through them one-by-one (line 23), saving a screenshot on each iteration (line 35).
 
-\begin{marginfigure}
+\begin{marginfigure}[-4cm]
     \includegraphics{developmental-timelapse.png}
     \caption{Frames from a developmental timelapse of \emph{D. rerio} rendered in sciview, from \citep{Daetwyler:2018e8d}.}
     \label{fig:developmental_timelapse_sciview}
@@ -176,7 +175,7 @@ For the last step, less than 10 annotations had to be manually performed, result
     \caption{Constraining a volumetric image for segmentation using the \emph{thingy} command in SciView. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentation}}
 \end{figure}
 
-\begin{marginfigure}
+\begin{marginfigure}[-4.5cm]
     \includegraphics{segmented-pericardium.png}
     \caption{Constrained segmentation result using a trainable Weka segmenter on the volume cropped before as shown in \cref{fig:ConstrainedSegmentation}. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentationResult}}
 \end{marginfigure}

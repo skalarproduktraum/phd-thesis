@@ -82,6 +82,7 @@
 \makeatother
 
 % Set colour of links to black so that they don't show up when printed
+\PassOptionsToPackage{unicode=true,backref=page}{hyperref} % options for packages loaded elsewhere
 \usepackage{hyperref}
 
 % letter spacing — workaround needed by tufte-book package
@@ -117,8 +118,16 @@
     colorlinks=true,
     linkcolor={MidnightBlue},
     citecolor={MidnightBlue},
-    urlcolor={MidnightBlue}
+    urlcolor={MidnightBlue},
+    pagebackref=true,
+    backref=page
 }
+
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\BR@backref}{\newblock}{\newblock(page~}{}{}
+\patchcmd{\BR@backref}{\par}{)\par}{}{}
+\makeatother
 
 % \renewcommand{\citep}[1]{\cite{#1}}
 % \let\citep\cite
@@ -135,6 +144,14 @@
 \definecolor{publishedbg}{RGB}{240,240,240}
 \tcbset{commonstyle/.style={boxrule=0pt,sharp corners,enhanced jigsaw,nobeforeafter,boxsep=0pt,left=\fboxsep,right=\fboxsep}}
 \newtcolorbox{publishedin}{commonstyle,colback=publishedbg}
+\newcommand{\alreadypublished}[2]{
+\begin{publishedin}
+    #1
+    \vskip 0.3em
+    #2
+\end{publishedin}
+}
+
 
 
 % DOI linking with hyperref

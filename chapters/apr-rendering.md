@@ -1,10 +1,6 @@
 # Rendering the Adaptive Particle Representation
 
-\begin{publishedin}
-The work presented in this chapter has been done in collaboration with Bevan Cheeseman, Sbalzarini Lab, MPI-CBG, and is partially published in\\
-\vspace{0.5em} 
-Cheeseman, B.L., \textbf{Günther, U.}, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. \emph{Nature Communications}, 2018. \href{https://www.biorxiv.org/content/early/2018/03/02/263061}{bioRxiv preprint 263061}.
-\end{publishedin}
+\alreadypublished{The work presented in this chapter has been done in collaboration with Bevan Cheeseman, Sbalzarini Lab, MPI-CBG, and is partially published in:}{Cheeseman, B.L., \textbf{Günther, U.}, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. \emph{Nature Communications}, 2018. \href{https://www.biorxiv.org/content/early/2018/03/02/263061}{bioRxiv preprint 263061}.}
 
 
 ## Introduction
