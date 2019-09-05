@@ -64,17 +64,8 @@
 
 
 \small
-\bigskip
-\noindent Typeset using [pandoc](https://www.pandoc.org), [Markdown](https://daringfireball.net/projects/markdown/), and [LuaLaTeX](http://www.luatex.org/) in EB Garamond, Roboto Slab, and Source Code Pro.
-\bigskip
-
 \vspace*{\fill}
-\textsc{isbn:} 978-1-333-33333-7
-
-![Creative Commons Logo Badge](./logos/cc-by-sa.pdf){ width=20% } \
-This work is licensed under a \
-[Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
-
+\noindent Typeset using [pandoc](https://www.pandoc.org), [Markdown](https://daringfireball.net/projects/markdown/), and [LuaLaTeX](http://www.luatex.org/) in EB Garamond, Roboto Slab, and Source Code Pro.
 
 \mbox{}
 
