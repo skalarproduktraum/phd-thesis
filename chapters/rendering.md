@@ -563,6 +563,14 @@ Volumetric data for out-of-core rendering is stored in tiles of up to $2^{31}$ v
 
 If a tile requested is already present in the cache, we encode its coordinates in the corresponding LUT voxel. Should a tile not yet be present in the cache, we enqueue the missing block for asynchronous loading through the cache layer of BigDataViewer. Recently-loaded blocks are inserted into the cache texture. The cache has least-recently used (LRU) behaviour, such that the oldest tiles are the first ones to be replaced. Missing blocks are substituted by lower-resolution data while not yet available.
 
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/OutOfCoreRendering.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video demo of out-of-core volume rendering in scenery. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
+\end{marginfigure}
+
 When the LUT is prepared, volume rendering proceeds by raycasting, while adapting the step size along the ray depending on distance to the observer. The correct coordinates for each voxel are determined by scaling its coordinate down to coincide with the voxel in the LUT. Nearest-neighbour sampling from the LUT then yields a block offset and scale in the cache texture. The final voxel value is then sampled from the cache texture, after reversing the scaling and translation operations. 
 
 This approach enables to render multiple volumes simultaneously, by adding additional LUTs for each volume. Non-out-of-core volumes can be rendered as well, such then do not require additional LUTs.
