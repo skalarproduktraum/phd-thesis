@@ -51,7 +51,7 @@ _Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic developme
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Platynereis100Timepoints.mp4}
     \end{center}
     \vspace{1.0em}
-    Scan this QR code to go to a video showing the early development of a \emph{Platynereis} embryo. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+    Scan this QR code to go to a video showing the early development of a \emph{Platynereis} embryo. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
  
 ## Design Process
@@ -230,7 +230,7 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackPlatynereis.mp4}
     \end{center}
     \vspace{1.0em}
-    Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+    Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
 \begin{marginfigure}

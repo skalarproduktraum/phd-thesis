@@ -116,7 +116,7 @@ The software for the second prototype was developed with our visualisation frame
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/VRAblationPrototype.mp4}
     \end{center}
     \vspace{1.0em}
-    Scan this QR code to go to a video demo of the VR ablation prototype. For a list of supplementary videos see \href{https://ulrik.is/thesising/supplement/}{ulrik.is/thesising/supplement/}.
+    Scan this QR code to go to a video demo of the VR ablation prototype. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
 In the prototype, the user is shown a pre-recorded, multi-timepoint dataset of a _C. elegans_ embryo in three-cell-stage. The embryo had been genetically engineered to express a fluorescent protein in the histones of its DNA, such that the chromosomes (and, to a lesser extent, the associated spindle apparatus orchestrating DNA condensation, duplication, and division) are visible. The time series dataset was played faster than realtime to evaluate quick decision making and the ability to perform cuts under time constraints. A screenshot of the prototype is shown in Figure \ref{fig:VRLaserAblationDemo}.
