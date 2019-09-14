@@ -12,7 +12,7 @@ After this chapter, we will introduce scenery's subsystems in more detail.
 
 ## ClearVolume
 
-![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset. From [@Royer:2015tg].\label{fig:cvfiji}](ClearVolumeFiji.png)
+![ClearVolume running inside Fiji, showing a multicolour _Drosophila melanogaster_ brain dataset (courtesy of Tsumin Lee, Howard Hughes Medical Institute, Janelia Farm Research Campus), with a by-slice viewer inset. Reused from [@Royer:2015tg].\label{fig:cvfiji}](ClearVolumeFiji.png)
 
 \alreadypublished{The work presented in this section has been developed in collaboration with Loïc Royer, Martin Weigert, Nicola Maghelli, and Florian Jug, Myers Lab, MPI-CBG, and has been published in:}{Royer, L.A., Weigert, M., \textbf{Günther, U.}, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. \emph{Nature Methods}, 2015.}
 
@@ -27,10 +27,10 @@ The discerning features of ClearVolume are:
 * _Image quality measurement_ — again utilising the source/sink architecture for data, we added a flexible evaluator of image sharpness to the system, where in the default settings the Tenengrad image sharpness measure is used (see Figure \ref{fig:ClearVolume}c), and
 * _Fiji & KNIME integration_ — as ClearVolume supports visualising volumetric data from a microscope or any other source, we have developed plugins for Fiji[@schindelin2012fiji] and KNIME, in addition to the integration with MicroManager[@Edelstein:2010gf] and National Instruments LabVIEW (see Figure \ref{fig:cvfiji}).
 
-![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments. With low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are filled in most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} From [@Royer:2015tg]](ClearVolumeMultipassVsNaive.pdf)
+![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments. With low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are filled in most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} Reused from [@Royer:2015tg].](ClearVolumeMultipassVsNaive.pdf)
 
 
-![__a__: Data flow in a ClearVolume-augmented microscopy application, __b__: Local or remote visualisation using ClearVolume, __c__: Evaluation of data fitness/sharpness and drift correction applied, __d__: Multi-colour compositing.\label{fig:ClearVolume} From [@Royer:2015tg].](ClearVolumeMainFigure.pdf)
+![__a__: Data flow in a ClearVolume-augmented microscopy application, __b__: Local or remote visualisation using ClearVolume, __c__: Evaluation of data fitness/sharpness and drift correction applied, __d__: Multi-colour compositing.\label{fig:ClearVolume} Reused from [@Royer:2015tg].](ClearVolumeMainFigure.pdf)
 
 In the time since its publication, ClearVolume has proven to be a useful tool for a multitude of use cases, such as microscope development and usage [@Royer:2016fh; @Kumar:2018rvi], method development for live imaging [@Boothe:20178ad], and the visualisation of correlative light microscopy/electron microscopy data [@Russell:2016711].
 
@@ -67,16 +67,16 @@ The following table shows a comparison of scenery with other state-of-the-art so
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
 | Amira | Big data, Microscopy | - | \textbullet | \textbullet | \textbullet | - | \textbullet | - | - | - | - |
 | Arivis | Big data, Microscopy | - | \textbullet | \textbullet | \textbullet | - | \textbullet | \textbullet | - | - | - |
-| BigDataViewer[@Pietzsch:2015hl] | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
+| BigDataViewer [@Pietzsch:2015hl] | Big data, Microscopy | \textbullet | \textbullet | \textbullet | - | - | - | \textbullet | \textbullet | - | \textbullet |
 | Imaris | Big data, Microscopy | - | \textbullet | \textbullet |  \textbullet | - | \textbullet | \textbullet | - | \textbullet | \textbullet |
-| Vaa3D[@Bria:2016fl] | Big data, Microscopy | \textbullet | \textbullet |  \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
-| ClearVolume[@Royer:2015tg] | Microscopy | \textbullet | \textbullet | - | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
+| Vaa3D [@Bria:2016fl] | Big data, Microscopy | \textbullet | \textbullet |  \textbullet | \textbullet | - | - | \textbullet | \textbullet | \textbullet | - |
+| ClearVolume [@Royer:2015tg] | Microscopy | \textbullet | \textbullet | - | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet |
 | Zeiss ZEN | Microscopy | - | \textbullet | - | - | - | - | \textbullet | - | - | - |
 | Unity | Game engine | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
 | Unreal Engine | Game engine | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
 | Vizard | CAVE software | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | - | \textbullet | - |
 | Mechdyne CAVELib | CAVE software | - | - | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - |
-| VTK[@Hanwell:2015iv] | Scivis engine | \textbullet | \textbullet | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
+| VTK [@Hanwell:2015iv] | Scivis engine | \textbullet | \textbullet | - | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | - | - |
 | _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
 
 Table: scenery compared to other software packages. {#tbl:SceneryComparison}
@@ -154,18 +154,18 @@ scenery now includes both an OpenGL 4.1 backend for use on the macOS operating s
 Current versions (8.0+) of the Java Virtual Machine do not provide Java-native bindings to graphics APIs like Direct3D, OpenGL or Vulkan, but 3rd-party libraries exist to bridge this gap.  We have chosen two projects for developing the OpenGL and Vulkan backends of scenery:
 
 * _JOGL_ ([www.jogamp.org](https://jogamp.org)) provides an object-oriented Java interface to the OpenGL API in all of its current versions. In that, JOGL's interfaces are written in a very idiomatic way, which partially diverge quite far from the original OpenGL C API. They do, however, simplify the use for the developed software, especially in situations where it has to be embedded into an existing GUI application. JOGL is used for the OpenGL backend in scenery.
-* _LWJGL3_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL3 keeps its API very close to the original, and does not wrap a normal C API in an object-oriented manner, but leaves that aspect to the developer, in case desired. This approach results in more flexibility, at the cost of higher effort for embedding into existing applications. LWJGL3 is used to develop the Vulkan backend in scenery. Memory management for Vulkan-related structures is mostly manual, but off-heap[^offheapnote], such that management of that memory is up to the developer.
+* _LWJGL3_ ([www.lwjgl.org](https://lwjgl.org)) provides a Java interface to the OpenGL and Vulkan APIs in all of their current versions. In contrast to JOGL, LWJGL3 keeps its API very close to the original, and does not wrap a normal C API in an object-oriented manner, but leaves that aspect to the developer, in case desired. This approach results in more flexibility, at the cost of higher effort for embedding into existing applications. LWJGL3 is used to develop the Vulkan backend in scenery. Memory management for Vulkan-related structures is mostly manual, but off-heap: Off-heap memory is memory that is not managed by the JavaVM. In the case of LWJGL3, on Windows `malloc()` is used for allocations, while on Linux and macOS, the high-performance memory allocator _jemalloc_ (jemalloc.net](http://jemalloc.net)) is used. Both allocators provide a better alternative to using Java's Direct Byte Buffers that incur a large performance penalty over raw `malloc()` calls, and are also a sparse resource, available only in a size determined at program startup. In LWJGL3, a thread-local memory stack is provided in addition, enabling high-speed temporary allocations. For details about memory allocation strategies in LWJGL3, see [blog.lwjgl.org/memory-management-in-lwjgl-3/](https://blog.lwjgl.org/memory-management-in-lwjgl-3/). In short, management of that memory is up to the developer.
 
 Unfortunately, JOGL is not actively maintained anymore, and we aim to fully switch to the LWJGL3-powered Vulkan backend in the future.
 
-[^offheapnote]: Off-heap memory is memory that is not managed by the JavaVM. In the case of LWJGL3, on Windows `malloc()` is used for allocations, while on Linux and macOS, the high-performance memory allocator _jemalloc_ (jemalloc.net](http://jemalloc.net)) is used. Both allocators provide a better alternative to using Java's Direct Byte Buffers that incur a large performance penalty over raw `malloc()` calls, and are also a sparse resource, available only in a size determined at program startup. In LWJGL3, a thread-local memory stack is provided in addition, enabling high-speed temporary allocations. For details about memory allocation strategies in LWJGL3, see [blog.lwjgl.org/memory-management-in-lwjgl-3/](https://blog.lwjgl.org/memory-management-in-lwjgl-3/).
+[^offheapnote]: 
 
 ## Component overview
 
-\begin{figure}
+\begin{figure*}
     \includegraphics{scenery-architecture.pdf}
     \caption{A high-level overview of scenery's components.\label{fig:SceneryArchitecture}}
-\end{figure}
+\end{figure*}
 
 At the outermost architectural layer, the scenery framework consists of seven main software components:
 

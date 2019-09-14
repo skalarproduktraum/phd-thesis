@@ -178,10 +178,10 @@ The definition must contain one renderpass that outputs to Viewport, otherwise n
 
 From the definition in the YAML file, `RenderConfigReader` will try to form a directed acyclic graph (DAG). The resulting graph for the forward shading example in Listing \ref{lst:SimpleForwardShading} is shown in Figure \ref{fig:SimpleRenderpipelineGraph}.
 
-\begin{figure*}
+\begin{figure}
     \includegraphics{RenderpipelineExampleSimple.pdf}
     \caption{The graph representation of the ForwardShading rendering pipeline. Scene passes are shown with red background, postprocessing passes with orange background. Light blue parallelograms are framebuffers. Solid black arrows signify transition from one pass to the next, grey arrows show data dependencies, with squares standing for writes, and circles for reads. Dotted arrows show scenegraph accesses.\label{fig:SimpleRenderpipelineGraph}}
-\end{figure*}
+\end{figure}
 
 If a DAG cannot be formed from the given definition, `RenderConfigReader` will emit an exception.
 
