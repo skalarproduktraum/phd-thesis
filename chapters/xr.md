@@ -8,7 +8,7 @@ In this chapter we give a brief overview of existing technology and current deve
 
 > "_Virtual Reality_ is the computer-generated simulation of a three-dimensional image or environment that can be interacted with in a seemingly real or physical way by a person using special electronic equipment, such as a helmet with a screen inside or gloves fitted with sensors." —  _Oxford Dictionary of English_
 
-With the term _Virtual Reality_ we describe environments that simulate parts of the real-world experience of human beings, such as the visual surroundings, auditory perception, and sometimes even proprioception[^ProprioNote] in an interactive, computer-generated three-dimensional environment. The world exterior to the simulated environment plays no role here, such that the user can become shut off from his real surroundings and fully immersed in the simulation, if it is convincing enough.
+With the term _Virtual Reality_ we describe environments that simulate parts of the real-world experience of human beings, such as the visual surroundings, auditory perception, and sometimes even proprioception[^ProprioNote] in an interactive, computer-generated three-dimensional environment. The world exterior to the simulated environment plays no role here, such that the user can become shut off from her real surroundings and fully immersed in the simulation, if it is convincing enough.
 
 [^ProprioNote]: Proprioception is the sense of relative motion and positioning of one's own body and/or its parts.
 

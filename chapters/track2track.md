@@ -25,7 +25,7 @@ The challenges of this step are twofold:
 
 We intend to tackle this problem by using a combination of eye tracking and virtual reality. 
 
-The user can be tasked to follow a cell with his/her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system, as described in [Introduction to Visual Processing], is excellent in following moving objects smoothly, and in datasets used for cell tracking, the cells can also be assumed to move smoothly. Interestingly, the particular kind of eye movement we are exploiting here, _smooth pursuits_ — see [Eye movements] for details — is rather underexplored in human-computer interaction. To the author's knowledge, only [@piumsomboon2017] use it in their _Radial Pursuit_ technique. In _Radial Pursuit_, the user can select an object by following it in a scene with his eyes, and it will become more "lensed-out" the longer he does that.
+The user can be tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system, as described in [Introduction to Visual Processing], is excellent in following moving objects smoothly, and in datasets used for cell tracking, the cells can also be assumed to move smoothly. Interestingly, the particular kind of eye movement we are exploiting here, _smooth pursuits_ — see [Eye movements] for details — is rather underexplored in human-computer interaction. To the author's knowledge, only [@piumsomboon2017] use it in their _Radial Pursuit_ technique. In _Radial Pursuit_, the user can select an object by following it in a scene with her eyes, and it will become more "lensed-out" the longer she does that.
 
 With the addition of virtual reality to the mix, we can first help the user with orientation in the dataset, and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers or spurious pupil detections, or even foveate the rendering of the volumetric dataset.
 
@@ -113,7 +113,7 @@ Eye positions, size, etc. are subject to large individual differences. It is the
 
 In case of regular, glasses-mounted eye trackers, _Pupil_ offers an integrated calibration procedure, while for HMD-based settings, we need to create our own calibration routine. Our custom calibration routine works as follows:
 
- 1. we show the user a single highlighted point located on a circle in the center of the screen, the user is instructed to follow the highlighted point with his eyes,
+ 1. we show the user a single highlighted point located on a circle in the center of the screen, the user is instructed to follow the highlighted point with her eyes,
  2. after acquiring enough samples for calibration, the screen space position of the calibration point is sent to Pupil,
  3. the next, randomly selected point out of a set of 10 equidistant points on the circle is shown to the user,
  4. after all 10 points have been gazed at by the user, Pupil's calibration routine will try to construct a correspondence between the gaze vectors of both eyes and the screen-space coordinates submitted,
@@ -141,7 +141,7 @@ After calibration and before starting the tracking procedure for a single cell, 
 
 To adjust for handedness of the user, the controller mappings can be swapped. 
 
-The user can start the tracking process as soon as he is ready and has found the cell he wants to track. Starting a tracking step will start playing the dataset if it is currently paused. When tracking is active, gaze directions and other metadata are collected, and can be analysed automatically in the next step. The limitation at the moment is that the user _has_ to look at a trackable object when the tracking step is started, in order to seed the analysis algorithm.
+The user can start the tracking process as soon as she is ready and has found the cell she wants to track. Starting a tracking step will start playing the dataset if it is currently paused. When tracking is active, gaze directions and other metadata are collected, and can be analysed automatically in the next step. The limitation at the moment is that the user _has_ to look at a trackable object when the tracking step is started, in order to seed the analysis algorithm.
 
 ## Analysis of Eye Tracking Data
 
