@@ -58,10 +58,11 @@ Vergence however is only one kind of the movements the eye can perform, so let's
 Following the classifications from [@Snowden:2012wu] and [@Duchowski:2017ii], eye movements fall into one of five categories:
 
 * _Saccades_ are quick and jumpy movements of the eye to reposition the fovea to a new area of interest. As such, they can be voluntary or involuntary. In natural environments saccades occur with high speeds, and several times per second. Their peak angular velocity can exceed $900^\circ/\mathrm{s}$, take approximately $200\,\mathrm{ms}$ to initiate, and then last for about $10-200\,\mathrm{ms}$. Saccades are _stereotypical_ and _ballistic_: Stereotypical movement means they always follow the same pattern of fast initial acceleration after an initial processing delay of about $200\,\mathrm{ms}$, followed by movement with maximum velocity, and concluded by a rapid slowdown as the eye reaches the target area (see Figure \ref{fig:SaccadicMovements} for example time series). Ballistic movement means they are planned and, once initiated, cannot be stopped. During execution of the movement there is no visual perception, rendering the subject temporarilly blind. This effect is called _saccadic suppression_[^suppressionnote] [@Snowden:2012wu].
-* _Smooth pursuits_ occur when a subject is tracking a moving stimulus, where the eye's angular velocity is matched to the movement of the image of the stimulus on the retina. These are the only smooth movements the eyes perform.
+* _Smooth pursuits_ occur when a subject is tracking a moving stimulus, where the eye's angular velocity is matched to the movement of the image of the stimulus on the retina. These are the only smooth movements the eyes perform. While they are voluntary, they cannot be initiated without a moving stimulus [@Cullen:2016Visuomotor].
 * _Fixations_, _tremors_, and _jitters_ occurs when a subject focuses on a particular object of interest. Counterintuitively, these movements do not completely fix the image on the retina, but jitter around it within about $5^\circ$ of visual angle. If they would not do that, the image would disappear within seconds, due to adaption of the receptors to overstimulation. This suggests that a different system is involved with fixations than with saccades or pursuits. Fixations last for about $150-600\,\mathrm{ms}$ and humans spend over 90% of viewing time with this kind of eye movement. It has also been found that miniature movements enhance the perception of high-frequency detail in a stimulus [@Rucci:20070f2].
 * _Vergence_ movements occur when a subject is moving its attention between near and far objects, with the eyes then moving in opposite directions.
-* (Physiological) _Nystagmus_ is a fast, compensatory movement of both eyes to either follow moving imagery (optokinetic nystagmus, such as when looking out of a train window), or when compensating for fast angular movements of the head (vestibular nystagmus). Both follow the same movement patterns.
+* The _Optokinetic reflex_ (OKR) is a compensatory reflex that stabilises moving objects on the retina, and moves the eyes back to the original position, in case the object moves outside the field of view (for example, when looking out of a train window).
+* The _Vestibo-ocular reflex_ (VOR) is another compensatory reflex that induces compensating eye movements during rotational and translational head movements, in order to stabilise the image on the retina. Often, the OKR and VOR work in concert [@Cullen:2016Visuomotor].
 
 [^suppressionnote]: The most visible effect of saccadic suppression in humans is the lack of motion blur during saccadic eye movements, opposed to e.g. fast head movements.
 
@@ -128,20 +129,21 @@ The LGN itself has a 6-layer, staggered architecture: Projections from the same 
 * _parvocellular_ (P) cells, small, slow-responding cells, connected to the cones, and found in layers 3-6,
 * _koniocellular_ (K) cells, consisting of very small, heterogeneous cells, connected to only blue cones, to be found _between_ the M and P layers.
 
-The M and P cells have complimentary functional characteristics, with certain similarities to the photoreceptors they connect from (from [@Duchowski:2017ii):
+The M and P cells have complimentary functional characteristics, with certain similarities to the photoreceptors they connect from (from [@Kiley:2016Cortical] and [@Duchowski:2017ii]):
 
-| Characteristic | Magnocellular cells | Parvocellular cells |
-|:--|:--|:--|
-| Ganglion size | Large | Small |
-| Transmission time | Fast | Slow |
-| Receptive fields | Large | Small |
-| Sensitivity to small objects | Poor | Good |
-| Sensitivity to change in light levels | Large | Small |
-| Sensitivity to contrast | Low | High |
-| Sensitivity to motion | High | Low |
-| Color discrimination | No | Yes |
+| Characteristic | Magnocellular cells | Parvocellular cells | Koniocellular cells |
+|:--|:--|:--|:--|
+| Cell body size | Large | Small | Small |
+| Receptive field size | Large | Small | _unknown_ |
+| Transmission time | Fast | Slow | _unknown_ |
+| Receptive fields | Large | Small | _unknown_ |
+| Sensitivity to small objects | Poor | Good | _unknown _ |
+| Sensitivity to change in light levels | Large | Small | _unknown_ |
+| Sensitivity to contrast | High | Low | _unknown_ |
+| Sensitivity to motion | High | Low | Low |
+| Color discrimination | Broadband | Red/Green | Blue/Yellow |
 
-The function of the K cells remains a bit nebulous: They might play a role in motion detection and where-and-when processing [@Eiber:20182bf] and regulate other visual pathways [@Martin:2019cd1], and most likely are heterogeneous and form subpopulations [@Casagrande:1994tp].
+The function of the K cells remains a bit nebulous: They might play a role in motion detection and where-and-when processing [@Eiber:20182bf] and regulate other visual pathways [@Martin:2019cd1], and most likely are heterogeneous and form subpopulations [@Casagrande:1994tp]. Many details about the K cells remain unknown and are subject to current investigations [@Kiley:2016Cortical].
 
 Another striking fact about the LGN is that it does not receive most of its input from the retinal ganglion cells, but actually from the visual cortex itself. Through this feedback loop, the LGN is able to play a vital role in the direction of visual attention, focussing, and vergence of the eyes, as well as in stereoscopic mapping of the visual field.
 
@@ -174,16 +176,40 @@ The hypercolumns can contain three different types of cells:
 * _Complex Cells:_ They add together (e.g. with a mathematical _or_ operation) the outputs of multiple simple cells, resulting in a receptive field that is not only sensitive to the orientation of the stimulus, but also to its relative position within the field.
 * Finally, _Hypercomplex cells_ or _End-stopped cells_ wire together multiple complex cells, to additionally provide inhibition if a stimulus exceeds the receptive field — complex cells would continue to fire there, and are thereby able to detect curved stimuli [@Yazdanbakhsh:2006ec0; @Snowden:2012wu].
 
+These types of cells can now be tuned to a multitude of properties: Some respond to high spatial frequencies, some to low, others are sensitive to size, or temporal frequency.
+
+## Beyond the Visual Cortex
+
+ Beyond the visual cortex, further processing of visual signals is done in areas called extrastriate cortical areas. Neurons in these areas are responsible for, e.g., motion tracking. Some of these areas are responsible for _visiomotor integration_, the derivation of motor signal from visual stimuli. We briefly want to discuss how the saccades, smooth pursuits, and the VOR/OKR are elicited by the visual system and the motor system [@Prsa:2016Cerebellum; @Cullen:2016Visuomotor]:
+ 
+For _saccades_, both the amplitude and direction are controlled by the superior colliculus, which contains a neuronal map in terms of amplitude and direction. The neuronal inputs to this map stem from a wide population of neurons. The delay to saccade onset is about 100ms.
+
+In the case of _smooth pursuits_, the eye movements are controlled by an interplay of neurons in the visual cortex, the brainstem, and the cerebellum. Cerebellar neurons in the floccular lobe and the vermis project to the motoneurons of the eye muscles. In addition, extra-visual signals, e.g., from anticipation of movement, are integrated into the process. While the cerebellum does not directly execute movements, it provides information to motoneurons and is constantly re-calibrated [@Cullen:2016Visuomotor]. The interplay of these systems allows accurate tracking of objects with speeds of more than 50º/s, starting only 100ms after motion onset. However, if the target's velocity changes direction frequently, this performance degrades. 
+
+Compared to the two eye movements just mentioned, the _Vestibuloocular Reflex_ (VOR) has a remarkably fast response time of only about 5ms. It integrates information from the vestibular organs (the semicircular canals and otolith organs) in the inner ear, which respond best to relatively fast translational and rotational movements (>0.1 Hz). Slower movements are compensated by the _Optokinetic Reflex_ (OKR), which is evoked by information of visual origin instead of vestibular origin. For the OKR, similar circuits as for smooth pursuits are involved. In addition, the OKR is controlled by the _Accessory Optic System_, which receives inputs from the Medial Superior Temporal Cortex (MST) and the Middle Temporal Cortex (MT).
+
+
 ## Consequences for the Design of Eye-based Interfaces
 
-From the architecture of the visual system, we can draw a series of conclusions on how eye-based user interfaces need to be designed (in extension of [@Duchowski:2017ii]):
+In extension of [@Duchowski:2017ii], from the architecture of the visual system and its integration with the motor systems, we can draw a series of consequences for the design of gaze-based user interfaces:
 
-* _Cones fall off sharply outside the foveal region, high number of rods still exists in the periphery_ $\Rightarrow$ Color information (chrominance) can fall off as sharply outside the foveal region, while brightness (luminance) should not degrade as fast.
-* _Magnocellular ganglion cells respond most strongly to stimuli in the periphery_ $\Rightarrow$ contrast changes should only happen on purpose there, as the visual system can react strongly to objects appearing suddenly in the periphery, responding e.g. with a saccade to the new highly salient object. Interfaces where gaze is used as selection modality, or where gaze is used more passively, e.g. to indicate current attention (gaze-contingent interfaces, see [Review of Interaction Techniques]) or which actively manage the users attention (attentive user interfaces) need to take special care about this.
-* _Saccades lead to temporary blindness (saccadic suppression)_ $\Rightarrow$ eye tracking information correlated with e.g. saliency during a saccade might not be useful.
-* _Smooth movements are not possible without smooth pursuit movements_ $\Rightarrow$ the limited possibility of voluntary, smooth movement needs to be taken into consideration e.g. when designing eye gesture-based interfaces.
-* _Eye movements have characteristic velocities and durations_ $\Rightarrow$ can be taken into consideration for systemic modelling of  eye movements. As consequence, gaze-contingent or attentive user interfaces must not react too fast or require too swift user interaction.
-* _Eye tracking is not instant_ $\Rightarrow$ the processing delay of eye tracking hardware and software also needs to be taken into account.
+| Fact | Consequence |
+|:--|:--|
+| _Cones fall off sharply outside the foveal region, high number of rods still exists in the periphery._ | Color information (chrominance) can fall off as sharply outside the foveal region, while brightness (luminance) should not degrade as fast. |
+| _Magnocellular ganglion cells respond most strongly to stimuli in the periphery._ | Contrast changes should only happen on purpose in the periphery, as the visual system can react strongly to objects appearing suddenly in the periphery, responding e.g. with a saccade to the new highly salient object. Interfaces where gaze is used as selection modality, or where gaze is used more passively, e.g. to indicate current attention (gaze-contingent interfaces, see [Review of Interaction Techniques]) or which actively manage the users attention (attentive user interfaces) need to take special care about this. |
+| _Saccades lead to temporary blindness (saccadic suppression)._ | Eye tracking information correlated with e.g. saliency during a saccade might not be useful. |
+| _Smooth movements are not possible without smooth pursuit movements._ |   The limited possibility of voluntary, smooth movement needs to be taken into consideration e.g. when designing eye gesture-based interfaces.|
+| _Smooth pursuits are cannot track all movements equally well._ | While smooth pursuits can easily track movements in excess of 50º/s, their reliability decreases with oscillatory movements faster than 1 Hz. However, if the motion can be anticipated, reliability is increased again. |
+| _Eye movements have characteristic velocities and durations._ | Needs to be taken into consideration for systemic modelling of  eye movements. As consequence, gaze-contingent or attentive user interfaces must not react too fast or require too swift user interaction. |
+| _Eye movements have processing delays._ | While the VOR/OKR only incurs a processing delay of about 5ms, both saccades and smooth pursuits take 100ms, so fully-instant reaction from the user cannot be expected. | 
+| _Eye tracking is not instant._ | The processing delay of eye tracking hardware and software also needs to be taken into account. |
+
+
+## Summary
+
+In this chapter, we have summarised the machinery and neural circuitry behind the human visual system. We described the human eye and its movements, the structure of the retina, and the neural structures following downstream, such as the superior colliculus and the primary visual cortex. We have described the major eye movements and briefly discussed the interactions of the visual system with the motor control systems of the brain controlling the eye movements. Finally, we drawn conclusions for the design of eye-based user interfaces.
+
+While this chapter aims to provide a concise introduction to the visual system and its integration with the motor systems, it is far from complete. For more detailed descriptions of the human visual system, we refer the interested reader to the book _Basic Vision_ [@Snowden:2012wu], the series _Neuroscience in the 21st century_, especially the chapters about the _Retina: Neuroanatomy and Physiology_ [@Reichenbach:2016Retina], _Cortical Processing of Visual Signals_ [@Kiley:2016Cortical], _Cerebellum: Eye Movements_ [@Prsa:2016Cerebellum],  and  _Visiomotor Integration_ [@Cullen:2016Visuomotor]. In addition to these books, Duchowski's book, _Eye Tracking Methodology: Theory and Practise_ [@Duchowski:2017ii], provides another introduction to the visual system, with special emphasis on the relevant parts and systems for eye tracking.
 
 ## Challenges and Opportunities
 
