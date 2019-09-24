@@ -158,8 +158,6 @@ Current versions (8.0+) of the Java Virtual Machine do not provide Java-native b
 
 Unfortunately, JOGL is not actively maintained anymore, and we aim to fully switch to the LWJGL3-powered Vulkan backend in the future.
 
-[^offheapnote]: 
-
 ## Component overview
 
 \begin{figure*}
