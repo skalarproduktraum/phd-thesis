@@ -1,23 +1,23 @@
 \ifthenelse{\boolean{@tufte@toc}}{%
   \titlecontents{part}% FIXME
     [0em] % distance from left margin
-    {\vspace{1.2em}\begin{fullwidth}\LARGE\rmfamily PART\ } % above (global formatting of entry)
-    {\hspace*{0em}\contentslabel{2em}} % before w/label (label = ``2'')
-    {\hspace*{0em}} % before w/o label
+    {\vspace{1.2em}\begin{fullwidth}\LARGE\tocpartfont PART\ } % above (global formatting of entry)
+    {\hspace*{0.5em}\contentslabel{1.5em}} % before w/label (label = ``2'')
+    {\hspace*{0.5em}} % before w/o label
     {\rmfamily\upshape\qquad} % filler + page (leaders and page num)
     [\end{fullwidth}] % after
   \titlecontents{chapter}%
     [0em] % distance from left margin
-    {\vspace{0.8em}\begin{fullwidth}\Large\rmfamily\itshape} % above (global formatting of entry)
-    {\hspace*{2.5em}\contentslabel{2em}} % before w/label (label = ``2'')
-    {\hspace*{2.5em}} % before w/o label
-    {\rmfamily\upshape\qquad\thecontentspage} % filler + page (leaders and page num)
+    {\vspace{0.8em}\begin{fullwidth}\LARGE\rmfamily} % above (global formatting of entry)
+    {\hspace*{3.5em}\contentslabel{1.8em}\itshape} % before w/label (label = ``2'')
+    {\hspace*{3.5em}\itshape} % before w/o label
+    {\rmfamily\upshape\qquad} % filler + page (leaders and page num)
     [\end{fullwidth}] % after
   \titlecontents{section}% FIXME
     [0em] % distance from left margin
-    {\vspace{0\baselineskip}\begin{fullwidth}\Large\rmfamily\itshape} % above (global formatting of entry)
-    {\hspace*{2.5em}} % before w/label (label = ``2.6'')
-    {\hspace*{2.5em}} % before w/o label
+    {\vspace{0\baselineskip}\begin{fullwidth}\large\rmfamily} % above (global formatting of entry)
+    {\hspace*{4.5em}} % before w/label (label = ``2.6'')
+    {\hspace*{4.5em}} % before w/o label
     {\rmfamily\upshape\qquad\thecontentspage} % filler + page (leaders and page num)
     [\end{fullwidth}] % after
   \titlecontents{subsection}% FIXME

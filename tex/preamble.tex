@@ -40,6 +40,15 @@
     ItalicFont = *-Italic, 
     BoldItalicFont = *-BoldItalic]{EBGaramond}
 
+\newfontfamily{\tocpartfont}[Path=fonts/, 
+    Extension = .ttf, 
+    UprightFont = *-Regular, 
+    BoldFont = *-Bold, 
+    ItalicFont = *-Italic, 
+    BoldItalicFont = *-BoldItalic,
+    LetterSpace = 20]{EBGaramond}
+
+
 \usepackage{siunitx}
 
 % Adjust spacing between lines to 1.5
@@ -59,7 +68,7 @@
 \newcommand{\yellowbox}[1]{\colorbox{yellow}{#1}}
 \titleformat{\chapter}[display]
   {\LARGE\headingfont\begin{minipage}{\linewidth}}
-  {\chaptertitlename\ \thechapter}
+  {\chaptertitlename\ \thechapter:}
   {0pt}
   {\raggedright\Huge\yellowbox}
   [\end{minipage}]
@@ -127,6 +136,10 @@
 \makeatletter
 \patchcmd{\BR@backref}{\newblock}{\newblock(page~}{}{}
 \patchcmd{\BR@backref}{\par}{)\par}{}{}
+\makeatother
+
+\makeatletter
+\patchcmd{\l@section}{#1}{\MakeTextUppercase{#1}}{}{}
 \makeatother
 
 % \renewcommand{\citep}[1]{\cite{#1}}
