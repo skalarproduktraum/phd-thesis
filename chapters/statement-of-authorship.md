@@ -1,4 +1,4 @@
-\chapter*{Selbstständigkeitserklärung}
+\chapter{Selbstständigkeitserklärung}
 
 \begin{enumerate}
 \item Hiermit	versichere	ich,	dass	ich	die	vorliegende	Arbeit	ohne	unzulässige	Hilfe	Dritter	
