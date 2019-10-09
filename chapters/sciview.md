@@ -175,7 +175,7 @@ For the last step, less than 10 annotations had to be manually performed, in ord
     \caption{Constraining a volumetric image for segmentation using the \emph{thingy} command in SciView. a: Constrain points drawn into dataset (step 1), b: Outside of convex hull removed (step 5). See text for details. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentation}}
 \end{figure}
 
-\begin{marginfigure}[-4.5cm]
+\begin{marginfigure}[-2.5cm]
     \includegraphics{segmented-pericardium.png}
     \caption{Constrained segmentation result using a trainable Weka segmenter on the volume cropped before (step 6), as shown in \cref{fig:ConstrainedSegmentation}. See text for details. Dataset courtesy of Anjalie Schleppi, Huisken Lab, MPI-CBG and Morgridge Institute for Research.\label{fig:ConstrainedSegmentationResult}}
 \end{marginfigure}
@@ -183,14 +183,15 @@ For the last step, less than 10 annotations had to be manually performed, in ord
 
 ### EmbryoGen — Generating test data for algorithmic analysis of lightsheet imaging data
 
-\begin{figure*}
-    \includegraphics{embryogen.png}
-    \caption{Visualisation of a simulated \emph{Drosophila} embryo using \emph{EmbryoGen} in sciview. The cells are shown as green spheres, while the equilibrating forces acting on them are shown as arrows on the right side where the cells are hidden. Courtesy of Vladimir Ulman, Tomancak and Jug Labs, MPI-CBG and Center for Systems Biology Dresden.\label{fig:EmbryoGen}}
-\end{figure*}
 
 Vladimir Ulman (Tomancak Lab, MPI-CBG) has developed a software, _EmbryoGen_, to create artificial, but realistic-looking images of developing _Drosophila_ embryos. EmbryoGen was developed in order to be able to compare segmentation and tracking algorithms with actual ground truth data of cell positions, sizes, and velocities, which is normally not available for microscope-acquired fluorescence microscopy datasets.
 
 ![EmbryoGen architecture, with the actual simulation written in C++ talking to scenery and sciview via a ZeroMQ-based protocol. See text for details.\label{fig:EmbryoGenArchitecture}](embryogen-communication.pdf)
+
+\begin{figure*}
+    \includegraphics{embryogen.png}
+    \caption{Visualisation of a simulated \emph{Drosophila} embryo using \emph{EmbryoGen} in sciview. The cells are shown as green spheres, while the equilibrating forces acting on them are shown as arrows on the right side where the cells are hidden. Courtesy of Vladimir Ulman, Tomancak and Jug Labs, MPI-CBG and Center for Systems Biology Dresden.\label{fig:EmbryoGen}}
+\end{figure*}
 
 EmbryoGen's visualisation is based on scenery and sciview, in order to harness the simultaneous visualisation of mesh data, coming from simulated cell shapes and positions, and volumetric data, calculated from the simulated cells. Employing a client-server architecture, EmbryoGen has the actual simulation code written in C++, and communicates with scenery and sciview via a simple, ZeroMQ-based protocol. A sketch of the architecture is shown in \cref{fig:EmbryoGenArchitecture}. The support of instancing in scenery (see [Instancing]) is helpful in this particular use case, as the number of simulated cells can easily reach many tens of thousands.
 
