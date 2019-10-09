@@ -193,19 +193,24 @@ Compared to the two eye movements just mentioned, the _Vestibuloocular Reflex_ (
 
 ## Consequences for the Design of Eye-based Interfaces
 
-In extension of [@Duchowski:2017ii], from the architecture of the visual system and its integration with the motor systems, we can draw a series of consequences for the design of gaze-based user interfaces:
+In extension of [@Duchowski:2017ii], from the architecture and the physiological features of the visual system and its integration with the motor systems, we can draw a series of consequences for the design of gaze-based user interfaces:
 
-| Fact | Consequence |
-|:--|:--|
-| _Cones fall off sharply outside the foveal region, high number of rods still exists in the periphery._ | Color information (chrominance) can fall off as sharply outside the foveal region, while brightness (luminance) should not degrade as fast. |
-| _Magnocellular ganglion cells respond most strongly to stimuli in the periphery._ | Contrast changes should only happen on purpose in the periphery, as the visual system can react strongly to objects appearing suddenly in the periphery, responding e.g. with a saccade to the new highly salient object. Interfaces where gaze is used as selection modality, or where gaze is used more passively, e.g. to indicate current attention (gaze-contingent interfaces, see [Classification of Gaze-based User Interfaces]) or which actively manage the users attention (attentive user interfaces) need to take special care about this. |
-| _Saccades lead to temporary blindness (saccadic suppression)._ | Eye tracking information correlated with e.g. saliency during a saccade might not be useful. |
-| _Smooth movements are not possible without smooth pursuit movements._ |   The limited possibility of voluntary, smooth movement needs to be taken into consideration e.g. when designing eye gesture-based interfaces.|
-| _Smooth pursuits are cannot track all movements equally well._ | While smooth pursuits can easily track movements in excess of 50º/s, their reliability decreases with oscillatory movements faster than 1 Hz. However, if the motion can be anticipated, reliability is increased again. |
-| _Eye movements have characteristic velocities and durations._ | Needs to be taken into consideration for systemic modelling of  eye movements. As consequence, gaze-contingent or attentive user interfaces must not react too fast or require too swift user interaction. |
-| _Eye movements have processing delays._ | While the VOR/OKR only incurs a processing delay of about 5ms, both saccades and smooth pursuits take 100ms, so fully-instant reaction from the user cannot be expected. | 
-| _Eye tracking is not instant._ | The processing delay of eye tracking hardware and software also needs to be taken into account. |
+\begin{fullwidth}
+\begin{tabular}{ p{6cm} p{9.6cm} }
+\hline
 
+Physiological Feature & Consequence \\\noalign{\medskip} \hline
+Cones fall off sharply outside the foveal region, high number of rods still exists in the periphery. & Color information (chrominance) can fall off as sharply outside the foveal region, while brightness (luminance) should not degrade as fast. \\\noalign{\medskip} 
+Magnocellular ganglion cells respond most strongly to stimuli in the periphery. & Contrast changes should only happen on purpose in the periphery, as the visual system can react strongly to objects appearing suddenly in the periphery, responding e.g. with a saccade to the new highly salient object. Interfaces where gaze is used as selection modality, or where gaze is used more passively, e.g. to indicate current attention (gaze-contingent interfaces, see \cref{classification-of-gaze-based-user-interfaces}) or which actively manage the users attention (attentive user interfaces) need to take special care about this. \\\noalign{\medskip}
+Saccades lead to temporary blindness (saccadic suppression). & Eye tracking information correlated with e.g. saliency during a saccade might not be useful. \\\noalign{\medskip} 
+Smooth movements are not possible without smooth pursuit movements. & The limited possibility of voluntary, smooth movement needs to be taken into consideration e.g. when designing eye gesture-based interfaces. \\\noalign{\medskip} 
+Smooth pursuits are cannot track all movements equally well. & While smooth pursuits can easily track movements in excess of 50º/s, their reliability decreases with oscillatory movements faster than 1 Hz. However, if the motion can be anticipated, reliability is increased again. \\\noalign{\medskip} 
+Eye movements have characteristic velocities and durations. & Needs to be taken into consideration for systemic modelling of  eye movements. As consequence, gaze-contingent or attentive user interfaces must not react too fast or require too swift user interaction. \\\noalign{\medskip} 
+Eye movements have processing delays. & While the VOR/OKR only incurs a processing delay of about 5ms, both saccades and smooth pursuits take 100ms, so fully-instant reaction from the user cannot be expected. \\\noalign{\medskip} 
+Eye tracking is not instant. & The processing delay of eye tracking hardware and software also needs to be taken into account. \\\noalign{\medskip} 
+
+\end{tabular}
+\end{fullwidth}
 
 ## Summary
 
