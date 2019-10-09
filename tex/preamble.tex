@@ -259,3 +259,23 @@
 
 % Use cleveref to actually show numbers in front the the section names
 \renewcommand{\hyperlink}[2]{\cref{#1}, \emph{#2}}
+
+\makeatletter
+\renewcommand{\@tufte@lof@line}[2]{%
+  % #1 is the figure/table number and its caption text
+  % #2 is the page number on which the figure/table appears
+  \leftskip 0.0em
+  \rightskip 0em
+  \parfillskip 0em plus 1fil
+  \parindent 0.0em
+  \@afterindenttrue
+  \interlinepenalty\@M
+  \leavevmode
+  \@tempdima 2.0em
+  \advance\leftskip\@tempdima
+  \null\nobreak\hskip -\leftskip
+  {#1}\nobreak\nobreak\hspace*{0em}\hfill #2%
+  \par%
+}
+\makeatother
+
