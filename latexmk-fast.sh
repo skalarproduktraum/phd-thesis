@@ -8,6 +8,16 @@ fi
 
 echo "interaction mode is $INTERACTION_MODE"
 
+
+if [[ -z "${NICE}" ]]; then
+  echo "Creating draft PDF"
+  QUALITY="-draftmode"
+else
+  echo "Creating print-quality PDF"
+  QUALITY=""
+fi
+
+
 # run latexmk with lualatex
-latexmk -pdf -pdflatex='lualatex '"$INTERACTION_MODE"' -draftmode %O %S && touch %D' -print=pdf -e '$lpr_pdf=q|lualatex '"$INTERACTION_MODE"' -synctex=1 %R|' "$@"
+latexmk -pdf -pdflatex='lualatex '"$INTERACTION_MODE"' '"$QUALITY"' %O %S && touch %D' -print=pdf -e '$lpr_pdf=q|lualatex '"$INTERACTION_MODE"' -synctex=1 %R|' "$@"
 
