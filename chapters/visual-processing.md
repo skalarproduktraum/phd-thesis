@@ -81,7 +81,7 @@ All of the described movements are optimisations to provide the best image possi
 \begin{marginfigure}[2cm]
     \label{fig:retina_architecture}
     \includegraphics{retina-architecture.pdf}
-    \caption{Inverted retinal architecture of mammals. Adapted, original illustration (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
+    \caption{Inverted retinal architecture of mammals. Adapted from original illustration, (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid, Wikimedia Commons}.}  
 \end{marginfigure}
 
 At the retina, the processing of incident photons starts in the true sense of the word, as so far we have only been concerned with transmission, modulation, and focussing.

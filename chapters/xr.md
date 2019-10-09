@@ -23,22 +23,22 @@ In the case of a mix of both, where there is a direct connection or overlap betw
 The first virtual reality "glasses" have been introduced in the 1850's, as so-called _stereoscopes_, looking not unlike contemporary head-mounted displays. In the stereoscopes, the user would insert a postcard that is split in the middle in two parts, showing the subject of the postcard from two slightly different perspectives corresponding the capturing an image with two eyes, as in the human visual system. 
 
 \begin{marginfigure}
-    \includegraphics{stereoscope.png}
-    \caption{\label{fig:stereoscope}The stereoscope.}
+    \includegraphics{stereoscope.jpg}
+    \caption{\label{fig:stereoscope}A Holmes-type stereoscopes to view left/right-eye images as single image. Public Domain.}
 \end{marginfigure}
 
 In the early 1950, the _Sensorama_ was introduced, an immersive movie theater, that not only included stereoscopic visuals, but also wind, sound, and even smell. The machine is shown in Figure \ref{fig:sensorama}.
 
 \begin{marginfigure}
-    \includegraphics{sensorama.png}
-    \caption{\label{fig:sensorama}The sensorama. Image reproduced from Sensorama, Inc. advertisement, 1962.}
+    \includegraphics{sensorama.jpg}
+    \caption{\label{fig:sensorama}The sensorama. Image reproduced from Sensorama, Inc. Advertisement, 1962.}
 \end{marginfigure}
 
 With computer graphics still in it's infancy, the first steps towards a head-mounted display mainly for military purposes, were made in 1968 by Ivan Sutherland [@Sutherland:1968im]. Sutherland developed a glasses-based virtual reality system (actually, augmented reality) that consisted of cathode-ray tubes mounted on the users head, with images being directed to the eyes by the means of mirrors. The tracking system for the contraption was suspended from the ceiling, looming over the user, hence the name of the system, _The Sword of Damocles_. _The Sword of Damocles_ could display wireframe models of geometric objects overlaid onto the user's surroundings, and adapted to the viewpoint that had been calculated by the tracking system.
 
 \begin{marginfigure}
     \includegraphics{sword-of-damocles.png}
-    \caption{\label{fig:damocles}The \emph{Sword of Damocles}. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes.}
+    \caption{\label{fig:damocles}The \emph{Sword of Damocles}. Note the cathode-ray tubes mounted to the sides of the user's head, and the mirrors directing the image to the eyes. Reproduced from \citep{Sutherland:1968im}.}
 \end{marginfigure}
 
 Big steps towards the current state of virtual and augmented reality were taken in the 1980s and 1990s by the University of Southern California's _Mixed Reality Lab_, and the company VPL, a spin-off of the lab. The lab developed not only head-mounted displays, but full-body virtual reality suits, providing the user with a force-feedback system, and gloves developed for NASA that would react to virtual objects and the user's grip [@Zimmerman:19875d6]. 
@@ -66,23 +66,23 @@ Unfortunately, the First Virtual Reality Revolution was not successful, at least
 
 ## Current Developments
 
+\begin{marginfigure}
+    \label{fig:OculusRiftPrototype}
+    \includegraphics{OculusRiftPrototype.jpg}
+    \caption{An early Oculus Rift prototype. Image reproduced from  Engadget, \url{https://www.engadget.com/2012/08/16/oculus-rift-hands-on/}.}
+\end{marginfigure}
+
 The currently ongoing _Second Virtual Reality Revolution_ has been enabled — at least in part — by the development of low-cost, high-resolution displays that are used in smart phones, and the gyroscopic sensors used alongside them. 
 
 The displays used in mobile phones form the ideal basis for ergonomic and lightweight head-mounted displays, as they feature both a low physical footprint, low energy use, and the right size and resolution to be put right in front of the eyes.
 
-After showing several prototypes of head-mounted displays, Palmer Luckey, a former employee of the _Mixed Reality Lab_, produced the _Oculus Rift_ in 2016 (see Figure \ref{fig:OculusRiftPrototype} for the prototype, and Figure \ref{fig:OculusRiftHMD} for the final product), a translational and rotational tracking HMD complete with tracking system, based on full-HD smartphone displays. Soon after the _Rift_, other manufacturers presented similar devices, such as HTC's _Vive_, Sony's _Playstation VR_, Samsung's _GearVR_, or the set of Microsoft's _Windows Mixed Reality_ glasses (a slight misnomer, being actually virtual reality glasses).
-
-\begin{marginfigure}
-    \label{fig:OculusRiftPrototype}
-    \includegraphics{OculusRiftPrototype.jpg}
-    \caption{An early Oculus Rift prototype. Image courtesy of Engadget.}
-\end{marginfigure}
-
-\begin{marginfigure}
+\begin{marginfigure}[1cm]
     \label{fig:OculusRiftHMD}
     \includegraphics{OculusRiftHMD.jpg}
     \caption{The Oculus Rift Virtual Reality HMD. Public domain.}
 \end{marginfigure}
+
+After showing several prototypes of head-mounted displays, Palmer Luckey, a former employee of the _Mixed Reality Lab_, produced the _Oculus Rift_ in 2016 (see Figure \ref{fig:OculusRiftPrototype} for the prototype, and Figure \ref{fig:OculusRiftHMD} for the final product), a translational and rotational tracking HMD complete with tracking system, based on full-HD smartphone displays. Soon after the _Rift_, other manufacturers presented similar devices, such as HTC's _Vive_, Sony's _Playstation VR_, Samsung's _GearVR_, or the set of Microsoft's _Windows Mixed Reality_ glasses (a slight misnomer, being actually virtual reality glasses).
 
 On the side of augmented reality, Microsoft has been selling the developer kit of the _HoloLens_ since 2016. The HoloLens is an untethered headset with its own CPU, GPU, and HPU (holographic processing unit, apparently used for tracking tasks, etc.). The HoloLens features _inside-out tracking_, where no external tracking hardware is needed, apart from the cameras inside the HMD itself. On the software side, the HoloLens supports rendering directly on the device via Direct3D11, or via low-latency remote rendering (named Holographic Remoting) on a separate computer, and streamed image transfer, with the images encoded as H264 video stream, and corrected by the HoloLens on-the-fly with affine transformations for rotations and translations, to compensate for network latency. In early 2019, Microsoft announced the _HoloLens 2_, with improved field of view, latency, and physical footprint (see Figure \ref{fig:HoloLens2}).
 

@@ -545,23 +545,23 @@ An example of an alpha-composited volume rendering is shown in Figure \ref{fig:a
 
 ### Out-of-core rendering
 
-Out-of-core (OOC) rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
-
-BigDataViewer[@Pietzsch:2015hl] has introduced a HDF5[@hdf52017]-based pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources (see Figure \ref{fig:bdvDrosophila} for an example).
-
 \begin{marginfigure}
     \label{fig:bdvDrosophila}
     \includegraphics{bdv.png}
     \caption{A \emph{Drosophila} dataset rendered by-slice in BigDataViewer. Image courtesy of Tobias Pietzsch.}
 \end{marginfigure}
 
+Out-of-core (OOC) rendering describes techniques for rendering volumetric data that does not fit into the GPU memory or main memory of a computer, and is therefore out-of-core. 
+
+BigDataViewer [@Pietzsch:2015hl] has introduced a HDF5 [@hdf52017]-based pyramid image file format that is now widely used. The program itself displays single slices that can be arbitrarily oriented to the user, and loads them on-the-fly from local or remote data sources (see Figure \ref{fig:bdvDrosophila} for an example).
+
 scenery also includes support for loading these data sets, and for that makes use of a BigDataViewer-provided library. An example of multiple volumes rendered using this technique is shown in Figure \ref{fig:sceneryBDV}.
 
 ![scenery rendering an out-of-core, multiview _Drosophila_ dataset consisting of three different views (color-coded) using the BigDataViewer integration. volume rendering using maximum intensity projection. On the left-hand side, the transfer function has been adjusted to make boundaries between the different subvolumes visible more clearly. \label{fig:sceneryBDV}](ooc-drosophila.png)
 
-Volumetric data for out-of-core rendering is stored in tiles of up to $2^{31}$ voxels. Tiles are addressed with 64bit, leading to a theoretical maximum data size of $2^{94}$ voxels, or about 20000 Yottabyte. Tiles are stored in a GPU cache. The cache is organised into small, uniformly-sized blocks storing a particular tile of the volume in the resolution pyramid. All tiles are padded by one voxel to avoid bleeding artifacts. To render a particular view of a volume, we determine the base resolution, such that the screen resolution is matched for the voxel closest to the observer. We then prepare a 3D lookup texture (LUT) where each voxel corresponds to a volume block at base resolution. Each voxel in the LUT stores the coordinates of a tile in the in cache, as well as the resolution level relative to the base level, encoded as RGBA quadruple. For each visible volume tile, we determine the ideal resolution by the distance to the observer. 
+Volumetric data for out-of-core rendering is stored in tiles of up to $2^{31}$ voxels. Tiles are addressed with 64bit, leading to a theoretical maximum data size of $2^{94}$ voxels, or about 20000 Yottabyte. Tiles are stored in a GPU cache. The cache is organised into small, uniformly-sized blocks storing a particular tile of the volume in the resolution pyramid. All tiles are padded by one voxel to avoid bleeding artifacts [@Beyer:2008Smooth]. To render a particular view of a volume, we determine the base resolution, such that the screen resolution is matched for the voxel closest to the observer. We then prepare a 3D lookup texture (LUT) where each voxel corresponds to a volume block at base resolution. Each voxel in the LUT stores the coordinates of a tile in the in cache, as well as the resolution level relative to the base level, encoded as RGBA quadruple. For each visible volume tile, we determine the ideal resolution by the distance to the observer. 
 
-If a tile requested is already present in the cache, we encode its coordinates in the corresponding LUT voxel. Should a tile not yet be present in the cache, we enqueue the missing block for asynchronous loading through the cache layer of BigDataViewer. Recently-loaded blocks are inserted into the cache texture. The cache has least-recently used (LRU) behaviour, such that the oldest tiles are the first ones to be replaced. Missing blocks are substituted by lower-resolution data while not yet available.
+If a tile requested is already present in the cache, we encode its coordinates in the corresponding LUT voxel. Should a tile not yet be present in the cache, we enqueue the missing block for asynchronous loading through the cache layer of BigDataViewer. Recently-loaded blocks are inserted into the cache texture. The cache has least-recently used (LRU) behaviour, such that the oldest tiles are the first ones to be replaced. Missing blocks are substituted by lower-resolution data while not yet available. This technique is a combination of hierarchical blocking [@Beyer:2008Smooth; @LaMar:1999Multiresolution] and the missing data scheme introduced in [@Pietzsch:2015hl].
 
 \begin{marginfigure}
     \begin{center}

@@ -25,13 +25,13 @@ For more complex specimen, and to study three-dimensional structures, more advan
 
 ## Confocal Microscopy
 
-The confocal microscope was developed in the 1960s by Marvin Minsky, one of the pioneers of Artificial Intelligence (AI), in order to investigate neural connections in the central nervous system of mammals, and draw conclusions for AI from that. The confocal microscope enables optical sectioning by illuminating the sample sample with a coherent light source, nowadays lasers, and rejecting the emitted fluorescence with a pinhole. With this principle, it is possible to scan the specimen point-wise in X and Y directions, and provide optical sectioning by also moving it in the Z direction. Occurring fluorescence that was not rejected as background by the pinhole gets collected point-wise by a photomultiplier, and an image or volume reconstructed from that. The principle of operation is also pictured in \ref{fig:confocal_principle}. An example of an image taken with a confocal microscope is shown in Figure \ref{fig:ConfocalActinFilaments}
-
 \begin{marginfigure}
     \label{fig:ConfocalActinFilaments}
     \includegraphics{confocal-actin-filaments.png}
     \caption{Z projection of a phalloidin-labeled osteosarcoma cancer cell, making actin filaments visible. Image taken on a Zeiss LSM780 confocal microscope. Image (cc) by Howard Vidin, Wikimedia Commons}  
 \end{marginfigure}
+
+The confocal microscope was developed in the 1960s by Marvin Minsky, one of the pioneers of Artificial Intelligence (AI), in order to investigate neural connections in the central nervous system of mammals, and draw conclusions for AI from that. The confocal microscope enables optical sectioning by illuminating the sample sample with a coherent light source, nowadays lasers, and rejecting the emitted fluorescence with a pinhole. With this principle, it is possible to scan the specimen point-wise in X and Y directions, and provide optical sectioning by also moving it in the Z direction. Occurring fluorescence that was not rejected as background by the pinhole gets collected point-wise by a photomultiplier, and an image or volume reconstructed from that. The principle of operation is also pictured in \ref{fig:confocal_principle}. An example of an image taken with a confocal microscope is shown in Figure \ref{fig:ConfocalActinFilaments}
 
 ![\label{fig:confocal_principle}Confocal microscope operating principle,  10: Arc lamp (laser, nowadays), 12: Illumination pinhole, 16: Dichroic mirror, 22: specimen, 26: Pinhole, 28: Photomultiplier diode (Public Domain, from Marvin Minksky's original patent application).](confocal_principle.png)
 
