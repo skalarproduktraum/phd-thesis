@@ -230,7 +230,10 @@ The following additions were requested:
 
 For interactive rendering of the APR, we have integrated the Java wrapper with _scenery_[^demonote]. In scenery, we render the APR as point-based graphics, and subject it to the same postprocessing steps as all other renderings (such as screen-space ambient occlusion, and HDR exposure correction).
 
-For point-based rendering, positions and intensities of particles on all levels of the APR are reconstructed according to Eq. \ref{eq:ParticlePosition}, and stored in a `Mesh`, with the following mapping:
+For point-based rendering, positions and intensities of particles on all levels of the APR are reconstructed according to Eq. \ref{eq:ParticlePosition}, and stored in a `Mesh`, with the mapping shown in \cref{tbl:APRtoScenery}.
+
+
+Particle normals can be stored with the regular APR data as additional property, but they might also be computed on-the-fly. The vertex data is then rendered with a custom shader that provides multiple options for colouring the particles, such as colouring by level, by distance to observer, or intensity. The shader also enables thresholding of the particles, resulting in a very simple way to render visualisations of an APR similar to isosurfaces and segmentations by just selecting particles with a given intensity. An example segmentation of _D. rerio_ head vasculature using graph cuts is shown in Figure \ref{fig:APRvasculature}, and an example direct particle rendering of a _Drosophila melanogaster_ embryo is shown in Figure \ref{fig:APRdrosophila}.
 
 | scenery Node property | APR contents |
 |:--|:--|
@@ -240,7 +243,6 @@ For point-based rendering, positions and intensities of particles on all levels 
 
 Table: APR-to-scenery mapping for particle properties. {#tbl:APRtoScenery}
 
-Particle normals can be stored with the regular APR data as additional property, but they might also be computed on-the-fly. The vertex data is then rendered with a custom shader that provides multiple options for colouring the particles, such as colouring by level, by distance to observer, or intensity. The shader also enables thresholding of the particles, resulting in a very simple way to render visualisations of an APR similar to isosurfaces and segmentations by just selecting particles with a given intensity. An example segmentation of _D. rerio_ head vasculature using graph cuts is shown in Figure \ref{fig:APRvasculature}, and an example direct particle rendering of a _Drosophila melanogaster_ embryo is shown in Figure \ref{fig:APRdrosophila}.
 
 [^demonote]: See [github.com/skalarproduktraum/aprrenderer](https://github.com/skalarproduktraum/aprrenderer) for demo code.
 
