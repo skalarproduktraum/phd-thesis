@@ -29,8 +29,10 @@ The discerning features of ClearVolume are:
 
 ![Multipass maximum projection — In the naive approach, consecutive samples along a ray are taken in single-step increments. With low-discrepancy sampling based on the Fibonacci sequence, not-yet sampled intervals along the ray are filled in most efficiently. In the figure, consecutive samples are shown top-to-bottom, with the current sample being highlighted in red.\label{fig:LowDiscrepancySampling} Reused from [@Royer:2015tg].](ClearVolumeMultipassVsNaive.pdf)
 
-
-![__a__: Data flow in a ClearVolume-augmented microscopy application, __b__: Local or remote visualisation using ClearVolume, __c__: Evaluation of data fitness/sharpness and drift correction applied, __d__: Multi-colour compositing.\label{fig:ClearVolume} Reused from [@Royer:2015tg].](ClearVolumeMainFigure.pdf)
+\begin{figure*}
+    \includegraphics{ClearVolumeMainFigure.pdf}
+    \caption{\textbf{a} Data flow in a ClearVolume-augmented microscopy application, \textbf{b} Local or remote visualisation using ClearVolume, \textbf{c} Evaluation of data fitness/sharpness and drift correction applied, \textbf{d} Multi-colour compositing.\label{fig:ClearVolume} Reused from \citep{Royer:2015tg}.}
+\end{figure*}
 
 In the time since its publication, ClearVolume has proven to be a useful tool for a multitude of use cases, such as microscope development and usage [@Royer:2016fh; @Kumar:2018rvi], method development for live imaging [@Boothe:20178ad], and the visualisation of correlative light microscopy/electron microscopy data [@Russell:2016711].
 
