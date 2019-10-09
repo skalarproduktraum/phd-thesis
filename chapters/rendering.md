@@ -442,11 +442,11 @@ The shader parameters here are all the key-value pairs below `parameters`: The o
 
 ```glsl
 layout(set = 2, binding = 0, std140) uniform ShaderParameters {
-	int displayWidth;
-	int displayHeight;
-	float occlusionRadius;
-	int occlusionSamples;
-	float occlusionExponent;
+  int displayWidth;
+  int displayHeight;
+  float occlusionRadius;
+  int occlusionSamples;
+  float occlusionExponent;
   float maxDistance;
   float bias;
   int algorithm;
