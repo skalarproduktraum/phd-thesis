@@ -13,7 +13,7 @@ The goal of this chapter is to give the reader an understanding of the physiolog
 
 ## A Short Tour of the Human Visual System
 
-The processing of visual stimuli happens in multiple stages: In Figure \ref{fig:processing_overview} we show an overview sketch of the nerve pathways involved in visual processing. In the following, we will discuss the following parts in deeper detail:
+The processing of visual stimuli happens in multiple stages: In Figure \ref{fig:processing_overview} we show an overview sketch of the nerve pathways involved in visual processing. We will discuss the following parts in deeper detail:
 
 1. _The Optical Path_ — Collection and accumulation of incoming photons by the optical system consisting of the _cornea_, _iris_, and _lens_ onto the _retina_, and especially the most sensitive part of the retina, the _fovea_.
 2. _The Retina_ — Collection and translation of incoming photons into nerve pulses, and compression of the nerve signals for further processing,
