@@ -78,7 +78,7 @@ All of the described movements are optimisations to provide the best image possi
 
 ## The Retina — Retinal Architecture and Processing
 
-\begin{marginfigure}
+\begin{marginfigure}[2cm]
     \label{fig:retina_architecture}
     \includegraphics{retina-architecture.pdf}
     \caption{Inverted retinal architecture of mammals. Adapted, original illustration (cc) by \href{https://commons.wikimedia.org/wiki/File:Retina_layers.svg}{Marc Gabriel Schmid}}  
@@ -94,16 +94,18 @@ After traversing this neuronal maze, photons reach the true actors of photon rec
 
 ### Rods and cones
 
-\begin{marginfigure}
-    \includegraphics{rods-and-cones.pdf}
-    \caption{The distribution of rods and cones in dependence of the visual angle. While the distribution of cones sharply peaks around the fovea, the distribution of rods falls off slower in the periphery, and rods do not exist entirely at the fovea. Adapted from \citep{Duchowski:2017ii}.\label{fig:RodsAndCones}}
-\end{marginfigure}
+
 
 These are the workhorses of the retina, responding in different lighting intensity conditions: While rods are highly sensitive in dim conditions,  the _scotopic_ regime, even responding to single-photon stimuli (_rhodopsin_ is responsible for the actual reception in rods, and absorbs green light most strongly), cones respond more sensitively in high-intensity conditions, the _mesopic_ regime. While cones exist in long-wavelength, middle-wavelength, and short-wavelength flavours, often called red, green, and blue, rods only exist in a single flavour. 
 
 Coming back to the distribution of photoreceptors among the retina, both types also follow different patterns: While most — $150000/\mathrm{mm}^2$ — of the rods exist around $12^\circ-15^\circ$ of visual angle, the density of cones peaks at the fovea at $0^\circ$ of visual angle, also with about $150000/mm^2$. The cone density falls off sharply outside the fovea, reaching a density as low as $\approx 15000/mm^2$ at $15^\circ$. 
 
 There are no rods at the fovea, and their falloff is not as sharp, slowly waning to about $50000/mm^2$ in the periphery at $80^\circ$[@Snowden:2012wu]. See Figure \ref{fig:RodsAndCones} for a graph of the distribution.
+
+\begin{marginfigure}
+    \includegraphics{rods-and-cones.pdf}
+    \caption{The distribution of rods and cones in dependence of the visual angle. While the distribution of cones sharply peaks around the fovea, the distribution of rods falls off slower in the periphery, and rods do not exist entirely at the fovea. Adapted from \citep{Duchowski:2017ii}.\label{fig:RodsAndCones}}
+\end{marginfigure}
 
 The perceptual consequences of this distribution are interesting: While the sensitivity to color changes in the periphery sinks quite drastically due to the reduced number of cones, contrast sensitivity due to rods is still quite high.
 
