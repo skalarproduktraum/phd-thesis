@@ -1,5 +1,7 @@
 # track2track: Eye Tracking for Cell Tracking
 
+\alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and is currently being prepared for publication as:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{track2track}: Using Eye Tracking for Cell Tracking in VR.}
+
 We are going to detail the track2track strategy for augmenting biological tracking tasks with eye gaze data in order to make them easier and faster to do.
 
 We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into track2track, and finally show a proof-of-concept that the strategy works in the case of tracking cells during the early development of _Platynereis_ embryos.
@@ -21,18 +23,21 @@ The challenges of this step are twofold:
 * Image data from fluorescence microscopy can be very inhomogeneous, with inhomogeneity stemming from both the distribution of fluorescent proteins, and from the diversity of cell shapes. Deriving general algorithms that can capture both regular and very deformed cells or nuclei is a highly challenging task.
 * Manually curation of cell lineages is very tedious at the moment, as the users have to go through each timepoint and connect cells between the timepoints. This is often done on a per-slice basis and by mouse, leading to a time-consuming process. Manually tracking a single cell through 100 timepoints with this process can take up to 30 minutes, and tracking a single dataset whole can take many months.
 
-## Design Space
+## Design Space and Related Work
 
-We intend to tackle this problem by using a combination of eye tracking and virtual reality. 
+track2track is powered by a combination of eye tracking and virtual reality: 
 
-The user can be tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system, as described in [Introduction to Visual Processing], is excellent in following moving objects smoothly, and in datasets used for cell tracking, the cells can also be assumed to move smoothly. Interestingly, the particular kind of eye movement we are exploiting here, _smooth pursuits_ — see [Eye movements] for details — is rather underexplored in human-computer interaction. To the author's knowledge, only [@piumsomboon2017] use it in their _Radial Pursuit_ technique. In _Radial Pursuit_, the user can select an object by following it in a scene with her eyes, and it will become more "lensed-out" the longer she does that.
+A user can be tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system excels in following moving objects smoothly, and in datasets used for cell tracking, the cells are also assumed to be moving smoothly. 
 
-With the addition of virtual reality to the mix, we can first help the user with orientation in the dataset, and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers or spurious pupil detections, or even foveate the rendering of the volumetric dataset.
+Gaze in general has been used in human-computer interaction for various kinds of interactions. Briefly, it has been used as an additional input modality in conjunction with touch interaction [@Stellmach:2012Looka] or pedaling [@Klamka:2015ka], or for building user interfaces on top of it, e.g. for text entry [@Lutz:2015ga].
+However, the particular kind of eye movements we are exploiting here -- _smooth pursuits_ — are under-explored in human-computer, especially for 3D interaction: In [@Kosch:2018Your], the authors use deviations from smoothness in  smooth pursuits to evaluate cognitive load, while in [@Vidal:2013Pursuits], smooth pursuits are used for item selection in 2D user interfaces. To the author's knowledge, only [@piumsomboon2017] use smooth pursuits for 3D interaction in their _Radial Pursuit_ technique, where the user can select an object in a 3D scene by tracking it with her eyes, and it will become more "lensed-out" the longer she focuses on a particular object.
 
-Taking one of the two away, would lead to issues:
+With the addition of virtual reality, we give the user a tool for enhanced navigation and cognition when exploring a complex 3D dataset [@Slater:2016552], and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers from the gaze data, e.g., by calculating the quaternion distance between eyeball rotation and head rotation. In addition, head tracking data from the HMD can be used to foveate the rendering of the volumetric dataset, dimming areas the user is not looking at [@levoy1990; @bruder2019]. We have not yet explored foveation, e.g. to boost tracking rates, yet. In the context of biological image analysis, VR has been applied e.g. for virtual colonscopy [@Mirhosseini:2019Immersive] or for tracing of neurons from connectome data [@Usher:2017bda].
 
-* When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex (VOR, see [Eye movements]).
-* When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, such as Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer, especially when the user needs to move inside the dataset.
+Let us also take a critical look at whether only one of the two technologies could be sufficient in achieving our goal of making manual cell tracking faster and more comfortable:
+
+* When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex.
+* When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, such as Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer, especially when the user needs to move inside the dataset, or even evade objects while tracking a cell.
 
 In terms of the design space for gaze interaction on head-mounted displays introduced by [@hirzle2019], we utilise (stereoscopic) VR with full world information, combined with binocular eye tracking.
 
@@ -109,26 +114,33 @@ Although by using vergence as binocular depth cues, 3D detection could yield add
 
 ### Calibration procedure
 
+\begin{marginfigure}
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackCalibration.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video showing the calibration procedure for \emph{track2track}. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
+\end{marginfigure}
+
 Eye positions, size, etc. are subject to large individual differences. It is therefore required to calibrate the eye trackers before each use, to be able to get reliable gaze data out. 
 
-In case of regular, glasses-mounted eye trackers, _Pupil_ offers an integrated calibration procedure, while for HMD-based settings, we need to create our own calibration routine. Our custom calibration routine works as follows:
+In case of regular, glasses-mounted eye trackers, _Pupil_ offers an integrated calibration procedure, while for HMD-based settings, we need to create our own calibration routine. Our custom calibration routine works as follows and is based on the one used in the `HMDeyes` example from Pupil Labs:
 
- 1. we show the user a single highlighted point located on a circle in the center of the screen, the user is instructed to follow the highlighted point with her eyes,
- 2. after acquiring enough samples for calibration, the screen space position of the calibration point is sent to Pupil,
- 3. the next, randomly selected point out of a set of 10 equidistant points on the circle is shown to the user,
- 4. after all 10 points have been gazed at by the user, Pupil's calibration routine will try to construct a correspondence between the gaze vectors of both eyes and the screen-space coordinates submitted,
- 5. if the calibration routine is successful, the calibration interface will be hidden, and the regular application can continue. If the calibration routine is not successful, we restart from 1. until successful or until the user cancels.
+ 1. We show the user the images recorded by the two eye tracking cameras in the VR HMD, such that the position of the headset can be adjusted so the eyes can be detected well by _Pupil_,
+ 2. when the user starts the calibration procedure, we instruct her to follow the points shown on-screen. First, we show a single highlighted point in the center of the screen,
+ 3. after acquiring enough samples for calibration (scenery defaults to 120 samples per point, discarding the first 15 to remove samples where the eyes where potentially still moving), the screen space position of the calibration point is sent to Pupil,
+ 4. the next counter-clockwise point out of a set of 6 equidistant points on the circle is shown to the user,
+ 5. after all 7 points have been gazed at by the user, Pupil's calibration routine will try to construct a correspondence between the gaze vectors of both eyes and the screen-space coordinates submitted,
+ 6. if the calibration routine is successful, the calibration interface will be hidden, and the regular application can continue. If the calibration routine is not successful, we restart from 1. until successful or until the user cancels.
 
-\TODO{Add calibration image}
-
-
+The user can now continue with tracking cells in the loaded dataset.
 
 ## Tracking Procedure
 
-\begin{marginfigure}
+\begin{figure}
     \includegraphics{vive-controllers-t2t.pdf}
     \caption{Controller bindings for using \emph{track2track}. See text for details. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.\label{fig:T2TControls}}
-\end{marginfigure}
+\end{figure}
 
 After calibration and before starting the tracking procedure for a single cell, the user can position himself freely in space, and also move to the right position in time for the dataset. All of these functions can be performed using the HTC Vive handheld controllers. The controller bindings are shown in \cref{fig:T2TControls}, with them the user can perform the following:
 
@@ -175,22 +187,24 @@ The data can also be smoothed with a moving window average over time. An example
     \caption{An example profile of an entire ray through a volumetric dataset. X axis is step along the ray in voxels, Y axis volume sample value. In this case, there are two local maxima along the ray, one close to the observer, at index 70, and another one further away at 284.\label{fig:T2TExampleRay}}
 \end{figure*}
 
-\begin{marginfigure}[14cm]
-    \includegraphics{hedgehog-with-maxima.png}
-    \caption{The same hedgehog with local maxima marked. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
-\end{marginfigure}
+
 
 To reliably connect cells together over several timepoints, we use an incremental graph-based approach utilising all spines that have local maxima in their sample value. An example ray through a volume is shown in \cref{fig:T2TExampleRay}. In the figure, the position in voxels along the ray is shown on the X axis, while the Y axis shows the value of the volume at that point of the ray. We assume that when starting a tracking step, the user is looking at an unoccluded object that will be visible as a local maximum along the ray to seed the algorithm.
 
-\begin{figure*}
+\begin{figure}
     \includegraphics{t2t-algorithm.pdf}
     \caption{A graphical illustration of the incremental graph-search algorithm used to extract tracks from a hedgehog. Time runs along the X axis. $s_1$ is the initial seed point where to start tracking. The algorithm is currently at $s_3$, determining how to proceed to $s_4$. In this case, the middle track with $d=1$ wins, as it is the shortest world-space distance away from the current point.\label{fig:T2TAlgorithm}}
-\end{figure*}
+\end{figure}
 
 For each timepoint, we have collected a variable number of spines, whose count varies between 0 and 60 (with an average of 16) — zero spines might be obtained in case that the user blinks and no detection was possible. To connect the initial seed point with the other correct spines correctly, we step through the list of spines one-by-one, performing the following steps:
 
 1. Advance to the next spine,
 2. connect the currently active point from the previous spine with the local maximum on current next spine that has the lowest world-space distance — with this weighting we can exclude cases where another object was briefly moving between the user and the actually tracked object. The process of connecting one local maximum to the next closest one is a version of \emph{dynamic fringe-saving A*}-search [@sun2009] on a grid, where all rays get extended the the maximum length in the whole hedgehog along the X axis, and time flows along the Y axis. 
+
+\begin{marginfigure}[-1cm]
+    \includegraphics{hedgehog-with-maxima.png}
+    \caption{The same hedgehog with local maxima marked. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
+\end{marginfigure}
 
 A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} and the algorithm itself is summarised in \cref{alg:T2T}.
 
@@ -233,10 +247,10 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
     Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
-\begin{marginfigure}
+\begin{figure}
     \includegraphics{t2t-track.png}
-    \caption{A reconstructed cell track in a \emph{Platynereis} embryo. \TODO{Replace image}.\label{fig:T2TReconstructedTrack}}
-\end{marginfigure}
+    \caption{A cell track created with track2track for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
+\end{figure}
 
 Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See \cref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
 
