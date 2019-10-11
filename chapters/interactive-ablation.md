@@ -68,8 +68,6 @@ In terms of volumetric cuts, the authors of [@Brugues:2012fx] used a femtosecond
 
 ## Observations
 
-\TODO{Ask Romina for wing disc example stack to show complex geometry, and Brugues lab for spindle}
-
 From our survey of related works and use cases in the previous section, we observe the following:
 
 Current interfaces for laser ablation often do not feature a 3D view of the specimen, but usually utilise a 2D window with different controls for moving around, as shown in Figure \ref{fig:LaserAblation2D}. Such systems provide support for planar cuts, in the form of lines, circles, and rectangles.
