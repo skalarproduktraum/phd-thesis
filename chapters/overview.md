@@ -19,13 +19,13 @@ What these developments lack to a certain extent, are ways to again bring the ex
 
 With the advent of the first small-enough computers, and small-enough cathode-ray tubes (CRTs), the development of devices that give the user the ability to inhabit a virtual environment or use more than just a keyboard for input of data started. Early examples of such systems — from the 1960s — are The Sword of Damocles[@Sutherland:1968im] or the Sketchpad system[@Sutherland:1963kq], made famous as _The Mother of All Demos_. In the meantime, and over the course of two Virtual Reality Revolutions — with important developments like the CAVE (CAVE Automatic Virtual Environment, [@CruzNeira:1992fa]) —  head-mounted displays (HMDs) have now become a commodity and can be bought for about 400$, bringing a once highly specialised and expensive device into the homes  or offices of potential users.
 
-\section*{Natural User Interfaces}
+Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect or the Leap Motion), free-air controller input (e.g., HTC Vive controllers), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (such as eye trackers from Tobii or Pupil Labs). Such devices and their interaction modalities are commonly called Natural User Interfaces. 
 
-Complimentary to these display devices, new input methods are also on the rise, such as free-air gesture input (e.g. the widely available Microsoft Kinect or the Leap Motion), touch input (multitouch screens in nearly every contemporary mobile phone) or even devices controlled by the gaze of the user (such as eye trackers from Tobii or Pupil Labs). Such devices and their interaction modalities are commonly called Natural User Interfaces (NUIs, cite).
+Despite the common availability of VR display devices, or NUI input device, many of the analysis and visualisation tasks in bioimaging are still done on a 2D screen, using a keyboard and a mouse, while VR might actually provide tangible benefits, beyond just a quick "wow" effect.
 
 \section*{Scope of this thesis and contributions}
 
-In this thesis, we aim to demonstrate that the inclusion of natural user interfaces, combined with Virtual or Augmented Reality, and advanced realtime rendering techniques can enhance the biologist's workflow, and enable new kinds of experiments, _in vivo_ and _in silico_.
+In this thesis, we aim to demonstrate that the inclusion or Virtual  Reality and associated input devices, and advanced realtime rendering techniques can enhance the biologist's workflow, and enable new kinds of experiments, _in vivo_ and _in silico_.
 
 To achieve this, we develop an open-source realtime rendering and interaction framework named _scenery_ that enables rapid prototyping of visualisations of geometric and volumetric biological data, and interaction with such on the basis of Natural User Interfaces. The framework supports rendering on regular desktop screens, virtual reality headsets (like the Oculus Rift or HTC Vive), and augmented reality headsets (like the Microsoft HoloLens). 
 
@@ -34,10 +34,10 @@ We will detail the architecture of the framework and demonstrate its necessity, 
 Specifically, we will detail the following contributions:
 
 * _scenery_, a framework for creating visualisation and interaction interfaces with both volumetric and geometric data, supporting virtual and augmented reality, and clustered rendering.
-* rendering the _Adaptive Particle Representation_[@Cheeseman:2018b12], which can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. The APR is a new computational particle-based representation of image and volume data that can significantly reduce both storage and processing cost. All rendering algorithms are implemented on top of _scenery_.
 * _track2track_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
-* _interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_.
-* _SciView_, a plugin for the Fiji/ImageJ ecosystem, make scenery's flexible visualisation solutions available to the end user.
+* _Towards interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_ and a user study performed to show benefits and challenges, as well as identify issues.
+* _Rendering the Adaptive Particle Representation_, where we introduce ideas how to render the highly-efficient, particle-based Adaptive Particle Representation (APR) [@Cheeseman:2018b12] of volumetric data. The APR  can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. All rendering algorithms are implemented on top of _scenery_.
+* _SciView_, a plugin for the ImageJ2/Fiji ecosystem, make scenery's flexible visualisation solutions available to the end user.
 
 
 \section*{Publications}
