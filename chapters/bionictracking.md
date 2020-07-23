@@ -1,10 +1,10 @@
-# track2track: Eye Tracking for Cell Tracking
+# Bionic Tracking: Using Eye Tracking for Cell Tracking
 
-\alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and is currently being prepared for publication as:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{track2track}: Using Eye Tracking for Cell Tracking in VR.}
+\alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and has been submitted to BioImageComputing at ECCV 2020:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{Bionic Tracking}: Using Eye Tracking to Track Biological Cells in Virtual Reality. \href{https://arxiv.org/abs/2005.00387}{arXiv preprint 2005.00387}.}
 
-We are going to detail the _track2track_ strategy for augmenting biological tracking tasks for 3D data over time with eye gaze data in order to make them easier and faster to do. track2track utilises a combination of virtual reality and eye tracking in order to do so.
+We are going to detail the _Bionic Tracking_ strategy for augmenting biological tracking tasks for 3D data over time with eye gaze data in order to make them easier and faster to do. Bionic Tracking utilises a combination of virtual reality and eye tracking in order to do so.
 
-We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into track2track, and finally show a proof-of-concept that the strategy works in the case of tracking cells during the early development of _Platynereis_ embryos.
+We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into Bionic Tracking, and finally show a proof-of-concept that the strategy works in the case of tracking cells during the early development of _Platynereis_ embryos.
 
 ## Tracking Problems in Biology and Challenges
 
@@ -25,7 +25,7 @@ The challenges of this step are twofold:
 
 ## Design Space and Related Work
 
-track2track is powered by a combination of eye tracking and virtual reality: 
+Bionic Tracking is powered by a combination of eye tracking and virtual reality: 
 
 A user is tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a set of rays through it. As described in [Introduction to Visual Processing], the human visual system excels in following moving objects smoothly, and in datasets used for cell tracking, the cells are also assumed to be moving smoothly. 
 
@@ -60,7 +60,7 @@ In terms of the design space for gaze interaction on head-mounted displays intro
 
 _Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_. Their membranes are inherently hard to segment, also due to the stochastic distribution of fluorescent markers. Alternatively, nuclei can be tracked, but their shapes vary as well, with some examples shown in \cref{fig:PlatynereisCellShapes}.
 
- 
+
 ## Design Process
 
 ### Initial Prototype
@@ -118,10 +118,10 @@ Although by using vergence as binocular depth cues, 3D detection could yield add
 
 \begin{marginfigure}
     \begin{center}
-    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackCalibration.mp4}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Bionic TrackingCalibration.mp4}
     \end{center}
     \vspace{1.0em}
-    Scan this QR code to go to a video showing the calibration procedure for \emph{track2track}. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
+    Scan this QR code to go to a video showing the calibration procedure for \emph{Bionic Tracking}. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
 Eye positions, size, etc. are subject to large individual differences. It is therefore required to calibrate the eye trackers before each use, to be able to get reliable gaze data out. 
@@ -141,7 +141,7 @@ The user can now continue with tracking cells in the loaded dataset.
 
 \begin{figure}
     \includegraphics{vive-controllers-t2t.pdf}
-    \caption{Controller bindings for using \emph{track2track}. See text for details. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.\label{fig:T2TControls}}
+    \caption{Controller bindings for using \emph{Bionic Tracking}. See text for details. Vive controller drawing from VIVEPORT Developer Documentation, \href{https://developer.viveport.com}{developer.viveport.com}.\label{fig:T2TControls}}
 \end{figure}
 
 After calibration and before starting the tracking procedure for a single cell, the user can position himself freely in space, and also move to the right position in time for the dataset. All of these functions can be performed using the HTC Vive handheld controllers. The controller bindings are shown in \cref{fig:T2TControls}, with them the user can perform the following:
@@ -235,7 +235,7 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
     		$\mathcal{T} + v$
     }
 
-	\caption{Algorithm for evaluation of the hedgehog in \emph{track2track}.\label{alg:T2T} See text for a detailed explanation of the steps.} 
+	\caption{Algorithm for evaluation of the hedgehog in \emph{Bionic Tracking}.\label{alg:T2T} See text for a detailed explanation of the steps.} 
 \end{algorithm}
 
 
@@ -243,32 +243,32 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
 
 \begin{figure}
     \includegraphics{t2t-track.png}
-    \caption{A cell track created with track2track for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
+    \caption{A cell track created with Bionic Tracking for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
 \end{figure}
 
 Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See \cref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
 
 \begin{marginfigure}
     \begin{center}
-    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackPlatynereis.mp4}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Bionic TrackingPlatynereis.mp4}
     \end{center}
     \vspace{1.0em}
-    Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
+    Scan this QR code to go to a video showing tracking of a cell via \emph{Bionic Tracking} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
 
 ## Discussion and Future Work
 
-In this chapter we have introduced the _track2track_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve an order of magnitude speedup compared to manually tracking cells. 
+In this chapter we have introduced the _Bionic Tracking_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve an order of magnitude speedup compared to manually tracking cells. 
 
 Before we can bring this strategy into actual use for biologists, we need to do three more things: 
 
 * First, perform a user test to figure out usability issues and improvements. 
 * Second, implement interactions that allow to track or proofread lineage trees. Such an interaction could for example include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division. 
-* Third, track2track has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets.
+* Third, Bionic Tracking has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets.
 
-We foresee the limitation that for tracking large lineages entirely, track2track will not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. Furthermore, track2track could be used in a divide-and-conquer manner in conjunction with an automatic tracking algorithm that provides uncertainty scores, and only be applied in regions where the algorithm cannot cross a given uncertainty threshold. We could further increase the usefulness of track2track by not just searching for local maxima along rays, but actually extract the centroids of cells.
+We foresee the limitation that for tracking large lineages entirely, Bionic Tracking will not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. Furthermore, Bionic Tracking could be used in a divide-and-conquer manner in conjunction with an automatic tracking algorithm that provides uncertainty scores, and only be applied in regions where the algorithm cannot cross a given uncertainty threshold. We could further increase the usefulness of Bionic Tracking by not just searching for local maxima along rays, but actually extract the centroids of cells.
 
-Ultimately, we would like to integrate track2track into existing tracking software, such that it can be helpful for a more general audience. Current developments in eye tracking hardware indicate falling prices in the near future, such that those devices might become way more common soon. Alternatively, one could imagine just having one or two eye  tracking-enabled HMDs, and make them available to users in a bookable item-facility-like manner.
+Ultimately, we would like to integrate Bionic Tracking into existing tracking software, such that it can be helpful for a more general audience. Current developments in eye tracking hardware indicate falling prices in the near future, such that those devices might become way more common soon. Alternatively, one could imagine just having one or two eye  tracking-enabled HMDs, and make them available to users in a bookable item-facility-like manner.
 
 
