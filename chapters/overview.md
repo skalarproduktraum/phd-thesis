@@ -37,7 +37,7 @@ Specifically, we will detail the following contributions:
 * _track2track_, an algorithm for utilising the user's gaze to solve tracking problems involving moving particles and objects or tracing of neurons, implemented on top of _scenery_.
 * _Towards interactive laser ablation_, where laser-based complex microsurgical procedures on microscopic specimens are enhanced and simplified by the use of virtual reality and natural user interfaces. A simulation of this workflow is also implemented on top of _scenery_ and a user study performed to show benefits and challenges, as well as identify issues.
 * _Rendering the Adaptive Particle Representation_, where we introduce ideas how to render the highly-efficient, particle-based Adaptive Particle Representation (APR) [@Cheeseman:2018b12] of volumetric data. The APR  can be displayed as point-based graphics, as maximum intensity projection (MIP), or full volume rendering. All rendering algorithms are implemented on top of _scenery_.
-* _SciView_, a plugin for the ImageJ2/Fiji ecosystem, make scenery's flexible visualisation solutions available to the end user.
+* _sciview_, a plugin for the ImageJ2/Fiji ecosystem, make scenery's flexible visualisation solutions available to the end user.
 
 
 \section*{Publications}
@@ -46,17 +46,21 @@ Some of the results presented in this thesis have already been published :
 
 \subsection*{Peer-reviewed Papers}
 
-* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. _IEEE VIS_ 2019 (accepted). [arXiv preprint 1906.06726](https://arxiv.org/abs/1906.06726).
-* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019. [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1).
-* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019. [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061).
-* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 2015.
+* __Günther, U.__, Harrington, K.I.S.: Tales from the Trenches -- Developing sciview, a new 3D viewer for the ImageJ community. _VisGap workshop at Eurovis 2020_, Norrköping, Sweden. [arXiv preprint 2004.00000](https://arxiv.org/abs/2004.00000), [DOI 10.2312/visgap20201112](https://doi.org/10.2312/visgap20201112).
+* __Günther, U.__, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. _IEEE VIS_ 2019, Vancouver, Canada. [arXiv preprint 1906.06726](https://arxiv.org/abs/1906.06726), [DOI 10.1109/VISUAL.2019.8933605](https://doi.org/10.1109/VISUAL.2019.8933605).
+* Daetwyler S., __Günther, U.__ , Modes, Carl D., Harrington, K.I.S., and Huisken, J.: Multi-sample SPIM image acquisition, processing and analysis of vascular growth in zebrafish. _Development_, 2019. [bioRxiv preprint 478149](https://www.biorxiv.org/content/10.1101/478149v1), [DOI 10.1242/dev.173757](https://doi.org10.1242/dev.173757).
+* Cheeseman, B.L., __Günther, U.__, Susik, M., Gonciarz, K., and Sbalzarini, I.F.: Adaptive Particle Representation of Fluorescence Microscopy Images. _Nature Communications_, 9(5160), 2019. [bioRxiv preprint 263061](https://www.biorxiv.org/content/early/2018/03/02/263061), [DOI 10.1038/s41467-018-07390-9](https://doi.org/10.1038/s41467-018-07390-9)
+* Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume: open-source live 3D visualization for light-sheet microscopy. _Nature Methods_, 2015. [DOI 10.1038/nmeth.3372](https://doi.org/10.1038/nmeth.3372).
 
+\subsection*{Submitted Papers}
 
+* __Günther, U.__, Harrington, K.I.S., Dachselt, Raimund, Sbalzarini, I.F.: Bionic Tracking: Using Eye Tracking to Track Biological Cells in Virtual Reality. _Submitted to BioImageComputing at ECCV 2020_. [arXiv preprint 2005.00387](https://arxiv.org/abs/2005.00387).
+* Arshadi, C., Eddison, M., __Günther, U.__, Harrington, K.I.S., Ferreira, T.A.: SNT: A Unifying Toolbox for Quantification of Neuronal Anatomy. _Submitted to Nature Methods_. [bioRxiv preprint 2020.07.13.179325](https://www.biorxiv.org/content/10.1101/2020.07.13.179325v1).
 
 \subsection*{Conference Abstracts}
 
 
-* Gupta, A., __Günther, U.__, Incardona, P., Aydin, A.D., Dachselt, R., Gumhold, S., Sbalzarini, I.F.: A Framework for Interactive Virtual Reality _In Situ_ Visualisation of Parallel Numerical Simulations. _The 9th IEEE Symposium on Large Data Analysis and Visualization at IEEE VIS_, 2019 (accepted, [arXiv preprint 1337.13337](https://arxiv.org/abs/1906.06726)).
+* Gupta, A., __Günther, U.__, Incardona, P., Aydin, A.D., Dachselt, R., Gumhold, S., Sbalzarini, I.F.: A Framework for Interactive Virtual Reality _In Situ_ Visualisation of Parallel Numerical Simulations. _The 9th IEEE Symposium on Large Data Analysis and Visualization at IEEE VIS_, 2019. [arXiv preprint 1909.02986](https://arxiv.org/abs/1909.02986), [DOI 10.1109/LDAV48142.2019.8944368](https://doi.org/10.1109/LDAV48142.2019.8944368).
 * __Günther, U.__, Pietzsch, T., Rueden, C., Daetwyler, S., Huisken, J., Elicieri, K., Tomancak, P., Sbalzarini, I.F., Harrington, K.I.S.: sciview - Next-generation 3D visualisation for ImageJ & Fiji, _From Images to Knowledge with ImageJ and Friends_, EMBL Heidelberg, 2018
 * __Günther, U.__, Harrington, K.I.S., Sbalzarini, I.F.: Exploring the scenery of lightsheet microscopy with virtual reality, _LSFM2018_, Dresden, 2018.
 * Royer, L.A., Weigert, M., __Günther, U.__, Maghelli, N., Jug, F., Sbalzarini, I.F. and Myers, E.W.: ClearVolume - from microscope to visualisation in seconds, _VizBi_, EMBL Heidelberg, 2016.
