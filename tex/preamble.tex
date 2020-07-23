@@ -3,6 +3,7 @@
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{1}
  
+
 % Headers and page numbering 
 \usepackage{fancyhdr}
 \usepackage{fontspec}
@@ -119,6 +120,11 @@
 % Epigraph
 \newcommand{\myepigraph}[2]{\epigraphhead[450]{\raggedright#1\par\hspace*{\fill}\textsc{---#2}}}
 
+\usepackage{hyperxmp}[2020/03/01]
+\usepackage{embedfile}[2020/04/01]
+
+%\usepackage{bookmark}
+
 \hypersetup{
     bookmarksdepth=3,
     bookmarksopen=true,
@@ -129,7 +135,44 @@
     citecolor={MidnightBlue},
     urlcolor={MidnightBlue},
     pagebackref=true,
-    backref=page
+    backref=page,
+    pdflang=en,
+    pdfapart=2, %set to 1 for PDF/A-1
+    pdfaconformance=B,
+    pdftitle={A Modular and Open-Source Framework for Virtual Reality Visualisation and Interaction in Bioimaging},
+    pdfauthor={Ulrik Günther},
+    pdfcreator={Ulrik Günther},
+    pdfsubject={PhD thesis, visualisation in bioimaging},
+    pdfcopyright={Copyright (c) 2018-2020, Ulrik Günther},
+    pdfdate={2020-07-23},
+    pdfkeywords={Visualisation,
+               virtual reality,
+               systems biology,
+               human-computer interaction,
+               eye tracking,
+               augmented reality,
+               cross reality,
+               Kotlin,
+               Java,
+               ImageJ,
+               Cross-platform,
+               open-source,
+               software,
+               bioimaging}
+}
+
+%Create an OutputIntent in order to correctly specify colours
+\immediate\pdfobj stream attr{/N 3} file{sRGB.icc}
+\pdfcatalog{%
+  /OutputIntents [
+    <<
+      /Type /OutputIntent
+      /S /GTS_PDFA2
+      /DestOutputProfile \the\pdflastobj\space 0 R
+      /OutputConditionIdentifier (sRGB)
+      /Info (sRGB)
+    >>
+  ]
 }
 
 \usepackage{etoolbox}
