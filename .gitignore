@@ -16,3 +16,4 @@ thesis.tex
 *.fls
 tmp/*.pdf
 tmp/*.svg
+.DS_Store
