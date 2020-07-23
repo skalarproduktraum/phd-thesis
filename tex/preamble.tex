@@ -279,3 +279,14 @@
 }
 \makeatother
 
+
+%% pandoc-tablenos: required package
+%\usepackage{caption}
+
+%% pandoc-tablenos: environment to disable table caption prefixes
+\makeatletter
+\newcounter{tableno}
+\newenvironment{tablenos:no-prefix-table-caption}{
+}{
+}
+\makeatother
