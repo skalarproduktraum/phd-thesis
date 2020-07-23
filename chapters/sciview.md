@@ -225,3 +225,12 @@ Furthermore, we would like to provide better interoperability with simulation fr
 
 While the current GUI of sciview is based on Swing, we would like to provide support for JavaFX in the future as well. If Fiji/ImageJ2 also move to JavaFX, this would provide a very powerful combination, as it opens up the possibility to also run on touch-based devices, such as smartphones and tablets.
 
+## Software Availability
+
+sciview is available as free and open-source software under the 2-clause BSD license at [github.com/scenerygraphics/sciview](https://github.com/scenerygraphics/sciview). It is also available via a ImageJ/Fiji update site (see [https://imagej.net/Update_Sites](https://imagej.net/Update_Sites) for details) under [https://sites.imagej.net/SciView](https://sites.imagej.net/SciView). An automatically-built unstable version also available in addition at [https://sites.imagej.net/SciView-Unstable](https://sites.imagej.net/SciView-Unstable).
+
+
+
+
+
+

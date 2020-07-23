@@ -2,7 +2,7 @@
 
 \alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and is currently being prepared for publication as:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{track2track}: Using Eye Tracking for Cell Tracking in VR.}
 
-We are going to detail the track2track strategy for augmenting biological tracking tasks with eye gaze data in order to make them easier and faster to do.
+We are going to detail the _track2track_ strategy for augmenting biological tracking tasks for 3D data over time with eye gaze data in order to make them easier and faster to do. track2track utilises a combination of virtual reality and eye tracking in order to do so.
 
 We will first discuss the tracking problems usually encountered in biology and then detail the design process that went into track2track, and finally show a proof-of-concept that the strategy works in the case of tracking cells during the early development of _Platynereis_ embryos.
 
@@ -20,28 +20,37 @@ All of these automated approaches however have in common that they need manual c
 
 The challenges of this step are twofold:
 
-* Image data from fluorescence microscopy can be very inhomogeneous, with inhomogeneity stemming from both the distribution of fluorescent proteins, and from the diversity of cell shapes. Deriving general algorithms that can capture both regular and very deformed cells or nuclei is a highly challenging task.
+* Image data from fluorescence microscopy can be very inhomogeneous, with inhomogeneity stemming from both the distribution of fluorescent proteins, and from the diversity of cell or nuclear shapes. Deriving general algorithms that can capture both regular and very deformed cells or nuclei is a highly challenging task.
 * Manually curation of cell lineages is very tedious at the moment, as the users have to go through each timepoint and connect cells between the timepoints. This is often done on a per-slice basis and by mouse, leading to a time-consuming process. Manually tracking a single cell through 100 timepoints with this process can take up to 30 minutes, and tracking a single dataset whole can take many months.
 
 ## Design Space and Related Work
 
 track2track is powered by a combination of eye tracking and virtual reality: 
 
-A user can be tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a single ray through it. The human visual system excels in following moving objects smoothly, and in datasets used for cell tracking, the cells are also assumed to be moving smoothly. 
+A user is tasked to follow a cell with her eyes, the gaze direction recorded, and the targeted cell then determined, turning the 3-dimensional localisation problem into a 1-dimensional one — from the whole volume of image data, to a set of rays through it. As described in [Introduction to Visual Processing], the human visual system excels in following moving objects smoothly, and in datasets used for cell tracking, the cells are also assumed to be moving smoothly. 
 
 Gaze in general has been used in human-computer interaction for various kinds of interactions. Briefly, it has been used as an additional input modality in conjunction with touch interaction [@Stellmach:2012Looka] or pedaling [@Klamka:2015ka], or for building user interfaces on top of it, e.g. for text entry [@Lutz:2015ga].
-However, the particular kind of eye movements we are exploiting here -- _smooth pursuits_ — are under-explored in human-computer, especially for 3D interaction: In [@Kosch:2018Your], the authors use deviations from smoothness in  smooth pursuits to evaluate cognitive load, while in [@Vidal:2013Pursuits], smooth pursuits are used for item selection in 2D user interfaces. To the author's knowledge, only [@piumsomboon2017] use smooth pursuits for 3D interaction in their _Radial Pursuit_ technique, where the user can select an object in a 3D scene by tracking it with her eyes, and it will become more "lensed-out" the longer she focuses on a particular object.
+However, the particular kind of eye movements we are exploiting here mainly -- _smooth pursuits_ — are under-explored in human-computer, especially for 3D interaction: In [@Kosch:2018Your], the authors use deviations from smoothness in  smooth pursuits to evaluate cognitive load, while in [@Vidal:2013Pursuits], smooth pursuits are used for item selection in 2D user interfaces. To the author's knowledge, only [@piumsomboon2017] use smooth pursuits for 3D interaction in their _Radial Pursuit_ technique, where the user can select an object in a 3D scene by tracking it with her eyes, and it will become more "lensed-out" the longer she focuses on a particular object.
 
-With the addition of virtual reality, we give the user a tool for enhanced navigation and cognition when exploring a complex 3D dataset [@Slater:2016552], and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers from the gaze data, e.g., by calculating the quaternion distance between eyeball rotation and head rotation. In addition, head tracking data from the HMD can be used to foveate the rendering of the volumetric dataset, dimming areas the user is not looking at [@levoy1990; @bruder2019]. We have not yet explored foveation, e.g. to boost tracking rates, yet. In the context of biological image analysis, VR has been applied e.g. for virtual colonscopy [@Mirhosseini:2019Immersive] or for tracing of neurons from connectome data [@Usher:2017bda].
+With the addition of virtual reality, we give the user a tool for enhanced navigation and cognition when exploring a complex 3D dataset [@Slater:2016552], and second, utilise the tracking data from the head-mounted display, consisting of head position and head orientation, for constraining the eye tracking data to remove outliers from the gaze data, e.g., by calculating the quaternion distance between eyeball rotation and head rotation. In addition, head tracking data from the HMD can be used to foveate the rendering of the volumetric dataset, dimming areas the user is not looking at [@levoy1990; @bruder2019]. We have not yet explored foveation (e.g., to boost tracking rates) yet. In the context of biological or biomedical image analysis, VR has been applied e.g. for virtual colonscopy [@Mirhosseini:2019Immersive] or for tracing of neurons from connectome data [@Usher:2017bda].
 
-Let us also take a critical look at whether only one of the two technologies could be sufficient in achieving our goal of making manual cell tracking faster and more comfortable:
+Let us take a critical look at whether only one of the two technologies could be sufficient in achieving our goal of making manual cell tracking faster and more comfortable:
 
 * When _removing eye tracking_, the head orientation could still be used as a cursor. However, following small and smooth movements with your head is not something humans are used to, the eyes will always lead the way, and the head will follow via the vestibulo-ocular reflex.
 * When _removing virtual reality_, the effective "canvas" the user can use to follow cells around become restricted to the small part of the visual field a regular screen occupies. Alternatively, large screens, such as Powerwalls, could be used, but these also do not offer the freedom of movement that virtual reality headsets offer, especially when the user needs to move inside the dataset, or even evade objects while tracking a cell.
 
 In terms of the design space for gaze interaction on head-mounted displays introduced by [@hirzle2019], we utilise (stereoscopic) VR with full world information, combined with binocular eye tracking.
 
-## Tracking cells in early Platynereis development
+## Tracking cells in early _Platynereis_ development
+
+\begin{marginfigure}[6.5cm]
+    \begin{center}
+    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Platynereis100Timepoints.mp4}
+    \end{center}
+    \vspace{1.0em}
+    Scan this QR code to go to a video showing the early development of a \emph{Platynereis} embryo. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
+\end{marginfigure}
+
 
 \begin{figure*}
     \includegraphics{cell-shapes.pdf}
@@ -51,13 +60,6 @@ In terms of the design space for gaze interaction on head-mounted displays intro
 
 _Platynereis dumerilii_ is an annelid, a segmented worm. Its embryonic development has a very characteristic feature, _spiral cleavage_ where dividing cells turn in spiral form during their division. Arising from this geometric peculiarity, a wide variety of cell shapes can be found in developing _Platynereis_. Their membranes are inherently hard to segment, also due to the stochastic distribution of fluorescent markers. Alternatively, nuclei can be tracked, but their shapes vary as well, with some examples shown in \cref{fig:PlatynereisCellShapes}.
 
-\begin{marginfigure}[4cm]
-    \begin{center}
-    \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Platynereis100Timepoints.mp4}
-    \end{center}
-    \vspace{1.0em}
-    Scan this QR code to go to a video showing the early development of a \emph{Platynereis} embryo. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
-\end{marginfigure}
  
 ## Design Process
 
@@ -172,10 +174,10 @@ How this collection looks visually in 3D is depicted in \cref{fig:hedgehog} (whe
 
 Additionally, the hedgehog can be represented in two dimensions, with time on the Y axis, and depth along a given ray along the X axis. An example of that is shown in \cref{fig:rawHedgehog}. In this figure it is clearly visible that the rays do have different lengths, which is due to the angle they intersect the dataset. Also note that each line on the Y axis represents one gaze sample, of which we collect up to 60 per second, leading to 1614 samples in the plot (16 samples per timepoint on average).
 
-\begin{marginfigure}[-4cm]
+\begin{figure*}
     \includegraphics{hedgehog-raw.png}
-    \caption{The raw plot of the hedgehog rays. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. See text for details.\label{fig:rawHedgehog}}
-\end{marginfigure}
+    \caption{The raw plot of the hedgehog rays. On the Y axis, volume intensity along a single ray is shown, on the X axis, time runs from top to bottom. See text for details.\label{fig:rawHedgehog}}
+\end{figure*}
 
 The data can also be smoothed with a moving window average over time. An example of that with the same dataset as before is shown in \cref{fig:labelledHedgehog}. In this plot we additionally show the local maxima along each ray in red. The track of the cell we were following is clearly visible. As there are movements of the user, and other cells or objects might appear in front of the cell the user is tracking, the challenge is now how to reliably use the temporal information contained in the hedgehog to find a track for the cell.
 
@@ -201,10 +203,10 @@ For each timepoint, we have collected a variable number of spines, whose count v
 1. Advance to the next spine,
 2. connect the currently active point from the previous spine with the local maximum on current next spine that has the lowest world-space distance — with this weighting we can exclude cases where another object was briefly moving between the user and the actually tracked object. The process of connecting one local maximum to the next closest one is a version of \emph{dynamic fringe-saving A*}-search [@sun2009] on a grid, where all rays get extended the the maximum length in the whole hedgehog along the X axis, and time flows along the Y axis. 
 
-\begin{marginfigure}[-1cm]
+\begin{figure*}
     \includegraphics{hedgehog-with-maxima.png}
-    \caption{The same hedgehog with local maxima marked. On the X axis, volume intensity along a single ray is shown, on the Y axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
-\end{marginfigure}
+    \caption{The same hedgehog with local maxima marked. On the Y axis, volume intensity along a single ray is shown, on the X axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
+\end{figure*}
 
 A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} and the algorithm itself is summarised in \cref{alg:T2T}.
 
@@ -239,6 +241,13 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
 
 ## Preliminary Results
 
+\begin{figure}
+    \includegraphics{t2t-track.png}
+    \caption{A cell track created with track2track for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
+\end{figure}
+
+Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See \cref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
+
 \begin{marginfigure}
     \begin{center}
     \qrcode[height=3cm]{https://ulrik.is/thesising/supplement/Track2TrackPlatynereis.mp4}
@@ -247,12 +256,6 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
     Scan this QR code to go to a video showing tracking of a cell via \emph{track2track} in early \emph{Platynereis} development. For a list of supplementary videos see \href{https://ulrik.is/writing/a-thesis}{https://ulrik.is/writing/a-thesis}.
 \end{marginfigure}
 
-\begin{figure}
-    \includegraphics{t2t-track.png}
-    \caption{A cell track created with track2track for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
-\end{figure}
-
-Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See \cref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
 
 ## Discussion and Future Work
 

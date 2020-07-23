@@ -10,17 +10,15 @@
        
         \vspace*{1cm}
         
-       \large{ \textbf{ \uppercase{A Modular and Open-Source Framework for Virtual Reality Visualisation and Interaction in Bioimaging}}}
+       {\Huge A Modular and Open-Source Framework for Virtual Reality Visualisation and Interaction in Bioimaging}
         
         \vspace{0.5cm}
-        
-        \vspace{1.0cm}
  
         A thesis submitted to attain the degree of\\
         \large{\textsc{Doctor rerum naturalium}}\\ 
         (Dr. rer. nat.)
         
-        \vspace{0.8cm}        
+        \vspace{0.5cm}        
          
         presented by\\        
         \textbf{Ulrik Günther}
@@ -28,7 +26,7 @@
        \vspace{0.8cm}    
         \textit{Diplom-Physiker, Technische Universit{\"a}t Dresden}       
        
-       \vspace{0.8cm}          
+       \vspace{0.5cm}          
         born on 19th May, 1987 in Dresden, Germany
                      
          \vspace{1.2cm}

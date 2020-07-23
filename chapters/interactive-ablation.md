@@ -100,11 +100,6 @@ We abandoned browser-based prototyping after this first iteration, as loading ti
 
 ## Second Prototype
 
-\begin{figure}
-    \includegraphics{vr_ablation_demo.png}
-    \caption{Screenshot of the second virtual reality-powered laser ablation prototype. In the prototype, we show the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. The task of the user is to draw in cuts using VR controllers. See text for a full description. Dataset courtesy of Loïc Royer (MPI-CBG/CZI).\label{fig:VRLaserAblationDemo}}
-\end{figure}
-
 The software for the second prototype was developed with our visualisation framework _scenery_, described in detail in [scenery — Democratising VR/AR Visualisation for Systems Biology]. We switched away from browser-based prototyping, as the amounts of volumetric data required to be handled in the demo are too large for browser-based software, and because _scenery_ is an ideal toolkit for such prototype, due to its support for large volumetric data and VR devices. We choose a VR setup using an HTC Vive HMD with two controllers. The HTC Vive VR package is state-of-the-art at the time of writing, provides high-resolution displays for both eyes and low-latency, hand-held controllers. In addition, the controllers can be augmented with additional devices, tracked by a small puck that can be attached to arbitrary objects, or even body parts for full-body tracking. We did however only use the hand-held controllers for this prototype.
 
 ### Description of study
@@ -150,6 +145,11 @@ After the study, the users were asked about the following aspects:
 For standardised evaluation, we choose NASA-TLX and SSQ, as they perfectly match our application setting, do not interfere with the study process itself, and have been widely used and validated. Newer methods to assess motion sickness in real or virtual environments, such as [@keshavarz2011] have not been used, as they have been designed to assess motion sickness during the course of the study, which would have caused interference with the tasks the user were asked to perform.
 
 After filling out our questionnaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the follow-up interview. 
+
+\begin{figure}
+    \includegraphics{vr_ablation_demo.png}
+    \caption{Screenshot of the second virtual reality-powered laser ablation prototype. In the prototype, we show the mitotic spindle apparatus in a pre-recorded dataset showing a \emph{C. elegans} embryo undergoing mitosis. The tube-like objects in the center of the image are the condensing chromosomes in the cell nucleus, in the process of being separated by the mitotic spindle. The task of the user is to draw in cuts using VR controllers. See text for a full description. Dataset courtesy of Loïc Royer (MPI-CBG/CZI).\label{fig:VRLaserAblationDemo}}
+\end{figure}
 
 
 ### Results — General Questions

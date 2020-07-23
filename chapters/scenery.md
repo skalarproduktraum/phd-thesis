@@ -1,4 +1,4 @@
-# scenery — Democratising VR/AR for Systems Biology
+# scenery — VR/AR for Systems Biology
 
 \alreadypublished{The work presented in this part has been partially published in:}{\textbf{Günther, U.}, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. \emph{IEEE VIS}, 2019 (accepted). \href{https://arxiv.org/abs/1906.06726}{arXiv preprint 1906.06726}.}
     
@@ -180,3 +180,9 @@ At the outermost architectural layer, the scenery framework consists of seven ma
 The construction and interplay of all the components is handled by the class `SceneryBase`, which a user can directly subclass to create own applications.
 
 In the next chapters, we are going to introduce the most important subsystems of scenery, namely those for rendering, input handling and integration of external hardware, and for distributed rendering. These chapters are followed by a brief description of the remaining subsystems in scenery. We conclude the description of scenery with [Future Development Directions]. 
+
+## Software Availability
+
+scenery is available as free and open-source software under the LGPL 3.0 license at [github.com/scenerygraphics/scenery](https://github.com/scenerygraphics/scenery).
+
+
