@@ -183,7 +183,7 @@ These types of cells can now be tuned to a multitude of properties: Some respond
 ## Beyond the Visual Cortex
 
  Beyond the visual cortex, further processing of visual signals is done in areas called extrastriate cortical areas. Neurons in these areas are responsible for, e.g., motion tracking. Some of these areas are responsible for _visiomotor integration_, the derivation of motor signal from visual stimuli. We briefly want to discuss how the saccades, smooth pursuits, and the VOR/OKR are elicited by the visual system and the motor system [@Prsa:2016Cerebellum; @Cullen:2016Visuomotor]:
- 
+
 For _saccades_, both the amplitude and direction are controlled by the superior colliculus, which contains a neuronal map in terms of amplitude and direction. The neuronal inputs to this map stem from a wide population of neurons. The delay to saccade onset is about 100ms.
 
 In the case of _smooth pursuits_, the eye movements are controlled by an interplay of neurons in the visual cortex, the brainstem, and the cerebellum. Cerebellar neurons in the floccular lobe and the vermis project to the motoneurons of the eye muscles. In addition, extra-visual signals, e.g., from anticipation of movement, are integrated into the process. While the cerebellum does not directly execute movements, it provides information to motoneurons and is constantly re-calibrated [@Cullen:2016Visuomotor]. The interplay of these systems allows accurate tracking of objects with speeds of more than 50º/s, starting only 100ms after motion onset. However, if the target's velocity changes direction frequently, this performance degrades. 
@@ -226,7 +226,7 @@ Adaptive sampling and by that, data reduction is done very efficiently already b
 
 ### Object tracking with support of the visual system
 
-A task often encountered in image-based developmental and systems biology is the tracking of objects in volumetric data. One example is to identify cells in consecutive volumetric images that correspond to each other. Another example is the tracing of neurons from large still images, to ultimate generate a connectome — a representation of which neuron connects to which — in an effort to identify functional connections and correlations (see e.g. [@Swanson:2016ht] for a review). In the chapter [track2track: Eye Tracking for Cell Tracking] for a prototype of how to use smooth pursuit eye movements for cell tracking. Solving such tracking problems via eye tracking further requires robust eye tracking algorithms, a topic we also briefly touch in that chapter.
+A task often encountered in image-based developmental and systems biology is the tracking of objects in volumetric data. One example is to identify cells in consecutive volumetric images that correspond to each other. Another example is the tracing of neurons from large still images, to ultimate generate a connectome — a representation of which neuron connects to which — in an effort to identify functional connections and correlations (see e.g. [@Swanson:2016ht] for a review). In the chapter [Bionic Tracking: Using Eye Tracking for Cell Tracking] for a prototype of how to use smooth pursuit eye movements for cell tracking. Solving such tracking problems via eye tracking further requires robust eye tracking algorithms, a topic we also briefly touch in that chapter.
 
 
 ### Optimal Viewpoint Determination by Modelling Visual Attention

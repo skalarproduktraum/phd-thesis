@@ -1,6 +1,6 @@
 # scenery — VR/AR for Systems Biology
 
-\alreadypublished{The work presented in this part has been partially published in:}{\textbf{Günther, U.}, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. \emph{IEEE VIS}, 2019 (accepted). \href{https://arxiv.org/abs/1906.06726}{arXiv preprint 1906.06726}.}
+\alreadypublished{The work presented in this part has been partially published in:}{\textbf{Günther, U.}, Pietzsch, T., Gupta, A., Harrington, K.I.S., Tomancak, P., Gumhold, S., and Sbalzarini, I.F.: scenery: Flexible Virtual Reality Visualization on the Java VM. \emph{IEEE VIS}, Vancouver, 2019. \href{https://arxiv.org/abs/1906.06726}{arXiv preprint 1906.06726}, \href{https://doi.org/10.1109/VISUAL.2019.8933605}{DOI 10.1109/VISUAL.2019.8933605}.}
     
 In the chapters before, we have highlighted the needs of systems biology for flexible ways of harnessing human-computer interaction, high-fidelity, customisable visualisations, and reproducibility. 
 
@@ -63,7 +63,21 @@ In light of the needs we have identified in the previous section, we have added 
 
 ## State of the Art
 
-The following table shows a comparison of scenery with other state-of-the-art software packages in terms of our design goals.
+Table \ref{tbl:SceneryComparison} shows a comparison of scenery with other state-of-the-art software packages in terms of our design goals.
+
+We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes closest. _VTK_ is widely used and stable, and actually provides wrapper code for use from the Java VM. The wrappers are, however, difficult to build and maintain. VTK also does not offer straightforward modifications of the rendering code. VTK's rendering routines have been updated recently to use OpenGL 2.1 [@Hanwell:2015iv], but that OpenGL version does still enable the use of modern technologies like compute shaders to fully exploit of current GPUs.
+
+The CAVE development libraries _Vizard_ and _CAVElib_ offer out-of-the-box virtual reality support, but are not able to render volumetric data, nor are they extensible enough to add such functionality as a plugin. They also do not integrate with the Fiji ecosystem and the Java VM and are closed-source software, with significant license costs for all users. 
+
+The game engines _Unity_ and _Unreal_ in turn offer a wide variety of plugin-based extensions, albeit most of them are neither free nor open-source software. Both can be extended enough to facilitate volume rendering, but out-of-core volume rendering has not been shown yet. Both also support virtual reality and distributed rendering, although distributed rendering is an experimental feature at the time of writing. They also do not offer integration into the Fiji ecosystem or the Java VM.
+
+_Vaa3D_ and it's extension, _TeraFly_, does offer plugin-based extensibility, rendering of volumetric data — even out of core — but falls short on the virtual reality and distributed rendering support. Vaa3D also does not offer Fiji/Java VM integration, although there exists a Fiji plugin that can import Vaa3D data.
+
+The commercial big data microscopy packages, _Amira_, _Arivis_, and _Imaris_ all offer similar feature sets, with support for out-of-core volume rendering, mesh data support, even virtual reality. With the exception of Imaris, they use older graphics APIs than DirectX12/Vulkan or OpenGL 4.x and do not support distributed rendering setups. Imaris also offers Fiji integration, which the other two do not. However, non of them are open-source software and they do not support changes to their rendering routines.
+
+_Zeiss ZEN_ and is Zeiss' default microscopy acquisition software. It supports volumetric data and rendering of it, although not out-of-core. Since recently, ZEN also offers plugin-based extensibility, but is not open-source software and does not integrate with Fiji or the Java VM.
+
+Finally, _BigDataViewer_ has introduced an open-source architecture for access to large image datasets that do not fit into the main memory of a given machine, and are loaded on-the-fly from hard drives or even over the network. BigDataViewer supports by-slice rendering of volumetric data (thereby excluding VR rendering), but no meshes, and is tightly integrated with Fiji. We are going to use BigDataViewer's technology to implement out-of-core volume rendering in scenery.
 
 | Software | Type | \rotatebox[origin=c]{90}{Free/open-source} | \rotatebox[origin=c]{90}{Volumes} | \rotatebox[origin=c]{90}{Out-of-core rendering}  | \rotatebox[origin=c]{90}{Meshes} | \rotatebox[origin=c]{90}{Distr. Rendering} | \rotatebox[origin=c]{90}{VR} | \rotatebox[origin=c]{90}{Extensible} | \rotatebox[origin=c]{90}{Cross-platform} | \rotatebox[origin=c]{90}{OGL 4.1/D3D12/Vulkan} | \rotatebox[origin=c]{90}{Fiji integration} |
 |:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|:--|
@@ -82,20 +96,6 @@ The following table shows a comparison of scenery with other state-of-the-art so
 | _scenery_ | Scivis engine | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet | \textbullet |
 
 Table: scenery compared to other software packages. {#tbl:SceneryComparison}
-
-We find that none of the existing software packages satisfy our design goals fully, though _VTK_ comes closest. _VTK_ is widely used and stable, and actually provides wrapper code for use from the Java VM. The wrappers are, however, difficult to build and maintain. VTK also does not offer straightforward modifications of the rendering code. VTK's rendering routines have been updated recently to use OpenGL 2.1 [@Hanwell:2015iv], but that OpenGL version does still enable the use of modern technologies like compute shaders to fully exploit of current GPUs.
-
-The CAVE development libraries _Vizard_ and _CAVElib_ offer out-of-the-box virtual reality support, but are not able to render volumetric data, nor are they extensible enough to add such functionality as a plugin. They also do not integrate with the Fiji ecosystem and the Java VM and are closed-source software, with significant license costs for all users. 
-
-The game engines _Unity_ and _Unreal_ in turn offer a wide variety of plugin-based extensions, albeit most of them are neither free nor open-source software. Both can be extended enough to facilitate volume rendering, but out-of-core volume rendering has not been shown yet. Both also support virtual reality and distributed rendering, although distributed rendering is an experimental feature at the time of writing. They also do not offer integration into the Fiji ecosystem or the Java VM.
-
-_Vaa3D_ and it's extension, _TeraFly_, does offer plugin-based extensibility, rendering of volumetric data — even out of core — but falls short on the virtual reality and distributed rendering support. Vaa3D also does not offer Fiji/Java VM integration, although there exists a Fiji plugin that can import Vaa3D data.
-
-The commercial big data microscopy packages, _Amira_, _Arivis_, and _Imaris_ all offer similar feature sets, with support for out-of-core volume rendering, mesh data support, even virtual reality. With the exception of Imaris, they use older graphics APIs than DirectX12/Vulkan or OpenGL 4.x and do not support distributed rendering setups. Imaris also offers Fiji integration, which the other two do not. However, non of them are open-source software and they do not support changes to their rendering routines.
-
-_Zeiss ZEN_ and is Zeiss' default microscopy acquisition software. It supports volumetric data and rendering of it, although not out-of-core. Since recently, ZEN also offers plugin-based extensibility, but is not open-source software and does not integrate with Fiji or the Java VM.
-
-Finally, _BigDataViewer_ has introduced an open-source architecture for access to large image datasets that do not fit into the main memory of a given machine, and are loaded on-the-fly from hard drives or even over the network. BigDataViewer supports by-slice rendering of volumetric data (thereby excluding VR rendering), but no meshes, and is tightly integrated with Fiji. We are going to use BigDataViewer's technology to implement out-of-core volume rendering in scenery.
 
 Of the mentioned software packages, Amira, Arivis, Imaris, ZEN, Vizard, and CAVELib only run on a subset of our list of target platforms (Windows, macOS, Linux).
 

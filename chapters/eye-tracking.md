@@ -159,7 +159,7 @@ In this chapter, we have introduced the various modalities that can be used for 
 
 ### Gaze-based object tracking
 
-At the end of [Introduction to Visual Processing], in [Object tracking with support of the visual system] we have already introduced the idea to utilise the power of the human visual system to follow objects for the purpose of tracking them. Such a system would fall into the category of gaze-contingent interaction. Furthermore, it would go beyond what is proposed in e.g. [@bruder2019], in the sense that it would need to handle multi-timepoint images on-the-fly, and combine it with an extension of the Radial Pursuit technique presented in [@piumsomboon2017]. See [track2track: Eye Tracking for Cell Tracking] for details.
+At the end of [Introduction to Visual Processing], in [Object tracking with support of the visual system] we have already introduced the idea to utilise the power of the human visual system to follow objects for the purpose of tracking them. Such a system would fall into the category of gaze-contingent interaction. Furthermore, it would go beyond what is proposed in e.g. [@bruder2019], in the sense that it would need to handle multi-timepoint images on-the-fly, and combine it with an extension of the Radial Pursuit technique presented in [@piumsomboon2017]. See [Bionic Tracking: Using Eye Tracking for Cell Tracking] for details.
 
 ### Robust Pupil Segmentation
 
