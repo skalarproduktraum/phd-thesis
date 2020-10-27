@@ -144,7 +144,7 @@ After the study, the users were asked about the following aspects:
 
 For standardised evaluation, we choose NASA-TLX and SSQ, as they perfectly match our application setting, do not interfere with the study process itself, and have been widely used and validated. Newer methods to assess motion sickness in real or virtual environments, such as [@keshavarz2011] have not been used, as they have been designed to assess motion sickness during the course of the study, which would have caused interference with the tasks the user were asked to perform.
 
-After filling out our questionnaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the follow-up interview. 
+After filling out our questionnaire, the users were asked to participate in an additional, voluntary interview, to ask detailed questions about their experience with the prototype. All of the users agreed to participate in the follow-up interview. The questionnaire used is available in Appendix \ref{app:QuestionnaireVRAblation}.
 
 \begin{figure}
     \includegraphics{vr_ablation_demo.png}

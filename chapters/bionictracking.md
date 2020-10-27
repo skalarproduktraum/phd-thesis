@@ -254,7 +254,7 @@ interfaces so far (5-point scale, 0 means no experience, and 4 daily use: mean 0
 
 ### Procedure
 
-Before starting the experiment, the users were informed of goals and potential risks of the study (e.g. simulator sickness). In a questionnaire that was split into a pre-experiment and a post-experiment part, the users were asked about the presence of any motor or visual impairments, previous VR experience, and their current wellbeing. 
+Before starting the experiment, the users were informed of goals and potential risks of the study (e.g. simulator sickness). In a questionnaire that was split into a pre-experiment and a post-experiment part, the users were asked about the presence of any motor or visual impairments, previous VR experience, and their current wellbeing. The full questionnaire is available in Appendix \ref{app:QuestionnaireBionicTracking}.
 
 The users then got a quick introduction into the software and into VR environments in general, if necessary. After the fit of the headset was ensured, the eye trackers were then calibrated. The users were then asked to create as many tracks as they liked and are comfortable with. If any of the created tracks did not satisfy them, that track could be deleted.
 
