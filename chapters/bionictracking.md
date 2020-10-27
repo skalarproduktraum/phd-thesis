@@ -1,6 +1,6 @@
 # Bionic Tracking: Using Eye Tracking for Cell Tracking
 
-\alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and has been submitted to BioImageComputing at ECCV 2020:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{Bionic Tracking}: Using Eye Tracking to Track Biological Cells in Virtual Reality. \href{https://arxiv.org/abs/2005.00387}{arXiv preprint 2005.00387}.}
+\alreadypublished{The work presented in this chapter has been done in collaboration with Kyle I.S. Harrington (University of Idaho, Moscow) and Raimund Dachselt (TU Dresden), and has been published as:}{\textbf{Günther, U.}, Harrington, K.I.S., Dachselt, R., Sbalzarini, I.F.: \emph{Bionic Tracking}: Using Eye Tracking to Track Biological Cells in Virtual Reality. \emph{BioImageComputing at ECCV 2020}. \href{https://arxiv.org/abs/2005.00387}{arXiv preprint 2005.00387}.}
 
 We are going to detail the _Bionic Tracking_ strategy for augmenting biological tracking tasks for 3D data over time with eye gaze data in order to make them easier and faster to do. Bionic Tracking utilises a combination of virtual reality and eye tracking in order to do so.
 
@@ -195,7 +195,7 @@ To reliably connect cells together over several timepoints, we use an incrementa
 
 \begin{figure}
     \includegraphics{t2t-algorithm.pdf}
-    \caption{A graphical illustration of the incremental graph-search algorithm used to extract tracks from a hedgehog. Time runs along the X axis. $s_1$ is the initial seed point where to start tracking. The algorithm is currently at $s_3$, determining how to proceed to $s_4$. In this case, the middle track with $d=1$ wins, as it is the shortest world-space distance away from the current point.\label{fig:T2TAlgorithm}}
+    \caption{A graphical illustration of the incremental graph-search algorithm used to extract tracks from a hedgehog. Time runs along the X axis. $\mathrm{spine}_1$ is the initial seed point where to start tracking. The algorithm is currently at $\mathrm{spine}_4$, determining how to proceed to $\mathrm{spine}_5$, which has multiple possible cell detections. In this case, the middle track with $d=1$ wins, as it is the shortest world-space distance away from the current point.\label{fig:T2TAlgorithm}}
 \end{figure}
 
 For each timepoint, we have collected a variable number of spines, whose count varies between 0 and 60 (with an average of 16) — zero spines might be obtained in case that the user blinks and no detection was possible. To connect the initial seed point with the other correct spines correctly, we step through the list of spines one-by-one, performing the following steps:
@@ -203,10 +203,10 @@ For each timepoint, we have collected a variable number of spines, whose count v
 1. Advance to the next spine,
 2. connect the currently active point from the previous spine with the local maximum on current next spine that has the lowest world-space distance — with this weighting we can exclude cases where another object was briefly moving between the user and the actually tracked object. The process of connecting one local maximum to the next closest one is a version of \emph{dynamic fringe-saving A*}-search [@sun2009] on a grid, where all rays get extended the the maximum length in the whole hedgehog along the X axis, and time flows along the Y axis. 
 
-\begin{figure*}
+\begin{marginfigure}
     \includegraphics{hedgehog-with-maxima.png}
     \caption{The same hedgehog with local maxima marked. On the Y axis, volume intensity along a single ray is shown, on the X axis, time runs from top to bottom. Local maxima are shown in red. See text for details. \label{fig:labelledHedgehog}}
-\end{figure*}
+\end{marginfigure}
 
 A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} and the algorithm itself is summarised in \cref{alg:T2T}.
 
@@ -239,14 +239,59 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
 \end{algorithm}
 
 
-## Preliminary Results
+## User Study
 
 \begin{figure}
-    \includegraphics{t2t-track.png}
-    \caption{A cell track created with Bionic Tracking for a \emph{Platynereis} embryo. The track was created by the user in about one minute. See the supplementary video for the creation of the track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
+    \includegraphics{52tracks.png}
+    \caption{52 cell tracks created by the author for a 101 timepoint time-series dataset of a\emph{Platynereis} embryo. The tracks were created in about 40 minutes. See the supplementary video for the creation of a single track, and a debug visualisation showing intersections with the nucleus.\label{fig:T2TReconstructedTrack}}
 \end{figure}
 
-Preliminary results show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. See \cref{fig:T2TReconstructedTrack} for an example track reconstruction. In addition to being able to reconstruct cell tracks, we find promising speedup of up to a factor of 10 compared to manually tracking cells in _Platynereis_ embryos.
+In order to evaluate the performance and usability of the Bionic Tracking method, we have conducted a user study with seven experts in either manual or algorithmic cell tracking, or both (median age 36, s.d. 7.23, 1 female, 6 male). In the study, the users were given the task to track cells in the _Platynereis_ dataset also featured in \cref{fig:T2TReconstructedTrack}. One of the participants was already familiar with the dataset. The user study was conducted on a Dell Precision Tower 7910 workstation (Intel Xeon E5-2630v3 CPU, 8 cores, 64 GB RAM, GeForce GTX 1080Ti GPU) running Windows 10, build 1909, with a HTC Vive VR headset equipped with eye trackers by Pupil Labs.
+
+The users who participated in the study had no or very limited experience with using VR
+interfaces so far (5-point scale, 0 means no experience, and 4 daily use: mean 0.43, s.d. 0.53), only one of them had previously used an eye-tracking-based user interface. (same 5-point scale: mean 0.14, s.d. 0.37).
+
+
+### Procedure
+
+Before starting the experiment, the users were informed of goals and potential risks of the study (e.g. simulator sickness). In a questionnaire that was split into a pre-experiment and a post-experiment part, the users were asked about the presence of any motor or visual impairments, previous VR experience, and their current wellbeing. 
+
+The users then got a quick introduction into the software and into VR environments in general, if necessary. After the fit of the headset was ensured, the eye trackers were then calibrated. The users were then asked to create as many tracks as they liked and are comfortable with. If any of the created tracks did not satisfy them, that track could be deleted.
+
+After the experiment was done, the post-experiment part was filled out, in this part users had to judge the usability and suitability of the software, were asked again for their wellbeing, and in addition had to rate their experience with both the NASA TLX questionnaire [@Hart:1988tlx] and the Simulator Sickness Questionnaire (SSQ, [@kennedy1993]). The questions about the usability and suitability of the software were based on both the System Usability Score [@Brooke:1996SUS] and the User Experience Questionnaire [@Laugwitz:2008Construction].
+
+As final element of the study, a free-form interview was conducted in which the users could comment about the software, and suggest improvements.
+
+### Results
+
+In the experiment, users created up to 32 cell tracks in 10 to 29 minutes.
+
+The average SSQ score was $25.6 \pm 29.8$ s.d. (median $14.9$), approximately on par with other VR applications that have been evaluated using SSQ [@Singla:2017Measuring]. For the NASA TLX score, we used all categories (mental demand, physical demand, temporal demand, success, effort, insecurity) on a 7-point scale where 0=Very Low and 6=Very High for the _demand metrics_, and 0=Perfect, 6=Failure for the _performance metrics_. Users reported medium scores for mental demand ($2.71 \pm 1.70$) and for effort ($2.86 \pm 1.68$), while reporting low scores for physical demand ($1.86 \pm 1.95$), temporal demand ($1.57 \pm 0.98$), and insecurity ($1.14 \pm 1.68$). Most importantly, the participants did judge themselves to have been rather successful with the cell tracking tasks ($1.71 \pm 0.75$).
+
+The users explicly expressed interest in using Bionic Tracking for their own tracking tasks ($3.43 \pm 0.53$; 5-point scale here and for the following questions: 0=No agreement, 4=Full agreement). The tracks created were judged to look reasonable ($2.57 \pm 0.98$), and Bionic Tracking was deemed to provide an improvement over their current manual tracking methods ($3.14 \pm 0.90$). Furthermore, the users stated that they could create new cell tracks not only with reasonable confidence ($2.86 \pm 0.69$), but much  faster ($3.29 \pm 0.76$). Users also found the software to be relatively intuitive ($2.43 \pm 0.98$) and did not need long to learn how to use it ($0.59 \pm 0.79$). Especially the ergonomics of the method were remarked about in the follow-up interviews:
+
+\begin{displayquote}
+{\small "It was so relaxing, actually, looking at this [cell] and just looking." (P2, the user remarked further after the interview that the technique might prevent carpal tunnel issues often encountered when tracking using mouse and keyboard.)}
+\end{displayquote}
+
+\begin{displayquote}
+{\small "I figured this could be like a super quick way to generate the [cell] tracks." (P7)} 
+\end{displayquote}
+
+\begin{figure}
+    \includegraphics[width=\textwidth]{study-answers.pdf}
+    \caption{Results of usability and acceptance question from the user study. Note that the questions are formulated both positively and negatively.\label{fig:BionicTrackingStudyAnswers}}
+\end{figure}
+
+The results from all questions related to software usability and acceptance are summarized in \cref{fig:BionicTrackingStudyAnswers}.
+
+We found two more interesting things in the user study: 
+
+First, we saw that users adjust playback speed more often than image size in VR. After exploring different settings – users could choose speeds from 1-20 timepoints/second – all users independently settled on a playback speed of 4-5 timepoints/second for tracking, corresponding to 200-250 ms of viewing time per timepoint, which coincides with the onset delay of smooth-pursuit eye movements (see [Eye movements], and [@Duchowski:2017ii]). The chosen visual size of the dataset was also usually chosen to be approximately human-scale (which was also the default setting, but experimented with by the users).
+
+Second, despite having no or limited previous VR or eye tracking experience, the users did not at all feel irritated by the environment ($0.00 \pm 0.00$), nor by the use of eye tracking ($0.29 \pm 0.49$).
+
+Our preliminary results and user study show that cell tracks can be reliably reconstructed by "just looking at them", using eye, head and body movements that are used in everyday life. Importantly, the users estimated that the Bionic Tracking method would yield a speedup of a factor 2 to 10 ($3.33 \pm 6.25$) compared to tracking cells with a 2D interface.
 
 \begin{marginfigure}
     \begin{center}
@@ -259,13 +304,13 @@ Preliminary results show that cell tracks can be reliably reconstructed by "just
 
 ## Discussion and Future Work
 
-In this chapter we have introduced the _Bionic Tracking_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we can achieve an order of magnitude speedup compared to manually tracking cells. 
+In this chapter we have introduced the _Bionic Tracking_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we might be able to achieve approximately an order of magnitude speedup compared to manually tracking cells. 
 
-Before we can bring this strategy into actual use for biologists, we need to do three more things: 
+Before we can bring this strategy into actual use for biologists, we need to do two more things: 
 
-* First, perform a user test to figure out usability issues and improvements. 
-* Second, implement interactions that allow to track or proofread lineage trees. Such an interaction could for example include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division. 
-* Third, Bionic Tracking has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets.
+* First, implement interactions that allow to track or proofread lineage trees. Such an interaction could for example include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division, and
+* Second, Bionic Tracking has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets (see e.g. [CellTrackingChallenge](https://celltrackingchallenge.net), [@Ulman:2017objective]).
+
 
 We foresee the limitation that for tracking large lineages entirely, Bionic Tracking will not work, simply for combinatorial reasons. It can however be used to track early-stage embryos where cells may have less-defined shapes, or it may provide constraints to training data to machine learning algorithms. Furthermore, Bionic Tracking could be used in a divide-and-conquer manner in conjunction with an automatic tracking algorithm that provides uncertainty scores, and only be applied in regions where the algorithm cannot cross a given uncertainty threshold. We could further increase the usefulness of Bionic Tracking by not just searching for local maxima along rays, but actually extract the centroids of cells.
 
