@@ -4,6 +4,7 @@ PREAMBLE=tex/preamble.tex
 CSL=csl/chicago-author-date.csl
 TEMPLATE=tex/thesis-template.latex
 OUTPUTFORMAT=tex
+BIBLIOGRAPHY=thesis.bib
 
 all: thesis.$(OUTPUTFORMAT)
 
