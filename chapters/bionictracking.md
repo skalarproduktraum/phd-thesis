@@ -249,14 +249,14 @@ A graphical representation of the algorithm is given in \cref{fig:T2TAlgorithm} 
 In order to evaluate the performance and usability of the Bionic Tracking method, we have conducted a user study with seven experts in either manual or algorithmic cell tracking, or both (median age 36, s.d. 7.23, 1 female, 6 male). In the study, the users were given the task to track cells in the _Platynereis_ dataset also featured in \cref{fig:T2TReconstructedTrack}. One of the participants was already familiar with the dataset. The user study was conducted on a Dell Precision Tower 7910 workstation (Intel Xeon E5-2630v3 CPU, 8 cores, 64 GB RAM, GeForce GTX 1080Ti GPU) running Windows 10, build 1909, with a HTC Vive VR headset equipped with eye trackers by Pupil Labs.
 
 The users who participated in the study had no or very limited experience with using VR
-interfaces so far (5-point scale, 0 means no experience, and 4 daily use: mean 0.43, s.d. 0.53), only one of them had previously used an eye-tracking-based user interface. (same 5-point scale: mean 0.14, s.d. 0.37).
+interfaces up to this point (5-point scale, 0 means no experience, and 4 daily use: mean 0.43, s.d. 0.53), only one of them had previously used an eye-tracking-based user interface. (same 5-point scale: mean 0.14, s.d. 0.37).
 
 
 ### Procedure
 
 Before starting the experiment, the users were informed of goals and potential risks of the study (e.g. simulator sickness). In a questionnaire that was split into a pre-experiment and a post-experiment part, the users were asked about the presence of any motor or visual impairments, previous VR experience, and their current wellbeing. The full questionnaire is available in Appendix \ref{app:QuestionnaireBionicTracking}.
 
-The users then got a quick introduction into the software and into VR environments in general, if necessary. After the fit of the headset was ensured, the eye trackers were then calibrated. The users were then asked to create as many tracks as they liked and are comfortable with. If any of the created tracks did not satisfy them, that track could be deleted.
+The users then got a quick introduction into the software and into VR environments in general, if necessary. After the fit of the headset was ensured, the eye trackers were calibrated. The users were then asked to create as many tracks as they liked and are comfortable with. If any of the created tracks did not satisfy them, the offending track could be deleted.
 
 After the experiment was done, the post-experiment part was filled out, in this part users had to judge the usability and suitability of the software, were asked again for their wellbeing, and in addition had to rate their experience with both the NASA TLX questionnaire [@Hart:1988tlx] and the Simulator Sickness Questionnaire (SSQ, [@kennedy1993]). The questions about the usability and suitability of the software were based on both the System Usability Score [@Brooke:1996SUS] and the User Experience Questionnaire [@Laugwitz:2008Construction].
 
@@ -278,14 +278,14 @@ The users explicly expressed interest in using Bionic Tracking for their own tra
 {\small "I figured this could be like a super quick way to generate the [cell] tracks." (P7)} 
 \end{displayquote}
 
-\begin{figure}
+\begin{figure}[t]
     \includegraphics[width=\textwidth]{study-answers.pdf}
     \caption{Results of usability and acceptance question from the user study. Note that the questions are formulated both positively and negatively.\label{fig:BionicTrackingStudyAnswers}}
 \end{figure}
 
 The results from all questions related to software usability and acceptance are summarized in \cref{fig:BionicTrackingStudyAnswers}.
 
-We found two more interesting things in the user study: 
+We made two more interesting observations in the user study: 
 
 First, we saw that users adjust playback speed more often than image size in VR. After exploring different settings – users could choose speeds from 1-20 timepoints/second – all users independently settled on a playback speed of 4-5 timepoints/second for tracking, corresponding to 200-250 ms of viewing time per timepoint, which coincides with the onset delay of smooth-pursuit eye movements (see [Eye movements], and [@Duchowski:2017ii]). The chosen visual size of the dataset was also usually chosen to be approximately human-scale (which was also the default setting, but experimented with by the users).
 
@@ -304,9 +304,7 @@ Our preliminary results and user study show that cell tracks can be reliably rec
 
 ## Discussion and Future Work
 
-In this chapter we have introduced the _Bionic Tracking_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we might be able to achieve approximately an order of magnitude speedup compared to manually tracking cells. 
-
-Before we can bring this strategy into actual use for biologists, we need to do two more things: 
+In this chapter we have introduced the _Bionic Tracking_ strategy for tracking cells in 3D microscopy images in an effort to speed up manual tracking and proofreading and developed a proof of concept. Preliminary results show that we might be able to achieve approximately an order of magnitude speedup compared to manually tracking cells. Before we can bring this strategy into actual use for biologists, we need to do two more things: 
 
 * First, implement interactions that allow to track or proofread lineage trees. Such an interaction could for example include the user pressing a certain button whenever a cell division occurs, and then track until the next cell division, and
 * Second, Bionic Tracking has to benchmarked against other automatic solutions, e.g. on cell tracking challenge datasets (see e.g. [CellTrackingChallenge](https://celltrackingchallenge.net), [@Ulman:2017objective]).
