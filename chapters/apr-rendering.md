@@ -124,7 +124,7 @@ The algorithm for the pulling scheme is summarised in Algorithm \ref{alg:Pulling
 
 
 ​	
-	\caption{\textbf{The Pulling Scheme algorithm}. The Pulling Scheme efficiently computes the OVPC set $\mathcal{V}$ from the Local Particle Cell set $\mathcal{L}$ using a temporary pyramid mesh data structure. $\mathcal{C}(l)$ denotes all Particle Cells on level $l$.\label{alg:PullingScheme}} 
+​	\caption{\textbf{The Pulling Scheme algorithm}. The Pulling Scheme efficiently computes the OVPC set $\mathcal{V}$ from the Local Particle Cell set $\mathcal{L}$ using a temporary pyramid mesh data structure. $\mathcal{C}(l)$ denotes all Particle Cells on level $l$.\label{alg:PullingScheme}} 
 \end{algorithm}
 
 The Pulling Scheme has the following properties:
@@ -267,15 +267,17 @@ The algorithm for achieving this is relatively simple:
 Two example renderings resulting from this algorithm are shown in Figures \ref{fig:PixelVsAPR} and \ref{fig:TriboliumPixelVsAPR}, where they are compared with a maximum intensity projections from the same pixel-based dataset. Visually, there is no difference, although blocking artifacts on the largest, lowest resolution particle cell levels will appear when the contrast is exaggerated.
 
 \begin{algorithm}
+  %\SetKwSty{texttt}
+  \SetDataSty{texttt}
   \SetKwData{Image}{image}
-  \SetKwData{Presult}{$\hat{P}$}
+  \SetKwData{Presult}{$M$}
   \SetKwFunction{InterpolateIntensity}{InterpolateIntensity}
   \SetKwFunction{Blend}{blend}
-​	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
-​	\KwResult{Maximum projection of the APR, $\hat{P}$}
-​	\BlankLine
-​	
-	\Fn{max\_project\_apr($\mathcal{V}$, $\mathcal{P}$)}
+	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
+	\KwResult{Maximum projection of the APR, $M$}
+	\BlankLine
+	
+	\Fn{maxProjectAPR($\mathcal{V}$, $\mathcal{P}$)}
 	{
 		\For{$l_c = l_{max}:l_{min}$ }{
 	    	\Image$\leftarrow$ initialize as empty with dimensions $\Omega_{l_c}$
@@ -285,6 +287,7 @@ Two example renderings resulting from this algorithm are shown in Figures \ref{f
 	        	\Image$(y_p)$ $\leftarrow$ \InterpolateIntensity{$c_{i,l_c}$,$\mathcal{P}$}
 	    	}
 	    	
+
 	    	\tcc{Blend levels together, e.g. by max operation}
 	    	\Presult \leftarrow \Blend{\Presult, \Image}
 		}
@@ -307,6 +310,8 @@ In addition, the methodology we proposed in [Particle-based rendering in scenery
 \end{figure}
 
 \begin{algorithm}
+ %\SetKwSty{texttt}
+  \SetDataSty{texttt}
   \SetKwData{Image}{image}
   \SetKwData{Iresult}{$\hat{I}$}
 ​	\KwData{APR consisting of OVPC $\mathcal{V}$ and particle set $\mathcal{P}$}
