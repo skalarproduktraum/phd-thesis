@@ -86,10 +86,10 @@ abstract class Renderer : Hubable {
     abstract fun setRenderingQuality(quality: RenderConfigReader.RenderingQuality)
     abstract var pushMode: Boolean
     abstract val managesRenderLoop: Boolean
-
+    
     abstract var lastFrameTime: Float
     abstract var renderConfigFile: String
-
+    
     // more functions follow here
     ...
 }
@@ -157,19 +157,19 @@ renderpasses:
     type: geometry
     shaders:
       - "Default.vert.spv"
-      - "Default.frag.spv"
-    output: HDR
-  PostprocessHDR:
-    type: quad
-    shaders:
-      - "FullscreenQuad.vert.spv"
-      - "HDR.frag.spv"
-    inputs:
-      - HDR
-    output: Viewport
-    parameters:
-      Gamma: 1.7
-      Exposure: 1.5
+            - "Default.frag.spv"
+        output: HDR
+    PostprocessHDR:
+        type: quad
+        shaders:
+            - "FullscreenQuad.vert.spv"
+                  - "HDR.frag.spv"
+            inputs:
+                  - HDR
+                output: Viewport
+                parameters:
+                        Gamma: 1.7
+                        Exposure: 1.5
 \end{lstlisting}
 
 In the render config file, both _rendertargets_ and _renderpasses_ are defined. A _rendertarget_ consists of a framebuffer name, a framebuffer size, and a set of attachments of the framebuffer that can have different data types. A _renderpass_ consists of a pass name, a type -- geometry or quad (for postprocessing) --, a set of default shaders, and defined _inputs_ and _outputs_. The renderpass may also define a set of _shader parameters_, which are handed over to the shader via the `UBO` mechanism, and supports all the data types supported by `UBO`.
@@ -617,7 +617,28 @@ The renderer then proceeds with scene initialisation, initialising each `Node` i
 [^vbonote]: Vertex Buffer Objects are the buffers on the GPU that actually contain the vertices of a Node's geometry. In scenery, they are stored in a strided format, meaning that vertices and normals are not stored as `V1V2V3N1N2N3...`, but rather as `V1N1V2N2V3N3`, for improved cache locality.
 [^vaonote]: Vertex Array Objects describe which buffers a rendered object in OpenGL uses, and what the data layouts of these buffers are.
 
-### Rendering
+### Rendering loop with OpenGL
+
+The rendering loop in the OpenGL-based renderer in turn works as follows. In the  section about rendering with Vulkan, we will highlight the differences to OpenGL.
+
+1. Early exit conditions are checked, e.g. for renderer shutdown, or for switching to fullscreen rendering.
+
+2. UBOs are updated, and the existence of changes is recorded.
+
+3. For all nodes that are rendered in a geometry pass:
+
+   1. The Node is initialised if not seen before
+
+4. If push mode is active and no changes have been recorded, the loop will return now. If push mode is not active, command buffer re-recording will commence.
+
+5. For all render passes, draw commands are issued. Drawing proceeds in the following way:
+
+   * if blitted images from the output of the previous pass are required, they are blitted into the current rendertargets, either by copying (if source and target formats are compatible), or actual blit.
+
+   * _geometry pass_: viewport and blending parameters are set, and all nodes are iterated over, grouped by shader pipeline used in order to minimise state switches. Textures, custom shaders, and geometry are updated if necessary. With shader pipeline and vertex/instance buffers bound, the node is rendered.
+   * _quad/postprocessing_ pass: Viewport parameters are set, then the shader pipeline for the pass is bound, then a fullscreen quad is drawn using this pipeline.
+
+6. Images created in the viewport pass are submitted to a possibly-connected HMD, stored as screenshots, or submitted to the video encoder.
 
 ## Rendering with Vulkan
 
@@ -629,22 +650,21 @@ Compared to OpenGL, Vulkan provides much leaner, close-to-metal access to the GP
 
 Instead in Vulkan, a _validation layer_ provides guidance to adherence to the standard. While in OpenGL, all state and state changes are continuously checked for sanity, incurring a performance hit, Vulkan skips these checks, and outsources them to validation layers, that may be activated during startup, and usually only used during development or debugging. Compared to OpenGL error messages, Vulkan validation layers provide highly detailed error messages, thus enabling the developer to quickly pinpoint the source of a problem.
 
-When using Vulkan, the initialisation of the renderer proceeds in the following way:
+When using Vulkan, the initialisation of the renderer proceeds as follows:
 
 1. the presence of a virtual reality HMD is checked, and window dimensions set accordingly.
 2. The `RenderConfig` is parsed from a render config YAML file.
 3. The renderer checks whether the user has requested the activation of validation layers, and activates them if indicated.
 4. the renderer checks whether the output will be embedded in a `SceneryPanel`. If this is not the case, the renderer will request surface rendering extensions, and create a _Vulkan instance_[^instancenote], if not, the instance will be created without the extensions. Further extensions might be required by the presence of an HMD, e.g. for memory sharing.
 5. A `VulkanDevice`[^devicenote] is created, the renderer defaults to the first device found, but this can be overridden by the user.
-6. A device queue[^queuenote] is created.
+6. At least one device queue[^queuenote] is created. Multiple queues might be created for rendering, compute work, and data transfers, if supported by the selected `VulkanDevice`.
 7. A `SwapchainRecreator` is created. This object is responsible for all resources that are resolution-dependent, such as framebuffers and rendering surfaces. It also takes care of initialising the render passes defined by the `RenderConfig`, with the necessary framebuffers and attachments. The swapchain is be one of:
 	* `OpenGLSwapchain`: creates an OpenGL context and enables the Vulkan renderer to draw into that. Necessary for frame-locked rendering e.g. on CAVE systems.
 	* `HeadlessSwapchain`: creates a swapchain without any rendering surfaces, e.g. for server use.
-	* `FXSwapchain`: create a swapchain for rendering into a JavaFX panel. Employs permanently mapped buffers for bandwidth efficiency and inherits from `HeadlessSwapchain`.
+	* `SwingSwapchain`: create a swapchain for rendering into a Swing panel. Employs permanently mapped buffers and native surfaces for efficiency, and inherits from `VulkanSwapchain`.
 	* `VulkanSwapchain`: creates a regular, window-based swapchain with GLFW. This is the standard case.
 8. the default vertex descriptors[^vdnote] are created.
-9. descriptor pools are created.
-10. default descriptor set layouts and descriptor sets[^dslnote] are prepared.
+9. descriptor pools are created, from these, the default descriptor set layouts and descriptor sets[^dslnote] are prepared.
 11. a default set of textures is initialised to provide textures in case a `Node`'s textures cannot be found.
 12. a heartbeat timer is initialised to record GPU usage (only on Nvidia cards running on Windows) and record performance data.
 13. a dynamically-managed memory pool for `Node` geometry is allocated.
@@ -656,17 +676,36 @@ Note here that the Vulkan renderer does not perform explicit scene initialisatio
 [^queuenote]: Work, may it be rendering or compute work, is submitted to a _queue_ in Vulkan, and executed asynchronously by the GPU. A queue may be asked for work completion and can be waited on.
 [^vdnote]: _Vertex descriptors_ describe the vertex layout for rendering and are somewhat comparable to OpenGL's Vertex Array Objects.
 
-[^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer.
+[^dslnote]: _Descriptor set layouts_ describe the memory layout of UBOs and textures in a shader, while _descriptor sets_ contain their actual realisation, and link to a physical buffer, or texture.
 
-### Rendering
+### Rendering loop with Vulkan
+
+For comparison with the sketch of the OpenGL rendering loop above, we highlight differences to OpenGL with bold typeface here, and add an explanation of the particular difference right after that in italics.
+
+1. Early exit conditions are checked, e.g. for renderer shutdown, or for switching to fullscreen rendering.
+2. UBOs are updated, and the existence of changes is recorded.
+3. __Node data is updated, for all nodes that are rendered in a geometry pass__ (_in Vulkan, this is executed before iterating over all Nodes for rendering, such that the command buffers recorded there can be reused and do not contain geometry updates, etc., which are usually only executed once._):
+   1. The Node is initialised if not seen before,
+   2. geometry is updated if necessary,
+   3. textures are updated if necessary,
+   4. custom shaders are reloaded if necessary.
+4. If push mode is active and no changes have been recorded, the loop will return now. If push mode is not active, command buffer re-recording will commence.
+5. For all render passes, __except the viewport pass, command buffers are recorded __(_in Vulkan, work for the GPU is not directly executed as in OpenGL, but enqueued in command buffers instead. These can be reused later on for increased performance, as one does not need to iterate over scene contents again, if nothing changed in between._). For each pass, as many command buffers as there are swapchain images are prepared, such that multiple frames can be in-flight in parallel to ensure optimal GPU occupancy. Recording happens as follows:
+   1. __If the currently-recording command buffer is still in-flight, it will be waited on using a fence__ (_in Vulkan, synchronisation operations between CPU-GPU, or GPU-GPU, are more explicit than in OpenGL, giving the developer greater control over what happens when; here, we might need to wait for the command buffer to not overwrite its contents while still in use and thereby cause undefined state. The synchronisation here is done using a fence._).
+   2. The command buffer for the respective pass type is recorded:
+      * if blitted images from the output of the previous pass are required, they are blitted into the current rendertargets, either __by copying , or actual blit__ (_while OpenGL only knows actual blit operations, Vulkan can perform copies between images, which incur a lower overhead, if source and target formats are compatible_).
+      * _geometry pass_: __A new Vulkan renderpass is started__ (_in Vulkan, it is possible to describe state and dependencies between different passes using Vulkan renderpass objects, this information can be used by the driver for optimisations, e.g. if certain attachments of a framebuffer will not be reused, or if a renderpass has no execution dependencies, and can be executed in parallel to another one_), viewport parameters set, and all nodes are iterated over, grouped by shader pipeline used in order to minimise state switches. With the corresponding __descriptor sets__ (_see [^dslnote]_) and vertex/instance buffers for the pipeline bound, the node is rendered.
+      * _quad/postprocessing_ pass: __A new Vulkan renderpass is started__ (_see above_), viewport parameters set, then the shader pipeline for the pass is bound, together with the corresponding descriptor sets, then a fullscreen quad is drawn using this pipeline.
+   3. The command buffer is submitted to the rendering queue.
+6. __The viewport pass is recorded in the same way as above, submitted, and presented using the swapchain__ (_in contrast to `glSwapBuffers()` in OpenGL to finish a frame, this is done in Vulkan by presenting to a Swapchain, which can be tied to an window surface, or can be headless, Vulkan here is also less coupled to the windowing system than OpenGL, making integration with Swing, JavaFX, or headless rendering much easier_).
+7. Images created in the viewport pass are submitted to a possibly-connected HMD, stored as screenshots, or submitted to the video encoder.
+
 
 ## Performance
 
 The Java Virtual Machine is quite an unorthodox choice for realtime rendering. One reason might be that the JVM is still perceived as slow, especially when compared to close-to-metal languages like C or C++.
 
 In this section, we compare performance of matrix multiplications on the Java VM with native code. Matrix multiplications in our context are particularly representative, as they occur in large amounts when doing scene graph traversals, in order to compute node positioning, scaling, and rotation in space.
-
-At the end of this section, we additionally compare the performance of the OpenGL and Vulkan renderers with each other.
 
 ### Performance of Matrix multiplications on the Java Virtual Machine
 
@@ -733,7 +772,7 @@ void matmult_AVX_8(Mat44 &out, const Mat44 &A, const Mat44 &B)
     
     __m256 out01x = twolincomb_AVX_8(A01, B);
     __m256 out23x = twolincomb_AVX_8(A23, B);
-
+    
     _mm256_storeu_ps(&out.m[0][0], out01x);
     _mm256_storeu_ps(&out.m[2][0], out23x);
 }
