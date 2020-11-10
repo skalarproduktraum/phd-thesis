@@ -13,7 +13,7 @@
        {\Huge A Modular and Open-Source Framework for Virtual Reality Visualisation and Interaction in Bioimaging}
         
         \vspace{0.5cm}
- 
+     
         A thesis submitted to attain the degree of\\
         \large{\textsc{Doctor rerum naturalium}}\\ 
         (Dr. rer. nat.)
@@ -29,30 +29,26 @@
        \vspace{0.5cm}          
         born on 19th May, 1987 in Dresden, Germany
                      
-         \vspace{1.2cm}
+         \vspace{1.0cm}
          \emph{First reviewer}:\\
          Prof. Dr. sc. techn. Ivo F. Sbalzarini\\
          Technische Universit{\"a}t Dresden \& Max Planck Institute of Molecular Cell Biology and Genetics\\
          Dresden, Germany\\
-         \vspace{0.5cm}
+         \vspace{0.4cm}
          \emph{Second reviewer}:\\
          James Sharpe, PhD\\
          European Molecular Biology Laboratory\\ Barcelona, Spain\\
-         \vspace{0.5cm}
+         \vspace{0.4cm}
          \emph{Fachreferent:}\\
          Prof. Dr.-Ing. Raimund Dachselt\\
          Technische Universit{\"a}t Dresden\\
          Dresden, Germany
-       
 
-        
-        
-        \vfill
-  
-        2019
-        
- 
- 
+        \vspace{0.5cm}
+      
+        Submitted on 11th October, 2019\\
+        Defended on 18th May, 2020
+
      \end{center}
 \end{fullwidth}
 \end{titlepage} 
